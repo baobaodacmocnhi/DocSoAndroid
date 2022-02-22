@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+<!--    <item-->
+<!--        android:id="@+id/action_search_khach_hang"-->
+<!--        android:icon="@drawable/ic_user_searchx512"-->
+<!--        android:title="Tìm Kiếm Khách Hàng"-->
+<!--        app:showAsAction="always" />-->
+    <item
+        android:id="@+id/action_settings"
+        android:icon="@mipmap/ic_settings"
+        android:title="Cấu Hình"
+        app:showAsAction="always" />
+</menu>
