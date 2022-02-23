@@ -9,6 +9,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceFirebaseMessaging;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceThermalPrinter;
@@ -119,6 +120,15 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        imgbtnDocSo = (ImageButton) findViewById(R.id.imgbtnDocSo);
+        imgbtnDocSo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityDocSo_DanhSach.class);
+                startActivity(intent);
+            }
+        });
+
         txtUser = (TextView) findViewById(R.id.txtUser);
         txtVersion = (TextView) findViewById(R.id.txtVersion);
         try {
@@ -141,7 +151,6 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
 
-            CLocal.initialPhiMoNuoc();
             CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
 
 //            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
@@ -156,17 +165,11 @@ public class MainActivity extends AppCompatActivity {
 //                }
 //            });
 
-            if (CLocal.sharedPreferencesre.getString("jsonHanhThu", "").equals("") == false) {
-                CLocal.listHanhThu = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonHanhThu", ""), new TypeToken<ArrayList<CEntityParent>>() {
+            if (CLocal.sharedPreferencesre.getString("jsonDocSo", "").equals("") == false) {
+                CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
-                if (CLocal.listHanhThu.size() > 2000)
-                    CLocal.listHanhThu = null;
-            }
-            if (CLocal.sharedPreferencesre.getString("jsonDongNuoc", "").equals("") == false) {
-                CLocal.listDongNuoc = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDongNuoc", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                }.getType());
-                if (CLocal.listDongNuoc.size() > 2000)
-                    CLocal.listDongNuoc = null;
+                if (CLocal.listDocSo.size() > 2000)
+                    CLocal.listDocSo = null;
             }
             if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
                 CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
@@ -195,13 +198,12 @@ public class MainActivity extends AppCompatActivity {
 
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
+                CLocal.May = CLocal.sharedPreferencesre.getString("May", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
-                CLocal.HanhThu = CLocal.sharedPreferencesre.getBoolean("HanhThu", false);
-                CLocal.DongNuoc = CLocal.sharedPreferencesre.getBoolean("DongNuoc", false);
                 CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
-                imgbtnDangNhap.setImageResource(R.mipmap.ic_login_round);
+                imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
                 if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true) {
                     CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
                     btnAdmin.setVisibility(View.VISIBLE);
@@ -214,14 +216,6 @@ public class MainActivity extends AppCompatActivity {
                     CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                     CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                     CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
-                } else if (CLocal.sharedPreferencesre.getBoolean("TestApp", false) == true) {
-                    CLocal.TestApp = CLocal.sharedPreferencesre.getBoolean("TestApp", false);
-                }
-                if (CLocal.sharedPreferencesre.getBoolean("DongNuoc", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false)
-                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                //nộp tiền
-                CLocal.SyncNopTien = CLocal.sharedPreferencesre.getBoolean("SyncNopTien", false);
-                if (CLocal.SyncNopTien == true) {
                 }
             } else {
                 txtUser.setText("Xin hãy đăng nhập");

@@ -1,29 +1,29 @@
 <resources>
     <string name="app_name">Đọc Số</string>
     <string-array name="ky_array">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
         <item>10</item>
         <item>11</item>
         <item>12</item>
     </string-array>
     <string-array name="dot_array">
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-        <item>4</item>
-        <item>5</item>
-        <item>6</item>
-        <item>7</item>
-        <item>8</item>
-        <item>9</item>
+        <item>01</item>
+        <item>02</item>
+        <item>03</item>
+        <item>04</item>
+        <item>05</item>
+        <item>06</item>
+        <item>07</item>
+        <item>08</item>
+        <item>09</item>
         <item>10</item>
         <item>11</item>
         <item>12</item>
@@ -35,5 +35,15 @@
         <item>18</item>
         <item>19</item>
         <item>20</item>
+    </string-array>
+    <string-array name="filter_docso_array">
+        <item>Tất Cả</item>
+        <item>Đã Đọc</item>
+        <item>Chưa Đọc</item>
+    </string-array>
+    <string-array name="sort_array">
+        <item>MLT</item>
+        <item>Thời Gian Tăng</item>
+        <item>Thời Gian Giảm</item>
     </string-array>
 </resources>

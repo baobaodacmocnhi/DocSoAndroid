@@ -93,11 +93,10 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonHanhThu, jsonDongNuoc, jsonDongNuocChild, jsonMessage, jsonTo, jsonNhanVien, jsonNam;
-    public static String MaNV, HoTen, MaTo, DienThoai, Zalo, ThermalPrinter, MethodPrinter, IDMobile;
-    public static boolean Admin, HanhThu, DongNuoc, Doi, ToTruong, SyncTrucTiep, InPhieuBao, TestApp, SyncNopTien;
-    public static ArrayList<CEntityParent> listHanhThu, listHanhThuView, listDongNuoc, listDongNuocView;
-    public static Map<String, List<String>> phiMoNuoc;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam;
+    public static String MaNV, HoTen, May,MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
+    public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
+    public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
 
@@ -107,12 +106,10 @@ public class CLocal {
         editor.putString("Password", "");
         editor.putString("MaNV", "");
         editor.putString("HoTen", "");
+        editor.putString("May", "");
         editor.putString("MaTo", "");
         editor.putString("DienThoai", "");
-        editor.putString("Zalo", "");
-        editor.putString("jsonHanhThu", "");
-        editor.putString("jsonDongNuoc", "");
-        editor.putString("jsonMessage", "");
+        editor.putString("jsonDocSo", "");
         editor.putString("jsonNam", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
@@ -124,18 +121,13 @@ public class CLocal {
         editor.putString("ThermalPrinter", "");
         editor.putString("MethodPrinter", "ESC");
         editor.putBoolean("SyncTrucTiep", true);
-        editor.putBoolean("InPhieuBao", false);
-        editor.putBoolean("TestApp", false);
-        editor.putBoolean("SyncNopTien", false);
         editor.commit();
-        editor.remove("jsonHanhThu_HoaDonDienTu").commit();
-        editor.remove("jsonDongNuocChild").commit();
         ThermalPrinter = "";
-        MaNV = HoTen = MaTo = DienThoai = Zalo = IDMobile = "";
-        Admin = HanhThu = DongNuoc = Doi = ToTruong = InPhieuBao = TestApp = SyncNopTien = false;
+        MaNV = HoTen =May= MaTo = DienThoai = IDMobile = "";
+        Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonHanhThu = jsonDongNuoc = jsonDongNuocChild = jsonMessage = jsonTo = jsonNhanVien = jsonNam = null;
-        listHanhThu = listHanhThuView = listDongNuoc = listDongNuocView = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = null;
+        listDocSo = null;
     }
 
     public static String creatPathFile(Activity activity, String path, String filename, String filetype) {
@@ -156,22 +148,6 @@ public class CLocal {
             FileProvider.getUriForFile(activity, "thutien_file_provider", photoFile);
         }
         return photoFile.getAbsolutePath();
-    }
-
-    public static void initialPhiMoNuoc() {
-        //add cứng phí mở nước
-        phiMoNuoc = new HashMap<>();
-        phiMoNuoc.put("264.000", Arrays.asList("15", "25"));
-        phiMoNuoc.put("1.552.000", Arrays.asList("40", "50", "80", "100"));
-    }
-
-    public static String getPhiMoNuoc(String Co) {
-        for (Map.Entry<String, List<String>> entry : CLocal.phiMoNuoc.entrySet()) {
-            if (entry.getValue().contains(Co)) {
-                return entry.getKey();
-            }
-        }
-        return null;
     }
 
     public static String getTime() {
@@ -456,11 +432,8 @@ public class CLocal {
     //update list to Json
     public static void updateArrayListToJson() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-        if (CLocal.listHanhThu != null)
-            editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
-        if (CLocal.listDongNuoc != null) {
-            editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
-        }
+        if (CLocal.listDocSo != null)
+            editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
         editor.commit();
     }
 

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:appcompat="http://schemas.android.com/apk/res-auto"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/menu_search"
+        android:title=""
+        appcompat:actionViewClass="androidx.appcompat.widget.SearchView"
+        appcompat:showAsAction="always" />
+
+    <item
+        android:id="@+id/action_down_data"
+        android:icon="@android:drawable/stat_sys_download"
+        android:title="Tải Dữ Liệu"
+        app:showAsAction="always" />
+
+</menu>

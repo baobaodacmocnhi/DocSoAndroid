@@ -71,17 +71,11 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             if (remoteMessage.getData().get("Action").equals("DangXuat")) {
                 CLocal.initialCLocal();
                 intent = new Intent(this, ActivityDangNhap.class);
-            } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.listHanhThu != null && CLocal.listHanhThu.size() > 0) {
+            } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                 //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
-                CLocal.updateValueChild(CLocal.listHanhThu, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-                CLocal.updateValueChild(CLocal.listHanhThuView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
 //                intent = new Intent(this, ActivityHoaDonDienTu_DanhSach.class);
-            } else if (remoteMessage.getData().get("Action").equals("DongNuoc") && CLocal.listDongNuoc != null && CLocal.listDongNuoc.size() > 0) {
-                //action DongNuoc cập nhật GiaiTrach,TamThu,ThuHo cho DongNuoc
-                CLocal.updateValueChild(CLocal.listDongNuoc, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-//                intent = new Intent(this, ActivityDanhSachDongNuoc.class);
-            } else if (remoteMessage.getData().get("Action").equals("LenhHuy")) {
-//                intent = new Intent(this, ActivityLenhHuy.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
             }

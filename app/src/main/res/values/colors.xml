@@ -18,4 +18,8 @@
     <color name="colorToTrinh">#FF008800</color>
     <color name="colorDCHD">#FFFF00FF</color>
     <color name="colorListView">#FFEFEFEF</color>
+    <color name="colorCSC_SL_0_1">#b0e5e5</color>
+    <color name="colorCSC_SL_1_1">#e5e5b0</color>
+    <color name="colorCSC_SL_2_1">#b0cae5</color>
+    <color name="colorCSC_SL_3_1">#e5b1b0</color>
 </resources>

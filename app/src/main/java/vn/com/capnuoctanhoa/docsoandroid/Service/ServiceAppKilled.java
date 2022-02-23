@@ -30,14 +30,8 @@ public class ServiceAppKilled extends Service {
         super.onTaskRemoved(rootIntent);
         try {
             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-            if (CLocal.listHanhThu != null)
-//                editor.putString("jsonHanhThu", CLocal.jsonHanhThu.toString());
-                editor.putString("jsonHanhThu", new Gson().toJsonTree(CLocal.listHanhThu).getAsJsonArray().toString());
-            if (CLocal.listDongNuoc != null) {
-//                editor.putString("jsonDongNuoc", CLocal.jsonDongNuoc.toString());
-//                editor.putString("jsonDongNuocChild", CLocal.jsonDongNuocChild.toString());
-                editor.putString("jsonDongNuoc", new Gson().toJsonTree(CLocal.listDongNuoc).getAsJsonArray().toString());
-            }
+            if (CLocal.listDocSo != null)
+                editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
             if (CLocal.jsonMessage != null)
                 editor.putString("jsonMessage", CLocal.jsonMessage.toString());
             editor.commit();

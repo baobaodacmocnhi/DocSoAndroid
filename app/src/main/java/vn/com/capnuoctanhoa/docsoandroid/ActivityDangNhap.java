@@ -137,11 +137,20 @@ public class ActivityDangNhap extends AppCompatActivity {
                             editor.putString("Password", jsonObject.getString("MatKhau"));
                             editor.putString("MaNV", jsonObject.getString("MaND"));
                             editor.putString("HoTen", jsonObject.getString("HoTen"));
+                            editor.putString("May", jsonObject.getString("May"));
                             editor.putString("MaTo", jsonObject.getString("MaTo"));
                             editor.putString("DienThoai", jsonObject.getString("DienThoai"));
                             editor.putBoolean("Admin", Boolean.parseBoolean(jsonObject.getString("Admin")));
+                            editor.putBoolean("ToTruong", Boolean.parseBoolean(jsonObject.getString("ToTruong")));
+                            editor.putBoolean("Doi", Boolean.parseBoolean(jsonObject.getString("Doi")));
                             editor.putString("jsonDocSo", "");
                             editor.putString("jsonNam", ws.getDS_Nam());
+                            if (Boolean.parseBoolean(jsonObject.getString("Doi")) == true) {
+                                editor.putString("jsonTo", ws.getDSTo());
+                                editor.putString("jsonNhanVien", ws.getDS_NhanVien());
+                            } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true) {
+                                editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
+                            }
                             editor.putBoolean("Login", true);
                             editor.putLong("LoginDate", new Date().getTime());
                             editor.commit();

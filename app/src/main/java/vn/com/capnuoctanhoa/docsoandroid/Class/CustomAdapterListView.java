@@ -113,16 +113,16 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
             holder.Row4b.setText(map.getRow4b());
         }
 
-        if (map.getDongNuoc() == true)
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
-        if (map.getDongNuoc2() == true)
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc2));
-        if (map.getLenhHuy() == true)
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
-        if (map.getToTrinh() == true)
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorToTrinh));
-        if (map.getDCHD() == true)
-            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDCHD));
+//        if (map.getDongNuoc() == true)
+//            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc));
+//        if (map.getDongNuoc2() == true)
+//            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDongNuoc2));
+//        if (map.getLenhHuy() == true)
+//            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorLenhHuy));
+//        if (map.getToTrinh() == true)
+//            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorToTrinh));
+//        if (map.getDCHD() == true)
+//            holder.layoutParent.setBackgroundColor(activity.getResources().getColor(R.color.colorDCHD));
 
         return convertView;
     }
