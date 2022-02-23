@@ -11,11 +11,8 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/ivGhiChu"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        tools:ignore="MissingConstraints">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,9 +22,9 @@
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="Ghi Chú"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edtGhiChu" />
@@ -41,22 +38,22 @@
 
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/edtHoTen"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="SĐT"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtGhiChu" />
@@ -70,14 +67,14 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
                 app:layout_constraintTop_toBottomOf="@+id/edtGhiChu"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -99,7 +96,7 @@
 
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/edtMaDN"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -121,21 +118,21 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/edtMLT"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView11"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="VT"
                 app:layout_constraintStart_toEndOf="@+id/edtDanhBo"
                 app:layout_constraintTop_toTopOf="@+id/edtViTri" />
@@ -175,6 +172,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
 
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
@@ -182,8 +180,7 @@
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toStartOf="@+id/edtDanhBo"
                 app:layout_constraintTop_toBottomOf="@+id/edtDiaChiDHN"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView5"
@@ -202,14 +199,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/edtHoTen"
                 app:layout_constraintTop_toBottomOf="@+id/edtHieu"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView6"
@@ -230,14 +227,14 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/edtDiaChi"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView7"
@@ -256,13 +253,13 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:autofillHints=""
                 android:ems="5"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/edtDanhBo"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView8"
@@ -282,14 +279,14 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
 
+                android:autofillHints=""
                 android:ems="2"
                 android:inputType="textPersonName"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="@+id/edtHieu"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView9"
@@ -310,22 +307,22 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginRight="8dp"
+                android:autofillHints=""
                 android:ems="6"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/edtHieu"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView13"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="GB"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edtGB" />
@@ -338,7 +335,7 @@
                 android:layout_marginLeft="8dp"
                 android:autofillHints=""
                 android:ems="5"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/edtDienThoai"
@@ -348,9 +345,9 @@
                 android:id="@+id/textView14"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:text="ĐM"
                 app:layout_constraintStart_toEndOf="@+id/edtGB"
                 app:layout_constraintTop_toTopOf="@+id/edtDM" />
@@ -361,14 +358,14 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
+                android:autofillHints=""
                 android:ems="2"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
                 app:layout_constraintTop_toTopOf="@+id/edtGB"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/textView15"
@@ -391,7 +388,7 @@
                 android:layout_marginRight="8dp"
                 android:autofillHints=""
                 android:ems="6"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
@@ -417,19 +414,22 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Code: " />
+                        android:text="Code: "
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Chỉ số: " />
+                        android:text="Chỉ số: "
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Tiêu thụ: " />
+                        android:text="Tiêu thụ: "
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -635,6 +635,7 @@
                 android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
+                android:minHeight="48dp"
                 android:textAlignment="center"
                 app:layout_constraintEnd_toStartOf="@+id/textView18"
                 app:layout_constraintStart_toEndOf="@+id/textView17"
@@ -662,7 +663,7 @@
                 android:layout_marginRight="8dp"
                 android:autofillHints=""
                 android:ems="6"
-                android:inputType="textPersonName"
+                android:inputType="number"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
@@ -685,15 +686,18 @@
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_menu_camera"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+                app:layout_constraintTop_toTopOf="@+id/recyclerView"
+                tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
     <ImageView
-        android:id="@+id/ivSave"
+        android:id="@+id/ivLuu"
         android:layout_width="50dp"
         android:layout_height="50dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:contentDescription="Lưu"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -707,7 +711,7 @@
         android:layout_marginRight="24dp"
         android:contentDescription="In"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/ivSave"
+        app:layout_constraintEnd_toStartOf="@+id/ivLuu"
         app:srcCompat="@mipmap/ic_printer_foreground"
         tools:ignore="ImageContrastCheck" />
 
@@ -722,4 +726,24 @@
         app:layout_constraintEnd_toStartOf="@+id/ivIn"
         tools:ignore="ImageContrastCheck"
         app:srcCompat="@mipmap/ic_ghichu_foreground" />
+
+    <ImageView
+        android:id="@+id/ivTruoc"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:srcCompat="@drawable/ic_truoc_foreground" />
+
+    <ImageView
+        android:id="@+id/ivSau"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginLeft="24dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/ivTruoc"
+        app:srcCompat="@drawable/ic_sau_foreground" />
 </androidx.constraintlayout.widget.ConstraintLayout>
