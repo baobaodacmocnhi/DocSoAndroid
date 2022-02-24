@@ -111,10 +111,10 @@
 
     <Spinner
         android:id="@+id/spnKy"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:entries="@array/ky_array"
         android:gravity="center"
         android:textAlignment="center"
@@ -146,7 +146,7 @@
 
     <Spinner
         android:id="@+id/spnNam"
-        android:layout_width="0dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
@@ -157,7 +157,7 @@
 
     <Spinner
         android:id="@+id/spnDot"
-        android:layout_width="100dp"
+        android:layout_width="wrap_content"
         android:layout_height="30dp"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"

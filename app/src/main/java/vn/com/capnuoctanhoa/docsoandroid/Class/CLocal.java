@@ -93,10 +93,10 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam,jsonCode;
     public static String MaNV, HoTen, May,MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
-    public static ArrayList<CEntityParent> listDocSo, listDocSoView;
+    public static ArrayList<CEntityParent> listDocSo, listDocSoView,listCode;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
 
@@ -110,6 +110,7 @@ public class CLocal {
         editor.putString("MaTo", "");
         editor.putString("DienThoai", "");
         editor.putString("jsonDocSo", "");
+        editor.putString("jsonCode", "");
         editor.putString("jsonNam", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
@@ -126,7 +127,7 @@ public class CLocal {
         MaNV = HoTen =May= MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam=jsonCode = null;
         listDocSo = null;
     }
 
@@ -453,125 +454,6 @@ public class CLocal {
         }
     }
 
-    //update giá trí child
-    public static void updateValueChild(ArrayList<CEntityParent> lst, String NameUpdate, String ValueUpdate, String MaHD) {
-        try {
-            for (int i = 0; i < lst.size(); i++) {
-                for (int j = 0; j < lst.get(i).getLstHoaDon().size(); j++)
-                    if (lst.get(i).getLstHoaDon().get(j).getMaHD().equals(MaHD) == true) {
-                        //update child
-                        switch (NameUpdate) {
-                            case "GiaiTrach":
-                                lst.get(i).getLstHoaDon().get(j).setGiaiTrach(Boolean.parseBoolean(ValueUpdate));
-                                break;
-                            case "TamThu":
-                                lst.get(i).getLstHoaDon().get(j).setTamThu(Boolean.parseBoolean(ValueUpdate));
-                                break;
-                            case "ThuHo":
-                                lst.get(i).getLstHoaDon().get(j).setThuHo(Boolean.parseBoolean(ValueUpdate));
-                                break;
-                            case "PhiMoNuocThuHo":
-                                lst.get(i).getLstHoaDon().get(j).setPhiMoNuocThuHo(ValueUpdate);
-                                break;
-                            case "DaThu":
-                                lst.get(i).getLstHoaDon().get(j).setDangNgan_DienThoai(Boolean.parseBoolean(ValueUpdate));
-                                break;
-                            case "InPhieuBao":
-                                lst.get(i).getLstHoaDon().get(j).setInPhieuBao_Ngay(ValueUpdate);
-                                break;
-                        }
-                        //gọi update lại parent
-                        updateTinhTrangParent(lst, i);
-                    }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-    //update tình trạng parent
-    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, int i) {
-        //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, LenhHuyCat = 0, PhiMoNuocThuHo = 0;
-        for (CEntityChild item : lst.get(i).getLstHoaDon()) {
-            if (item.isGiaiTrach() == true)
-                GiaiTrach++;
-            else if (item.isTamThu() == true)
-                TamThu++;
-            else if (item.isThuHo() == true) {
-                ThuHo++;
-                if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
-                    PhiMoNuocThuHo++;
-            } else if (item.isLenhHuy() == true) {
-                LenhHuy++;
-                if (item.isLenhHuyCat() == true)
-                    LenhHuyCat++;
-            } else if (item.isTBDongNuoc() == true)
-                TBDongNuoc++;
-            if (item.getInPhieuBao2_Ngay().equals("") == false)
-                InPhieuBao2++;
-            if (item.getInPhieuBao_Ngay().equals("") == false)
-                InPhieuBao++;
-
-            if (Doi == true || ToTruong == true) {
-                if (item.isDangNgan_DienThoai() == true)
-                    DangNgan_DienThoai++;
-            } else if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
-                DangNgan_DienThoai++;
-        }
-
-        lst.get(i).setGiaiTrach(false);
-        lst.get(i).setTamThu(false);
-        lst.get(i).setThuHo(false);
-        lst.get(i).setLenhHuy(false);
-        lst.get(i).setLenhHuyCat(false);
-        lst.get(i).setTBDongNuoc(false);
-        lst.get(i).setDangNgan_DienThoai(false);
-//        lst.get(i).setDongA(false);
-        lst.get(i).setTinhTrang("");
-
-        if (lst.get(i).isDongA() == true) {
-            lst.get(i).setTinhTrang("Đông Á");
-        } else if (GiaiTrach == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setGiaiTrach(true);
-            lst.get(i).setTinhTrang("Giải Trách");
-        } else if (TamThu == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setTamThu(true);
-            lst.get(i).setTinhTrang("Tạm Thu");
-        } else if (ThuHo == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setThuHo(true);
-            String str = "Thu Hộ";
-            if (PhiMoNuocThuHo == lst.get(i).getLstHoaDon().size())
-                str += " (" + lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, lst.get(i).getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
-            lst.get(i).setTinhTrang(str);
-        } else if (LenhHuy == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setLenhHuy(true);
-            if (LenhHuyCat == lst.get(i).getLstHoaDon().size())
-                lst.get(i).setLenhHuyCat(true);
-        } else if (TBDongNuoc == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setTBDongNuoc(true);
-        } else if (InPhieuBao2 == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setTinhTrang("Phiếu Báo 2");
-        } else if (InPhieuBao == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setTinhTrang("Phiếu Báo");
-        }
-        //update không nối tiếp
-        if (InPhieuBao2 == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setInPhieuBao2(true);
-        }
-        if (InPhieuBao == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setInPhieuBao(true);
-        }
-
-        if (DangNgan_DienThoai == lst.get(i).getLstHoaDon().size()) {
-            lst.get(i).setDangNgan_DienThoai(true);
-            lst.get(i).setTinhTrang("Đã Thu");
-        }
-
-        //goi update lại json hệ thống
-//        updateArrayListToJson();
-    }
-
     //update tình trạng parent
     public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, CEntityParent entityParentUpdate) {
         for (int i = 0; i < lst.size(); i++)
@@ -580,87 +462,6 @@ public class CLocal {
             }
         //goi update lại json hệ thống
         updateArrayListToJson();
-    }
-
-    //update tình trạng parent
-    public static CEntityParent updateTinhTrangParent(CEntityParent en) {
-        //update TinhTrang
-        int ThuHo = 0, TamThu = 0, GiaiTrach = 0, DangNgan_DienThoai = 0, InPhieuBao = 0, InPhieuBao2 = 0, TBDongNuoc = 0, LenhHuy = 0, LenhHuyCat = 0, PhiMoNuocThuHo = 0;
-        for (CEntityChild item : en.getLstHoaDon()) {
-            if (item.isGiaiTrach() == true)
-                GiaiTrach++;
-            else if (item.isTamThu() == true)
-                TamThu++;
-            else if (item.isThuHo() == true) {
-                ThuHo++;
-                if (Integer.parseInt(item.getPhiMoNuocThuHo()) > 0)
-                    PhiMoNuocThuHo++;
-            } else if (item.isLenhHuy() == true) {
-                LenhHuy++;
-                if (item.isLenhHuyCat() == true)
-                    LenhHuyCat++;
-            } else if (item.isTBDongNuoc() == true)
-                TBDongNuoc++;
-            if (item.getInPhieuBao2_Ngay().equals("") == false)
-                InPhieuBao2++;
-            if (item.getInPhieuBao_Ngay().equals("") == false)
-                InPhieuBao++;
-
-            if (Doi == true || ToTruong == true) {
-                if (item.isDangNgan_DienThoai() == true)
-                    DangNgan_DienThoai++;
-            } else if (item.isDangNgan_DienThoai() == true && item.getMaNV_DangNgan().equals(CLocal.MaNV) == true)
-                DangNgan_DienThoai++;
-        }
-
-        en.setGiaiTrach(false);
-        en.setTamThu(false);
-        en.setThuHo(false);
-        en.setLenhHuy(false);
-        en.setLenhHuyCat(false);
-        en.setTBDongNuoc(false);
-        en.setDangNgan_DienThoai(false);
-//        en.setDongA(false);
-        en.setTinhTrang("");
-
-        if (en.isDongA() == true) {
-            en.setTinhTrang("Đông Á");
-        } else if (GiaiTrach == en.getLstHoaDon().size()) {
-            en.setGiaiTrach(true);
-            en.setTinhTrang("Giải Trách");
-        } else if (TamThu == en.getLstHoaDon().size()) {
-            en.setTamThu(true);
-            en.setTinhTrang("Tạm Thu");
-        } else if (ThuHo == en.getLstHoaDon().size()) {
-            en.setThuHo(true);
-            String str = "Thu Hộ";
-            if (PhiMoNuocThuHo == en.getLstHoaDon().size())
-                str += " (" + en.getLstHoaDon().get(0).getPhiMoNuocThuHo().substring(0, en.getLstHoaDon().get(0).getPhiMoNuocThuHo().length() - 3) + "k)";
-            en.setTinhTrang(str);
-        } else if (LenhHuy == en.getLstHoaDon().size()) {
-            en.setLenhHuy(true);
-            if (LenhHuyCat == en.getLstHoaDon().size())
-                en.setLenhHuyCat(true);
-        } else if (TBDongNuoc == en.getLstHoaDon().size()) {
-            en.setTBDongNuoc(true);
-        } else if (InPhieuBao2 == en.getLstHoaDon().size()) {
-            en.setTinhTrang("Phiếu Báo 2");
-        } else if (InPhieuBao == en.getLstHoaDon().size()) {
-            en.setTinhTrang("Phiếu Báo");
-        }
-        //update không nối tiếp
-        if (InPhieuBao2 == en.getLstHoaDon().size()) {
-            en.setInPhieuBao2(true);
-        } else if (InPhieuBao == en.getLstHoaDon().size()) {
-            en.setInPhieuBao(true);
-        }
-
-        if (DangNgan_DienThoai == en.getLstHoaDon().size()) {
-            en.setDangNgan_DienThoai(true);
-            en.setTinhTrang("Đã Thu");
-        }
-
-        return en;
     }
 
     public static boolean checkDangNganChild(CEntityParent entityParent) {

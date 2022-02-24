@@ -72,10 +72,6 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 CLocal.initialCLocal();
                 intent = new Intent(this, ActivityDangNhap.class);
             } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
-                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-//                intent = new Intent(this, ActivityHoaDonDienTu_DanhSach.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
             }

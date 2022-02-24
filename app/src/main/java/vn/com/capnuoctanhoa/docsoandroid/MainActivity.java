@@ -201,6 +201,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.May = CLocal.sharedPreferencesre.getString("May", "");
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
                 CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
+                CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);

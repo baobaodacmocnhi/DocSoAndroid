@@ -119,7 +119,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:autofillHints=""
-                android:ems="10"
+                android:ems="8"
                 android:inputType="number"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView"
@@ -231,6 +231,8 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
                 app:layout_constraintTop_toBottomOf="@+id/edtDiaChi"
@@ -254,7 +256,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:autofillHints=""
-                android:ems="5"
+                android:ems="4"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
@@ -301,7 +303,7 @@
 
             <EditText
                 android:id="@+id/edtSoThan"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
@@ -311,6 +313,8 @@
                 android:ems="6"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
                 app:layout_constraintTop_toTopOf="@+id/edtHieu"
@@ -325,18 +329,21 @@
                 android:layout_marginTop="8dp"
                 android:text="GB"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtGB" />
+                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu" />
 
             <EditText
-                android:id="@+id/edtGB"
+                android:id="@+id/edtGiaBieu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:autofillHints=""
-                android:ems="5"
+                android:ems="2"
+                android:gravity="center_horizontal"
                 android:inputType="number"
                 android:minHeight="48dp"
+                android:textColor="@color/colorPrimaryDark"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
                 app:layout_constraintTop_toBottomOf="@+id/edtDienThoai"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -349,22 +356,23 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="ĐM"
-                app:layout_constraintStart_toEndOf="@+id/edtGB"
-                app:layout_constraintTop_toTopOf="@+id/edtDM" />
+                app:layout_constraintStart_toEndOf="@+id/edtGiaBieu"
+                app:layout_constraintTop_toTopOf="@+id/edtDinhMuc" />
 
             <EditText
-                android:id="@+id/edtDM"
+                android:id="@+id/edtDinhMuc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
                 android:autofillHints=""
-                android:ems="2"
+                android:ems="3"
+                android:gravity="center_horizontal"
                 android:inputType="number"
                 android:minWidth="48dp"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
-                app:layout_constraintTop_toTopOf="@+id/edtGB"
+                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -375,25 +383,52 @@
                 android:layout_marginLeft="8dp"
                 android:layout_marginTop="8dp"
                 android:text="ĐMHN"
-                app:layout_constraintStart_toEndOf="@+id/edtDM"
-                app:layout_constraintTop_toTopOf="@+id/edtDMHN" />
+                app:layout_constraintStart_toEndOf="@+id/edtDinhMuc"
+                app:layout_constraintTop_toTopOf="@+id/edtDinhMucHN" />
 
             <EditText
-                android:id="@+id/edtDMHN"
-                android:layout_width="0dp"
+                android:id="@+id/edtDinhMucHN"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginLeft="8dp"
-                android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:autofillHints=""
-                android:ems="6"
+                android:ems="2"
+                android:gravity="center_horizontal"
                 android:inputType="number"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
-                app:layout_constraintTop_toTopOf="@+id/edtGB"
+                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView19"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
+                android:text="TBTT"
+                app:layout_constraintStart_toEndOf="@+id/edtDinhMucHN"
+                app:layout_constraintTop_toTopOf="@+id/edtTBTT" />
+
+            <EditText
+                android:id="@+id/edtTBTT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:autofillHints=""
+                android:ems="2"
+                android:gravity="center_horizontal"
+                android:inputType="number"
+                android:minHeight="48dp"
+                android:textColor="@color/colorDanhBo"
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/textView19"
+                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
+                tools:ignore="SpeakableTextPresentCheck" />
+
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -403,7 +438,7 @@
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtGB">
+                app:layout_constraintTop_toBottomOf="@+id/edtGiaBieu">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -449,12 +484,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtCode2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -462,12 +499,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtChiSo2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -475,12 +514,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtTieuThu2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
                     </LinearLayout>
                     <!--ky hien tai - 2-->
                     <LinearLayout
@@ -491,12 +532,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtCode1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -504,12 +547,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtChiSo1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -517,12 +562,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtTieuThu1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
                     </LinearLayout>
                     <!--ky hien tai - 1-->
                     <LinearLayout
@@ -533,12 +580,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtCode0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -546,12 +595,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtChiSo0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -559,12 +610,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtTieuThu0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
                     </LinearLayout>
 
                     <!--ky hien tai-->
@@ -576,12 +629,14 @@
                         android:orientation="vertical">
 
                         <TextView
+                            android:id="@+id/txtCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -589,12 +644,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtChiSo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
 
                         <View
                             android:layout_width="match_parent"
@@ -602,12 +659,14 @@
                             android:background="@color/colorChuaThu" />
 
                         <TextView
+                            android:id="@+id/txtTieuThu"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center_vertical"
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
-                            android:textAppearance="?android:attr/textAppearanceMedium" />
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -674,11 +733,10 @@
                 android:id="@+id/recyclerView"
                 android:layout_width="0dp"
                 android:layout_height="100dp"
-                android:layout_marginTop="21dp"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toStartOf="@+id/ibtnChupHinh"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/textView17" />
+                app:layout_constraintTop_toBottomOf="@+id/spnCode" />
 
             <ImageButton
                 android:id="@+id/ibtnChupHinh"
@@ -724,8 +782,8 @@
         android:contentDescription="Ghi Chú"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ivIn"
-        tools:ignore="ImageContrastCheck"
-        app:srcCompat="@mipmap/ic_ghichu_foreground" />
+        app:srcCompat="@mipmap/ic_ghichu_foreground"
+        tools:ignore="ImageContrastCheck" />
 
     <ImageView
         android:id="@+id/ivTruoc"
