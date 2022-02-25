@@ -297,29 +297,37 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         try {
             listParent = new ArrayList<CViewParent>();
             CLocal.listDocSoView = new ArrayList<CEntityParent>();
-            TongDC  = 0;
+            TongDC = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Đọc":
-//                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-//                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-//                            if (CLocal.listDocSo.get(i).getLstHoaDon().get(0).getInPhieuBao_Ngay().equals("") == true
-//                                    && CLocal.listDocSo.get(i).getLstHoaDon().get(0).getInPhieuBao2_Ngay().equals("") == true
-//                                    && CLocal.listDocSo.get(i).getLstHoaDon().get(0).getTBDongNuoc_Ngay().equals("") == true) {
-//                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
-//                                addViewParent(CLocal.listDocSo.get(i));
-//                            }
-//                        }
-//                    }
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == true) {
+                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
                     break;
                 case "Đã Đọc":
-//                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-//                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-//                            if (CLocal.listDocSo.get(i).isDangNgan_DienThoai() == true) {
-//                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
-//                                addViewParent(CLocal.listDocSo.get(i));
-//                            }
-//                        }
-//                    }
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "K":
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("K") == false) {
+                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
                     break;
                 default:
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
@@ -349,7 +357,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             enViewParent.setRow1a(enParent.getMLT());
             enViewParent.setRow2a(enParent.getDanhBo());
             enViewParent.setRow3a(enParent.getHoTen());
-            enViewParent.setRow4a(enParent.getDiaChi());
+            enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
 
             TongDC++;
 

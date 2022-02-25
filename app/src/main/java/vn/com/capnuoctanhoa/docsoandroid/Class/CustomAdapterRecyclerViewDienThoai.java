@@ -1,0 +1,131 @@
+package vn.com.capnuoctanhoa.docsoandroid.Class;
+
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
+import androidx.recyclerview.widget.RecyclerView;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo;
+import vn.com.capnuoctanhoa.docsoandroid.R;
+
+public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<CustomAdapterRecyclerViewDienThoai.RecyclerViewHolder> {
+    private Activity activity;
+    private ArrayList<CEntityParent> mDisplayedValues;
+
+    public CustomAdapterRecyclerViewDienThoai(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
+        super();
+        this.activity = activity;
+        this.mDisplayedValues = mDisplayedValues;
+    }
+
+    @Override
+    public RecyclerViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.custom_listview_dienthoai, parent, false);
+        return new RecyclerViewHolder(itemView);
+    }
+
+    @Override
+    public void onBindViewHolder(RecyclerViewHolder holder, int position) {
+        if (getItemCount() > 0) {
+            final CEntityParent entityParent = mDisplayedValues.get(position);
+            final int ID = position;
+            holder.txtDanhBo.setText(entityParent.getDanhBo());
+            holder.txtDienThoai.setText(entityParent.getDienThoai());
+            holder.txtNoiDung.setText(entityParent.getDienThoai() + " " + entityParent.getHoTen());
+            holder.imageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mDisplayedValues.remove(ID);
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute(new String[]{entityParent.getDanhBo(), entityParent.getDienThoai()});
+                    notifyDataSetChanged();
+                }
+            });
+        }
+    }
+
+    @Override
+    public int getItemCount() {
+        return mDisplayedValues == null ? 0 : mDisplayedValues.size();
+    }
+
+
+    public class RecyclerViewHolder extends RecyclerView.ViewHolder {
+        TextView ID, txtDanhBo, txtDienThoai, txtNoiDung;
+        ImageButton imageButton;
+
+        public RecyclerViewHolder(View itemView) {
+            super(itemView);
+            ID = (TextView) itemView.findViewById(R.id.ID);
+            txtDanhBo = (TextView) itemView.findViewById(R.id.txtDanhBo);
+            txtDienThoai = (TextView) itemView.findViewById(R.id.txtDienThoai);
+            txtNoiDung = (TextView) itemView.findViewById(R.id.txtNoiDung);
+            imageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
+        }
+    }
+
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        JSONObject jsonObject = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(activity);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                CWebservice ws = new CWebservice();
+                String result = ws.delete_DienThoai(strings[0], strings[1]);
+                try {
+                    jsonObject = new JSONObject(result);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                    return "THÀNH CÔNG";
+                } else
+                    return "THẤT BẠI";
+            } catch (Exception ex) {
+                return "THẤT BẠI";
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            try {
+                CLocal.showPopupMessage(activity, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+
+    }
+}

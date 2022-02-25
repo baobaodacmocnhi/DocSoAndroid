@@ -39,7 +39,7 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDownDataDocSo extends AppCompatActivity {
     private Button btnDownload, btnShowMess;
-    private Spinner spnDot,  spnTo, spnNhanVien, spnNam, spnKy;
+    private Spinner spnDot, spnTo, spnNhanVien, spnNam, spnKy;
     private ArrayList<CViewParent> lstOriginal, lstDisplayed;
     private LinearLayout layoutTo, layoutNhanVien;
     private ConstraintLayout layoutMay;
@@ -122,7 +122,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         spnName_NhanVien.add("Tất Cả");
                         for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
-                            if (jsonObject.getString("May").equals("null")==false) {
+                            if (jsonObject.getString("May").equals("null") == false) {
                                 spnID_NhanVien.add(jsonObject.getString("May"));
                                 spnName_NhanVien.add(jsonObject.getString("May"));
                             }
@@ -267,7 +267,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         spnName_NhanVien.add("Tất Cả");
                         for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
-                            if (jsonObject.getString("MaTo") == spnID_To.get(position) &&jsonObject.getString("May").equals("null")==false) {
+                            if (jsonObject.getString("MaTo") == spnID_To.get(position) && jsonObject.getString("May").equals("null") == false) {
                                 spnID_NhanVien.add(jsonObject.getString("May"));
                                 spnName_NhanVien.add(jsonObject.getString("May"));
                             }
@@ -318,19 +318,19 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
         @Override
         protected String[] doInBackground(Void... voids) {
             try {
-                if (CLocal.Doi == false && CLocal.ToTruong == false )
+                if (CLocal.Doi == false && CLocal.ToTruong == false)
                     selectedMaNV = CLocal.May;
                 if (selectedMaNV.equals("0")) {
                     CLocal.jsonDocSo = new JSONArray();
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(),  String.valueOf(spnID_NhanVien.get(i))));
+                        JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), String.valueOf(spnID_NhanVien.get(i))));
                         for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
                             CLocal.jsonDocSo.put(jsonObject);
                         }
                     }
                 } else {
-                    CLocal.jsonDocSo = new JSONArray(ws.getDS_DocSo( spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
+                    CLocal.jsonDocSo = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
                 }
 
                 if (CLocal.jsonDocSo != null) {
@@ -360,8 +360,8 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 
                             enParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
                             enParent.setDiaChi(jsonObject.getString("DiaChi").replace("null", ""));
-                            if (jsonObject.has("DiaChiDHN") == true)
-                                enParent.setDiaChiDHN(jsonObject.getString("DiaChiDHN").replace("null", ""));
+                            enParent.setSoNha(jsonObject.getString("SoNha").replace("null", ""));
+                            enParent.setTenDuong(jsonObject.getString("TenDuong").replace("null", ""));
                             enParent.setHieu(jsonObject.getString("Hieu").replace("null", ""));
                             enParent.setCo(jsonObject.getString("Co").replace("null", ""));
                             enParent.setSoThan(jsonObject.getString("SoThan").replace("null", ""));
@@ -386,6 +386,9 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                             enParent.setGieng(Boolean.parseBoolean(jsonObject.getString("Gieng").replace("null", "")));
                             enParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
                             enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
+                            enParent.setNam(jsonObject.getString("Nam").replace("null", ""));
+                            enParent.setKy(jsonObject.getString("Ky").replace("null", ""));
+                            enParent.setDot(jsonObject.getString("Dot").replace("null", ""));
                             CLocal.listDocSo.add(enParent);
                         }
                     }

@@ -10,6 +10,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChu;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceFirebaseMessaging;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceThermalPrinter;
@@ -202,6 +203,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
                 CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
                 CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
+                CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
                 txtUser.setText("Xin chào " + CLocal.HoTen);
                 txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                 imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
@@ -235,7 +237,7 @@ public class MainActivity extends AppCompatActivity {
                 }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            CLocal.showToastMessage(MainActivity.this, ex.getMessage());
         }
     }
 

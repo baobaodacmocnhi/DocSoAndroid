@@ -39,8 +39,14 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DocSo.ActivityDocSo_GhiChu"
+            android:exported="false"
+            android:label="Ghi Chú"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+        <activity
             android:name=".DocSo.ActivityDocSo_GhiChiSo"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Ghi Chỉ Số Nước" />
 
         <service
             android:name=".Service.ServiceThermalPrinter"

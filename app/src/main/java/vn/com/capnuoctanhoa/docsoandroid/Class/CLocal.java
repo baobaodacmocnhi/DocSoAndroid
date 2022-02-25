@@ -93,10 +93,10 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam,jsonCode;
-    public static String MaNV, HoTen, May,MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN;
+    public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
-    public static ArrayList<CEntityParent> listDocSo, listDocSoView,listCode;
+    public static ArrayList<CEntityParent> listDocSo, listDocSoView, listCode;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
 
@@ -111,6 +111,7 @@ public class CLocal {
         editor.putString("DienThoai", "");
         editor.putString("jsonDocSo", "");
         editor.putString("jsonCode", "");
+        editor.putString("jsonViTriDHN", "");
         editor.putString("jsonNam", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
@@ -124,10 +125,10 @@ public class CLocal {
         editor.putBoolean("SyncTrucTiep", true);
         editor.commit();
         ThermalPrinter = "";
-        MaNV = HoTen =May= MaTo = DienThoai = IDMobile = "";
+        MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam=jsonCode = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode =jsonViTriDHN= null;
         listDocSo = null;
     }
 

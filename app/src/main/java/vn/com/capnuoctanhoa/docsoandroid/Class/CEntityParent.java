@@ -8,7 +8,8 @@ public class CEntityParent {
     private String DanhBo;
     private String HoTen;
     private String DiaChi;
-    private String DiaChiDHN;
+    private String SoNha;
+    private String TenDuong;
     private String ModifyDate;
     private String TinhTrang;
     private String Hieu;
@@ -45,14 +46,17 @@ public class CEntityParent {
     private String PhiBVMT;
     private String PhiBVMT_Thue;
     private String TongCong;
-
+    private String Nam;
+    private String Ky;
+    private String Dot;
 
     public CEntityParent() {
         ID = "";
         MLT = "";
         DanhBo = "";
         HoTen = "";
-        DiaChiDHN = "";
+        SoNha = "";
+        TenDuong = "";
         DiaChi = "";
         ModifyDate = "";
         TinhTrang = "";
@@ -90,6 +94,9 @@ public class CEntityParent {
         PhiBVMT = "";
         PhiBVMT_Thue = "";
         TongCong = "";
+        Nam = "";
+        Ky = "";
+        Dot = "";
     }
 
     public String getID() {
@@ -132,12 +139,20 @@ public class CEntityParent {
         DiaChi = diaChi;
     }
 
-    public String getDiaChiDHN() {
-        return DiaChiDHN;
+    public String getSoNha() {
+        return SoNha;
     }
 
-    public void setDiaChiDHN(String diaChiDHN) {
-        DiaChiDHN = diaChiDHN;
+    public void setSoNha(String soNha) {
+        SoNha = soNha;
+    }
+
+    public String getTenDuong() {
+        return TenDuong;
+    }
+
+    public void setTenDuong(String tenDuong) {
+        TenDuong = tenDuong;
     }
 
     public String getModifyDate() {
@@ -428,13 +443,38 @@ public class CEntityParent {
         TongCong = tongCong;
     }
 
+    public String getNam() {
+        return Nam;
+    }
+
+    public void setNam(String nam) {
+        Nam = nam;
+    }
+
+    public String getKy() {
+        return Ky;
+    }
+
+    public void setKy(String ky) {
+        Ky = ky;
+    }
+
+    public String getDot() {
+        return Dot;
+    }
+
+    public void setDot(String dot) {
+        Dot = dot;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
         DanhBo = entityParent.getDanhBo();
         HoTen = entityParent.getHoTen();
         DiaChi = entityParent.getDiaChi();
-        DiaChiDHN = entityParent.getDiaChiDHN();
+        SoNha = entityParent.getSoNha();
+        TenDuong = entityParent.getTenDuong();
         ModifyDate = entityParent.getModifyDate();
         TinhTrang = entityParent.getTinhTrang();
         Hieu = entityParent.getHieu();
@@ -471,6 +511,9 @@ public class CEntityParent {
         PhiBVMT = entityParent.getPhiBVMT();
         PhiBVMT_Thue = entityParent.getPhiBVMT_Thue();
         TongCong = entityParent.getTongCong();
+        Nam = entityParent.getNam();
+        Ky = entityParent.getKy();
+        Dot = entityParent.getDot();
     }
 
 
