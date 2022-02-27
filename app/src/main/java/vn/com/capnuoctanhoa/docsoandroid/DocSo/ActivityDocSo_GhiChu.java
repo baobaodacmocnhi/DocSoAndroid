@@ -1,34 +1,51 @@
 package vn.com.capnuoctanhoa.docsoandroid.DocSo;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewDienThoai;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewImage;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
+import android.app.ProgressDialog;
+import android.app.VoiceInteractor;
+import android.graphics.Bitmap;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private Integer STT = -1;
-    private EditText edtSoNha, edtTenDuong;
+    private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen;
     private Spinner spnViTri1, spnViTri2;
-    private ImageView ivLuu;
-    private CheckBox chkGieng;
+    private Button btnCapNhat, btnCapNhatDT;
+    private CheckBox chkGieng, chkSoChinh;
     private CWebservice ws;
     private ArrayList<String> spnName_ViTriDHN;
+    private JSONArray jsonDSDienThoai = null;
+    private RecyclerView recyclerView;
+    private CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,7 +56,14 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         spnViTri1 = (Spinner) findViewById(R.id.spnViTri1);
         spnViTri2 = (Spinner) findViewById(R.id.spnViTri2);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
-        ivLuu = (ImageView) findViewById(R.id.ivLuu);
+        btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
+        edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
+        edtHoTen = (EditText) findViewById(R.id.edtHoTen);
+        chkSoChinh = (CheckBox) findViewById(R.id.chkSoChinh);
+        btnCapNhatDT = (Button) findViewById(R.id.btnCapNhatDT);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+
+        ws = new CWebservice();
 
         try {
             if (CLocal.jsonViTriDHN != null && CLocal.jsonViTriDHN.length() > 0) {
@@ -57,7 +81,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        ivLuu.setOnClickListener(new View.OnClickListener() {
+        btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this) == false) {
@@ -67,6 +91,19 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
 
             }
         });
+
+        btnCapNhatDT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this) == false) {
+                    CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
+                    return;
+                }
+
+            }
+        });
+
+
     }
 
     @Override
@@ -88,9 +125,129 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkGieng.setChecked(item.isGieng());
                     }
                 }
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("getDSDienThoai");
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
         }
     }
+
+    private void fillDSDienThoai() {
+        if (jsonDSDienThoai != null)
+            try {
+                ArrayList<CEntityParent> lstDienThoai = new ArrayList<>();
+                for (int k = 0; k < jsonDSDienThoai.length(); k++) {
+                    JSONObject jsonObject = jsonDSDienThoai.getJSONObject(k);
+                    CEntityParent entityParent = new CEntityParent();
+                    entityParent.setDanhBo(jsonObject.getString("DanhBo").replace("null", ""));
+                    entityParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
+                    entityParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
+                    entityParent.setSoChinh(Boolean.parseBoolean(jsonObject.getString("SoChinh").replace("null", "")));
+                    lstDienThoai.add(entityParent);
+                }
+                customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(this, lstDienThoai);
+                recyclerView.setHasFixedSize(true);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(customAdapterRecyclerViewDienThoai);
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+            }
+    }
+
+    public class MyAsyncTask extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        JSONObject jsonObject = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String result = "";
+                switch (strings[0]) {
+                    case "CapNhat":
+                        result = ws.update_GhiChu(CLocal.listDocSoView.get(STT).getDanhBo(), edtSoNha.getText().toString(), edtSoNha.getText().toString()
+                                , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()), CLocal.MaNV);
+                        break;
+                    case "CapNhatDT":
+                        result = ws.update_DienThoai(CLocal.listDocSoView.get(STT).getDanhBo(), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
+                                , String.valueOf(chkSoChinh.isChecked()), CLocal.MaNV);
+                        break;
+                    case "getDSDienThoai":
+                        result = ws.getDS_DienThoai(CLocal.listDocSoView.get(STT).getDanhBo());
+                        break;
+                }
+                if (result.equals("") == false)
+                    jsonObject = new JSONObject(result);
+                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                    switch (strings[0]) {
+                        case "CapNhat":
+                            CLocal.listDocSoView.get(STT).setSoNha(edtSoNha.getText().toString());
+                            CLocal.listDocSoView.get(STT).setTenDuong(edtTenDuong.getText().toString());
+                            CLocal.listDocSoView.get(STT).setViTri1(spnViTri1.getSelectedItem().toString());
+                            CLocal.listDocSoView.get(STT).setViTri2(spnViTri2.getSelectedItem().toString());
+                            CLocal.listDocSoView.get(STT).setGieng(chkGieng.isChecked());
+                            break;
+                        case "CapNhatDT":
+
+                            break;
+                        case "getDSDienThoai":
+                            publishProgress(new String[]{"getDSDienThoai", jsonObject.getString("message").replace("null", "")});
+                            break;
+                    }
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(STT));
+                    return "THÀNH CÔNG";
+                } else
+                    return "THẤT BẠI";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            if (values != null) {
+                switch (values[0]) {
+                    case "getDSDienThoai":
+                        try {
+                            jsonDSDienThoai = new JSONArray(values[1]);
+                            fillDSDienThoai();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            try {
+                if (jsonObject != null)
+                    CLocal.showPopupMessage(getApplicationContext(), s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+                else
+                    CLocal.showPopupMessage(getApplicationContext(), s, "center");
+            } catch (Exception e) {
+                CLocal.showPopupMessage(getApplicationContext(), e.getMessage(), "center");
+            }
+        }
+
+    }
+
 }

@@ -7,7 +7,7 @@ android {
 
     defaultConfig {
         applicationId "vn.com.capnuoctanhoa.docsoandroid"
-        minSdkVersion 16
+        minSdk 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"

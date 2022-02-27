@@ -5,7 +5,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
@@ -35,6 +37,7 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -215,6 +218,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (selectedCode != null && edtChiSo.getText().toString().equals("") == false && lstCapture.size() > 0) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
+                    ivIn.performClick();
                 } else {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
                 }
@@ -224,11 +228,16 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (selectedCode != null && edtChiSo.getText().toString().equals("") == false && lstCapture.size() > 0) {
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute();
+                if (CLocal.listDocSoView.get(STT).getCodeMoi().equals("") == false) {
+                    if (CLocal.serviceThermalPrinter != null) {
+                        try {
+                            CLocal.serviceThermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(STT));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
                 } else {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
                 }
             }
         });
@@ -369,6 +378,17 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     txtChiSoMoi.setText(item.getChiSoMoi());
                     txtCodeMoi.setText(item.getCodeMoi());
                     txtTieuThuMoi.setText(item.getTieuThuMoi());
+                    if (item.getLstCapture().size() > 0) {
+                        for (int i = 0; i < item.getLstCapture().size(); i++) {
+                            lstCapture.add(item.getLstCapture().get(i));
+                        }
+                        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
+                        recyclerView.setHasFixedSize(true);
+                        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                        recyclerView.setLayoutManager(layoutManager);
+                        recyclerView.setAdapter(customAdapterRecyclerViewImage);
+                    }
                 }
             }
         } catch (Exception ex) {
@@ -404,11 +424,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     }
                 }
                 String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.MaNV);
-                try {
+                if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                     CLocal.listDocSoView.get(STT).setCodeMoi(selectedCode.getCode());
                     CLocal.listDocSoView.get(STT).setChiSoMoi(edtChiSo.getText().toString());
@@ -420,13 +437,25 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(STT).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
-
+                    if (lstCapture.size() > 0) {
+                        for (int i = 0; i < lstCapture.size(); i++) {
+                            CLocal.listDocSoView.get(STT).getLstCapture().add(lstCapture.get(i));
+                        }
+                    }
+                    JSONArray jsonHoaDonTon = new JSONArray(jsonObjectC.getString("hoadonton"));
+                    for (int i = 0; i < jsonHoaDonTon.length(); i++) {
+                        JSONObject jsonhd = jsonHoaDonTon.getJSONObject(i);
+                        CEntityChild entityChild = new CEntityChild();
+                        entityChild.setKy(jsonhd.getString("KyHD"));
+                        entityChild.setTongCong(jsonhd.getString("TongCong"));
+                        CLocal.listDocSoView.get(STT).getLstHoaDon().add(entityChild);
+                    }
                     CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(STT));
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";
-            } catch (Exception ex) {
-                return "THẤT BẠI";
+            } catch (Exception e) {
+                return e.getMessage();
             }
         }
 
@@ -442,9 +471,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             try {
-                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+                if (jsonObject != null)
+                    CLocal.showPopupMessage(getApplicationContext(), s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+                else
+                    CLocal.showPopupMessage(getApplicationContext(), s , "center");
             } catch (JSONException e) {
-                e.printStackTrace();
+                CLocal.showPopupMessage(getApplicationContext(), e.getMessage(), "center");
             }
         }
 

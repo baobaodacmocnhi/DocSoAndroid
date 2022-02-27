@@ -7,6 +7,7 @@ import android.os.AsyncTask;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -44,6 +45,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             holder.txtDanhBo.setText(entityParent.getDanhBo());
             holder.txtDienThoai.setText(entityParent.getDienThoai());
             holder.txtNoiDung.setText(entityParent.getDienThoai() + " " + entityParent.getHoTen());
+            holder.chkSoChinh.setChecked(entityParent.isSoChinh());
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,6 +67,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
         TextView ID, txtDanhBo, txtDienThoai, txtNoiDung;
         ImageButton imageButton;
+        CheckBox chkSoChinh;
 
         public RecyclerViewHolder(View itemView) {
             super(itemView);
@@ -72,6 +75,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             txtDanhBo = (TextView) itemView.findViewById(R.id.txtDanhBo);
             txtDienThoai = (TextView) itemView.findViewById(R.id.txtDienThoai);
             txtNoiDung = (TextView) itemView.findViewById(R.id.txtNoiDung);
+            chkSoChinh=(CheckBox) itemView.findViewById(R.id.chkSoChinh);
             imageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
         }
     }

@@ -389,6 +389,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                             enParent.setNam(jsonObject.getString("Nam").replace("null", ""));
                             enParent.setKy(jsonObject.getString("Ky").replace("null", ""));
                             enParent.setDot(jsonObject.getString("Dot").replace("null", ""));
+                            enParent.setNgayThuTien(jsonObject.getString("NgayThuTien").replace("null", ""));
                             CLocal.listDocSo.add(enParent);
                         }
                     }

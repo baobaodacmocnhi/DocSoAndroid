@@ -63,4 +63,13 @@
         android:visibility="invisible"
         app:layout_constraintStart_toEndOf="@+id/imageView"
         app:layout_constraintTop_toTopOf="@+id/txtDanhBo" />
+
+    <CheckBox
+        android:id="@+id/chkSoChinh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:text="Số Chính"
+        app:layout_constraintEnd_toStartOf="@+id/imageButton"
+        app:layout_constraintTop_toTopOf="@+id/imageButton" />
 </androidx.constraintlayout.widget.ConstraintLayout>

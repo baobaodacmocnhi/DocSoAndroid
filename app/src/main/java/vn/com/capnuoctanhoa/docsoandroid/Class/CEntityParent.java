@@ -1,5 +1,7 @@
 package vn.com.capnuoctanhoa.docsoandroid.Class;
 
+import android.graphics.Bitmap;
+
 import java.util.ArrayList;
 
 public class CEntityParent {
@@ -49,6 +51,10 @@ public class CEntityParent {
     private String Nam;
     private String Ky;
     private String Dot;
+    private String NgayThuTien;
+    private boolean SoChinh;
+    private ArrayList<Bitmap> lstCapture;
+
 
     public CEntityParent() {
         ID = "";
@@ -97,6 +103,9 @@ public class CEntityParent {
         Nam = "";
         Ky = "";
         Dot = "";
+        NgayThuTien = "";
+        SoChinh = false;
+        lstCapture = new ArrayList<>();
     }
 
     public String getID() {
@@ -467,6 +476,30 @@ public class CEntityParent {
         Dot = dot;
     }
 
+    public ArrayList<Bitmap> getLstCapture() {
+        return lstCapture;
+    }
+
+    public void setLstCapture(ArrayList<Bitmap> lstCapture) {
+        this.lstCapture = lstCapture;
+    }
+
+    public String getNgayThuTien() {
+        return NgayThuTien;
+    }
+
+    public void setNgayThuTien(String ngayThuTien) {
+        NgayThuTien = ngayThuTien;
+    }
+
+    public boolean isSoChinh() {
+        return SoChinh;
+    }
+
+    public void setSoChinh(boolean soChinh) {
+        SoChinh = soChinh;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
@@ -514,6 +547,9 @@ public class CEntityParent {
         Nam = entityParent.getNam();
         Ky = entityParent.getKy();
         Dot = entityParent.getDot();
+        NgayThuTien = entityParent.getNgayThuTien();
+        SoChinh = entityParent.isSoChinh();
+        lstCapture = entityParent.getLstCapture();
     }
 
 

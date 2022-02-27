@@ -14,7 +14,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.434">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -25,7 +26,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="0dp"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -39,7 +39,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Vị Trí 2"
                 app:layout_constraintStart_toEndOf="@+id/spnViTri1"
@@ -50,8 +49,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView28"
                 app:layout_constraintTop_toBottomOf="@+id/edtTenDuong"
@@ -62,7 +59,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Tên Đường"
                 app:layout_constraintStart_toStartOf="parent"
@@ -73,7 +69,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
@@ -88,7 +83,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Vị Trí 1"
                 app:layout_constraintStart_toStartOf="parent"
@@ -99,7 +93,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:minHeight="48dp"
                 android:text="Giếng"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -111,22 +104,72 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView29"
                 app:layout_constraintTop_toTopOf="@+id/spnViTri1"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <Button
+                android:id="@+id/btnCapNhat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cập Nhật"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnViTri2" />
 
             <TextView
                 android:id="@+id/textView20"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginTop="16dp"
                 android:text="Số Nhà"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edtSoNha" />
+
+            <TextView
+                android:id="@+id/textView30"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginEnd="8dp"
+                android:text="Điện Thoại"
+                app:layout_constraintEnd_toStartOf="@+id/edtDienThoai"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edtDienThoai" />
+
+            <EditText
+                android:id="@+id/edtDienThoai"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="32dp"
+                android:autofillHints=""
+                android:ems="5"
+                android:inputType="phone"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toEndOf="@+id/textView30"
+                app:layout_constraintTop_toBottomOf="@+id/spnViTri1"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView31"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Họ Tên"
+                app:layout_constraintStart_toEndOf="@+id/edtDienThoai"
+                app:layout_constraintTop_toTopOf="@+id/edtHoTen" />
+
+            <Button
+                android:id="@+id/btnCapNhatDT"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cập Nhật"
+                app:layout_constraintEnd_toEndOf="parent"
+                tools:layout_editor_absoluteY="224dp" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
@@ -134,8 +177,32 @@
                 android:layout_height="100dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/spnViTri1"
+                app:layout_constraintTop_toBottomOf="@+id/chkSoChinh"
                 tools:layout_editor_absoluteX="0dp" />
+
+            <EditText
+                android:id="@+id/edtHoTen"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:ems="5"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toEndOf="@+id/textView31"
+                app:layout_constraintTop_toTopOf="@+id/edtDienThoai"
+                tools:ignore="SpeakableTextPresentCheck"
+                android:autofillHints="" />
+
+            <CheckBox
+                android:id="@+id/chkSoChinh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:minHeight="48dp"
+                android:text="Số Chính"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:layout_editor_absoluteY="224dp" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
 
