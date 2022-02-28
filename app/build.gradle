@@ -3,16 +3,28 @@ plugins {
 }
 
 android {
+    lintOptions {
+        checkReleaseBuilds false
+    }
+    signingConfigs {
+        release {
+
+            storeFile file('D:\\Projects\\DocSoAndroid\\docsoandroidkey.jks')
+            storePassword 'TanHoa@2022'
+            keyAlias 'release'
+            keyPassword 'TanHoa@2022'
+        }
+    }
     compileSdkVersion 30
 
     defaultConfig {
         applicationId "vn.com.capnuoctanhoa.docsoandroid"
-        minSdk 24
+        minSdkVersion 24
         targetSdkVersion 30
         versionCode 1
         versionName "1.0"
-
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
     }
 
     buildTypes {

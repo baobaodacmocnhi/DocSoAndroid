@@ -44,8 +44,9 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             final int ID = position;
             holder.txtDanhBo.setText(entityParent.getDanhBo());
             holder.txtDienThoai.setText(entityParent.getDienThoai());
-            holder.txtNoiDung.setText(entityParent.getDienThoai() + " " + entityParent.getHoTen());
+            holder.txtHoTen.setText(entityParent.getHoTen());
             holder.chkSoChinh.setChecked(entityParent.isSoChinh());
+            holder.txtGhiChu.setText(entityParent.getLyDo());
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -65,7 +66,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
 
 
     public class RecyclerViewHolder extends RecyclerView.ViewHolder {
-        TextView ID, txtDanhBo, txtDienThoai, txtNoiDung;
+        TextView ID, txtDanhBo, txtDienThoai, txtHoTen,txtGhiChu;
         ImageButton imageButton;
         CheckBox chkSoChinh;
 
@@ -74,8 +75,9 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             ID = (TextView) itemView.findViewById(R.id.ID);
             txtDanhBo = (TextView) itemView.findViewById(R.id.txtDanhBo);
             txtDienThoai = (TextView) itemView.findViewById(R.id.txtDienThoai);
-            txtNoiDung = (TextView) itemView.findViewById(R.id.txtNoiDung);
+            txtHoTen = (TextView) itemView.findViewById(R.id.txtHoTen);
             chkSoChinh=(CheckBox) itemView.findViewById(R.id.chkSoChinh);
+            txtGhiChu=(TextView) itemView.findViewById(R.id.txtGhiChu);
             imageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
         }
     }

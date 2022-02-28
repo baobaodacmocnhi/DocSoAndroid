@@ -6,17 +6,27 @@
     android:layout_height="wrap_content">
 
     <TextView
-        android:id="@+id/txtNoiDung"
+        android:id="@+id/txtDienThoai"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
-        android:text="NoiDung"
+        android:text="DienThoai"
         android:textSize="18sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/txtGhiChu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:text="GhiChu"
+        app:layout_constraintStart_toEndOf="@+id/txtHoTen"
+        app:layout_constraintTop_toTopOf="@+id/txtHoTen" />
 
     <ImageButton
         android:id="@+id/imageButton"
@@ -39,29 +49,29 @@
         android:text="DanhBo"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNoiDung" />
+        app:layout_constraintEnd_toEndOf="@+id/ID"
+        app:layout_constraintTop_toBottomOf="@+id/txtDienThoai" />
 
     <TextView
-        android:id="@+id/txtDienThoai"
+        android:id="@+id/txtHoTen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="DienThoai"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
+        android:text="HoTen"
         android:textStyle="bold"
-        android:visibility="invisible"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtNoiDung" />
+        app:layout_constraintTop_toBottomOf="@+id/txtDienThoai" />
 
     <TextView
         android:id="@+id/ID"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
         android:text="ID"
         android:textStyle="bold"
         android:visibility="invisible"
-        app:layout_constraintStart_toEndOf="@+id/imageView"
+        app:layout_constraintEnd_toStartOf="@+id/chkSoChinh"
         app:layout_constraintTop_toTopOf="@+id/txtDanhBo" />
 
     <CheckBox

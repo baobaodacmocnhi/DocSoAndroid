@@ -10,12 +10,10 @@
         android:id="@+id/scrollView2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/ivLuu"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.434">
+        app:layout_constraintTop_toTopOf="parent">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -24,12 +22,13 @@
             <EditText
                 android:id="@+id/edtSoNha"
                 android:layout_width="wrap_content"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:autofillHints=""
-                android:ems="10"
+                android:ems="8"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
+                app:layout_constraintEnd_toStartOf="@+id/chkGieng"
                 app:layout_constraintStart_toEndOf="@+id/textView20"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -93,6 +92,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginLeft="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginRight="8dp"
                 android:minHeight="48dp"
                 android:text="Giếng"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -169,12 +171,13 @@
                 android:layout_height="wrap_content"
                 android:text="Cập Nhật"
                 app:layout_constraintEnd_toEndOf="parent"
-                tools:layout_editor_absoluteY="224dp" />
+                app:layout_constraintTop_toTopOf="@+id/chkSoChinh" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/recyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
+                android:layout_marginBottom="8dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chkSoChinh"
@@ -185,13 +188,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:autofillHints=""
                 android:ems="5"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView31"
                 app:layout_constraintTop_toTopOf="@+id/edtDienThoai"
-                tools:ignore="SpeakableTextPresentCheck"
-                android:autofillHints="" />
+                tools:ignore="SpeakableTextPresentCheck" />
 
             <CheckBox
                 android:id="@+id/chkSoChinh"
@@ -201,19 +204,9 @@
                 android:minHeight="48dp"
                 android:text="Số Chính"
                 app:layout_constraintStart_toStartOf="parent"
-                tools:layout_editor_absoluteY="224dp" />
+                app:layout_constraintTop_toBottomOf="@+id/edtDienThoai" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
-
-    <ImageView
-        android:id="@+id/ivLuu"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
-        android:contentDescription="Lưu"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@mipmap/ic_save_foreground" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

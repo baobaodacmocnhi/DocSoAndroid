@@ -54,7 +54,15 @@ public class CEntityParent {
     private String NgayThuTien;
     private boolean SoChinh;
     private ArrayList<Bitmap> lstCapture;
+private String CuaHangThuHo;
 
+    public String getCuaHangThuHo() {
+        return CuaHangThuHo;
+    }
+
+    public void setCuaHangThuHo(String cuaHangThuHo) {
+        CuaHangThuHo = cuaHangThuHo;
+    }
 
     public CEntityParent() {
         ID = "";
@@ -106,6 +114,7 @@ public class CEntityParent {
         NgayThuTien = "";
         SoChinh = false;
         lstCapture = new ArrayList<>();
+        CuaHangThuHo="";
     }
 
     public String getID() {
@@ -550,6 +559,7 @@ public class CEntityParent {
         NgayThuTien = entityParent.getNgayThuTien();
         SoChinh = entityParent.isSoChinh();
         lstCapture = entityParent.getLstCapture();
+        CuaHangThuHo=entityParent.getCuaHangThuHo();
     }
 
 

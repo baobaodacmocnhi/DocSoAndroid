@@ -10,12 +10,18 @@
         android:id="@+id/edtIDMobile"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toStartOf="@+id/btnGetIDMobile"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/btnGetIDMobile" />
+        app:layout_constraintStart_toEndOf="@+id/textView32"
+        app:layout_constraintTop_toTopOf="@+id/btnGetIDMobile"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:autofillHints="" />
 
     <Button
         android:id="@+id/btnGetIDMobile"
@@ -63,6 +69,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/radGroupSync" />
 
+    <TextView
+        android:id="@+id/textView32"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginTop="16dp"
+        android:text="IDMobile"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/edtIDMobile" />
+
     <RadioGroup
         android:id="@+id/radGroupSync"
         android:layout_width="250dp"
@@ -77,7 +95,7 @@
         <RadioButton
             android:id="@+id/radTrucTiep"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:checked="true"
             android:text="Trực Tiếp" />
@@ -85,7 +103,7 @@
         <RadioButton
             android:id="@+id/radGianTiep"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Gián Tiếp"
             tools:visibility="visible" />
@@ -107,16 +125,19 @@
         android:id="@+id/edtMayInDaChon"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp"
         android:layout_marginStart="8dp"
+        android:layout_marginLeft="8dp"
         android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginRight="8dp"
         android:ems="10"
         android:inputType="textPersonName"
+        android:minHeight="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textView60"
-        app:layout_constraintTop_toBottomOf="@+id/btnGetThermal" />
+        app:layout_constraintTop_toBottomOf="@+id/btnGetThermal"
+        tools:ignore="SpeakableTextPresentCheck"
+        android:autofillHints="" />
 
     <TextView
         android:id="@+id/textView62"
@@ -137,24 +158,32 @@
         android:layout_marginStart="8dp"
         android:layout_marginLeft="8dp"
         android:layout_marginTop="16dp"
-        android:orientation="horizontal"
+        android:orientation="vertical"
         app:layout_constraintStart_toEndOf="@+id/textView62"
         app:layout_constraintTop_toBottomOf="@+id/lstView">
 
         <RadioButton
-            android:id="@+id/radESC"
+            android:id="@+id/radHoneywell31"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
             android:checked="true"
-            android:text="ESC" />
+            android:text="Honeywell 31" />
 
         <RadioButton
-            android:id="@+id/radEZ"
+            android:id="@+id/radHoneywell45"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="EZ" />
+            android:checked="false"
+            android:text="Honeywell 45" />
+
+        <RadioButton
+            android:id="@+id/radIntermec"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Intermec" />
 
     </RadioGroup>
 

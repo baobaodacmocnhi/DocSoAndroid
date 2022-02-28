@@ -88,7 +88,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
                     return;
                 }
-
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("CapNhat");
             }
         });
 
@@ -99,7 +100,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
                     return;
                 }
-
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("CapNhatDT");
             }
         });
 
@@ -125,8 +127,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkGieng.setChecked(item.isGieng());
                     }
                 }
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute("getDSDienThoai");
+                MyAsyncTaskDT myAsyncTaskDT = new MyAsyncTaskDT();
+                myAsyncTaskDT.execute("getDSDienThoai");
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
@@ -144,9 +146,10 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     entityParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
                     entityParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
                     entityParent.setSoChinh(Boolean.parseBoolean(jsonObject.getString("SoChinh").replace("null", "")));
+                    entityParent.setLyDo(jsonObject.getString("GhiChu").replace("null", ""));
                     lstDienThoai.add(entityParent);
                 }
-                customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(this, lstDienThoai);
+                customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);
                 recyclerView.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -164,7 +167,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(getApplicationContext());
+            progressDialog = new ProgressDialog(ActivityDocSo_GhiChu.this);
             progressDialog.setTitle("Thông Báo");
             progressDialog.setMessage("Đang xử lý...");
             progressDialog.setCanceledOnTouchOutside(false);
@@ -240,11 +243,85 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             }
             try {
                 if (jsonObject != null)
-                    CLocal.showPopupMessage(getApplicationContext(), s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
                 else
-                    CLocal.showPopupMessage(getApplicationContext(), s, "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
             } catch (Exception e) {
-                CLocal.showPopupMessage(getApplicationContext(), e.getMessage(), "center");
+                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, e.getMessage(), "center");
+            }
+        }
+
+    }
+
+    public class MyAsyncTaskDT extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        JSONObject jsonObject = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityDocSo_GhiChu.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String result = "";
+                switch (strings[0]) {
+                    case "getDSDienThoai":
+                        result = ws.getDS_DienThoai(CLocal.listDocSoView.get(STT).getDanhBo());
+                        break;
+                }
+                if (result.equals("") == false)
+                    jsonObject = new JSONObject(result);
+                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                    switch (strings[0]) {
+                        case "getDSDienThoai":
+                            publishProgress(new String[]{"getDSDienThoai", jsonObject.getString("message").replace("null", "")});
+                            break;
+                    }
+                    return "THÀNH CÔNG";
+                } else
+                    return "THẤT BẠI";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            if (values != null) {
+                switch (values[0]) {
+                    case "getDSDienThoai":
+                        try {
+                            jsonDSDienThoai = new JSONArray(values[1]);
+                            fillDSDienThoai();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                        break;
+                }
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            try {
+//                if (jsonObject != null)
+//                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+//                else
+//                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
+            } catch (Exception e) {
+                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, e.getMessage(), "center");
             }
         }
 

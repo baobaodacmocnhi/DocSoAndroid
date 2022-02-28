@@ -6,6 +6,7 @@ import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
@@ -28,6 +29,7 @@ import java.util.Vector;
 
 import androidx.annotation.Nullable;
 
+import androidx.annotation.RequiresApi;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
@@ -317,18 +319,19 @@ public class ServiceThermalPrinter extends Service {
     private static int toadoY = 0;
     private static StringBuilder stringBuilder;
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void printGhiChiSo(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
                 connected(mSocket);
             switch (CLocal.MethodPrinter) {
-                case "1":
+                case "Honeywell45":
                     printGhiChiSo_escpPrint(entityParent, 45);
                     break;
-                case "2":
+                case "Intermec":
                     printGhiChiSo_escpEasyPrint(entityParent);
                     break;
-                case "3":
+                case "Honeywell31":
                     printGhiChiSo_escpPrint(entityParent, 31);
                     break;
             }
@@ -337,6 +340,7 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void printGhiChiSo_escpPrint(CEntityParent entityParent, int charWidth) throws IOException {
         try {
             if (entityParent != null) {
@@ -523,17 +527,20 @@ public class ServiceThermalPrinter extends Service {
         }
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private int escpLength(String str) {
         if (str == null)
             return 0;
         return str.length() - (int) str.chars().filter(ch -> ch == 0x1B).count() * 3;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private String pad(String left, int rightInt, char pad, int space) {
         String right = String.valueOf(rightInt);
         return pad(left, right, pad, space);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     private String pad(String left, String right, char pad, int space) {
         if (left == null)
             left = "";
@@ -681,6 +688,7 @@ public class ServiceThermalPrinter extends Service {
 
     ///////////////////////////////////
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void printGhiChiSo_escpEasyPrint(CEntityParent entityParent) throws IOException {
         try {
             if (entityParent != null) {

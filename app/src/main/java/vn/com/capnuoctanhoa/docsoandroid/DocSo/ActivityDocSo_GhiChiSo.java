@@ -218,7 +218,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (selectedCode != null && edtChiSo.getText().toString().equals("") == false && lstCapture.size() > 0) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
-                    ivIn.performClick();
+
                 } else {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
                 }
@@ -423,7 +423,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            imgString += ";" + CLocal.convertBitmapToString(reizeImage);
                     }
                 }
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.MaNV);
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.May);
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
@@ -438,17 +438,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     if (lstCapture.size() > 0) {
+                        CLocal.listDocSoView.get(STT).getLstCapture().clear();
                         for (int i = 0; i < lstCapture.size(); i++) {
                             CLocal.listDocSoView.get(STT).getLstCapture().add(lstCapture.get(i));
                         }
                     }
-                    JSONArray jsonHoaDonTon = new JSONArray(jsonObjectC.getString("hoadonton"));
-                    for (int i = 0; i < jsonHoaDonTon.length(); i++) {
-                        JSONObject jsonhd = jsonHoaDonTon.getJSONObject(i);
-                        CEntityChild entityChild = new CEntityChild();
-                        entityChild.setKy(jsonhd.getString("KyHD"));
-                        entityChild.setTongCong(jsonhd.getString("TongCong"));
-                        CLocal.listDocSoView.get(STT).getLstHoaDon().add(entityChild);
+                    if(jsonObject.getString("hoadonton").replace("null", "").equals("")==false) {
+                        JSONArray jsonHoaDonTon = new JSONArray(jsonObject.getString("hoadonton").replace("null", ""));
+                        for (int i = 0; i < jsonHoaDonTon.length(); i++) {
+                            JSONObject jsonhd = jsonHoaDonTon.getJSONObject(i);
+                            CEntityChild entityChild = new CEntityChild();
+                            entityChild.setKy(jsonhd.getString("KyHD"));
+                            entityChild.setTongCong(jsonhd.getString("TongCong"));
+                            CLocal.listDocSoView.get(STT).getLstHoaDon().add(entityChild);
+                        }
                     }
                     CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(STT));
                     return "THÀNH CÔNG";
@@ -472,11 +475,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
             try {
                 if (jsonObject != null)
-                    CLocal.showPopupMessage(getApplicationContext(), s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
                 else
-                    CLocal.showPopupMessage(getApplicationContext(), s , "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s , "center");
+                ivIn.performClick();
             } catch (JSONException e) {
-                CLocal.showPopupMessage(getApplicationContext(), e.getMessage(), "center");
+                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
             }
         }
 
