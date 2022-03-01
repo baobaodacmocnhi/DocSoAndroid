@@ -383,6 +383,7 @@ public class ServiceThermalPrinter extends Service {
                             .append(CMD_ALIGN_RIGHT)
                             .append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
                             .append(CMD_ALIGN_LEFT)
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
                             .append("MLT: ").append(entityParent.getMLT()).append('\n')
                             .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
@@ -403,6 +404,7 @@ public class ServiceThermalPrinter extends Service {
                             .append("NV: ").append(CLocal.HoTen).append('\n')
                             .append("SĐT: ").append(CLocal.DienThoai).append('\n')
                             .append("Kỳ: ").append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
                             .append("MLT: ").append(entityParent.getMLT()).append('\n')
                             .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
@@ -734,6 +736,8 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Kỳ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 305, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
+                    stringBuilder.append(printLine("Từ ngày: "+entityParent.getTuNgay()+" Đến ngày: "+entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1))
                             .append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));
                     y = handlingYMoreThan450(y, 25);
@@ -799,6 +803,8 @@ public class ServiceThermalPrinter extends Service {
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Kỳ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 305, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
+                    y = handlingYMoreThan450(y, 25);
+                    stringBuilder.append(printLine("Từ ngày: "+entityParent.getTuNgay()+" Đến ngày: "+entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));

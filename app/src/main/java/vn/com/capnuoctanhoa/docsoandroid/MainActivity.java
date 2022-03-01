@@ -466,7 +466,7 @@ public class MainActivity extends AppCompatActivity {
             Intent intent;
             File file = new File(pathdownloaded);
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-                Uri apkUri = FileProvider.getUriForFile(MainActivity.this, "thutien_file_provider", file);
+                Uri apkUri = FileProvider.getUriForFile(MainActivity.this, "docso_file_provider", file);
                 intent = new Intent(Intent.ACTION_INSTALL_PACKAGE);
                 intent.setData(apkUri);
                 intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);

@@ -319,10 +319,10 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         }
                     }
                     break;
-                case "K":
+                case "F":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("K") == true) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().contains("F") == true) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }
@@ -355,9 +355,9 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             enViewParent.setID(String.valueOf(enParent.getID()));
 
             enViewParent.setRow1a(enParent.getMLT());
-            enViewParent.setRow1b("Code "+enParent.getCodeMoi());
+            enViewParent.setRow1b("Code " + enParent.getCodeMoi());
             enViewParent.setRow2a(enParent.getDanhBo());
-            enViewParent.setRow2b("CS "+enParent.getChiSoMoi());
+            enViewParent.setRow2b("CS " + enParent.getChiSoMoi());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
 

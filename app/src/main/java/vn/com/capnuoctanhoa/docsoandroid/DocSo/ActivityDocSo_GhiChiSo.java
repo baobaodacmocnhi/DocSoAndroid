@@ -143,7 +143,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (STT > 0) {
-                    STT--;
+                    initial();
+                    STT = STT - 1;
                     fillLayout(STT);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Đầu Danh Sách");
@@ -154,7 +155,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (STT < CLocal.listDocSoView.size() - 1) {
-                    STT++;
+                    initial();
+                    STT = STT + 1;
                     fillLayout(STT);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Cuối Danh Sách");
@@ -215,10 +217,28 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
                     return;
                 }
-                if (selectedCode != null && edtChiSo.getText().toString().equals("") == false && lstCapture.size() > 0) {
+                if (lstCapture.size() > 0 && selectedCode != null
+                        && (((CCode) selectedCode).getCode().contains("F1") == true
+                        ||((CCode) selectedCode).getCode().contains("F2") == true
+                        ||((CCode) selectedCode).getCode().contains("F3") == true
+                        ||((CCode) selectedCode).getCode().contains("F4") == true
+                        ||((CCode) selectedCode).getCode().contains("61") == true
+                        ||((CCode) selectedCode).getCode().contains("63") == true
+                        ||((CCode) selectedCode).getCode().contains("64") == true
+                        ||((CCode) selectedCode).getCode().contains("66") == true
+                        ||((CCode) selectedCode).getCode().contains("68") == true)
+                        || (((CCode) selectedCode).getCode().contains("F1") == false
+                        &&((CCode) selectedCode).getCode().contains("F2") == false
+                        &&((CCode) selectedCode).getCode().contains("F3") == false
+                        &&((CCode) selectedCode).getCode().contains("F4") == false
+                        &&((CCode) selectedCode).getCode().contains("61") == false
+                        &&((CCode) selectedCode).getCode().contains("63") == false
+                        &&((CCode) selectedCode).getCode().contains("64") == false
+                        &&((CCode) selectedCode).getCode().contains("66") == false
+                        &&((CCode) selectedCode).getCode().contains("68") == false
+                        && edtChiSo.getText().toString().equals("") == false)) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
-
                 } else {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
                 }
@@ -228,16 +248,16 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivIn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.listDocSoView.get(STT).getCodeMoi().equals("") == false) {
-                    if (CLocal.serviceThermalPrinter != null) {
-                        try {
+                try {
+                    if (CLocal.listDocSoView.get(STT).getCodeMoi().equals("") == false) {
+                        if (CLocal.serviceThermalPrinter != null) {
                             CLocal.serviceThermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(STT));
-                        } catch (IOException e) {
-                            e.printStackTrace();
                         }
+                    } else {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
                     }
-                } else {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
+                } catch (Exception ex) {
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
                 }
             }
         });
@@ -254,6 +274,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 startActivityForResult(intent, 1);
             }
         });
+    }
+
+    private  void initial()
+    {
+        lstCapture=new ArrayList<>();
+        selectedCode=null;
+        spnCode.setSelection(0);
+        edtChiSo.setText("");
+        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(customAdapterRecyclerViewImage);
     }
 
     @Override
@@ -292,7 +326,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
                     imgCapture = bitmap;
                 }
-
             } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
                 Uri uri = data.getData();
                 String strPath = CLocal.getPathFromUri(this, uri);
@@ -443,7 +476,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             CLocal.listDocSoView.get(STT).getLstCapture().add(lstCapture.get(i));
                         }
                     }
-                    if(jsonObject.getString("hoadonton").replace("null", "").equals("")==false) {
+                    if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
                         JSONArray jsonHoaDonTon = new JSONArray(jsonObject.getString("hoadonton").replace("null", ""));
                         for (int i = 0; i < jsonHoaDonTon.length(); i++) {
                             JSONObject jsonhd = jsonHoaDonTon.getJSONObject(i);
@@ -477,8 +510,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (jsonObject != null)
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
                 else
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s , "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
                 ivIn.performClick();
+                ivSau.performClick();
             } catch (JSONException e) {
                 CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
             }

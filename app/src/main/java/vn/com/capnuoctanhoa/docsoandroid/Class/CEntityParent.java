@@ -54,15 +54,10 @@ public class CEntityParent {
     private String NgayThuTien;
     private boolean SoChinh;
     private ArrayList<Bitmap> lstCapture;
-private String CuaHangThuHo;
+    private String CuaHangThuHo;
+    private String TuNgay;
+    private String DenNgay;
 
-    public String getCuaHangThuHo() {
-        return CuaHangThuHo;
-    }
-
-    public void setCuaHangThuHo(String cuaHangThuHo) {
-        CuaHangThuHo = cuaHangThuHo;
-    }
 
     public CEntityParent() {
         ID = "";
@@ -114,7 +109,8 @@ private String CuaHangThuHo;
         NgayThuTien = "";
         SoChinh = false;
         lstCapture = new ArrayList<>();
-        CuaHangThuHo="";
+        CuaHangThuHo = "";
+        TuNgay = DenNgay = "";
     }
 
     public String getID() {
@@ -509,6 +505,30 @@ private String CuaHangThuHo;
         SoChinh = soChinh;
     }
 
+    public String getTuNgay() {
+        return TuNgay;
+    }
+
+    public void setTuNgay(String tuNgay) {
+        TuNgay = tuNgay;
+    }
+
+    public String getDenNgay() {
+        return DenNgay;
+    }
+
+    public void setDenNgay(String denNgay) {
+        DenNgay = denNgay;
+    }
+
+    public String getCuaHangThuHo() {
+        return CuaHangThuHo;
+    }
+
+    public void setCuaHangThuHo(String cuaHangThuHo) {
+        CuaHangThuHo = cuaHangThuHo;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
@@ -559,7 +579,9 @@ private String CuaHangThuHo;
         NgayThuTien = entityParent.getNgayThuTien();
         SoChinh = entityParent.isSoChinh();
         lstCapture = entityParent.getLstCapture();
-        CuaHangThuHo=entityParent.getCuaHangThuHo();
+        CuaHangThuHo = entityParent.getCuaHangThuHo();
+        TuNgay = entityParent.getTuNgay();
+        DenNgay = entityParent.getDenNgay();
     }
 
 
