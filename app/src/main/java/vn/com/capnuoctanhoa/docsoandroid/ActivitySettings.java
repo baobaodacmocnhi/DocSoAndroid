@@ -91,8 +91,8 @@ public class ActivitySettings extends AppCompatActivity {
 
         if (CLocal.SyncTrucTiep == true)
             radTrucTiep.setChecked(true);
-        else
-            radGianTiep.setChecked(true);
+//        else
+//            radGianTiep.setChecked(true);
 
         switch (CLocal.MethodPrinter) {
             case "Intermec":

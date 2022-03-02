@@ -144,6 +144,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                             editor.putBoolean("ToTruong", Boolean.parseBoolean(jsonObject.getString("ToTruong")));
                             editor.putBoolean("Doi", Boolean.parseBoolean(jsonObject.getString("Doi")));
                             editor.putString("jsonDocSo", "");
+                            editor.putString("jsonDownDocSo", "");
                             editor.putString("jsonCode",ws.getDS_Code());
                             editor.putString("jsonViTriDHN",ws.getDS_ViTriDHN());
                             editor.putString("jsonNam", ws.getDS_Nam());

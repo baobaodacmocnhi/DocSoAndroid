@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -17,9 +18,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,13 +31,18 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewDienThoai;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDownDataDocSo extends AppCompatActivity {
@@ -42,9 +50,10 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
     private Spinner spnDot, spnTo, spnNhanVien, spnNam, spnKy;
     private ArrayList<CViewParent> lstOriginal, lstDisplayed;
     private LinearLayout layoutTo, layoutNhanVien;
-    private ConstraintLayout layoutMay;
     private ArrayList<String> spnID_To, spnName_To, spnID_NhanVien, spnName_NhanVien, spnName_Nam;
+    private RecyclerView recyclerView;
     private String selectedMaNV = "";
+    private CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,7 +69,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
         spnKy = (Spinner) findViewById(R.id.spnKy);
         layoutTo = (LinearLayout) findViewById(R.id.layoutTo);
         layoutNhanVien = (LinearLayout) findViewById(R.id.layoutNhanVien);
-        layoutMay = (ConstraintLayout) findViewById(R.id.layoutMay);
+        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         try {
             if (CLocal.jsonNam != null && CLocal.jsonNam.length() > 0) {
@@ -90,7 +99,6 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 
         if (CLocal.Doi == true) {
             layoutTo.setVisibility(View.VISIBLE);
-            layoutMay.setVisibility(View.VISIBLE);
             try {
                 if (CLocal.jsonTo != null && CLocal.jsonTo.length() > 0) {
                     spnID_To = new ArrayList<>();
@@ -113,7 +121,6 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
             layoutTo.setVisibility(View.GONE);
             if (CLocal.ToTruong == true) {
                 layoutNhanVien.setVisibility(View.VISIBLE);
-                layoutMay.setVisibility(View.VISIBLE);
                 try {
                     if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
                         spnID_NhanVien = new ArrayList<>();
@@ -299,6 +306,28 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
             }
         });
 
+        loadDownDocSo();
+    }
+
+    private void loadDownDocSo() {
+        if (CLocal.listDownDocSo != null && CLocal.listDownDocSo.size() > 0)
+            try {
+                ArrayList<CEntityParent> lstDienThoai = new ArrayList<>();
+                for (int k = 0; k < CLocal.listDownDocSo.size(); k++) {
+                    CEntityParent entityParent = new CEntityParent();
+                    entityParent.setDanhBo("");
+                    entityParent.setDienThoai(CLocal.listDownDocSo.get(k).getHoTen());
+                    lstDienThoai.add(entityParent);
+                }
+                customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDownDataDocSo.this, lstDienThoai);
+                recyclerView.setHasFixedSize(true);
+                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+                recyclerView.setLayoutManager(layoutManager);
+                recyclerView.setAdapter(customAdapterRecyclerViewDienThoai);
+            } catch (Exception ex) {
+                Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+            }
     }
 
     public class MyAsyncTask extends AsyncTask<Void, Void, String[]> {
@@ -390,7 +419,8 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                             enParent.setKy(jsonObject.getString("Ky").replace("null", ""));
                             enParent.setDot(jsonObject.getString("Dot").replace("null", ""));
                             enParent.setNgayThuTien(jsonObject.getString("NgayThuTien").replace("null", ""));
-                            enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
+                            if (jsonObject.has("CuaHangThuHo") == true)
+                                enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
                             enParent.setTuNgay(jsonObject.getString("TuNgay").replace("null", ""));
                             enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
                             CLocal.listDocSo.add(enParent);
@@ -398,6 +428,22 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                    boolean flagExists = false;
+                    if (CLocal.listDownDocSo == null)
+                        CLocal.listDownDocSo = new ArrayList<>();
+                    for (int i = 0; i < CLocal.listDownDocSo.size(); i++) {
+                        if (CLocal.listDownDocSo.get(i).getHoTen().equals(spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString()) == true) {
+                            CLocal.listDownDocSo.get(i).setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                            flagExists = true;
+                        }
+                    }
+                    if (flagExists == false) {
+                        CEntityParent entityParent = new CEntityParent();
+                        entityParent.setHoTen(spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString());
+                        entityParent.setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                        CLocal.listDownDocSo.add(entityParent);
+                    }
+                    editor.putString("jsonDownDocSo", new Gson().toJsonTree(CLocal.listDownDocSo).getAsJsonArray().toString());
                     editor.commit();
                 }
                 return new String[]{"true", ""};

@@ -138,10 +138,10 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         txtVersion.setText("V" + packageInfo.versionName);
-        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
-            MyAsyncTask myAsyncTask = new MyAsyncTask();
-            myAsyncTask.execute("Version");
-        }
+//        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+//            MyAsyncTask myAsyncTask = new MyAsyncTask();
+//            myAsyncTask.execute("Version");
+//        }
 
     }
 
@@ -152,8 +152,11 @@ public class MainActivity extends AppCompatActivity {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
 
+            if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("Version");
+            }
             CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
-
 //            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
 //                @Override
 //                public void onComplete(@NonNull Task<String> task) {
@@ -165,7 +168,12 @@ public class MainActivity extends AppCompatActivity {
 //                    }
 //                }
 //            });
-
+            if (CLocal.sharedPreferencesre.getString("jsonDownDocSo", "").equals("") == false) {
+                CLocal.listDownDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDownDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                }.getType());
+                if (CLocal.listDownDocSo.size() > 2000)
+                    CLocal.listDownDocSo = null;
+            }
             if (CLocal.sharedPreferencesre.getString("jsonDocSo", "").equals("") == false) {
                 CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
@@ -179,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
             }
 
-            CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "ESC");
+            CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
             CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
 
             btnAdmin.setVisibility(View.GONE);

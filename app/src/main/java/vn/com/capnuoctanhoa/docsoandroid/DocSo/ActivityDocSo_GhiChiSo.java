@@ -219,23 +219,23 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 }
                 if (lstCapture.size() > 0 && selectedCode != null
                         && (((CCode) selectedCode).getCode().contains("F1") == true
-                        ||((CCode) selectedCode).getCode().contains("F2") == true
-                        ||((CCode) selectedCode).getCode().contains("F3") == true
-                        ||((CCode) selectedCode).getCode().contains("F4") == true
-                        ||((CCode) selectedCode).getCode().contains("61") == true
-                        ||((CCode) selectedCode).getCode().contains("63") == true
-                        ||((CCode) selectedCode).getCode().contains("64") == true
-                        ||((CCode) selectedCode).getCode().contains("66") == true
-                        ||((CCode) selectedCode).getCode().contains("68") == true)
+                        || ((CCode) selectedCode).getCode().contains("F2") == true
+                        || ((CCode) selectedCode).getCode().contains("F3") == true
+                        || ((CCode) selectedCode).getCode().contains("F4") == true
+                        || ((CCode) selectedCode).getCode().contains("61") == true
+                        || ((CCode) selectedCode).getCode().contains("63") == true
+                        || ((CCode) selectedCode).getCode().contains("64") == true
+                        || ((CCode) selectedCode).getCode().contains("66") == true
+                        || ((CCode) selectedCode).getCode().contains("68") == true)
                         || (((CCode) selectedCode).getCode().contains("F1") == false
-                        &&((CCode) selectedCode).getCode().contains("F2") == false
-                        &&((CCode) selectedCode).getCode().contains("F3") == false
-                        &&((CCode) selectedCode).getCode().contains("F4") == false
-                        &&((CCode) selectedCode).getCode().contains("61") == false
-                        &&((CCode) selectedCode).getCode().contains("63") == false
-                        &&((CCode) selectedCode).getCode().contains("64") == false
-                        &&((CCode) selectedCode).getCode().contains("66") == false
-                        &&((CCode) selectedCode).getCode().contains("68") == false
+                        && ((CCode) selectedCode).getCode().contains("F2") == false
+                        && ((CCode) selectedCode).getCode().contains("F3") == false
+                        && ((CCode) selectedCode).getCode().contains("F4") == false
+                        && ((CCode) selectedCode).getCode().contains("61") == false
+                        && ((CCode) selectedCode).getCode().contains("63") == false
+                        && ((CCode) selectedCode).getCode().contains("64") == false
+                        && ((CCode) selectedCode).getCode().contains("66") == false
+                        && ((CCode) selectedCode).getCode().contains("68") == false
                         && edtChiSo.getText().toString().equals("") == false)) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
@@ -269,30 +269,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
                     return;
                 }
-                Intent intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChu.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_GhiChu.class);
                 intent.putExtra("STT", String.valueOf(STT));
                 startActivityForResult(intent, 1);
             }
         });
-    }
 
-    private  void initial()
-    {
-        lstCapture=new ArrayList<>();
-        selectedCode=null;
-        spnCode.setSelection(0);
-        edtChiSo.setText("");
-        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(customAdapterRecyclerViewImage);
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         try {
             STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
@@ -301,6 +283,24 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
+    }
+
+    private void initial() {
+        lstCapture = new ArrayList<>();
+        lstCapture.clear();
+        spnCode.setSelection(0);
+        selectedCode = (CCode) spnCode.getItemAtPosition(0);
+        edtChiSo.setText("");
+        loadRecyclerViewImage();
+    }
+
+    private void loadRecyclerViewImage() {
+        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
+        recyclerView.setHasFixedSize(true);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(customAdapterRecyclerViewImage);
     }
 
     @Override
@@ -335,12 +335,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
             if (imgCapture != null) {
                 lstCapture.add(imgCapture);
-                customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
-                recyclerView.setHasFixedSize(true);
-                LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                recyclerView.setLayoutManager(layoutManager);
-                recyclerView.setAdapter(customAdapterRecyclerViewImage);
+                loadRecyclerViewImage();
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
@@ -415,17 +410,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         for (int i = 0; i < item.getLstCapture().size(); i++) {
                             lstCapture.add(item.getLstCapture().get(i));
                         }
-                        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
-                        recyclerView.setHasFixedSize(true);
-                        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-                        recyclerView.setLayoutManager(layoutManager);
-                        recyclerView.setAdapter(customAdapterRecyclerViewImage);
+                        loadRecyclerViewImage();
                     }
                 }
             }
         } catch (Exception ex) {
-
+            CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage(), "center");
         }
     }
 
@@ -456,7 +446,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            imgString += ";" + CLocal.convertBitmapToString(reizeImage);
                     }
                 }
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.May);
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.May, CLocal.listDocSoView.get(STT).getTBTT());
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
@@ -507,17 +497,33 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 progressDialog.dismiss();
             }
             try {
-                if (jsonObject != null)
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
-                else
+                if (jsonObject != null) {
+                    String error = "", alert = "";
+                    if (jsonObject.getString("error").replace("null", "").equals("") == false)
+                        error = "\r\n" + jsonObject.getString("error").replace("null", "");
+                    if (jsonObject.getString("alert").replace("null", "").equals("") == false)
+                        alert = "\r\n" + jsonObject.getString("alert").replace("null", "");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert
+                            + error, "center");
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                        ivIn.performClick();
+                        ivSau.performClick();
+                    }
+                } else
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
-                ivIn.performClick();
-                ivSau.performClick();
             } catch (JSONException e) {
                 CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
             }
         }
 
+    }
+
+    public static String convertStandardJSONString(String data_json) {
+        data_json = data_json.replaceAll("\\\\r\\\\n", "");
+        data_json = data_json.replace("\"{", "{");
+        data_json = data_json.replace("}\",", "},");
+        data_json = data_json.replace("}\"", "}");
+        return data_json;
     }
 
 }

@@ -105,12 +105,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             }
         });
 
-
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
         try {
             STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (STT > -1) {
@@ -133,6 +127,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
         }
+
     }
 
     private void fillDSDienThoai() {

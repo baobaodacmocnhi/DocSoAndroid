@@ -86,7 +86,7 @@ public class CLocal {
     //Android 8.0 - 8.1 	Oreo 	21/8/2017 (phát hành lần đầu)
 
     public static SharedPreferences sharedPreferencesre;
-    public static String Path = "/data/data/vn.com.capnuoctanhoa.thutienandroid/files";
+    public static String Path = "/data/data/vn.com.capnuoctanhoa.docsoandroid/files";
     public static String pathRoot = Environment.getExternalStorageDirectory() + "/TanHoa/";
     public static String pathFile = pathRoot + "/File/";
     public static String pathPicture = pathRoot + "/Picture/";
@@ -96,7 +96,7 @@ public class CLocal {
     public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
-    public static ArrayList<CEntityParent> listDocSo, listDocSoView, listCode;
+    public static ArrayList<CEntityParent> listDocSo, listDocSoView, listDownDocSo;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
 
@@ -128,8 +128,8 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode =jsonViTriDHN= null;
-        listDocSo = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = null;
+        listDocSo = listDocSoView = listDownDocSo = null;
     }
 
     public static String creatPathFile(Activity activity, String path, String filename, String filetype) {
@@ -147,7 +147,7 @@ public class CLocal {
         } else {
             // từ android 5.0 trở lên ta có thể sử dụng Uri.fromFile() và FileProvider.getUriForFile() để trả về uri file sau khi chụp.
             // Nhưng bắt buộc từ Android 7.0 trở lên ta phải sử dụng FileProvider.getUriForFile() để trả về uri cho file đó.
-            FileProvider.getUriForFile(activity, "thutien_file_provider", photoFile);
+            FileProvider.getUriForFile(activity, "docso_file_provider", photoFile);
         }
         return photoFile.getAbsolutePath();
     }
