@@ -62,8 +62,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Đồng Bộ Dữ Liệu"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -106,16 +105,15 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:text="Gián Tiếp"
-            tools:visibility="invisible" />
+            android:visibility="invisible" />
     </RadioGroup>
 
     <TextView
         android:id="@+id/textView60"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Máy In Đã Chọn"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -144,8 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginLeft="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="16dp"
         android:text="Ngôn Ngữ Máy In"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
