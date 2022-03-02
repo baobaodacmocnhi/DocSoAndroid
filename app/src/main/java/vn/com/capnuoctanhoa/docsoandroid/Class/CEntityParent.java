@@ -13,14 +13,9 @@ public class CEntityParent {
     private String SoNha;
     private String TenDuong;
     private String ModifyDate;
-    private String TinhTrang;
     private String Hieu;
     private String Co;
     private String SoThan;
-    private String ChiMatSo;
-    private String ChiKhoaGoc;
-    private String ViTri;
-    private String LyDo;
     private ArrayList<CEntityChild> lstHoaDon;
     private String CreateDate;
     private String GiaBieu;
@@ -53,7 +48,7 @@ public class CEntityParent {
     private String Dot;
     private String NgayThuTien;
     private boolean SoChinh;
-    private ArrayList<Bitmap> lstCapture;
+    private ArrayList<String> lstCaptureString;
     private String CuaHangThuHo;
     private String TuNgay;
     private String DenNgay;
@@ -68,14 +63,9 @@ public class CEntityParent {
         TenDuong = "";
         DiaChi = "";
         ModifyDate = "";
-        TinhTrang = "";
         Hieu = "";
         Co = "";
         SoThan = "";
-        ChiMatSo = "";
-        ChiKhoaGoc = "";
-        ViTri = "";
-        LyDo = "";
         lstHoaDon = new ArrayList<CEntityChild>();
         CreateDate = "";
         GiaBieu = "";
@@ -108,7 +98,7 @@ public class CEntityParent {
         Dot = "";
         NgayThuTien = "";
         SoChinh = false;
-        lstCapture = new ArrayList<>();
+        lstCaptureString = new ArrayList<>();
         CuaHangThuHo = "";
         TuNgay = DenNgay = "";
     }
@@ -177,14 +167,6 @@ public class CEntityParent {
         ModifyDate = modifyDate;
     }
 
-    public String getTinhTrang() {
-        return TinhTrang;
-    }
-
-    public void setTinhTrang(String tinhTrang) {
-        TinhTrang = tinhTrang;
-    }
-
     public String getHieu() {
         return Hieu;
     }
@@ -207,38 +189,6 @@ public class CEntityParent {
 
     public void setSoThan(String soThan) {
         SoThan = soThan;
-    }
-
-    public String getChiMatSo() {
-        return ChiMatSo;
-    }
-
-    public void setChiMatSo(String chiMatSo) {
-        ChiMatSo = chiMatSo;
-    }
-
-    public String getChiKhoaGoc() {
-        return ChiKhoaGoc;
-    }
-
-    public void setChiKhoaGoc(String chiKhoaGoc) {
-        ChiKhoaGoc = chiKhoaGoc;
-    }
-
-    public String getViTri() {
-        return ViTri;
-    }
-
-    public void setViTri(String viTri) {
-        ViTri = viTri;
-    }
-
-    public String getLyDo() {
-        return LyDo;
-    }
-
-    public void setLyDo(String lyDo) {
-        LyDo = lyDo;
     }
 
     public ArrayList<CEntityChild> getLstHoaDon() {
@@ -481,12 +431,12 @@ public class CEntityParent {
         Dot = dot;
     }
 
-    public ArrayList<Bitmap> getLstCapture() {
-        return lstCapture;
+    public ArrayList<String> getLstCaptureString() {
+        return lstCaptureString;
     }
 
-    public void setLstCapture(ArrayList<Bitmap> lstCapture) {
-        this.lstCapture = lstCapture;
+    public void setLstCaptureString(ArrayList<String> lstCaptureString) {
+        this.lstCaptureString = lstCaptureString;
     }
 
     public String getNgayThuTien() {
@@ -538,14 +488,9 @@ public class CEntityParent {
         SoNha = entityParent.getSoNha();
         TenDuong = entityParent.getTenDuong();
         ModifyDate = entityParent.getModifyDate();
-        TinhTrang = entityParent.getTinhTrang();
         Hieu = entityParent.getHieu();
         Co = entityParent.getCo();
         SoThan = entityParent.getSoThan();
-        ChiMatSo = entityParent.getChiMatSo();
-        ChiKhoaGoc = entityParent.getChiKhoaGoc();
-        ViTri = entityParent.getViTri();
-        LyDo = entityParent.getLyDo();
         lstHoaDon = entityParent.getLstHoaDon();
         CreateDate = entityParent.getCreateDate();
         GiaBieu = entityParent.getGiaBieu();
@@ -578,7 +523,7 @@ public class CEntityParent {
         Dot = entityParent.getDot();
         NgayThuTien = entityParent.getNgayThuTien();
         SoChinh = entityParent.isSoChinh();
-        lstCapture = entityParent.getLstCapture();
+        lstCaptureString = entityParent.getLstCaptureString();
         CuaHangThuHo = entityParent.getCuaHangThuHo();
         TuNgay = entityParent.getTuNgay();
         DenNgay = entityParent.getDenNgay();

@@ -63,7 +63,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             if (DanhBo.length() != 11)
                 holder.chkSoChinh.setVisibility(View.INVISIBLE);
             holder.chkSoChinh.setChecked(entityParent.isSoChinh());
-            holder.txtGhiChu.setText(entityParent.getLyDo());
+            holder.txtGhiChu.setText(entityParent.getDiaChi());
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

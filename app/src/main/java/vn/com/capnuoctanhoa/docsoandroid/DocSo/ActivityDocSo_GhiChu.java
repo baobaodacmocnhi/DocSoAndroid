@@ -141,7 +141,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     entityParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
                     entityParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
                     entityParent.setSoChinh(Boolean.parseBoolean(jsonObject.getString("SoChinh").replace("null", "")));
-                    entityParent.setLyDo(jsonObject.getString("GhiChu").replace("null", ""));
+                    entityParent.setDiaChi(jsonObject.getString("GhiChu").replace("null", ""));
                     lstDienThoai.add(entityParent);
                 }
                 customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);

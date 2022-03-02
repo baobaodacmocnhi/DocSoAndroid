@@ -92,13 +92,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
 
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="number"
                 app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/edtMaDN"
+                app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -336,11 +335,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:autofillHints=""
                 android:ems="2"
                 android:gravity="center_horizontal"
                 android:inputType="number"
+                android:minWidth="48dp"
                 android:minHeight="48dp"
                 android:textColor="@color/colorPrimaryDark"
                 android:textStyle="bold"
@@ -391,11 +390,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:autofillHints=""
                 android:ems="2"
                 android:gravity="center_horizontal"
                 android:inputType="number"
+                android:minWidth="48dp"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
                 app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
@@ -417,11 +416,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:autofillHints=""
                 android:ems="2"
                 android:gravity="center_horizontal"
                 android:inputType="number"
+                android:minWidth="48dp"
                 android:minHeight="48dp"
                 android:textColor="@color/colorDanhBo"
                 android:textStyle="bold"
@@ -688,10 +687,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
-                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
                 android:minHeight="48dp"
@@ -717,14 +713,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:autofillHints=""
-                android:ems="6"
+                android:ems="4"
                 android:inputType="number"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/ibtnChupHinh"
                 app:layout_constraintStart_toEndOf="@+id/textView18"
                 app:layout_constraintTop_toTopOf="@+id/spnCode"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -734,7 +728,7 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toStartOf="@+id/ibtnChupHinh"
+                app:layout_constraintEnd_toStartOf="@+id/btnChonHinh"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spnCode" />
 
@@ -744,8 +738,17 @@
                 android:layout_height="wrap_content"
                 android:src="@android:drawable/ic_menu_camera"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/recyclerView"
+                app:layout_constraintTop_toTopOf="@+id/spnCode"
                 tools:ignore="SpeakableTextPresentCheck,ImageContrastCheck" />
+
+            <Button
+                android:id="@+id/btnChonHinh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Chọn hình"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/recyclerView" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

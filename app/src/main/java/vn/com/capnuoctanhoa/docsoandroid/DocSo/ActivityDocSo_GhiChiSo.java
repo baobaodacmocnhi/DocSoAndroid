@@ -31,6 +31,7 @@ import android.provider.MediaStore;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -61,6 +62,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private ArrayList<Bitmap> lstCapture;
     private RecyclerView recyclerView;
     private ImageButton ibtnChupHinh;
+    private Button btnChonHinh;
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission cMarshMallowPermission;
     private CWebservice ws;
@@ -106,6 +108,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivIn = (ImageView) findViewById(R.id.ivIn);
         ivLuu = (ImageView) findViewById(R.id.ivLuu);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
+        btnChonHinh = (Button) findViewById(R.id.btnChonHinh);
         lstCapture = new ArrayList<Bitmap>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
@@ -143,8 +146,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (STT > 0) {
-                    initial();
-                    STT = STT - 1;
+                    STT--;
                     fillLayout(STT);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Đầu Danh Sách");
@@ -155,8 +157,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (STT < CLocal.listDocSoView.size() - 1) {
-                    initial();
-                    STT = STT + 1;
+                    STT++;
                     fillLayout(STT);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Cuối Danh Sách");
@@ -174,39 +175,70 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         return;
                 }
                 imgCapture = null;
-                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_GhiChiSo.this);
-                builder.setTitle("Thông Báo");
-                builder.setMessage("Chọn lựa hành động");
-                builder.setCancelable(false);
-                builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        Uri imgUri = createImageUri();
-                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                        if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
-                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
-                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                            startActivityForResult(intent, 1);
-                        }
+                Uri imgUri = createImageUri();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    startActivityForResult(intent, 1);
+                }
+//                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_GhiChiSo.this);
+//                builder.setTitle("Thông Báo");
+//                builder.setMessage("Chọn lựa hành động");
+//                builder.setCancelable(false);
+//                builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        Uri imgUri = createImageUri();
+//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//                        if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
+//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
+//                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+//                            startActivityForResult(intent, 1);
+//                        }
+//                    }
+//                });
+//                builder.setNegativeButton("Chọn từ thư viện", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialogInterface, int i) {
+//                        if (Build.VERSION.SDK_INT <= 19) {
+//                            Intent intent = new Intent();
+//                            intent.setType("image/*");
+//                            intent.setAction(Intent.ACTION_GET_CONTENT);
+//                            intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                            startActivityForResult(intent, 2);
+//                        } else if (Build.VERSION.SDK_INT > 19) {
+//                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                            startActivityForResult(intent, 2);
+//                        }
+//                    }
+//                });
+//                AlertDialog alertDialog = builder.create();
+//                alertDialog.show();
+            }
+        });
+
+        btnChonHinh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                        cMarshMallowPermission.requestPermissionForExternalStorage();
                     }
-                });
-                builder.setNegativeButton("Chọn từ thư viện", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (Build.VERSION.SDK_INT <= 19) {
-                            Intent intent = new Intent();
-                            intent.setType("image/*");
-                            intent.setAction(Intent.ACTION_GET_CONTENT);
-                            intent.addCategory(Intent.CATEGORY_OPENABLE);
-                            startActivityForResult(intent, 2);
-                        } else if (Build.VERSION.SDK_INT > 19) {
-                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                            startActivityForResult(intent, 2);
-                        }
-                    }
-                });
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
+                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false)
+                        return;
+                }
+                imgCapture = null;
+                if (Build.VERSION.SDK_INT <= 19) {
+                    Intent intent = new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+                    startActivityForResult(intent, 2);
+                } else if (Build.VERSION.SDK_INT > 19) {
+                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                    startActivityForResult(intent, 2);
+                }
             }
         });
 
@@ -239,6 +271,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         && edtChiSo.getText().toString().equals("") == false)) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
+                    ivIn.performClick();
                 } else {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
                 }
@@ -326,6 +359,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
                     imgCapture = bitmap;
                 }
+
             } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
                 Uri uri = data.getData();
                 String strPath = CLocal.getPathFromUri(this, uri);
@@ -406,9 +440,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     txtChiSoMoi.setText(item.getChiSoMoi());
                     txtCodeMoi.setText(item.getCodeMoi());
                     txtTieuThuMoi.setText(item.getTieuThuMoi());
-                    if (item.getLstCapture().size() > 0) {
-                        for (int i = 0; i < item.getLstCapture().size(); i++) {
-                            lstCapture.add(item.getLstCapture().get(i));
+                    if (item.getLstCaptureString().size() > 0) {
+                        for (int i = 0; i < item.getLstCaptureString().size(); i++) {
+                            lstCapture.add(CLocal.StringToBitmap(item.getLstCaptureString().get(i)));
                         }
                         loadRecyclerViewImage();
                     }
@@ -446,7 +480,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            imgString += ";" + CLocal.convertBitmapToString(reizeImage);
                     }
                 }
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.May, CLocal.listDocSoView.get(STT).getTBTT());
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.MaNV,CLocal.listDocSoView.get(STT).getTBTT());
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
@@ -461,9 +495,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     if (lstCapture.size() > 0) {
-                        CLocal.listDocSoView.get(STT).getLstCapture().clear();
+                        CLocal.listDocSoView.get(STT).getLstCaptureString().clear();
                         for (int i = 0; i < lstCapture.size(); i++) {
-                            CLocal.listDocSoView.get(STT).getLstCapture().add(lstCapture.get(i));
+                            CLocal.listDocSoView.get(STT).getLstCaptureString().add(CLocal.BitmapToString(lstCapture.get(i)));
                         }
                     }
                     if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
