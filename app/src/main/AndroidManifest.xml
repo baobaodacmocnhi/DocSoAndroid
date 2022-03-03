@@ -89,6 +89,9 @@
             android:name=".ActivityDangNhap"
             android:label="Đăng Nhập" />
         <activity
+            android:name=".ActivityAdmin"
+            android:label="Admin" />
+        <activity
             android:name=".ActivitySettings"
             android:label="Cài Đặt"
             android:windowSoftInputMode="stateHidden" />

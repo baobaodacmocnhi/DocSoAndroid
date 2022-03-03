@@ -245,7 +245,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, e.getMessage(), "center");
             }
         }
-
     }
 
     public class MyAsyncTaskDT extends AsyncTask<String, String, String> {

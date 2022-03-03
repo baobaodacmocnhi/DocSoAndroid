@@ -71,7 +71,9 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             if (remoteMessage.getData().get("Action").equals("DangXuat")) {
                 CLocal.initialCLocal();
                 intent = new Intent(this, ActivityDangNhap.class);
-            } else if (remoteMessage.getData().get("Action").equals("HanhThu") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+            } else
+                if (remoteMessage.getData().get("Action").equals("DocSo") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+
             } else {
                 intent = new Intent(this, MainActivity.class);
             }
@@ -96,15 +98,15 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         NotificationCompat.Builder notificationBuilder = null;
 
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-            NotificationChannel mChannel = notificationManager.getNotificationChannel("ThuTienNotification_ID");
+            NotificationChannel mChannel = notificationManager.getNotificationChannel("DocSoNotification_ID");
             if (mChannel == null) {
-                mChannel = new NotificationChannel("ThuTienNotification_ID", "ThuTienNotification_Name", NotificationManager.IMPORTANCE_HIGH);
+                mChannel = new NotificationChannel("DocSoNotification_ID", "ThuTienNotification_Name", NotificationManager.IMPORTANCE_HIGH);
                 mChannel.setDescription("ThuTienNotification_Des");
                 mChannel.enableVibration(true);
                 mChannel.setVibrationPattern(new long[]{0, 1000});
                 notificationManager.createNotificationChannel(mChannel);
             }
-            notificationBuilder = new NotificationCompat.Builder(this, "ThuTienNotification_ID");
+            notificationBuilder = new NotificationCompat.Builder(this, "DocSoNotification_ID");
 
             notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
                     .setContentTitle(remoteMessage.getData().get("Title"))
@@ -114,7 +116,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{0, 1000})
-//                    .setGroup("vn.com.capnuoctanhoa.thutienandroid")
+//                    .setGroup("vn.com.capnuoctanhoa.docsoandroid")
 //                    .setGroupSummary(true)
                     .setContentIntent(pendingIntent);
         } else {
@@ -127,7 +129,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                     .setAutoCancel(true)
                     .setSound(defaultSoundUri)
                     .setVibrate(new long[]{0, 1000})
-//                    .setGroup("vn.com.capnuoctanhoa.thutienandroid")
+//                    .setGroup("vn.com.capnuoctanhoa.docsoandroid")
 //                    .setGroupSummary(true)
                     .setContentIntent(pendingIntent);
         }

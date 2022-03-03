@@ -78,20 +78,6 @@ public class MainActivity extends AppCompatActivity {
         if (cMarshMallowPermission.checkAllPermissionForAPP()) {
 
         }
-
-//        File folder = new File(CLocal.pathRoot);
-//        if (!folder.exists()) {
-//            folder.mkdirs();
-//        }
-//        folder = new File(CLocal.pathPicture);
-//        if (!folder.exists()) {
-//            folder.mkdirs();
-//        }
-//        folder = new File(CLocal.pathFile);
-//        if (!folder.exists()) {
-//            folder.mkdirs();
-//        }
-
         CLocal.sharedPreferencesre = getSharedPreferences(CLocal.fileName_SharedPreferences, MODE_PRIVATE);
         if (CLocal.checkGPSAvaible(MainActivity.this) == false)
             CLocal.openGPSSettings(MainActivity.this);
@@ -111,13 +97,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityDangNhap.class);
                 startActivity(intent);
-//                FirebaseInstanceId.getInstance().getInstanceId().addOnSuccessListener(new OnSuccessListener<InstanceIdResult>() {
-//                    @Override
-//                    public void onSuccess(InstanceIdResult instanceIdResult) {
-//                        String deviceToken = instanceIdResult.getToken();
-//                        CLocal.showPopupMessage1(MainActivity.this,deviceToken);
-//                    }
-//                });
             }
         });
 
@@ -138,11 +117,6 @@ public class MainActivity extends AppCompatActivity {
             ex.printStackTrace();
         }
         txtVersion.setText("V" + packageInfo.versionName);
-//        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
-//            MyAsyncTask myAsyncTask = new MyAsyncTask();
-//            myAsyncTask.execute("Version");
-//        }
-
     }
 
     @Override
@@ -151,23 +125,22 @@ public class MainActivity extends AppCompatActivity {
         try {
             Intent intent = new Intent(this, ServiceAppKilled.class);
             startService(intent);
-
+            CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
+            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                @Override
+                public void onComplete(@NonNull Task<String> task) {
+                    // Get new FCM registration token
+                    String deviceToken = task.getResult();
+                    if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
+                        ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
+                        serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
+                    }
+                }
+            });
             if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                 myAsyncTask.execute("Version");
             }
-            CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
-//            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-//                @Override
-//                public void onComplete(@NonNull Task<String> task) {
-//                    // Get new FCM registration token
-//                    String deviceToken = task.getResult();
-//                    if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
-//                        ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
-//                        serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
-//                    }
-//                }
-//            });
             if (CLocal.sharedPreferencesre.getString("jsonDownDocSo", "").equals("") == false) {
                 CLocal.listDownDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDownDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                 }.getType());
@@ -204,7 +177,6 @@ public class MainActivity extends AppCompatActivity {
                     MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
                     myAsyncTask_dangXuat.execute("DangXuat");
                 }
-
                 CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                 CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                 CLocal.May = CLocal.sharedPreferencesre.getString("May", "");
@@ -243,7 +215,6 @@ public class MainActivity extends AppCompatActivity {
                     startService(intent2);
                     bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
                 }
-
         } catch (Exception ex) {
             CLocal.showToastMessage(MainActivity.this, ex.getMessage());
         }

@@ -728,8 +728,9 @@
                 android:layout_width="0dp"
                 android:layout_height="100dp"
                 android:orientation="horizontal"
-                app:layout_constraintEnd_toStartOf="@+id/btnChonHinh"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/edtChiSo"
+                app:layout_constraintStart_toEndOf="@+id/btnChonHinh"
                 app:layout_constraintTop_toBottomOf="@+id/spnCode" />
 
             <ImageButton
@@ -745,10 +746,9 @@
                 android:id="@+id/btnChonHinh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:text="Chọn hình"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/recyclerView" />
+                app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
+                app:layout_constraintStart_toStartOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>
