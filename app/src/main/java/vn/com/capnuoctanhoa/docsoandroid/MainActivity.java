@@ -159,10 +159,8 @@ public class MainActivity extends AppCompatActivity {
             if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
                 CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
             }
-
             CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
             CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
-
             btnAdmin.setVisibility(View.GONE);
             if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                 //so sánh logout sau 7 ngày

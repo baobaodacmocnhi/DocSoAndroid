@@ -122,7 +122,7 @@ public class CLocal {
         editor.putBoolean("Login", false);
         editor.putLong("LoginDate", 0L);
         editor.putString("ThermalPrinter", "");
-        editor.putString("MethodPrinter", "ESC");
+        editor.putString("MethodPrinter", "Intermec");
         editor.putBoolean("SyncTrucTiep", true);
         editor.commit();
         ThermalPrinter = "";

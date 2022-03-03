@@ -250,7 +250,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     return;
                 }
                 if (lstCapture.size() > 0 && selectedCode != null
-                        && (((CCode) selectedCode).getCode().contains("F1") == true
+                        && ((((CCode) selectedCode).getCode().contains("F1") == true
                         || ((CCode) selectedCode).getCode().contains("F2") == true
                         || ((CCode) selectedCode).getCode().contains("F3") == true
                         || ((CCode) selectedCode).getCode().contains("F4") == true
@@ -268,10 +268,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         && ((CCode) selectedCode).getCode().contains("64") == false
                         && ((CCode) selectedCode).getCode().contains("66") == false
                         && ((CCode) selectedCode).getCode().contains("68") == false
-                        && edtChiSo.getText().toString().equals("") == false)) {
+                        && edtChiSo.getText().toString().equals("") == false))) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
-                    ivIn.performClick();
                 } else {
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
                 }
@@ -410,6 +409,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
     private void fillLayout(final Integer STT) {
         try {
+            initial();
             if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
                 ArrayList<String> arrayList = new ArrayList<String>();
                 if (STT >= 0 && STT < CLocal.listDocSoView.size()) {
