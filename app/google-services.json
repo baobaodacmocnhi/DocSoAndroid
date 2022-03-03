@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "70213024315",
+    "project_id": "docsoandroid-410b8",
+    "storage_bucket": "docsoandroid-410b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:70213024315:android:55e1b1a452c9580eee7a1e",
+        "android_client_info": {
+          "package_name": "vn.com.capnuoctanhoa.docsoandroid"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "70213024315-7qr6t7bi0vdl4se0stccuflevisqkiqr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAUKNZ_CK9QjpYQPPIHbkBmyuNoaOziQZE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "70213024315-7qr6t7bi0vdl4se0stccuflevisqkiqr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
