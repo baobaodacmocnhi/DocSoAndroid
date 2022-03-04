@@ -52,6 +52,7 @@ public class CEntityParent {
     private String CuaHangThuHo;
     private String TuNgay;
     private String DenNgay;
+    private boolean GhiHinh;
 
 
     public CEntityParent() {
@@ -101,6 +102,7 @@ public class CEntityParent {
         lstCaptureString = new ArrayList<>();
         CuaHangThuHo = "";
         TuNgay = DenNgay = "";
+        GhiHinh = false;
     }
 
     public String getID() {
@@ -479,6 +481,14 @@ public class CEntityParent {
         CuaHangThuHo = cuaHangThuHo;
     }
 
+    public boolean isGhiHinh() {
+        return GhiHinh;
+    }
+
+    public void setGhiHinh(boolean ghiHinh) {
+        GhiHinh = ghiHinh;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         ID = entityParent.getID();
         MLT = entityParent.getMLT();
@@ -527,6 +537,7 @@ public class CEntityParent {
         CuaHangThuHo = entityParent.getCuaHangThuHo();
         TuNgay = entityParent.getTuNgay();
         DenNgay = entityParent.getDenNgay();
+        GhiHinh = entityParent.isGhiHinh();
     }
 
 

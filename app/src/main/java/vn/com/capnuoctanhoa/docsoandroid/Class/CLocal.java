@@ -998,4 +998,12 @@ public class CLocal {
         return FromDate;
     }
 
+    public static String convertStandardJSONString(String data_json) {
+        data_json = data_json.replaceAll("\\\\r\\\\n", "");
+        data_json = data_json.replace("\"{", "{");
+        data_json = data_json.replace("}\",", "},");
+        data_json = data_json.replace("}\"", "}");
+        return data_json;
+    }
+
 }

@@ -457,6 +457,26 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String ghi_Hinh(String ID, String HinhDHN) {
+        String SOAP_ACTION = "http://tempuri.org/ghi_Hinh";
+        String OPERATION_NAME = "ghi_Hinh";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("ID");
+        pi.setValue(ID);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("HinhDHN");
+        pi.setValue(HinhDHN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     //admin
     public String truyvan(String sql) {
         String SOAP_ACTION = "http://tempuri.org/truyvan";

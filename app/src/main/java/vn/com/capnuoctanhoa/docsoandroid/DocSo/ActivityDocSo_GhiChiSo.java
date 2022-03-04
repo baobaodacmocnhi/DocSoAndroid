@@ -1,13 +1,11 @@
 package vn.com.capnuoctanhoa.docsoandroid.DocSo;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
@@ -18,7 +16,6 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -38,7 +35,6 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -367,6 +363,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 imgCapture = bitmap;
             }
             if (imgCapture != null) {
+                lstCapture = new ArrayList<>();
                 lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
                 loadRecyclerViewImage();
             }
@@ -475,12 +472,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (lstCapture.size() > 0) {
                     for (int i = 0; i < lstCapture.size(); i++) {
                         if (imgString.equals("") == true)
-                            imgString += CLocal.convertBitmapToString(lstCapture.get(i));
+                            imgString = CLocal.convertBitmapToString(lstCapture.get(i));
 //                        else
-//                            imgString += ";" + CLocal.convertBitmapToString(reizeImage);
+//                            imgString += ";" + CLocal.convertBitmapToString(lstCapture.get(i));
                     }
                 }
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), imgString, CLocal.listDocSoView.get(STT).getDot(), CLocal.MaNV, CLocal.listDocSoView.get(STT).getTBTT());
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(STT).getDot(), CLocal.MaNV, CLocal.listDocSoView.get(STT).getTBTT());
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
@@ -495,10 +492,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     if (lstCapture.size() > 0) {
-                        CLocal.listDocSoView.get(STT).getLstCaptureString().clear();
+                        ArrayList<String> lstImage = new ArrayList<>();
                         for (int i = 0; i < lstCapture.size(); i++) {
-                            CLocal.listDocSoView.get(STT).getLstCaptureString().add(imgString);
+                            lstImage.add(imgString);
                         }
+                        CLocal.listDocSoView.get(STT).setLstCaptureString(lstImage);
                     }
 //                    if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
 //                        JSONArray jsonHoaDonTon = new JSONArray(jsonObject.getString("hoadonton").replace("null", ""));
@@ -540,6 +538,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert
                             + error, "center");
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                        MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
+                        myAsyncTaskGhiHinh.execute(new String[]{STT.toString()});
                         ivIn.performClick();
                         ivSau.performClick();
                     }
@@ -549,15 +549,24 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
             }
         }
-
     }
 
-    public static String convertStandardJSONString(String data_json) {
-        data_json = data_json.replaceAll("\\\\r\\\\n", "");
-        data_json = data_json.replace("\"{", "{");
-        data_json = data_json.replace("}\",", "},");
-        data_json = data_json.replace("}\"", "}");
-        return data_json;
+    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                int index = Integer.parseInt(strings[0]);
+                String result = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getLstCaptureString().get(0));
+                if (Boolean.parseBoolean(result) == true) {
+                    CLocal.listDocSoView.get(index).setGhiHinh(true);
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(index));
+                }
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+            }
+            return null;
+        }
     }
 
 }

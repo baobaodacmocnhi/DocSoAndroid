@@ -30,6 +30,7 @@ import java.util.Vector;
 import androidx.annotation.Nullable;
 
 import androidx.annotation.RequiresApi;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
@@ -432,10 +433,10 @@ public class ServiceThermalPrinter extends Service {
                         stringBuilder.append("Nợ cũ: ").append('\n');
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
-                            stringBuilder.append("Kỳ " + entityParent.getLstHoaDon().get(i).getKy() + ": " + entityParent.getLstHoaDon().get(i).getTongCong()).append('\n');
+                            stringBuilder.append("   Kỳ " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong()))).append('\n');
                         }
                     }
-                    stringBuilder.append(escpStyle(pad("Số tiền cần thanh toán:", numberVN(Double.parseDouble(String.valueOf( TongCong))), padChar, charWidth) + "\n", 0b10000));
+                    stringBuilder.append(escpStyle(pad("Số tiền cần thanh toán:", numberVN(Double.parseDouble(String.valueOf(TongCong))), padChar, charWidth) + "\n", 0b10000));
                     //doc tien
                     String docTien = ReadMoney(String.valueOf(TongCong));
                     String docTienLines = "";
@@ -505,7 +506,7 @@ public class ServiceThermalPrinter extends Service {
                 //stringBuilder.append(breakLine("Quét QR để cung cấp chỉ số nước qua Zalo:\n", charWidth));
                 //String link = "https://cskhtanhoa.com.vn/bai-viet/cung-cap-chi-so-nuoc-4022.html";
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n", charWidth));
-                String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo();
+                String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ","");
                 String qrData;
                 if (charWidth == 31)
                     qrData = woosimQrPrint(link, 5);
@@ -736,7 +737,7 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Kỳ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 305, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: "+entityParent.getTuNgay()+" Đến ngày: "+entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() + " Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1))
                             .append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));
@@ -804,7 +805,7 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Kỳ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 305, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: "+entityParent.getTuNgay()+" Đến ngày: "+entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() + " Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));
@@ -887,7 +888,7 @@ public class ServiceThermalPrinter extends Service {
                         y = handlingYMoreThan450(y, 25);
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
-                            stringBuilder.append(printLine("Kỳ " + entityParent.getLstHoaDon().get(i).getKy() + ": " + entityParent.getLstHoaDon().get(i).getTongCong(), 1, y, 0, 1, 1));
+                            stringBuilder.append(printLine("   Kỳ " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong())), 1, y, 0, 1, 1));
                             y = handlingYMoreThan450(y, 25);
                         }
                     }
@@ -940,7 +941,7 @@ public class ServiceThermalPrinter extends Service {
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("dụng nước:", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 50);
-                stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo(), y, 0));
+                stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ",""), y, 0));
                 y = handlingYMoreThan450(y, 225);
                 stringBuilder.append(printLine("TRÂN TRỌNG", 3, y, 130, 1, 1));
                 y = handlingYMoreThan450(y, 50);

@@ -97,8 +97,19 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
+                        String Nam = "", Ky = "", Dot = "";
+                        if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                            Nam = CLocal.listDocSo.get(0).getNam();
+                            Ky = CLocal.listDocSo.get(0).getKy();
+                            Dot = CLocal.listDocSo.get(0).getDot();
+                        }
+                        for (int i = 0; i < CLocal.listDownDocSo.size(); i++)
+                            if (CLocal.listDownDocSo.get(i).getHoTen().equals(Nam + "_" + Ky + "_" + Dot) == true) {
+                                CLocal.listDownDocSo.get(i).setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                            }
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                         editor.putString("jsonDocSo", CLocal.listDownDocSo.get(ID).getDiaChi());
+                        editor.putString("jsonDownDocSo",  new Gson().toJsonTree(CLocal.listDownDocSo).getAsJsonArray().toString());
                         editor.commit();
                         CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                         }.getType());
