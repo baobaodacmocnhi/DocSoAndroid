@@ -122,99 +122,101 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        try {
-            Intent intent = new Intent(this, ServiceAppKilled.class);
-            startService(intent);
-            CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
-            FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
-                @Override
-                public void onComplete(@NonNull Task<String> task) {
-                    // Get new FCM registration token
-                    String deviceToken = task.getResult();
-                    if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
-                        ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
-                        serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
+        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+            try {
+                Intent intent = new Intent(this, ServiceAppKilled.class);
+                startService(intent);
+                CLocal.IDMobile = CLocal.getAndroidID(MainActivity.this);
+                FirebaseMessaging.getInstance().getToken().addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        // Get new FCM registration token
+                        String deviceToken = task.getResult();
+                        if (CLocal.sharedPreferencesre.getString("UID", "").equals(deviceToken) == false) {
+                            ServiceFirebaseMessaging serviceFirebaseInstanceID = new ServiceFirebaseMessaging();
+                            serviceFirebaseInstanceID.sendRegistrationToServer(deviceToken);
+                        }
                     }
+                });
+                if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute("Version");
                 }
-            });
-            if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute("Version");
-            }
-            if (CLocal.sharedPreferencesre.getString("jsonDownDocSo", "").equals("") == false) {
-                CLocal.listDownDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDownDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                }.getType());
-                if (CLocal.listDownDocSo.size() > 2000)
-                    CLocal.listDownDocSo = null;
-            }
-            if (CLocal.sharedPreferencesre.getString("jsonDocSo", "").equals("") == false) {
-                CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                }.getType());
-                if (CLocal.listDocSo.size() > 2000)
-                    CLocal.listDocSo = null;
-            }
-            if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
-                CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
-            }
-            if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
-                CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
-            }
-            CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
-            CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
-            btnAdmin.setVisibility(View.GONE);
-            if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
-                //so sánh logout sau 7 ngày
-                long millis = CLocal.sharedPreferencesre.getLong("LoginDate", 0L);
-                Date dateLogin = new Date(millis);
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTime(dateLogin);
-                calendar.add(Calendar.DATE, 2);
-                Date dateLogin7 = calendar.getTime();
-                Date currentDate = new Date();
-                if (currentDate.compareTo(dateLogin7) > 0) {
-                    MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
-                    myAsyncTask_dangXuat.execute("DangXuat");
+                if (CLocal.sharedPreferencesre.getString("jsonDownDocSo", "").equals("") == false) {
+                    CLocal.listDownDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDownDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                    }.getType());
+                    if (CLocal.listDownDocSo.size() > 2000)
+                        CLocal.listDownDocSo = null;
                 }
-                CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
-                CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
-                CLocal.May = CLocal.sharedPreferencesre.getString("May", "");
-                CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
-                CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
-                CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
-                CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
-                txtUser.setText("Xin chào " + CLocal.HoTen);
-                txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
-                imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
-                if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true) {
-                    CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
-                    btnAdmin.setVisibility(View.VISIBLE);
+                if (CLocal.sharedPreferencesre.getString("jsonDocSo", "").equals("") == false) {
+                    CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                    }.getType());
+                    if (CLocal.listDocSo.size() > 2000)
+                        CLocal.listDocSo = null;
                 }
-                if (CLocal.sharedPreferencesre.getBoolean("Doi", false) == true && CLocal.sharedPreferencesre.getString("jsonTo", "").equals("") == false) {
-                    CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
-                    CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
-                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
-                    CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
-                    CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                    CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
+                if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
+                    CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
                 }
-            } else {
-                txtUser.setText("Xin hãy đăng nhập");
-                txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
-                imgbtnDangNhap.setImageResource(R.mipmap.ic_logout_foreground);
-            }
+                if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
+                    CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
+                }
+                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
+                CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
+                btnAdmin.setVisibility(View.GONE);
+                if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
+                    //so sánh logout sau 7 ngày
+                    long millis = CLocal.sharedPreferencesre.getLong("LoginDate", 0L);
+                    Date dateLogin = new Date(millis);
+                    Calendar calendar = Calendar.getInstance();
+                    calendar.setTime(dateLogin);
+                    calendar.add(Calendar.DATE, 2);
+                    Date dateLogin7 = calendar.getTime();
+                    Date currentDate = new Date();
+                    if (currentDate.compareTo(dateLogin7) > 0) {
+                        MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
+                        myAsyncTask_dangXuat.execute("DangXuat");
+                    }
+                    CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
+                    CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
+                    CLocal.May = CLocal.sharedPreferencesre.getString("May", "");
+                    CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
+                    CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
+                    CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
+                    CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
+                    txtUser.setText("Xin chào " + CLocal.HoTen);
+                    txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
+                    imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
+                    if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true) {
+                        CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
+                        btnAdmin.setVisibility(View.VISIBLE);
+                    }
+                    if (CLocal.sharedPreferencesre.getBoolean("Doi", false) == true && CLocal.sharedPreferencesre.getString("jsonTo", "").equals("") == false) {
+                        CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
+                        CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
+                        CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                    } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
+                        CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
+                        CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                        CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
+                    }
+                } else {
+                    txtUser.setText("Xin hãy đăng nhập");
+                    txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
+                    imgbtnDangNhap.setImageResource(R.mipmap.ic_logout_foreground);
+                }
 
-            if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
-                if (CLocal.checkBluetoothAvaible() == false) {
-                    CLocal.openBluetoothSettings(MainActivity.this);
-                } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
-                    Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
-                    intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
-                    startService(intent2);
-                    bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
-                }
-        } catch (Exception ex) {
-            CLocal.showToastMessage(MainActivity.this, ex.getMessage());
+                if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+                    if (CLocal.checkBluetoothAvaible() == false) {
+                        CLocal.openBluetoothSettings(MainActivity.this);
+                    } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
+                        Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
+                        intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+                        startService(intent2);
+                        bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+                    }
+            } catch (Exception ex) {
+                CLocal.showToastMessage(MainActivity.this, ex.getMessage());
+            }
         }
     }
 

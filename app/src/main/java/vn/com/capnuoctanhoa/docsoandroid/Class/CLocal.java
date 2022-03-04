@@ -94,7 +94,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView, listDownDocSo;
@@ -129,7 +129,7 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = null;
         listDocSo = listDocSoView = listDownDocSo = null;
     }
 
@@ -456,7 +456,24 @@ public class CLocal {
         }
     }
 
-    //update tình trạng parent
+    //update giá trí child
+    public static void updateValueChild(ArrayList<CEntityParent> lst, String NameUpdate, String ValueUpdate, String MaHD) {
+        try {
+            for (int i = 0; i < lst.size(); i++) {
+                for (int j = 0; j < lst.get(i).getLstHoaDon().size(); j++)
+                    if (lst.get(i).getLstHoaDon().get(j).getMaHD().equals(MaHD) == true) {
+                        switch (NameUpdate) {
+                            case "XoaHoaDon":
+                                lst.get(i).getLstHoaDon().remove(j);
+                                break;
+                        }
+                    }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
     public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, CEntityParent entityParentUpdate) {
         for (int i = 0; i < lst.size(); i++)
             if (lst.get(i).getID().equals(entityParentUpdate.getID())) {
@@ -852,20 +869,20 @@ public class CLocal {
         return (byte) "0123456789ABCDEF".indexOf(c);
     }
 
-    public static String BitmapToString(Bitmap bitmap){
-        ByteArrayOutputStream baos=new  ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG,100, baos);
-        byte [] b=baos.toByteArray();
-        String temp=Base64.encodeToString(b, Base64.DEFAULT);
+    public static String BitmapToString(Bitmap bitmap) {
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String temp = Base64.encodeToString(b, Base64.DEFAULT);
         return temp;
     }
 
-    public static Bitmap StringToBitmap(String encodedString){
+    public static Bitmap StringToBitmap(String encodedString) {
         try {
-            byte [] encodeByte=Base64.decode(encodedString,Base64.DEFAULT);
-            Bitmap bitmap= BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
+            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
+            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
             return bitmap;
-        } catch(Exception e) {
+        } catch (Exception e) {
             e.getMessage();
             return null;
         }

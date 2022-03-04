@@ -27,6 +27,7 @@ import androidx.core.app.NotificationCompat;
 import vn.com.capnuoctanhoa.docsoandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
 import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
@@ -73,7 +74,10 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 intent = new Intent(this, ActivityDangNhap.class);
             } else
                 if (remoteMessage.getData().get("Action").equals("DocSo") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-
+                    //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
+                    CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                    CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                    intent = new Intent(this, ActivityDocSo_DanhSach.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
             }
