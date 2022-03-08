@@ -1,5 +1,6 @@
 package vn.com.capnuoctanhoa.docsoandroid.DocSo;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -16,6 +17,7 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -254,7 +256,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         || ((CCode) selectedCode).getCode().contains("63") == true
                         || ((CCode) selectedCode).getCode().contains("64") == true
                         || ((CCode) selectedCode).getCode().contains("66") == true
-                        || ((CCode) selectedCode).getCode().contains("68") == true)
+                        || ((CCode) selectedCode).getCode().contains("68") == true
+                        || ((CCode) selectedCode).getCode().contains("K") == true)
                         || (((CCode) selectedCode).getCode().contains("F1") == false
                         && ((CCode) selectedCode).getCode().contains("F2") == false
                         && ((CCode) selectedCode).getCode().contains("F3") == false
@@ -264,6 +267,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         && ((CCode) selectedCode).getCode().contains("64") == false
                         && ((CCode) selectedCode).getCode().contains("66") == false
                         && ((CCode) selectedCode).getCode().contains("68") == false
+                        && ((CCode) selectedCode).getCode().contains("K") == false
                         && edtChiSo.getText().toString().equals("") == false))) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
@@ -535,13 +539,36 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         error = "\r\n" + jsonObject.getString("error").replace("null", "");
                     if (jsonObject.getString("alert").replace("null", "").equals("") == false)
                         alert = "\r\n" + jsonObject.getString("alert").replace("null", "");
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert
-                            + error, "center");
+//                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert + error, "center");
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                         MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
                         myAsyncTaskGhiHinh.execute(new String[]{STT.toString()});
-                        ivIn.performClick();
-                        ivSau.performClick();
+                        //
+                        if (alert.equals("") == false) {
+                            CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_GhiChiSo.this);
+                            builder.setTitle("Thông Báo");
+                            builder.setMessage(s + alert);
+                            builder.setCancelable(false);
+                            builder.setPositiveButton("Đọc Tiếp", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ivSau.performClick();
+                                }
+                            });
+                            builder.setNegativeButton("In", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+                                    ivIn.performClick();
+                                    ivSau.performClick();
+                                }
+                            });
+                            AlertDialog alertDialog = builder.create();
+                            alertDialog.show();
+                        }
+                    } else {
+                        CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + error, "center");
+                        CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
                     }
                 } else
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");

@@ -25,6 +25,7 @@ import android.net.Uri;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Environment;
+import android.os.Vibrator;
 import android.provider.DocumentsContract;
 import android.provider.MediaStore;
 import android.provider.Settings;
@@ -1004,6 +1005,14 @@ public class CLocal {
         data_json = data_json.replace("}\",", "},");
         data_json = data_json.replace("}\"", "}");
         return data_json;
+    }
+
+    public static void vibrate(Activity activity) {
+        // Get instance of Vibrator from current Context
+        Vibrator v = (Vibrator) activity.getSystemService(Context.VIBRATOR_SERVICE);
+
+        // Vibrate for 400 milliseconds
+        v.vibrate(400);
     }
 
 }
