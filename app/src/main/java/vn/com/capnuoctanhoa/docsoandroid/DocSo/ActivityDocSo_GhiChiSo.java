@@ -565,6 +565,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             });
                             AlertDialog alertDialog = builder.create();
                             alertDialog.show();
+                        } else {
+                            CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
+                            ivIn.performClick();
+                            ivSau.performClick();
                         }
                     } else {
                         CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + error, "center");

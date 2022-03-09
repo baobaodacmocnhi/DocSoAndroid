@@ -34,6 +34,7 @@ import androidx.annotation.RequiresApi;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 
 public class ServiceThermalPrinter extends Service {
     public ServiceThermalPrinter() {
@@ -324,7 +325,8 @@ public class ServiceThermalPrinter extends Service {
     public void printGhiChiSo(CEntityParent entityParent) throws IOException {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
-                connected(mSocket);
+//                connected(mSocket);
+                connectToDevice(B_DEVICE);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell45":
                     printGhiChiSo_escpPrint(entityParent, 45);

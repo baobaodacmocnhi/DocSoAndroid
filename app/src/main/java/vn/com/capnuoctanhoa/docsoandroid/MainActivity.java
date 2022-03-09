@@ -205,15 +205,16 @@ public class MainActivity extends AppCompatActivity {
                     imgbtnDangNhap.setImageResource(R.mipmap.ic_logout_foreground);
                 }
 
-                if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
-                    if (CLocal.checkBluetoothAvaible() == false) {
-                        CLocal.openBluetoothSettings(MainActivity.this);
-                    } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
-                        Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
-                        intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
-                        startService(intent2);
-                        bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
-                    }
+//                if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+//                    if (CLocal.checkBluetoothAvaible() == false) {
+//                        CLocal.openBluetoothSettings(MainActivity.this);
+//                    } else if (CLocal.checkServiceRunning(getApplicationContext(), ServiceThermalPrinter.class) == false) {
+//                        Intent intent2 = new Intent(this, ServiceThermalPrinter.class);
+//                        intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+//                        startService(intent2);
+//                        bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+//                    }
+                CLocal.runServiceThermalPrinter(MainActivity.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(MainActivity.this, ex.getMessage());
             }
@@ -574,22 +575,5 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    /**
-     * Defines callbacks for service binding, passed to bindService()
-     */
-    private ServiceConnection mConnection = new ServiceConnection() {
 
-        @Override
-        public void onServiceConnected(ComponentName className, IBinder service) {
-            // We've bound to LocalService, cast the IBinder and get LocalService instance
-            ServiceThermalPrinter.LocalBinder binder = (ServiceThermalPrinter.LocalBinder) service;
-            CLocal.serviceThermalPrinter = binder.getService();
-//            mBound = true;
-        }
-
-        @Override
-        public void onServiceDisconnected(ComponentName arg0) {
-//            mBound = false;
-        }
-    };
 }
