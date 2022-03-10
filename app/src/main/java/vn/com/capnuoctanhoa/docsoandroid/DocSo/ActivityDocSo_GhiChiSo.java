@@ -457,7 +457,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         JSONObject jsonObject = null;
-
+        String imgString = "";
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -471,7 +471,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                String imgString = "";
+//                String imgString = "";
                 jsonObject = new JSONObject();
                 if (lstCapture.size() > 0) {
                     for (int i = 0; i < lstCapture.size(); i++) {
@@ -495,13 +495,13 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(STT).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
-                    if (lstCapture.size() > 0) {
-                        ArrayList<String> lstImage = new ArrayList<>();
-                        for (int i = 0; i < lstCapture.size(); i++) {
-                            lstImage.add(imgString);
-                        }
-                        CLocal.listDocSoView.get(STT).setLstCaptureString(lstImage);
-                    }
+//                    if (lstCapture.size() > 0) {
+//                        ArrayList<String> lstImage = new ArrayList<>();
+//                        for (int i = 0; i < lstCapture.size(); i++) {
+//                            lstImage.add(imgString);
+//                        }
+//                        CLocal.listDocSoView.get(STT).setLstCaptureString(lstImage);
+//                    }
 //                    if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
 //                        JSONArray jsonHoaDonTon = new JSONArray(jsonObject.getString("hoadonton").replace("null", ""));
 //                        for (int i = 0; i < jsonHoaDonTon.length(); i++) {
@@ -541,8 +541,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         alert = "\r\n" + jsonObject.getString("alert").replace("null", "");
 //                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert + error, "center");
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                        MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
-                        myAsyncTaskGhiHinh.execute(new String[]{STT.toString()});
+                        if(imgString.equals("")==false) {
+                            MyAsyncTaskGhiHinhtest myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinhtest();
+                            myAsyncTaskGhiHinh.execute(new String[]{STT.toString(), imgString});
+                        }
                         //
                         if (alert.equals("") == false) {
                             CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
@@ -588,11 +590,29 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
             try {
                 int index = Integer.parseInt(strings[0]);
-                String result = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getLstCaptureString().get(0));
-                if (Boolean.parseBoolean(result) == true) {
-                    CLocal.listDocSoView.get(index).setGhiHinh(true);
-                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(index));
+                if (CLocal.listDocSoView.get(index).getLstCaptureString() != null && CLocal.listDocSoView.get(index).getLstCaptureString().size() > 0) {
+                    String result = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getLstCaptureString().get(0));
+                    if (Boolean.parseBoolean(result) == true) {
+                        CLocal.listDocSoView.get(index).setGhiHinh(true);
+                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(index));
+                    }
                 }
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+            }
+            return null;
+        }
+    }
+
+    public class MyAsyncTaskGhiHinhtest extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                int index = Integer.parseInt(strings[0]);
+
+                String result = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), strings[1]);
+
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }
