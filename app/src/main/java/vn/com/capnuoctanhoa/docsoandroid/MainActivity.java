@@ -142,12 +142,6 @@ public class MainActivity extends AppCompatActivity {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute("Version");
                 }
-                if (CLocal.sharedPreferencesre.getString("jsonDownDocSo", "").equals("") == false) {
-                    CLocal.listDownDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDownDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                    }.getType());
-                    if (CLocal.listDownDocSo.size() > 2000)
-                        CLocal.listDownDocSo = null;
-                }
                 if (CLocal.sharedPreferencesre.getString("jsonDocSo", "").equals("") == false) {
                     CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                     }.getType());

@@ -9,7 +9,6 @@ import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -18,23 +17,20 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
@@ -42,7 +38,6 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewDienThoai;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
@@ -307,17 +302,18 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
             }
         });
 
-        loadDownDocSo();
+        loadFileDownDocSo();
     }
 
-    private void loadDownDocSo() {
-        if (CLocal.listDownDocSo != null && CLocal.listDownDocSo.size() > 0)
-            try {
-                ArrayList<CEntityParent> lstDienThoai = new ArrayList<>();
-                for (int k = 0; k < CLocal.listDownDocSo.size(); k++) {
+    private void loadFileDownDocSo() {
+        try {
+            ArrayList<CEntityParent> lstDienThoai = new ArrayList<>();
+            File[] files = CLocal.getFilesInFolder(CLocal.pathAppDownload);
+            if (files != null && files.length > 0) {
+                for (int i = 0; i < files.length; i++) {
                     CEntityParent entityParent = new CEntityParent();
                     entityParent.setDanhBo("");
-                    entityParent.setDienThoai(CLocal.listDownDocSo.get(k).getHoTen());
+                    entityParent.setDienThoai(files[i].getName());
                     lstDienThoai.add(entityParent);
                 }
                 customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDownDataDocSo.this, lstDienThoai);
@@ -326,9 +322,10 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(customAdapterRecyclerViewDienThoai);
-            } catch (Exception ex) {
-                Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
             }
+        } catch (Exception ex) {
+            Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
+        }
     }
 
     public class MyAsyncTask extends AsyncTask<Void, Void, String[]> {
@@ -428,7 +425,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         if (CLocal.jsonHoaDonTon != null && CLocal.jsonHoaDonTon.length() > 0)
                             for (int k = 0; k < CLocal.jsonHoaDonTon.length(); k++) {
                                 JSONObject jsonObjectChild = CLocal.jsonHoaDonTon.getJSONObject(k);
-                                if (jsonObjectChild.getString("DanhBo").equals(enParent.getDanhBo().replace(" ","")) == true) {
+                                if (jsonObjectChild.getString("DanhBo").equals(enParent.getDanhBo().replace(" ", "")) == true) {
                                     CEntityChild entityChild = new CEntityChild();
                                     entityChild.setMaHD(jsonObjectChild.getString("MaHD").replace("null", ""));
                                     entityChild.setKy(jsonObjectChild.getString("KyHD").replace("null", ""));
@@ -441,23 +438,10 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     }
                     SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                     editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                    boolean flagExists = false;
-                    if (CLocal.listDownDocSo == null)
-                        CLocal.listDownDocSo = new ArrayList<>();
-                    for (int i = 0; i < CLocal.listDownDocSo.size(); i++) {
-                        if (CLocal.listDownDocSo.get(i).getHoTen().equals(spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString()) == true) {
-                            CLocal.listDownDocSo.get(i).setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                            flagExists = true;
-                        }
-                    }
-                    if (flagExists == false) {
-                        CEntityParent entityParent = new CEntityParent();
-                        entityParent.setHoTen(spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString());
-                        entityParent.setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                        CLocal.listDownDocSo.add(entityParent);
-                    }
-                    editor.putString("jsonDownDocSo", new Gson().toJsonTree(CLocal.listDownDocSo).getAsJsonArray().toString());
                     editor.commit();
+                    //ghi file
+                    CLocal.writeFile(CLocal.pathAppDownload, spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString() + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
+                    CLocal.writeFile(CLocal.pathAppPicture + "/" + spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString(), "", "");
                 }
                 return new String[]{"true", ""};
             } catch (Exception ex) {

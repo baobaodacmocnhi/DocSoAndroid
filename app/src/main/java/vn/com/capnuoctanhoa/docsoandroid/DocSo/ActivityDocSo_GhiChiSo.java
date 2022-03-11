@@ -1,5 +1,9 @@
 package vn.com.capnuoctanhoa.docsoandroid.DocSo;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -144,7 +148,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (STT > 0) {
-                    STT--;
+                    STT = STT - 1;
                     fillLayout(STT);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Đầu Danh Sách");
@@ -155,7 +159,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (STT < CLocal.listDocSoView.size() - 1) {
-                    STT++;
+                    STT = STT + 1;
                     fillLayout(STT);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Cuối Danh Sách");
@@ -178,41 +182,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    startActivityForResult(intent, 1);
+//                    startActivityForResult(intent, 1);
+                    activityResultLauncher_ChupHinh.launch(intent);
                 }
-//                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_GhiChiSo.this);
-//                builder.setTitle("Thông Báo");
-//                builder.setMessage("Chọn lựa hành động");
-//                builder.setCancelable(false);
-//                builder.setPositiveButton("Chụp từ camera", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        Uri imgUri = createImageUri();
-//                        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                        if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
-//                            intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
-//                            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                            startActivityForResult(intent, 1);
-//                        }
-//                    }
-//                });
-//                builder.setNegativeButton("Chọn từ thư viện", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        if (Build.VERSION.SDK_INT <= 19) {
-//                            Intent intent = new Intent();
-//                            intent.setType("image/*");
-//                            intent.setAction(Intent.ACTION_GET_CONTENT);
-//                            intent.addCategory(Intent.CATEGORY_OPENABLE);
-//                            startActivityForResult(intent, 2);
-//                        } else if (Build.VERSION.SDK_INT > 19) {
-//                            Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                            startActivityForResult(intent, 2);
-//                        }
-//                    }
-//                });
-//                AlertDialog alertDialog = builder.create();
-//                alertDialog.show();
             }
         });
 
@@ -232,10 +204,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     intent.setType("image/*");
                     intent.setAction(Intent.ACTION_GET_CONTENT);
                     intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    startActivityForResult(intent, 2);
+//                    startActivityForResult(intent, 2);
+                    activityResultLauncher_ChonHinh.launch(intent);
                 } else if (Build.VERSION.SDK_INT > 19) {
                     Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    startActivityForResult(intent, 2);
+//                    startActivityForResult(intent, 2);
+                    activityResultLauncher_ChonHinh.launch(intent);
                 }
             }
         });
@@ -303,7 +277,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 }
                 Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_GhiChu.class);
                 intent.putExtra("STT", String.valueOf(STT));
-                startActivityForResult(intent, 1);
+                startActivity(intent);
             }
         });
 
@@ -348,33 +322,73 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        try {
-            if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-                if (imgPath != null && imgPath != "") {
-                    Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                    bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
-                    imgCapture = bitmap;
+    ActivityResultLauncher<Intent> activityResultLauncher_ChupHinh = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
+                        if (imgPath != null && imgPath != "") {
+                            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+                            bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+                            imgCapture = bitmap;
+                        }
+                    }
+                    if (imgCapture != null) {
+                        lstCapture = new ArrayList<>();
+                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                        loadRecyclerViewImage();
+                    }
                 }
+            });
 
-            } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
-                Uri uri = data.getData();
-                String strPath = CLocal.getPathFromUri(this, uri);
-                Bitmap bitmap = BitmapFactory.decodeFile(strPath);
-                bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
-                imgCapture = bitmap;
-            }
-            if (imgCapture != null) {
-                lstCapture = new ArrayList<>();
-                lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
-                loadRecyclerViewImage();
-            }
-        } catch (Exception ex) {
-            CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
-        }
-    }
+    ActivityResultLauncher<Intent> activityResultLauncher_ChonHinh = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
+                        Uri uri = result.getData().getData();
+                        String strPath = CLocal.getPathFromUri(ActivityDocSo_GhiChiSo.this, uri);
+                        Bitmap bitmap = BitmapFactory.decodeFile(strPath);
+                        bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+                        imgCapture = bitmap;
+                    }
+                    if (imgCapture != null) {
+                        lstCapture = new ArrayList<>();
+                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                        loadRecyclerViewImage();
+                    }
+                }
+            });
+
+//    @Override
+//    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        try {
+//            if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
+//                if (imgPath != null && imgPath != "") {
+//                    Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+//                    bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+//                    imgCapture = bitmap;
+//                }
+//
+//            } else if (requestCode == 2 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null) {
+//                Uri uri = data.getData();
+//                String strPath = CLocal.getPathFromUri(this, uri);
+//                Bitmap bitmap = BitmapFactory.decodeFile(strPath);
+//                bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+//                imgCapture = bitmap;
+//            }
+//            if (imgCapture != null) {
+//                lstCapture = new ArrayList<>();
+//                lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+//                loadRecyclerViewImage();
+//            }
+//        } catch (Exception ex) {
+//            CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
+//        }
+//    }
 
     public Uri createImageUri() {
         try {
@@ -441,15 +455,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     txtChiSoMoi.setText(item.getChiSoMoi());
                     txtCodeMoi.setText(item.getCodeMoi());
                     txtTieuThuMoi.setText(item.getTieuThuMoi());
-                    if (item.getLstCaptureString().size() > 0) {
-                        for (int i = 0; i < item.getLstCaptureString().size(); i++) {
-                            lstCapture.add(CLocal.StringToBitmap(item.getLstCaptureString().get(i)));
+
+                    try {
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + item.getNam() + "_" + item.getKy() + "_" + item.getDot() + "/" + item.getDanhBo().replace(" ", "") + ".jpg");
+                        if (bitmap != null) {
+                            bitmap = CLocal.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + item.getNam() + "_" + item.getKy() + "_" + item.getDot() + "/" + item.getDanhBo().replace(" ", "") + ".jpg");
+                            lstCapture.add(bitmap);
+                            loadRecyclerViewImage();
                         }
-                        loadRecyclerViewImage();
+                    } catch (Exception ex) {
                     }
                 }
             }
-        } catch (Exception ex) {
+        } catch (
+                Exception ex) {
             CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage(), "center");
         }
     }
@@ -458,6 +477,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ProgressDialog progressDialog;
         JSONObject jsonObject = null;
         String imgString = "";
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -495,13 +515,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(STT).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
-//                    if (lstCapture.size() > 0) {
-//                        ArrayList<String> lstImage = new ArrayList<>();
-//                        for (int i = 0; i < lstCapture.size(); i++) {
-//                            lstImage.add(imgString);
-//                        }
-//                        CLocal.listDocSoView.get(STT).setLstCaptureString(lstImage);
-//                    }
+                    if (lstCapture.size() > 0) {
+                        for (int i = 0; i < lstCapture.size(); i++) {
+                            CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(STT).getNam() + "_" + CLocal.listDocSoView.get(STT).getKy() + "_" + CLocal.listDocSoView.get(STT).getDot()
+                                    , CLocal.listDocSoView.get(STT).getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
+                        }
+                    }
 //                    if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
 //                        JSONArray jsonHoaDonTon = new JSONArray(jsonObject.getString("hoadonton").replace("null", ""));
 //                        for (int i = 0; i < jsonHoaDonTon.length(); i++) {
@@ -541,7 +560,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         alert = "\r\n" + jsonObject.getString("alert").replace("null", "");
 //                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert + error, "center");
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                        if(imgString.equals("")==false) {
+                        if (imgString.equals("") == false) {
                             MyAsyncTaskGhiHinhtest myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinhtest();
                             myAsyncTaskGhiHinh.execute(new String[]{STT.toString(), imgString});
                         }

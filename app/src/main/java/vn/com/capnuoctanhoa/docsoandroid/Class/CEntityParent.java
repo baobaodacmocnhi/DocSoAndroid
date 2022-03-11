@@ -54,7 +54,6 @@ public class CEntityParent {
     private String DenNgay;
     private boolean GhiHinh;
 
-
     public CEntityParent() {
         ID = "";
         MLT = "";

@@ -5,21 +5,13 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.Bitmap;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.provider.Settings;
-import android.view.GestureDetector;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.CheckBox;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -27,12 +19,11 @@ import com.google.gson.reflect.TypeToken;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
-import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<CustomAdapterRecyclerViewDienThoai.RecyclerViewHolder> {
@@ -76,10 +67,24 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                                 myAsyncTask.execute(new String[]{entityParent.getDanhBo(), entityParent.getDienThoai()});
                             } else {
-                                CLocal.listDownDocSo.remove(ID);
-                                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                                editor.putString("jsonDownDocSo", new Gson().toJsonTree(CLocal.listDownDocSo).getAsJsonArray().toString());
-                                editor.commit();
+                                try {
+                                    String Nam = "", Ky = "", Dot = "";
+                                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                        Nam = CLocal.listDocSo.get(0).getNam();
+                                        Ky = CLocal.listDocSo.get(0).getKy();
+                                        Dot = CLocal.listDocSo.get(0).getDot();
+                                    }
+                                    if ((Nam + "_" + Ky + "_" + Dot + ".txt").equals(entityParent.getDienThoai()) == true) {
+                                        CLocal.listDocSo = null;
+                                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                                        editor.putString("jsonDocSo", "");
+                                        editor.commit();
+                                    }
+                                    CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
+                                    CLocal.deleteFile(CLocal.pathAppPicture, entityParent.getDienThoai());
+                                } catch (IOException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             notifyDataSetChanged();
                         }
@@ -103,19 +108,19 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                             Ky = CLocal.listDocSo.get(0).getKy();
                             Dot = CLocal.listDocSo.get(0).getDot();
                         }
-                        for (int i = 0; i < CLocal.listDownDocSo.size(); i++)
-                            if (CLocal.listDownDocSo.get(i).getHoTen().equals(Nam + "_" + Ky + "_" + Dot) == true) {
-                                CLocal.listDownDocSo.get(i).setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                            }
                         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                        editor.putString("jsonDocSo", CLocal.listDownDocSo.get(ID).getDiaChi());
-                        editor.putString("jsonDownDocSo",  new Gson().toJsonTree(CLocal.listDownDocSo).getAsJsonArray().toString());
+                        try {
+                            CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                            editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
                         editor.commit();
                         CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                         }.getType());
                         if (CLocal.listDocSo.size() > 2000)
                             CLocal.listDocSo = null;
-                        CLocal.showToastMessage(activity, "Đã load dữ liệu " + CLocal.listDownDocSo.get(ID).getHoTen());
+                        CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
                         Intent returnIntent = new Intent();
                         activity.setResult(Activity.RESULT_OK, returnIntent);
                         activity.finish();

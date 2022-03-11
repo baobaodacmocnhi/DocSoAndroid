@@ -52,8 +52,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileOutputStream;
+import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
@@ -92,19 +96,22 @@ public class CLocal {
     //Android 8.0 - 8.1 	Oreo 	21/8/2017 (phát hành lần đầu)
 
     public static SharedPreferences sharedPreferencesre;
-    public static String Path = "/data/data/vn.com.capnuoctanhoa.docsoandroid/files";
+    public static String pathApp = "/data/data/vn.com.capnuoctanhoa.docsoandroid/files/";
+    public static String pathAppDownload = pathApp + "Download";
+    public static String pathAppPicture = pathApp + "Picture";
     public static String pathRoot = Environment.getExternalStorageDirectory() + "/TanHoa/";
-    public static String pathFile = pathRoot + "/File/";
-    public static String pathPicture = pathRoot + "/Picture/";
+    public static String pathFile = pathRoot + "File/";
+    public static String pathPicture = pathRoot + "Picture/";
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
     public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
-    public static ArrayList<CEntityParent> listDocSo, listDocSoView, listDownDocSo;
+    public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
+    public static int STT = 0;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -135,7 +142,7 @@ public class CLocal {
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
         jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = null;
-        listDocSo = listDocSoView = listDownDocSo = null;
+        listDocSo = listDocSoView = null;
     }
 
     public static String creatPathFile(Activity activity, String path, String filename, String filetype) {
@@ -1038,8 +1045,7 @@ public class CLocal {
         }
     };
 
-    public static void runServiceThermalPrinter(Activity activity)
-    {
+    public static void runServiceThermalPrinter(Activity activity) {
         if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
             if (CLocal.checkBluetoothAvaible() == false) {
                 CLocal.openBluetoothSettings(activity);
@@ -1049,6 +1055,87 @@ public class CLocal {
                 activity.startService(intent2);
                 activity.bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
             }
+    }
+
+    public static String readFile(String path, String filename) throws IOException {
+        try {
+            File dir = new File(path);
+            if (!dir.exists()) {
+                return "";
+            }
+            File gpxfile = new File(dir, filename);
+            FileReader reader = new FileReader(gpxfile);
+            String result = "", strLine = "";
+            BufferedReader br = new BufferedReader(reader);
+            while ((strLine = br.readLine()) != null) {
+                result = result + strLine + "\n";
+            }
+            br.close();
+            reader.close();
+            return result;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static boolean writeFile(String path, String filename, String value) throws IOException {
+        try {
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            if (value != null && value != "") {
+                File gpxfile = new File(dir, filename);
+                FileWriter writer = new FileWriter(gpxfile);
+                writer.append(value);
+                writer.flush();
+                writer.close();
+            }
+            return true;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static boolean writeFile(String path, String filename, Bitmap value) throws IOException {
+        try {
+            File dir = new File(path);
+            if (!dir.exists()) {
+                dir.mkdir();
+            }
+            if (value != null) {
+                File file = new File(dir, filename);
+                FileOutputStream fOut = new FileOutputStream(file);
+                value.compress(Bitmap.CompressFormat.JPEG, 100, fOut);
+                fOut.flush();
+                fOut.close();
+            }
+            return true;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static boolean deleteFile(String path, String filename) throws IOException {
+        try {
+            File dir = new File(path, filename);
+            if (dir.exists()) {
+                dir.delete();
+            }
+            return true;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static File[] getFilesInFolder(String path) throws IOException {
+        try {
+            File directory = new File(path);
+            File[] files = directory.listFiles();
+            return files;
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
 }

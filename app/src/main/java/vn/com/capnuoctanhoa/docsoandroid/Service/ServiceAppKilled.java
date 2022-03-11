@@ -36,13 +36,8 @@ public class ServiceAppKilled extends Service {
                 Ky = CLocal.listDocSo.get(0).getKy();
                 Dot = CLocal.listDocSo.get(0).getDot();
                 editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
             }
-            if (CLocal.listDownDocSo != null && CLocal.listDownDocSo.size() > 0)
-                for (int i = 0; i < CLocal.listDownDocSo.size(); i++)
-                    if (CLocal.listDownDocSo.get(i).getHoTen().equals(Nam + "_" + Ky + "_" + Dot) == true) {
-                        CLocal.listDownDocSo.get(i).setDiaChi(new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                    }
-            editor.putString("jsonDownDocSo", new Gson().toJsonTree(CLocal.listDownDocSo).getAsJsonArray().toString());
             if (CLocal.jsonMessage != null)
                 editor.putString("jsonMessage", CLocal.jsonMessage.toString());
             editor.commit();

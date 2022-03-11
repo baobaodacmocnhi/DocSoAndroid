@@ -7,6 +7,9 @@ import android.app.SearchManager;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Gravity;
@@ -31,6 +34,10 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 
+import androidx.activity.result.ActivityResult;
+import androidx.activity.result.ActivityResultCallback;
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
@@ -223,7 +230,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 Intent intent;
                 intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChiSo.class);
                 intent.putExtra("STT", String.valueOf(i));
-                startActivityForResult(intent, 1);
+//                startActivityForResult(intent, 1);
+                activityResultLauncher_GhiChiSo.launch(intent);
                 return false;
             }
         });
@@ -235,6 +243,18 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             }
         });
 
+        loadListView();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadListView();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         loadListView();
     }
 
@@ -285,7 +305,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 return true;
             case R.id.action_down_data:
                 Intent intent = new Intent(getApplicationContext(), ActivityDownDataDocSo.class);
-                startActivityForResult(intent, 1);
+//                startActivityForResult(intent, 1);
+                activityResultLauncher_GhiChiSo.launch(intent);
                 return true;
             default:
                 break;
@@ -369,13 +390,24 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            if (resultCode == Activity.RESULT_OK)
-                loadListView();
-        }
-    }
+    ActivityResultLauncher<Intent> activityResultLauncher_GhiChiSo = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            new ActivityResultCallback<ActivityResult>() {
+                @Override
+                public void onActivityResult(ActivityResult result) {
+                    if (result.getResultCode() == Activity.RESULT_OK ) {
+                        loadListView();
+                    }
+                }
+            });
+
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if (requestCode == 1) {
+//            if (resultCode == Activity.RESULT_OK)
+//                loadListView();
+//        }
+//    }
 
 }
