@@ -48,7 +48,6 @@ public class CEntityParent {
     private String Dot;
     private String NgayThuTien;
     private boolean SoChinh;
-    private ArrayList<String> lstCaptureString;
     private String CuaHangThuHo;
     private String TuNgay;
     private String DenNgay;
@@ -98,7 +97,6 @@ public class CEntityParent {
         Dot = "";
         NgayThuTien = "";
         SoChinh = false;
-        lstCaptureString = new ArrayList<>();
         CuaHangThuHo = "";
         TuNgay = DenNgay = "";
         GhiHinh = false;
@@ -432,14 +430,6 @@ public class CEntityParent {
         Dot = dot;
     }
 
-    public ArrayList<String> getLstCaptureString() {
-        return lstCaptureString;
-    }
-
-    public void setLstCaptureString(ArrayList<String> lstCaptureString) {
-        this.lstCaptureString = lstCaptureString;
-    }
-
     public String getNgayThuTien() {
         return NgayThuTien;
     }
@@ -532,7 +522,6 @@ public class CEntityParent {
         Dot = entityParent.getDot();
         NgayThuTien = entityParent.getNgayThuTien();
         SoChinh = entityParent.isSoChinh();
-        lstCaptureString = entityParent.getLstCaptureString();
         CuaHangThuHo = entityParent.getCuaHangThuHo();
         TuNgay = entityParent.getTuNgay();
         DenNgay = entityParent.getDenNgay();

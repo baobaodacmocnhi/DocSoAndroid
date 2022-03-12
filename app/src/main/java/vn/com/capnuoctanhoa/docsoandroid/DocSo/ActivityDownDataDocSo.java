@@ -33,6 +33,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
@@ -441,6 +442,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     editor.commit();
                     //ghi file
                     CLocal.writeFile(CLocal.pathAppDownload, spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString() + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
+                    CLocal.writeFile(CLocal.pathAppPicture, "", "");
                     CLocal.writeFile(CLocal.pathAppPicture + "/" + spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString(), "", "");
                 }
                 return new String[]{"true", ""};

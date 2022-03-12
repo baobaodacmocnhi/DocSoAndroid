@@ -5,6 +5,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
@@ -504,7 +505,7 @@ public class MainActivity extends AppCompatActivity {
                             //shouldShowRequestPermissionRationale will return true
                             if (ActivityCompat.shouldShowRequestPermissionRationale(this, permName)) {
                                 //show dialog of explanation
-                                showDialog("", "App cần cấp Tất Cả Quyền để hoạt động ổn định", "Yes, Cấp Quyền", new DialogInterface.OnClickListener() {
+                                CLocal.showDialog(MainActivity.this, "Thông Báo", "App cần cấp Tất Cả Quyền để hoạt động ổn định", "Yes, Cấp Quyền", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
@@ -522,7 +523,7 @@ public class MainActivity extends AppCompatActivity {
                             //shouldShowRequestPermissionRationale will return false
                             else {
                                 //ask user to go to settings and manually allow permissions
-                                showDialog("", "Bạn đã Từ Chối Cấp Quyền. Đồng ý Tất Cả Quyền tại [Cài Đặt] > [Quyền Ứng Dụng]", "Đi đến Cài Đặt", new DialogInterface.OnClickListener() {
+                                CLocal.showDialog(MainActivity.this, "Thông Báo", "Bạn đã Từ Chối Cấp Quyền. Đồng ý Tất Cả Quyền tại [Cài Đặt] > [Quyền Ứng Dụng]", "Đi đến Cài Đặt", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         dialog.dismiss();
@@ -549,19 +550,6 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception ex) {
             throw ex;
         }
-    }
-
-    public AlertDialog showDialog(String title, String msg, String positiveLabel, DialogInterface.OnClickListener positiveOnClick, String negativeLabel, DialogInterface.OnClickListener negativeOnClick, boolean isCancelAble) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(title);
-        builder.setCancelable(isCancelAble);
-        builder.setMessage(msg);
-        builder.setPositiveButton(positiveLabel, positiveOnClick);
-        builder.setNegativeButton(negativeLabel, negativeOnClick);
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        return alertDialog;
     }
 
     @Override

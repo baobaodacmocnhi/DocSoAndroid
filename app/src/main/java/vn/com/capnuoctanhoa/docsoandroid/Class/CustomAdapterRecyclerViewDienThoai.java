@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
+
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<CustomAdapterRecyclerViewDienThoai.RecyclerViewHolder> {
@@ -58,16 +59,17 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    showDialog("Xác nhận", "", "Ok", new DialogInterface.OnClickListener() {
+                    CLocal.showDialog(activity, "Xác nhận", "", "Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
                             mDisplayedValues.remove(ID);
+                            //sđt
                             if (DanhBo.length() == 11) {
                                 MyAsyncTask myAsyncTask = new MyAsyncTask();
                                 myAsyncTask.execute(new String[]{entityParent.getDanhBo(), entityParent.getDienThoai()});
                             } else {
-                                try {
+                                try {//downfile
                                     String Nam = "", Ky = "", Dot = "";
                                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                                         Nam = CLocal.listDocSo.get(0).getNam();
@@ -81,7 +83,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                         editor.commit();
                                     }
                                     CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
-                                    CLocal.deleteFile(CLocal.pathAppPicture, entityParent.getDienThoai());
+                                    CLocal.deleteFile(CLocal.pathAppPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
                                 } catch (IOException e) {
                                     e.printStackTrace();
                                 }
@@ -95,10 +97,9 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
 
                         }
                     }, false);
-
                 }
             });
-            if (DanhBo.length() != 11)
+            if (DanhBo.length() != 11)//downfile
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
@@ -150,19 +151,6 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             txtGhiChu = (TextView) itemView.findViewById(R.id.txtGhiChu);
             imageButton = (ImageButton) itemView.findViewById(R.id.imageButton);
         }
-    }
-
-    public AlertDialog showDialog(String title, String msg, String positiveLabel, DialogInterface.OnClickListener positiveOnClick, String negativeLabel, DialogInterface.OnClickListener negativeOnClick, boolean isCancelAble) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
-        builder.setTitle(title);
-        builder.setCancelable(isCancelAble);
-        builder.setMessage(msg);
-        builder.setPositiveButton(positiveLabel, positiveOnClick);
-        builder.setNegativeButton(negativeLabel, negativeOnClick);
-
-        AlertDialog alertDialog = builder.create();
-        alertDialog.show();
-        return alertDialog;
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {

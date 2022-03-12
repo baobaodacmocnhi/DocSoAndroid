@@ -76,6 +76,7 @@ import java.util.TimeZone;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
+
 import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceThermalPrinter;
 
@@ -495,14 +496,6 @@ public class CLocal {
         updateArrayListToJson();
     }
 
-    public static boolean checkDangNganChild(CEntityParent entityParent) {
-        boolean flag = false;
-        for (int i = 0; i < entityParent.getLstHoaDon().size(); i++)
-            if (entityParent.getLstHoaDon().get(i).isDangNgan_DienThoai() == true)
-                flag = true;
-        return flag;
-    }
-
     //convert tiền thành chữ
     public static String formatMoney(String price, String symbol) {
 
@@ -523,7 +516,6 @@ public class CLocal {
         price = String.format("%s " + symbol, price);
         return price;
     }
-
 
     public File createFile(Activity activity) {
         File filesDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
@@ -1118,9 +1110,20 @@ public class CLocal {
 
     public static boolean deleteFile(String path, String filename) throws IOException {
         try {
-            File dir = new File(path, filename);
-            if (dir.exists()) {
-                dir.delete();
+            if (filename == "") {
+                File[] files = CLocal.getFilesInFolder(path);
+                if (files != null && files.length > 0)
+                    for (int i = 0; i < files.length; i++) {
+                        if (files[i].exists())
+                            files[i].delete();
+                    }
+                File dir = new File(path);
+                if (dir.exists())
+                    dir.delete();
+            } else {
+                File dir = new File(path, filename);
+                if (dir.exists())
+                    dir.delete();
             }
             return true;
         } catch (Exception ex) {
@@ -1136,6 +1139,19 @@ public class CLocal {
         } catch (Exception ex) {
             throw ex;
         }
+    }
+
+    public static AlertDialog showDialog(Activity activity, String title, String msg, String positiveLabel, DialogInterface.OnClickListener positiveOnClick, String negativeLabel, DialogInterface.OnClickListener negativeOnClick, boolean isCancelAble) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(activity);
+        builder.setTitle(title);
+        builder.setCancelable(isCancelAble);
+        builder.setMessage(msg);
+        builder.setPositiveButton(positiveLabel, positiveOnClick);
+        builder.setNegativeButton(negativeLabel, negativeOnClick);
+
+        AlertDialog alertDialog = builder.create();
+        alertDialog.show();
+        return alertDialog;
     }
 
 }

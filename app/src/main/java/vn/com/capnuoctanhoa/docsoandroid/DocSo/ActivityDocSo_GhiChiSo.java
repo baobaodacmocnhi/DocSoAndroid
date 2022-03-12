@@ -15,6 +15,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewDienThoai;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewImage;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
@@ -23,6 +24,7 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -558,40 +560,54 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         error = "\r\n" + jsonObject.getString("error").replace("null", "");
                     if (jsonObject.getString("alert").replace("null", "").equals("") == false)
                         alert = "\r\n" + jsonObject.getString("alert").replace("null", "");
-//                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + alert + error, "center");
+                    //báo thành công
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                         if (imgString.equals("") == false) {
-                            MyAsyncTaskGhiHinhtest myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinhtest();
+                            MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
                             myAsyncTaskGhiHinh.execute(new String[]{STT.toString(), imgString});
                         }
-                        //
+                        //thành công có cảnh báo
                         if (alert.equals("") == false) {
                             CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
-                            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_GhiChiSo.this);
-                            builder.setTitle("Thông Báo");
-                            builder.setMessage(s + alert);
-                            builder.setCancelable(false);
-                            builder.setPositiveButton("Đọc Tiếp", new DialogInterface.OnClickListener() {
+//                            AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_GhiChiSo.this);
+//                            builder.setTitle("Thông Báo");
+//                            builder.setMessage(s + alert);
+//                            builder.setCancelable(false);
+//                            builder.setPositiveButton("Đọc Tiếp", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    ivSau.performClick();
+//                                }
+//                            });
+//                            builder.setNegativeButton("In", new DialogInterface.OnClickListener() {
+//                                @Override
+//                                public void onClick(DialogInterface dialogInterface, int i) {
+//                                    ivIn.performClick();
+//                                    ivSau.performClick();
+//                                }
+//                            });
+//                            AlertDialog alertDialog = builder.create();
+//                            alertDialog.show();
+                            CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", s + alert, "Đọc Tiếp", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
                                     ivSau.performClick();
                                 }
-                            });
-                            builder.setNegativeButton("In", new DialogInterface.OnClickListener() {
+                            }, "In", new DialogInterface.OnClickListener() {
                                 @Override
-                                public void onClick(DialogInterface dialogInterface, int i) {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
                                     ivIn.performClick();
                                     ivSau.performClick();
                                 }
-                            });
-                            AlertDialog alertDialog = builder.create();
-                            alertDialog.show();
-                        } else {
+                            }, false);
+                        } else {//thành công không có cảnh báo
                             CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
                             ivIn.performClick();
                             ivSau.performClick();
                         }
-                    } else {
+                    } else {//thất bại
                         CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + error, "center");
                         CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
                     }
@@ -609,29 +625,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
             try {
                 int index = Integer.parseInt(strings[0]);
-                if (CLocal.listDocSoView.get(index).getLstCaptureString() != null && CLocal.listDocSoView.get(index).getLstCaptureString().size() > 0) {
-                    String result = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getLstCaptureString().get(0));
-                    if (Boolean.parseBoolean(result) == true) {
-                        CLocal.listDocSoView.get(index).setGhiHinh(true);
-                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(index));
-                    }
-                }
-            } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-            }
-            return null;
-        }
-    }
-
-    public class MyAsyncTaskGhiHinhtest extends AsyncTask<String, Void, Void> {
-
-        @Override
-        protected Void doInBackground(String... strings) {
-            try {
-                int index = Integer.parseInt(strings[0]);
-
                 String result = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), strings[1]);
-
+                if (Boolean.parseBoolean(result) == true) {
+                    CLocal.listDocSoView.get(index).setGhiHinh(true);
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(index));
+                }
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }
