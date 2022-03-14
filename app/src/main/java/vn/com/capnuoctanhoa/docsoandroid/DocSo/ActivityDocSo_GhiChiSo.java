@@ -119,6 +119,15 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
         try {
+            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
+            if (STT > -1) {
+                fillLayout(STT);
+            }
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+        }
+
+        try {
             if (CLocal.jsonCode != null && CLocal.jsonCode.length() > 0) {
                 spnName_Code = new ArrayList<>();
                 for (int i = 0; i < CLocal.jsonCode.length(); i++) {
@@ -283,11 +292,14 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
         try {
-            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
-            if (STT > -1) {
-                fillLayout(STT);
-            }
+            fillLayout(STT);
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
@@ -503,7 +515,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            imgString += ";" + CLocal.convertBitmapToString(lstCapture.get(i));
                     }
                 }
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(STT).getDot(), CLocal.MaNV, CLocal.listDocSoView.get(STT).getTBTT());
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(STT).getDot(), CLocal.May, CLocal.listDocSoView.get(STT).getTBTT());
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
