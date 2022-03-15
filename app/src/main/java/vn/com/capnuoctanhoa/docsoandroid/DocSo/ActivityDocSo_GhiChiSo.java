@@ -59,6 +59,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private ArrayList<CCode> spnName_Code;
     private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu;
     private TextView txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
+    private EditText edtChiSo2, edtCode2, edtTieuThu2, edtChiSo1, edtCode1, edtTieuThu1, edtChiSo0, edtCode0, edtTieuThu0, edtChiSoMoi, edtCodeMoi,edtTieuThuMoi;
     private CustomAdapterSpinner customAdapterSpinner;
     private CCode selectedCode = null;
     private String imgPath;
@@ -70,6 +71,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
     private CMarshMallowPermission cMarshMallowPermission;
     private CWebservice ws;
+    private CEntityParent indexCEntityParent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -92,18 +94,30 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         edtDinhMucHN = (EditText) findViewById(R.id.edtDinhMucHN);
         edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
         edtTBTT = (EditText) findViewById(R.id.edtTBTT);
-        txtChiSo2 = (TextView) findViewById(R.id.txtChiSo2);
-        txtCode2 = (TextView) findViewById(R.id.txtCode2);
-        txtTieuThu2 = (TextView) findViewById(R.id.txtTieuThu2);
-        txtChiSo1 = (TextView) findViewById(R.id.txtChiSo1);
-        txtCode1 = (TextView) findViewById(R.id.txtCode1);
-        txtTieuThu1 = (TextView) findViewById(R.id.txtTieuThu1);
-        txtChiSo0 = (TextView) findViewById(R.id.txtChiSo0);
-        txtCode0 = (TextView) findViewById(R.id.txtCode0);
-        txtTieuThu0 = (TextView) findViewById(R.id.txtTieuThu0);
-        txtChiSoMoi = (TextView) findViewById(R.id.txtChiSo);
-        txtCodeMoi = (TextView) findViewById(R.id.txtCode);
-        txtTieuThuMoi = (TextView) findViewById(R.id.txtTieuThu);
+//        txtChiSo2 = (TextView) findViewById(R.id.txtChiSo2);
+//        txtCode2 = (TextView) findViewById(R.id.txtCode2);
+//        txtTieuThu2 = (TextView) findViewById(R.id.txtTieuThu2);
+//        txtChiSo1 = (TextView) findViewById(R.id.txtChiSo1);
+//        txtCode1 = (TextView) findViewById(R.id.txtCode1);
+//        txtTieuThu1 = (TextView) findViewById(R.id.txtTieuThu1);
+//        txtChiSo0 = (TextView) findViewById(R.id.txtChiSo0);
+//        txtCode0 = (TextView) findViewById(R.id.txtCode0);
+//        txtTieuThu0 = (TextView) findViewById(R.id.txtTieuThu0);
+//        txtChiSoMoi = (TextView) findViewById(R.id.txtChiSo);
+//        txtCodeMoi = (TextView) findViewById(R.id.txtCode);
+//        txtTieuThuMoi = (TextView) findViewById(R.id.txtTieuThu);
+        edtChiSo2 = (EditText) findViewById(R.id.edtChiSo2);
+        edtCode2 = (EditText) findViewById(R.id.edtCode2);
+        edtTieuThu2 = (EditText) findViewById(R.id.edtTieuThu2);
+        edtChiSo1 = (EditText) findViewById(R.id.edtChiSo1);
+        edtCode1 = (EditText) findViewById(R.id.edtCode1);
+        edtTieuThu1 = (EditText) findViewById(R.id.edtTieuThu1);
+        edtChiSo0 = (EditText) findViewById(R.id.edtChiSo0);
+        edtCode0 = (EditText) findViewById(R.id.edtCode0);
+        edtTieuThu0 = (EditText) findViewById(R.id.edtTieuThu0);
+        edtChiSoMoi = (EditText) findViewById(R.id.edtChiSo);
+        edtCodeMoi = (EditText) findViewById(R.id.edtCodeMoi);
+        edtTieuThuMoi = (EditText) findViewById(R.id.edtTieuThuMoi);
         edtChiSo = (EditText) findViewById(R.id.edtChiSo);
         spnCode = (Spinner) findViewById(R.id.spnCode);
         ivTruoc = (ImageView) findViewById(R.id.ivTruoc);
@@ -295,16 +309,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
     }
 
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-        try {
-            fillLayout(STT);
-        } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-        }
-    }
-
     private void initial() {
         lstCapture = new ArrayList<>();
         lstCapture.clear();
@@ -312,6 +316,33 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         selectedCode = (CCode) spnCode.getItemAtPosition(0);
         edtChiSo.setText("");
         loadRecyclerViewImage();
+        //
+        edtMLT.setText("");
+        edtDanhBo.setText("");
+        edtHoTen.setText("");
+        edtDiaChi.setText("");
+        edtDiaChiDHN.setText("");
+        edtViTri.setText("");
+        edtHieu.setText("");
+        edtCo.setText("");
+        edtSoThan.setText("");
+        edtDienThoai.setText("");
+        edtGiaBieu.setText("");
+        edtDinhMuc.setText("");
+        edtDinhMucHN.setText("");
+        edtTBTT.setText("");
+        edtChiSo2.setText("");
+        edtCode2.setText("");
+        edtTieuThu2.setText("");
+        edtChiSo1.setText("");
+        edtCode1.setText("");
+        edtTieuThu1.setText("");
+        edtChiSo0.setText("");
+        edtCode0.setText("");
+        edtTieuThu0.setText("");
+        edtChiSoMoi.setText("");
+        edtCodeMoi.setText("");
+        edtTieuThuMoi.setText("");
     }
 
     private void loadRecyclerViewImage() {
@@ -440,7 +471,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         try {
             initial();
             if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
-                ArrayList<String> arrayList = new ArrayList<String>();
                 if (STT >= 0 && STT < CLocal.listDocSoView.size()) {
                     CEntityParent item = CLocal.listDocSoView.get(STT);
                     edtMLT.setText(item.getMLT());
@@ -457,19 +487,18 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     edtDinhMuc.setText(item.getDinhMuc());
                     edtDinhMucHN.setText(item.getDinhMucHN());
                     edtTBTT.setText(item.getTBTT());
-                    txtChiSo2.setText(item.getChiSo2());
-                    txtCode2.setText(item.getCode2());
-                    txtTieuThu2.setText(item.getTieuThu2());
-                    txtChiSo1.setText(item.getChiSo1());
-                    txtCode1.setText(item.getCode1());
-                    txtTieuThu1.setText(item.getTieuThu1());
-                    txtChiSo0.setText(item.getChiSo0());
-                    txtCode0.setText(item.getCode0());
-                    txtTieuThu0.setText(item.getTieuThu0());
-                    txtChiSoMoi.setText(item.getChiSoMoi());
-                    txtCodeMoi.setText(item.getCodeMoi());
-                    txtTieuThuMoi.setText(item.getTieuThuMoi());
-
+                    edtChiSo2.setText(item.getChiSo2());
+                    edtCode2.setText(item.getCode2());
+                    edtTieuThu2.setText(item.getTieuThu2());
+                    edtChiSo1.setText(item.getChiSo1());
+                    edtCode1.setText(item.getCode1());
+                    edtTieuThu1.setText(item.getTieuThu1());
+                    edtChiSo0.setText(item.getChiSo0());
+                    edtCode0.setText(item.getCode0());
+                    edtTieuThu0.setText(item.getTieuThu0());
+                    edtChiSoMoi.setText(item.getChiSoMoi());
+                    edtCodeMoi.setText(item.getCodeMoi());
+                    edtTieuThuMoi.setText(item.getTieuThuMoi());
                     try {
                         Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + item.getNam() + "_" + item.getKy() + "_" + item.getDot() + "/" + item.getDanhBo().replace(" ", "") + ".jpg");
                         if (bitmap != null) {

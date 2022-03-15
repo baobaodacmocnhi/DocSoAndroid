@@ -112,7 +112,6 @@ public class CLocal {
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
-    public static int STT = -1;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -1043,7 +1042,7 @@ public class CLocal {
                 CLocal.openBluetoothSettings(activity);
             } else if (CLocal.checkServiceRunning(activity, ServiceThermalPrinter.class) == false) {
                 Intent intent2 = new Intent(activity, ServiceThermalPrinter.class);
-                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+//                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
                 activity.startService(intent2);
                 activity.bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
             }

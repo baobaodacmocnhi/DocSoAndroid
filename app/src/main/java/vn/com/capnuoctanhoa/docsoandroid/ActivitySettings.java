@@ -57,7 +57,6 @@ public class ActivitySettings extends AppCompatActivity {
                 MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
                 myAsyncTask_thermal.execute();
 
-
 //                String str="Bằng chữ: một trăm năm mươi hai ng";
 //                CLocal.showPopupMessage(ActivitySettings.this,String.valueOf(str.length()));
 

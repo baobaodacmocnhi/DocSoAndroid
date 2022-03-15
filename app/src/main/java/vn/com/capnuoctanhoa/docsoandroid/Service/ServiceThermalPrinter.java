@@ -41,7 +41,7 @@ public class ServiceThermalPrinter extends Service {
     }
 
     private BluetoothAdapter mBluetoothAdapter;
-    public static String B_DEVICE = "MY_DEVICE";
+//    public static String B_DEVICE = "MY_DEVICE";
     public static final String B_UUID = "00001101-0000-1000-8000-00805f9b34fb";
 
     public static final int STATE_NONE = 0;
@@ -94,13 +94,14 @@ public class ServiceThermalPrinter extends Service {
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
-        B_DEVICE = intent.getStringExtra("ThermalPrinter");
-        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-        connectToDevice(B_DEVICE);
+//        B_DEVICE = intent.getStringExtra("ThermalPrinter");
+//        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+        connectToDevice(CLocal.ThermalPrinter);
         return START_STICKY;
     }
 
     private synchronized void connectToDevice(String macAddress) {
+        mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
         mDevice = mBluetoothAdapter.getRemoteDevice(macAddress);
         if (mState == STATE_CONNECTING) {
             if (mConnectThread != null) {
@@ -326,7 +327,7 @@ public class ServiceThermalPrinter extends Service {
         try {
             if (mConnectedThread == null || mState != STATE_CONNECTED)
 //                connected(mSocket);
-                connectToDevice(B_DEVICE);
+                connectToDevice(CLocal.ThermalPrinter);
             switch (CLocal.MethodPrinter) {
                 case "Honeywell45":
                     printGhiChiSo_escpPrint(entityParent, 45);
