@@ -662,7 +662,7 @@
                     <View
                         android:id="@+id/view"
                         android:layout_width="match_parent"
-                        android:layout_height="7dp"
+                        android:layout_height="10dp"
                         android:background="@color/colorChuaThu" />
 
                     <TextView
@@ -674,7 +674,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="12dp"
+                        android:layout_height="22dp"
                         android:background="@color/colorChuaThu" />
 
                     <TextView
@@ -686,7 +686,7 @@
 
                     <View
                         android:layout_width="match_parent"
-                        android:layout_height="16dp"
+                        android:layout_height="20dp"
                         android:background="@color/colorChuaThu" />
 
                     <TextView
@@ -714,40 +714,38 @@
                         <EditText
                             android:id="@+id/edtCode2"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
-                            android:minHeight="48dp"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                         <EditText
                             android:id="@+id/edtChiSo2"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
-                            android:minHeight="48dp"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                         <EditText
                             android:id="@+id/edtTieuThu2"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
                     </LinearLayout>
                     <!--ky hien tai - 2-->
                     <LinearLayout
@@ -760,38 +758,38 @@
                         <EditText
                             android:id="@+id/edtCode1"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-                            android:autofillHints="" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                         <EditText
                             android:id="@+id/edtChiSo1"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                         <EditText
                             android:id="@+id/edtTieuThu1"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-                            android:autofillHints="" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
                     </LinearLayout>
                     <!--ky hien tai - 1-->
                     <LinearLayout
@@ -804,38 +802,38 @@
                         <EditText
                             android:id="@+id/edtCode0"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"
-                            android:autofillHints="" />
+                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
                         <EditText
                             android:id="@+id/edtChiSo0"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
                         <EditText
                             android:id="@+id/edtTieuThu0"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
                     </LinearLayout>
                     <!--ky hien tai-->
                     <LinearLayout
@@ -848,38 +846,38 @@
                         <EditText
                             android:id="@+id/edtCodeMoi"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="SpeakableTextPresentCheck" />
 
                         <EditText
                             android:id="@+id/edtChiSoMoi"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="SpeakableTextPresentCheck" />
 
                         <EditText
                             android:id="@+id/edtTieuThuMoi"
                             android:layout_width="match_parent"
-                            android:layout_height="39dp"
+                            android:layout_height="wrap_content"
+                            android:autofillHints=""
                             android:ems="10"
                             android:focusable="false"
                             android:inputType="number"
                             android:textAlignment="center"
                             android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck"
-                            android:autofillHints="" />
+                            tools:ignore="SpeakableTextPresentCheck" />
                     </LinearLayout>
                 </LinearLayout>
 
@@ -941,8 +939,8 @@
                 android:layout_height="100dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="@+id/edtChiSo"
-                app:layout_constraintStart_toEndOf="@+id/btnChonHinh"
+                app:layout_constraintEnd_toStartOf="@+id/btnChonHinh"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spnCode" />
 
             <ImageButton
@@ -961,7 +959,7 @@
                 android:layout_height="wrap_content"
                 android:text="Chọn hình"
                 app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 tools:ignore="TextContrastCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
