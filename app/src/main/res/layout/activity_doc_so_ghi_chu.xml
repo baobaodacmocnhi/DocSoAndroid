@@ -111,6 +111,30 @@
                 app:layout_constraintTop_toTopOf="@+id/spnViTri1"
                 tools:ignore="SpeakableTextPresentCheck" />
 
+            <EditText
+                android:id="@+id/edtGhiChu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:inputType="textPersonName"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView39"
+                app:layout_constraintTop_toBottomOf="@+id/spnViTri2"
+                tools:ignore="SpeakableTextPresentCheck" />
+
+            <TextView
+                android:id="@+id/textView39"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Ghi Chú"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/edtGhiChu" />
+
             <Button
                 android:id="@+id/btnCapNhat"
                 android:layout_width="wrap_content"
@@ -118,6 +142,15 @@
                 android:text="Cập Nhật"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/spnViTri2" />
+
+            <TextView
+                android:id="@+id/textView40"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-------------------------------------------------------------"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu" />
 
             <TextView
                 android:id="@+id/textView20"
@@ -152,7 +185,7 @@
                 android:inputType="phone"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/spnViTri1"
+                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView

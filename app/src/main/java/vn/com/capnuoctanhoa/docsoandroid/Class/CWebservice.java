@@ -220,7 +220,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri1, String ViTri2, String Gieng, String MaNV) {
+    public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri1, String ViTri2, String Gieng,String GhiChu, String MaNV) {
         String SOAP_ACTION = "http://tempuri.org/update_DienThoai";
         String OPERATION_NAME = "update_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -258,6 +258,12 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("Gieng");
         pi.setValue(Gieng);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("GhiChu");
+        pi.setValue(GhiChu);
         pi.setType(String.class);
         request.addProperty(pi);
 

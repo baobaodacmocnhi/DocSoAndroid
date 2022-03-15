@@ -423,6 +423,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                             enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
                         enParent.setTuNgay(jsonObject.getString("TuNgay").replace("null", ""));
                         enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
+                        enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
                         if (CLocal.jsonHoaDonTon != null && CLocal.jsonHoaDonTon.length() > 0)
                             for (int k = 0; k < CLocal.jsonHoaDonTon.length(); k++) {
                                 JSONObject jsonObjectChild = CLocal.jsonHoaDonTon.getJSONObject(k);

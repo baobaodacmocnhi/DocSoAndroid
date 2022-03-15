@@ -37,7 +37,7 @@ import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private Integer STT = -1;
-    private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen;
+    private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen,edtGhiChu;
     private Spinner spnViTri1, spnViTri2;
     private Button btnCapNhat, btnCapNhatDT;
     private CheckBox chkGieng, chkSoChinh;
@@ -53,6 +53,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         setContentView(R.layout.activity_doc_so_ghi_chu);
         edtSoNha = (EditText) findViewById(R.id.edtSoNha);
         edtTenDuong = (EditText) findViewById(R.id.edtTenDuong);
+        edtGhiChu = (EditText) findViewById(R.id.edtGhiChu);
         spnViTri1 = (Spinner) findViewById(R.id.spnViTri1);
         spnViTri2 = (Spinner) findViewById(R.id.spnViTri2);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
@@ -114,6 +115,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         CEntityParent item = CLocal.listDocSoView.get(STT);
                         edtSoNha.setText(item.getSoNha());
                         edtTenDuong.setText(item.getTenDuong());
+                        edtGhiChu.setText(item.getGhiChu());
                         if (item.getViTri1().equals("") == false)
                             spnViTri1.setSelection(((ArrayAdapter) spnViTri1.getAdapter()).getPosition(item.getViTri1()));
                         if (item.getViTri2().equals("") == false)
@@ -176,7 +178,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 switch (strings[0]) {
                     case "CapNhat":
                         result = ws.update_GhiChu(CLocal.listDocSoView.get(STT).getDanhBo(), edtSoNha.getText().toString(), edtSoNha.getText().toString()
-                                , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()), CLocal.MaNV);
+                                , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()),edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
                         result = ws.update_DienThoai(CLocal.listDocSoView.get(STT).getDanhBo(), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
