@@ -41,6 +41,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
@@ -337,7 +338,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "F":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().contains("F") == true) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false && CLocal.listDocSo.get(i).getCodeMoi().substring(0, 1).equals("F") == true) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }
@@ -389,7 +390,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK ) {
+                    if (result.getResultCode() == Activity.RESULT_OK) {
                         loadListView();
                     }
                 }
