@@ -687,9 +687,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Kỳ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 305, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() + "\n", 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() , 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay() + "\n", 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay() , 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1))
                             .append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));

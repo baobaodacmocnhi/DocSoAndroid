@@ -247,12 +247,6 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-        loadListView();
-    }
-
-    @Override
     protected void onRestart() {
         super.onRestart();
         loadListView();
