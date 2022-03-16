@@ -939,8 +939,8 @@
                 android:layout_height="100dp"
                 android:orientation="horizontal"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/btnChonHinh"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/spnCode"
                 app:layout_constraintTop_toBottomOf="@+id/spnCode" />
 
             <ImageButton
@@ -959,7 +959,7 @@
                 android:layout_height="wrap_content"
                 android:text="Chọn hình"
                 app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="TextContrastCheck" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
