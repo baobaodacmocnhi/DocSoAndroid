@@ -280,9 +280,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    if (CLocal.listDocSoView.get(STT).getCodeMoi().equals("") == false) {
+                    if (indexCEntityParent.getCodeMoi().equals("") == false) {
                         if (CLocal.serviceThermalPrinter != null) {
-                            CLocal.serviceThermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(STT));
+                            CLocal.serviceThermalPrinter.printGhiChiSo(indexCEntityParent);
                         }
                     } else {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
@@ -472,37 +472,37 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             initial();
             if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
                 if (STT >= 0 && STT < CLocal.listDocSoView.size()) {
-                    CEntityParent item = CLocal.listDocSoView.get(STT);
-                    edtMLT.setText(item.getMLT());
-                    edtDanhBo.setText(item.getDanhBo());
-                    edtHoTen.setText(item.getHoTen());
-                    edtDiaChi.setText(item.getDiaChi());
-                    edtDiaChiDHN.setText(item.getSoNha() + " " + item.getTenDuong());
-                    edtViTri.setText(item.getViTri1() + " - " + item.getViTri2());
-                    edtHieu.setText(item.getHieu());
-                    edtCo.setText(item.getCo());
-                    edtSoThan.setText(item.getSoThan());
-                    edtDienThoai.setText(item.getDienThoai());
-                    edtGiaBieu.setText(item.getGiaBieu());
-                    edtDinhMuc.setText(item.getDinhMuc());
-                    edtDinhMucHN.setText(item.getDinhMucHN());
-                    edtTBTT.setText(item.getTBTT());
-                    edtChiSo2.setText(item.getChiSo2());
-                    edtCode2.setText(item.getCode2());
-                    edtTieuThu2.setText(item.getTieuThu2());
-                    edtChiSo1.setText(item.getChiSo1());
-                    edtCode1.setText(item.getCode1());
-                    edtTieuThu1.setText(item.getTieuThu1());
-                    edtChiSo0.setText(item.getChiSo0());
-                    edtCode0.setText(item.getCode0());
-                    edtTieuThu0.setText(item.getTieuThu0());
-                    edtChiSoMoi.setText(item.getChiSoMoi());
-                    edtCodeMoi.setText(item.getCodeMoi());
-                    edtTieuThuMoi.setText(item.getTieuThuMoi());
+                     indexCEntityParent = CLocal.listDocSoView.get(STT);
+                    edtMLT.setText(indexCEntityParent.getMLT());
+                    edtDanhBo.setText(indexCEntityParent.getDanhBo());
+                    edtHoTen.setText(indexCEntityParent.getHoTen());
+                    edtDiaChi.setText(indexCEntityParent.getDiaChi());
+                    edtDiaChiDHN.setText(indexCEntityParent.getSoNha() + " " + indexCEntityParent.getTenDuong());
+                    edtViTri.setText(indexCEntityParent.getViTri1() + " - " + indexCEntityParent.getViTri2());
+                    edtHieu.setText(indexCEntityParent.getHieu());
+                    edtCo.setText(indexCEntityParent.getCo());
+                    edtSoThan.setText(indexCEntityParent.getSoThan());
+                    edtDienThoai.setText(indexCEntityParent.getDienThoai());
+                    edtGiaBieu.setText(indexCEntityParent.getGiaBieu());
+                    edtDinhMuc.setText(indexCEntityParent.getDinhMuc());
+                    edtDinhMucHN.setText(indexCEntityParent.getDinhMucHN());
+                    edtTBTT.setText(indexCEntityParent.getTBTT());
+                    edtChiSo2.setText(indexCEntityParent.getChiSo2());
+                    edtCode2.setText(indexCEntityParent.getCode2());
+                    edtTieuThu2.setText(indexCEntityParent.getTieuThu2());
+                    edtChiSo1.setText(indexCEntityParent.getChiSo1());
+                    edtCode1.setText(indexCEntityParent.getCode1());
+                    edtTieuThu1.setText(indexCEntityParent.getTieuThu1());
+                    edtChiSo0.setText(indexCEntityParent.getChiSo0());
+                    edtCode0.setText(indexCEntityParent.getCode0());
+                    edtTieuThu0.setText(indexCEntityParent.getTieuThu0());
+                    edtChiSoMoi.setText(indexCEntityParent.getChiSoMoi());
+                    edtCodeMoi.setText(indexCEntityParent.getCodeMoi());
+                    edtTieuThuMoi.setText(indexCEntityParent.getTieuThuMoi());
                     try {
-                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + item.getNam() + "_" + item.getKy() + "_" + item.getDot() + "/" + item.getDanhBo().replace(" ", "") + ".jpg");
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + indexCEntityParent.getNam() + "_" + indexCEntityParent.getKy() + "_" + indexCEntityParent.getDot() + "/" + indexCEntityParent.getDanhBo().replace(" ", "") + ".jpg");
                         if (bitmap != null) {
-                            bitmap = CLocal.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + item.getNam() + "_" + item.getKy() + "_" + item.getDot() + "/" + item.getDanhBo().replace(" ", "") + ".jpg");
+                            bitmap = CLocal.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + indexCEntityParent.getNam() + "_" + indexCEntityParent.getKy() + "_" + indexCEntityParent.getDot() + "/" + indexCEntityParent.getDanhBo().replace(" ", "") + ".jpg");
                             lstCapture.add(bitmap);
                             loadRecyclerViewImage();
                         }
@@ -544,24 +544,24 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            imgString += ";" + CLocal.convertBitmapToString(lstCapture.get(i));
                     }
                 }
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(STT).getDot(), CLocal.May, CLocal.listDocSoView.get(STT).getTBTT());
+                String result = ws.ghiChiSo(indexCEntityParent.getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", indexCEntityParent.getDot(), CLocal.May, indexCEntityParent.getTBTT());
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    CLocal.listDocSoView.get(STT).setCodeMoi(selectedCode.getCode());
-                    CLocal.listDocSoView.get(STT).setChiSoMoi(edtChiSo.getText().toString());
+                    indexCEntityParent.setCodeMoi(selectedCode.getCode());
+                    indexCEntityParent.setChiSoMoi(edtChiSo.getText().toString());
                     JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
-                    CLocal.listDocSoView.get(STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
+                    indexCEntityParent.setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
+                    indexCEntityParent.setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
+                    indexCEntityParent.setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
+                    indexCEntityParent.setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
+                    indexCEntityParent.setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
+                    indexCEntityParent.setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
+                    indexCEntityParent.setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     if (lstCapture.size() > 0) {
                         for (int i = 0; i < lstCapture.size(); i++) {
-                            CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(STT).getNam() + "_" + CLocal.listDocSoView.get(STT).getKy() + "_" + CLocal.listDocSoView.get(STT).getDot()
-                                    , CLocal.listDocSoView.get(STT).getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
+                            CLocal.writeFile(CLocal.pathAppPicture + "/" + indexCEntityParent.getNam() + "_" + indexCEntityParent.getKy() + "_" + indexCEntityParent.getDot()
+                                    , indexCEntityParent.getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
                         }
                     }
 //                    if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
@@ -571,10 +571,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            CEntityChild entityChild = new CEntityChild();
 //                            entityChild.setKy(jsonhd.getString("KyHD"));
 //                            entityChild.setTongCong(jsonhd.getString("TongCong"));
-//                            CLocal.listDocSoView.get(STT).getLstHoaDon().add(entityChild);
+//                            indexCEntityParent.getLstHoaDon().add(entityChild);
 //                        }
 //                    }
-                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(STT));
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, indexCEntityParent);
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";

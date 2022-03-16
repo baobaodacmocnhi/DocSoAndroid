@@ -444,7 +444,7 @@ public class ServiceThermalPrinter extends Service {
 //                    stringBuilder.append(breakLine("Ngày thu tiền dự kiến từ " + entityParent.getNgayThuTien(), charWidth)).append('\n');
                     stringBuilder.append("Phiếu này không có giá trị thanh toán\n");
                 }
-                stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC KỂ TỪ NGÀY " +
+                stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY " +
                                 escpStyle(entityParent.getNgayThuTien(), 0b11000) +
                                 ".\n",
                         charWidth));
@@ -659,14 +659,12 @@ public class ServiceThermalPrinter extends Service {
                 String[] tenKhLines = null;
                 String tenKh = entityParent.getHoTen();
                 if (tenKh != null && !tenKh.trim().isEmpty()) {
-                    tenKh = tenKh.toLowerCase();
                     tenKhLines = breakLine("KH:" + tenKh, 33).split("\n");
                 }
                 //dia chi
                 String[] diaChiLines = null;
                 String diaChi = entityParent.getDiaChi();
                 if (diaChi != null && !diaChi.trim().isEmpty()) {
-                    diaChi = diaChi.toLowerCase();
                     diaChiLines = breakLine("Đ/Chỉ:" + diaChi, 33).split("\n");
                 }
 
@@ -689,7 +687,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Kỳ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 305, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() + " Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() , 1, y, 0, 1, 1));
+                    y = handlingYMoreThan450(y, 25);
+                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1))
                             .append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));
@@ -844,8 +844,9 @@ public class ServiceThermalPrinter extends Service {
                             y = handlingYMoreThan450(y, 25);
                         }
                     }
-                    stringBuilder.append(printLine("Số tiền cần thanh toán: ", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s", 3, y, 255, 1, 1, TongCong));
+                    stringBuilder.append(printLine("Số tiền cần thanh toán:", 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1,
+                            padLeft(numberVN(Double.parseDouble(String.valueOf(TongCong))), 30)));
                     y = handlingYMoreThan450(y, 25);
                     //doc tien
                     String docTien = ReadMoney(String.valueOf(TongCong));
@@ -875,10 +876,9 @@ public class ServiceThermalPrinter extends Service {
                 }
                 stringBuilder.append(printLine("KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("TOÁN TIỀN NƯỚC KỂ TỪ NGÀY", 1, y, 0, 1, 1));
+                stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TRONG 7 NGÀY", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("%s.", 1, y, 0, 1, 1, entityParent.getNgayThuTien()));
-                stringBuilder.append(printLine("                                         %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
+                stringBuilder.append(printLine("KỂ TỪ NGÀY %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("Để biết thêm thông tin chi tiết tiền", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
