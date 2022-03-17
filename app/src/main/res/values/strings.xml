@@ -41,6 +41,7 @@
         <item>Đã Đọc</item>
         <item>Chưa Đọc</item>
         <item>F</item>
+        <item>Bất Thường</item>
     </string-array>
     <string-array name="sort_array">
         <item>MLT</item>

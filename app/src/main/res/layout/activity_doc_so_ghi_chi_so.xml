@@ -706,7 +706,7 @@
                     <!--ky hien tai - 3-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_3_1"
                         android:orientation="vertical">
@@ -750,7 +750,7 @@
                     <!--ky hien tai - 2-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_2_1"
                         android:orientation="vertical">
@@ -794,7 +794,7 @@
                     <!--ky hien tai - 1-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_1_1"
                         android:orientation="vertical">
@@ -838,7 +838,7 @@
                     <!--ky hien tai-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_0_1"
                         android:orientation="vertical">
