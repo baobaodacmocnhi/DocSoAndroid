@@ -230,7 +230,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 CLocal.indexPosition = i;
                 Intent intent;
                 intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChiSo.class);
-                intent.putExtra("STT", String.valueOf(i));
+                CLocal.STT = i;
+//                intent.putExtra("STT", String.valueOf(i));
 //                startActivityForResult(intent, 1);
                 activityResultLauncher_GhiChiSo.launch(intent);
                 return false;
@@ -387,7 +388,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 enViewParent.setRow1b("Code " + enParent.getCodeMoi());
             enViewParent.setRow2a(enParent.getDanhBo());
             if (enParent.getChiSoMoi().equals("") == false)
-            enViewParent.setRow2b("CS " + enParent.getChiSoMoi() + " - TT " + enParent.getTieuThuMoi());
+                enViewParent.setRow2b("CS " + enParent.getChiSoMoi() + " - TT " + enParent.getTieuThuMoi());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
 

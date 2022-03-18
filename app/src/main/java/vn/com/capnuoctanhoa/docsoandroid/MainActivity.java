@@ -265,16 +265,15 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
-            switch (strings[0]) {
-                case "Version":
-                    return ws.getVersion();
+            try {
+                switch (strings[0]) {
+                    case "Version":
+                        return ws.getVersion();
+                }
+                return null;
+            } catch (Exception ex) {
+                return ex.getMessage();
             }
-            return null;
-        }
-
-        @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
         }
 
         @Override

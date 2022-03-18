@@ -54,7 +54,7 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
-    private Integer STT = -1;
+    //    private Integer STT = -1;
     private CEntityParent entityParent;
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtDiaChiDHN, edtViTri, edtHieu, edtCo, edtSoThan, edtGiaBieu, edtDinhMuc, edtDinhMucHN, edtDienThoai, edtChiSo, edtTBTT;
     private Spinner spnCode;
@@ -134,9 +134,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
         try {
-            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
-            if (STT > -1) {
-                entityParent = CLocal.listDocSoView.get(STT);
+//            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
+            if (CLocal.STT > -1) {
+                entityParent = CLocal.listDocSoView.get(CLocal.STT);
                 fillLayout(entityParent);
             }
         } catch (Exception ex) {
@@ -174,9 +174,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivTruoc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (STT > 0) {
-                    STT = STT - 1;
-                    entityParent = CLocal.listDocSoView.get(STT);
+                if (CLocal.STT > 0) {
+                    CLocal.STT--;
+                    entityParent = CLocal.listDocSoView.get(CLocal.STT);
                     fillLayout(entityParent);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Đầu Danh Sách");
@@ -186,9 +186,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivSau.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (STT < CLocal.listDocSoView.size() - 1) {
-                    STT = STT + 1;
-                    entityParent = CLocal.listDocSoView.get(STT);
+                if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
+                    CLocal.STT++;
+                    entityParent = CLocal.listDocSoView.get(CLocal.STT);
                     fillLayout(entityParent);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Cuối Danh Sách");
@@ -305,7 +305,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     return;
                 }
                 Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_GhiChu.class);
-                intent.putExtra("STT", String.valueOf(STT));
+//                intent.putExtra("STT", String.valueOf(STT));
                 startActivity(intent);
             }
         });
@@ -504,6 +504,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
+        myAsyncTaskGhiHinhAll.execute();
         CLocal.updateArrayListToJson();
     }
 
@@ -680,7 +682,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
         }
     }
-    private boolean flagGhiHinh = false;
+
 
     public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
 
@@ -694,16 +696,13 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             CLocal.listDocSoView.get(i).setGhiHinh(true);
                             CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(i));
                         }
-                } else
-                    flagGhiHinh = true;
+                }
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-                flagGhiHinh = true;
             }
             return null;
         }
     }
-
 
 
     public class MyAsyncTaskGhiHinhAll extends AsyncTask<String, Void, Void> {
@@ -723,7 +722,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             }
                         }
                     }
-                flagGhiHinh = false;
             } catch (Exception ex) {
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }

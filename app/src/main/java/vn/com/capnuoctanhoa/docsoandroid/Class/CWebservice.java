@@ -5,8 +5,11 @@ import org.ksoap2.serialization.PropertyInfo;
 import org.ksoap2.serialization.SoapObject;
 import org.ksoap2.serialization.SoapSerializationEnvelope;
 import org.ksoap2.transport.HttpTransportSE;
+import org.xmlpull.v1.XmlPullParserException;
 
 import androidx.annotation.Nullable;
+
+import java.io.IOException;
 
 /**
  * Created by user on 22/03/2018.
@@ -15,33 +18,26 @@ import androidx.annotation.Nullable;
 public class CWebservice {
     private final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
     private final String SOAP_ADDRESS = "http://113.161.88.180:81/wsDHN.asmx";
-//  private final String SOAP_ADDRESS = "http://192.168.90.11:81/wsDHN_test.asmx";
 
     @Nullable
-    private String excute(SoapObject request, String SOAP_ACTION) {
-        SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
-        envelope.dotNet = true;
-
-        envelope.setOutputSoapObject(request);
-
-        HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 5);
-        Object response = null;
+    private String excute(SoapObject request, String SOAP_ACTION) throws XmlPullParserException, IOException {
         try {
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            envelope.dotNet = true;
+            envelope.setOutputSoapObject(request);
+            HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 1);
             httpTransport.call(SOAP_ACTION, envelope);
-            response = envelope.getResponse();
-        } catch (Exception exception) {
-            response = exception.toString();
+            return envelope.getResponse().toString();
+        } catch (Exception ex) {
+            throw ex;
         }
-        return response.toString();
     }
 
     @Nullable
     private SoapObject excuteReturnTable(SoapObject request, String SOAP_ACTION) {
         SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
         envelope.dotNet = true;
-
         envelope.setOutputSoapObject(request);
-
         HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);
         SoapObject response = null;
         try {
@@ -60,7 +56,7 @@ public class CWebservice {
         return response;
     }
 
-    public String dangNhaps(String Username, String Password, String IDMobile, String UID) {
+    public String dangNhaps(String Username, String Password, String IDMobile, String UID) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/DangNhaps";
         String OPERATION_NAME = "DangNhaps";
 //        String SOAP_ACTION = "http://tempuri.org/DangNhaps_Admin";
@@ -94,7 +90,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String dangXuats(String Username, String UID) {
+    public String dangXuats(String Username, String UID) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/DangXuats";
         String OPERATION_NAME = "DangXuats";
 //        String SOAP_ACTION = "http://tempuri.org/DangXuats_Admin";
@@ -116,7 +112,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String dangXuats_Person(String Username, String UID) {
+    public String dangXuats_Person(String Username, String UID) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/DangXuats_Person";
         String OPERATION_NAME = "DangXuats_Person";
 //        String SOAP_ACTION = "http://tempuri.org/DangXuats_Admin";
@@ -138,7 +134,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String updateUID(String MaNV, String UID) {
+    public String updateUID(String MaNV, String UID) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/UpdateUID";
         String OPERATION_NAME = "UpdateUID";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -158,7 +154,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getVersion() {
+    public String getVersion() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/GetVersion";
         String OPERATION_NAME = "GetVersion";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -166,7 +162,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDSTo() {
+    public String getDSTo() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/GetDSTo";
         String OPERATION_NAME = "GetDSTo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -174,7 +170,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDSNhanVienTo(String MaTo) {
+    public String getDSNhanVienTo(String MaTo) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/GetDSNhanVienTo";
         String OPERATION_NAME = "GetDSNhanVienTo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -188,7 +184,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_NhanVien() {
+    public String getDS_NhanVien()throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien";
         String OPERATION_NAME = "getDS_NhanVien";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -196,7 +192,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_Nam() {
+    public String getDS_Nam()throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/getDS_Nam";
         String OPERATION_NAME = "getDS_Nam";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -204,7 +200,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_Code() {
+    public String getDS_Code()throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/getDS_Code";
         String OPERATION_NAME = "getDS_Code";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -212,7 +208,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_ViTriDHN() {
+    public String getDS_ViTriDHN() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_ViTriDHN";
         String OPERATION_NAME = "getDS_ViTriDHN";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -220,7 +216,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri1, String ViTri2, String Gieng,String GhiChu, String MaNV) {
+    public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri1, String ViTri2, String Gieng, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/update_DienThoai";
         String OPERATION_NAME = "update_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -276,7 +272,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_DienThoai(String DanhBo) {
+    public String getDS_DienThoai(String DanhBo)throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/getDS_DienThoai";
         String OPERATION_NAME = "getDS_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -290,7 +286,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String update_DienThoai(String DanhBo, String DienThoai, String HoTen,String SoChinh, String MaNV) {
+    public String update_DienThoai(String DanhBo, String DienThoai, String HoTen, String SoChinh, String MaNV)throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/update_DienThoai";
         String OPERATION_NAME = "update_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -328,7 +324,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String delete_DienThoai(String DanhBo, String DienThoai) {
+    public String delete_DienThoai(String DanhBo, String DienThoai) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/delete_DienThoai";
         String OPERATION_NAME = "delete_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -349,7 +345,7 @@ public class CWebservice {
     }
 
     //đọc số
-    public String getDS_DocSo(String Nam, String Ky, String Dot, String May) {
+    public String getDS_DocSo(String Nam, String Ky, String Dot, String May)throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/getDS_DocSo";
         String OPERATION_NAME = "getDS_DocSo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -381,7 +377,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_HoaDonTon(String Nam, String Ky, String Dot, String May) {
+    public String getDS_HoaDonTon(String Nam, String Ky, String Dot, String May) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_HoaDonTon";
         String OPERATION_NAME = "getDS_HoaDonTon";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -413,7 +409,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghiChiSo(String ID, String Code, String ChiSo, String HinhDHN, String Dot, String MaNV, String TBTT) {
+    public String ghiChiSo(String ID, String Code, String ChiSo, String HinhDHN, String Dot, String MaNV, String TBTT)throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/ghiChiSo";
         String OPERATION_NAME = "ghiChiSo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -463,7 +459,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghi_Hinh(String ID, String HinhDHN) {
+    public String ghi_Hinh(String ID, String HinhDHN)throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/ghi_Hinh";
         String OPERATION_NAME = "ghi_Hinh";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -484,7 +480,7 @@ public class CWebservice {
     }
 
     //admin
-    public String truyvan(String sql) {
+    public String truyvan(String sql) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/truyvan";
         String OPERATION_NAME = "truyvan";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -498,7 +494,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String capnhat(String sql) {
+    public String capnhat(String sql)throws XmlPullParserException, IOException  {
         String SOAP_ACTION = "http://tempuri.org/capnhat";
         String OPERATION_NAME = "capnhat";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);

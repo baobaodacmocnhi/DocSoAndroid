@@ -24,6 +24,7 @@ import java.util.Date;
 import java.util.Random;
 
 import androidx.core.app.NotificationCompat;
+
 import vn.com.capnuoctanhoa.docsoandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
@@ -51,8 +52,12 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            CWebservice ws = new CWebservice();
-            ws.updateUID(CLocal.sharedPreferencesre.getString("MaNV", ""), CLocal.sharedPreferencesre.getString("UID", ""));
+            try {
+                CWebservice ws = new CWebservice();
+                ws.updateUID(CLocal.sharedPreferencesre.getString("MaNV", ""), CLocal.sharedPreferencesre.getString("UID", ""));
+            } catch (Exception ex) {
+                CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
+            }
             return null;
         }
     }
@@ -72,12 +77,11 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             if (remoteMessage.getData().get("Action").equals("DangXuat")) {
                 CLocal.initialCLocal();
                 intent = new Intent(this, ActivityDangNhap.class);
-            } else
-                if (remoteMessage.getData().get("Action").equals("DocSo") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                    //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
-                    CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-                    CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-                    intent = new Intent(this, ActivityDocSo_DanhSach.class);
+            } else if (remoteMessage.getData().get("Action").equals("DocSo") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
+                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                intent = new Intent(this, ActivityDocSo_DanhSach.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
             }

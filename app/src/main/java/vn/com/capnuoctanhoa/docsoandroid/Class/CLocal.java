@@ -112,6 +112,7 @@ public class CLocal {
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
+    public static int STT = 0;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
