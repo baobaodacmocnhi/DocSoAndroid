@@ -383,9 +383,11 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             enViewParent.setID(String.valueOf(enParent.getID()));
 
             enViewParent.setRow1a(enParent.getMLT());
-            enViewParent.setRow1b("Code " + enParent.getCodeMoi());
+            if (enParent.getCodeMoi().equals("") == false)
+                enViewParent.setRow1b("Code " + enParent.getCodeMoi());
             enViewParent.setRow2a(enParent.getDanhBo());
-            enViewParent.setRow2b("CS " + enParent.getChiSoMoi());
+            if (enParent.getChiSoMoi().equals("") == false)
+            enViewParent.setRow2b("CS " + enParent.getChiSoMoi() + " - TT " + enParent.getTieuThuMoi());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
 

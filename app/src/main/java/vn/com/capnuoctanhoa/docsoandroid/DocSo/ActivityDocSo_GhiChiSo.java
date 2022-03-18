@@ -314,6 +314,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     }
 
     private void initial() {
+//        entityParent=null;
         lstCapture = new ArrayList<>();
         lstCapture.clear();
         spnCode.setSelection(0);
@@ -618,7 +619,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
             try {
                 if (jsonObject != null) {
-                    fillLayout(entityParent);
                     String error = "", alert = "";
                     if (jsonObject.getString("error").replace("null", "").equals("") == false)
                         error = "\r\n" + jsonObject.getString("error").replace("null", "");
@@ -650,7 +650,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                         public void run() {
                                             ivSau.performClick();
                                         }
-                                    }, 1000);
+                                    }, 2000);
                                 }
                             }, false);
                         } else {//thành công không có cảnh báo
@@ -662,7 +662,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 public void run() {
                                     ivSau.performClick();
                                 }
-                            }, 1000);
+                            }, 2000);
                         }
                     } else {//thất bại
                         CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + error, "center");
@@ -670,16 +670,17 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     }
                 } else
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
-                if(flagGhiHinh==true)
-                {
-                    MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll=new MyAsyncTaskGhiHinhAll();
-                    myAsyncTaskGhiHinhAll.execute();
-                }
+//                if(flagGhiHinh==true)
+//                {
+//                    MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll=new MyAsyncTaskGhiHinhAll();
+//                    myAsyncTaskGhiHinhAll.execute();
+//                }
             } catch (JSONException e) {
                 CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
             }
         }
     }
+    private boolean flagGhiHinh = false;
 
     public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
 
@@ -703,7 +704,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         }
     }
 
-    private boolean flagGhiHinh = false;
+
 
     public class MyAsyncTaskGhiHinhAll extends AsyncTask<String, Void, Void> {
 
