@@ -106,7 +106,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon,jsonPhieuChuyen;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
@@ -126,6 +126,7 @@ public class CLocal {
         editor.putString("jsonDocSo", "");
         editor.putString("jsonCode", "");
         editor.putString("jsonViTriDHN", "");
+        editor.putString("jsonPhieuChuyen", "");
         editor.putString("jsonNam", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
@@ -142,7 +143,7 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon=jsonPhieuChuyen = null;
         listDocSo = listDocSoView = null;
     }
 
