@@ -63,21 +63,18 @@ import java.text.DecimalFormat;
 import java.text.NumberFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 import java.util.TimeZone;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
-import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceThermalPrinter;
 
 
@@ -106,13 +103,14 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon,jsonPhieuChuyen;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
     public static int STT = 0;
+    public static Bitmap imgCapture;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -143,7 +141,7 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon=jsonPhieuChuyen = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = null;
         listDocSo = listDocSoView = null;
     }
 
@@ -573,6 +571,16 @@ public class CLocal {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
         String str = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
         return str;
+    }
+
+    public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+        return stream.toByteArray();
+    }
+
+    public static Bitmap convertByteArrayToBitmap(byte[] bytes) {
+        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     public static String getPathFromUri(final Context context, final Uri uri) {

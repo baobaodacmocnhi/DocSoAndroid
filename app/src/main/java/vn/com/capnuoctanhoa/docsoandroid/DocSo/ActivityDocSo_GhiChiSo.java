@@ -4,6 +4,7 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
@@ -310,7 +311,18 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
         });
 
+        if (savedInstanceState != null) {
+            imgCapture = CLocal.convertByteArrayToBitmap(savedInstanceState.getByteArray("imgCapture"));
+            lstCapture.add(imgCapture);
+            loadRecyclerViewImage();
+        }
 
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putByteArray("imgCapture", CLocal.convertBitmapToByteArray(imgCapture));
     }
 
     private void initial() {
@@ -446,8 +458,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         }
                     }
                     if (imgCapture != null) {
+                        CLocal.imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
                         lstCapture = new ArrayList<>();
-                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                        lstCapture.add(CLocal.imgCapture);
                         loadRecyclerViewImage();
                     }
                 }
@@ -466,8 +479,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         imgCapture = bitmap;
                     }
                     if (imgCapture != null) {
+                        CLocal.imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
                         lstCapture = new ArrayList<>();
-                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                        lstCapture.add(CLocal.imgCapture);
                         loadRecyclerViewImage();
                     }
                 }
@@ -507,6 +521,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
         myAsyncTaskGhiHinhAll.execute();
         CLocal.updateArrayListToJson();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        lstCapture.add(CLocal.imgCapture);
     }
 
     public Uri createImageUri() {

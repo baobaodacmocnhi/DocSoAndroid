@@ -216,6 +216,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    //ghi chú
     public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri1, String ViTri2, String Gieng, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/update_DienThoai";
         String OPERATION_NAME = "update_DienThoai";
@@ -338,6 +339,60 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("DienThoai");
         pi.setValue(DienThoai);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    //phiếu chuyển
+    public String getDS_PhieuChuyen() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_PhieuChuyen";
+        String OPERATION_NAME = "getDS_PhieuChuyen";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDS_DonTu(String DanhBo) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_PhieuChuyen";
+        String OPERATION_NAME = "getDS_PhieuChuyen";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("DanhBo");
+        pi.setValue(DanhBo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String ghi_DonTu(String DanhBo,String NoiDung,String GhiChu,String MaNV ) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_PhieuChuyen";
+        String OPERATION_NAME = "getDS_PhieuChuyen";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("DanhBo");
+        pi.setValue(DanhBo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("NoiDung");
+        pi.setValue(NoiDung);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi.setName("GhiChu");
+        pi.setValue(GhiChu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("MaNV");
+        pi.setValue(MaNV);
         pi.setType(String.class);
         request.addProperty(pi);
 

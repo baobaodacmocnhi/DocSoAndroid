@@ -103,28 +103,30 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 holder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        String Nam = "", Ky = "", Dot = "";
-                        if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                            Nam = CLocal.listDocSo.get(0).getNam();
-                            Ky = CLocal.listDocSo.get(0).getKy();
-                            Dot = CLocal.listDocSo.get(0).getDot();
-                        }
-                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                         try {
-                            CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                            editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
+                            String Nam = "", Ky = "", Dot = "";
+                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                Nam = CLocal.listDocSo.get(0).getNam();
+                                Ky = CLocal.listDocSo.get(0).getKy();
+                                Dot = CLocal.listDocSo.get(0).getDot();
+                                CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                            }
+                            else {
+                                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                                editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
+                                editor.commit();
+                                CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                                }.getType());
+                                if (CLocal.listDocSo.size() > 2000)
+                                    CLocal.listDocSo = null;
+                            }
+                            CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
+                            Intent returnIntent = new Intent();
+                            activity.setResult(Activity.RESULT_OK, returnIntent);
+                            activity.finish();
                         } catch (IOException e) {
                             e.printStackTrace();
                         }
-                        editor.commit();
-                        CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                        }.getType());
-                        if (CLocal.listDocSo.size() > 2000)
-                            CLocal.listDocSo = null;
-                        CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
-                        Intent returnIntent = new Intent();
-                        activity.setResult(Activity.RESULT_OK, returnIntent);
-                        activity.finish();
                     }
                 });
         }
