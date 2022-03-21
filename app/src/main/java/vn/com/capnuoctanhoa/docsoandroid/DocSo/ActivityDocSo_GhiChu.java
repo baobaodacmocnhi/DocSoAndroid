@@ -44,7 +44,7 @@ private CEntityParent entityParent;
     private CheckBox chkGieng, chkSoChinh;
     private CWebservice ws;
     private ArrayList<String> spnName_ViTriDHN;
-    private JSONArray jsonDSDienThoai = null;
+    private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
     private CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai;
 

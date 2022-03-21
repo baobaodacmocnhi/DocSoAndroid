@@ -60,7 +60,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtDiaChiDHN, edtViTri, edtHieu, edtCo, edtSoThan, edtGiaBieu, edtDinhMuc, edtDinhMucHN, edtDienThoai, edtChiSo, edtTBTT;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
-    private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu;
+    private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu,ivPhieuChuyen;
     private TextView txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo2, edtCode2, edtTieuThu2, edtChiSo1, edtCode1, edtTieuThu1, edtChiSo0, edtCode0, edtTieuThu0, edtChiSoMoi, edtCodeMoi, edtTieuThuMoi;
     private CustomAdapterSpinner customAdapterSpinner;
@@ -127,9 +127,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivGhiChu = (ImageView) findViewById(R.id.ivGhiChu);
         ivIn = (ImageView) findViewById(R.id.ivIn);
         ivLuu = (ImageView) findViewById(R.id.ivLuu);
+        ivPhieuChuyen = (ImageView) findViewById(R.id.ivPhieuChuyen);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
         btnChonHinh = (Button) findViewById(R.id.btnChonHinh);
-        lstCapture = new ArrayList<Bitmap>();
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
         cMarshMallowPermission = new CMarshMallowPermission(this);
@@ -311,9 +311,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
         });
 
+        ivPhieuChuyen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this) == false) {
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
+                    return;
+                }
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_PhieuChuyen.class);
+                startActivity(intent);
+            }
+        });
+
         if (savedInstanceState != null) {
-            imgCapture = CLocal.convertByteArrayToBitmap(savedInstanceState.getByteArray("imgCapture"));
-            lstCapture.add(imgCapture);
+            lstCapture = CLocal.lstCapture;
             loadRecyclerViewImage();
         }
 
@@ -322,7 +333,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putByteArray("imgCapture", CLocal.convertBitmapToByteArray(imgCapture));
+        CLocal.lstCapture = lstCapture;
     }
 
     private void initial() {
@@ -458,9 +469,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         }
                     }
                     if (imgCapture != null) {
-                        CLocal.imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
                         lstCapture = new ArrayList<>();
-                        lstCapture.add(CLocal.imgCapture);
+                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
                         loadRecyclerViewImage();
                     }
                 }
@@ -479,9 +489,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         imgCapture = bitmap;
                     }
                     if (imgCapture != null) {
-                        CLocal.imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
                         lstCapture = new ArrayList<>();
-                        lstCapture.add(CLocal.imgCapture);
+                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
                         loadRecyclerViewImage();
                     }
                 }
@@ -521,12 +530,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
         myAsyncTaskGhiHinhAll.execute();
         CLocal.updateArrayListToJson();
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        lstCapture.add(CLocal.imgCapture);
     }
 
     public Uri createImageUri() {

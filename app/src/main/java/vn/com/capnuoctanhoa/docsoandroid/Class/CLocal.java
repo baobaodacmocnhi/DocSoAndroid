@@ -110,7 +110,7 @@ public class CLocal {
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
     public static int STT = 0;
-    public static Bitmap imgCapture;
+    public static ArrayList<Bitmap> lstCapture;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
