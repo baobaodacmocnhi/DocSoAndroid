@@ -184,7 +184,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_NhanVien()throws XmlPullParserException, IOException  {
+    public String getDS_NhanVien() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien";
         String OPERATION_NAME = "getDS_NhanVien";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -192,7 +192,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_Nam()throws XmlPullParserException, IOException  {
+    public String getDS_Nam() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_Nam";
         String OPERATION_NAME = "getDS_Nam";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -200,7 +200,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_Code()throws XmlPullParserException, IOException  {
+    public String getDS_Code() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_Code";
         String OPERATION_NAME = "getDS_Code";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -273,7 +273,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_DienThoai(String DanhBo)throws XmlPullParserException, IOException  {
+    public String getDS_DienThoai(String DanhBo) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_DienThoai";
         String OPERATION_NAME = "getDS_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -287,7 +287,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String update_DienThoai(String DanhBo, String DienThoai, String HoTen, String SoChinh, String MaNV)throws XmlPullParserException, IOException  {
+    public String update_DienThoai(String DanhBo, String DienThoai, String HoTen, String SoChinh, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/update_DienThoai";
         String OPERATION_NAME = "update_DienThoai";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -368,7 +368,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghi_DonTu(String DanhBo,String NoiDung,String GhiChu,String MaNV ) throws XmlPullParserException, IOException {
+    public String ghi_DonTu(String DanhBo, String NoiDung, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghi_DonTu";
         String OPERATION_NAME = "ghi_DonTu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -385,6 +385,7 @@ public class CWebservice {
         pi.setType(String.class);
         request.addProperty(pi);
 
+        pi = new PropertyInfo();
         pi.setName("GhiChu");
         pi.setValue(GhiChu);
         pi.setType(String.class);
@@ -399,8 +400,34 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String ghi_Hinh_DonTu(String ID, String Hinh, String MaNV) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/ghi_Hinh_DonTu";
+        String OPERATION_NAME = "ghi_Hinh_DonTu";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("ID");
+        pi.setValue(ID);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Hinh");
+        pi.setValue(Hinh);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("MaNV");
+        pi.setValue(MaNV);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     //đọc số
-    public String getDS_DocSo(String Nam, String Ky, String Dot, String May)throws XmlPullParserException, IOException  {
+    public String getDS_DocSo(String Nam, String Ky, String Dot, String May) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_DocSo";
         String OPERATION_NAME = "getDS_DocSo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -464,7 +491,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghiChiSo(String ID, String Code, String ChiSo, String HinhDHN, String Dot, String MaNV, String TBTT)throws XmlPullParserException, IOException  {
+    public String ghiChiSo(String ID, String Code, String ChiSo, String HinhDHN, String Dot, String MaNV, String TBTT) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghiChiSo";
         String OPERATION_NAME = "ghiChiSo";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -514,7 +541,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghi_Hinh(String ID, String HinhDHN)throws XmlPullParserException, IOException  {
+    public String ghi_Hinh(String ID, String HinhDHN) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghi_Hinh";
         String OPERATION_NAME = "ghi_Hinh";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -549,7 +576,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String capnhat(String sql)throws XmlPullParserException, IOException  {
+    public String capnhat(String sql) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/capnhat";
         String OPERATION_NAME = "capnhat";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);

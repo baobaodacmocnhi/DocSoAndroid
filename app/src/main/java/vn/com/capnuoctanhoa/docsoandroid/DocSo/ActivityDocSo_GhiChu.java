@@ -150,7 +150,7 @@ private CEntityParent entityParent;
                 customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);
                 recyclerView.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-                layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
                 recyclerView.setLayoutManager(layoutManager);
                 recyclerView.setAdapter(customAdapterRecyclerViewDienThoai);
             } catch (Exception ex) {

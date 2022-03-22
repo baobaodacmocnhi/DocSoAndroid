@@ -56,6 +56,8 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 holder.chkSoChinh.setVisibility(View.INVISIBLE);
             holder.chkSoChinh.setChecked(entityParent.isSoChinh());
             holder.txtGhiChu.setText(entityParent.getDiaChi());
+            if (entityParent.isAnXoa() == true)
+                holder.imageButton.setVisibility(View.INVISIBLE);
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -110,8 +112,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                 Ky = CLocal.listDocSo.get(0).getKy();
                                 Dot = CLocal.listDocSo.get(0).getDot();
                                 CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                            }
-                            else {
+                            } else {
                                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                                 editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
                                 editor.commit();

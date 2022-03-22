@@ -442,7 +442,7 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(docTienLines).append('\n')
                             .append(line);
 //                    stringBuilder.append(breakLine("Ngày thu tiền dự kiến từ " + entityParent.getNgayThuTien(), charWidth)).append('\n');
-                    stringBuilder.append("Phiếu này không có giá trị thanh toán\n");
+//                    stringBuilder.append("Phiếu này không có giá trị thanh toán\n");
                 }
                 stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY " +
                                 escpStyle(entityParent.getNgayThuTien(), 0b11000) +
@@ -871,8 +871,8 @@ public class ServiceThermalPrinter extends Service {
 //                    stringBuilder.append(printLine("Ngày thu tiền dự kiến từ %s", 1, y, 0, 1, 1, entityParent.getNgayThuTien()));
 //                    y = handlingYMoreThan450(y, 25);
 
-                    stringBuilder.append(printLine("Phiếu này không có giá trị thanh toán", 1, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
+//                    stringBuilder.append(printLine("Phiếu này không có giá trị thanh toán", 1, y, 0, 1, 1));
+//                    y = handlingYMoreThan450(y, 25);
 
                     //endregion
                 }

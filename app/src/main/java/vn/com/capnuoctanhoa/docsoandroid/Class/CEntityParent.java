@@ -53,7 +53,7 @@ public class CEntityParent {
     private String DenNgay;
     private boolean GhiHinh;
     private String GhiChu;
-
+private boolean AnXoa;
 
     public CEntityParent() {
         this.ID = "";
@@ -103,6 +103,7 @@ public class CEntityParent {
         this.TuNgay = DenNgay = "";
         this.GhiHinh = false;
         this.GhiChu = "";
+        this.AnXoa=false;
     }
 
     public String getID() {
@@ -489,6 +490,14 @@ public class CEntityParent {
         GhiChu = ghiChu;
     }
 
+    public boolean isAnXoa() {
+        return AnXoa;
+    }
+
+    public void setAnXoa(boolean anXoa) {
+        AnXoa = anXoa;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -539,6 +548,7 @@ public class CEntityParent {
             this.DenNgay = entityParent.getDenNgay();
             this.GhiHinh = entityParent.isGhiHinh();
             this.GhiChu = entityParent.getGhiChu();
+            this.AnXoa=entityParent.isAnXoa();
         }
         catch (Exception ex)
         {

@@ -470,7 +470,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     }
                     if (imgCapture != null) {
                         lstCapture = new ArrayList<>();
-                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 2048, 2048, false));
                         loadRecyclerViewImage();
                     }
                 }
@@ -490,7 +490,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     }
                     if (imgCapture != null) {
                         lstCapture = new ArrayList<>();
-                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 2048, 2048, false));
                         loadRecyclerViewImage();
                     }
                 }
