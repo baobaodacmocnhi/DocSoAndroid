@@ -53,7 +53,13 @@ public class CEntityParent {
     private String DenNgay;
     private boolean GhiHinh;
     private String GhiChu;
-private boolean AnXoa;
+    private boolean AnXoa;
+    private boolean Sync;
+    private int SH;
+    private int SX;
+    private int DV;
+    private int HCSN;
+
 
     public CEntityParent() {
         this.ID = "";
@@ -103,7 +109,13 @@ private boolean AnXoa;
         this.TuNgay = DenNgay = "";
         this.GhiHinh = false;
         this.GhiChu = "";
-        this.AnXoa=false;
+        this.AnXoa = false;
+        this.Sync = false;
+        this.SH = 0;
+        this.SX = 0;
+        this.DV = 0;
+        this.HCSN = 0;
+
     }
 
     public String getID() {
@@ -498,6 +510,46 @@ private boolean AnXoa;
         AnXoa = anXoa;
     }
 
+    public boolean isSync() {
+        return Sync;
+    }
+
+    public void setSync(boolean sync) {
+        Sync = sync;
+    }
+
+    public int getSH() {
+        return SH;
+    }
+
+    public void setSH(int SH) {
+        this.SH = SH;
+    }
+
+    public int getSX() {
+        return SX;
+    }
+
+    public void setSX(int SX) {
+        this.SX = SX;
+    }
+
+    public int getDV() {
+        return DV;
+    }
+
+    public void setDV(int DV) {
+        this.DV = DV;
+    }
+
+    public int getHCSN() {
+        return HCSN;
+    }
+
+    public void setHCSN(int HCSN) {
+        this.HCSN = HCSN;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -548,10 +600,13 @@ private boolean AnXoa;
             this.DenNgay = entityParent.getDenNgay();
             this.GhiHinh = entityParent.isGhiHinh();
             this.GhiChu = entityParent.getGhiChu();
-            this.AnXoa=entityParent.isAnXoa();
-        }
-        catch (Exception ex)
-        {
+            this.AnXoa = entityParent.isAnXoa();
+            this.Sync = entityParent.isSync();
+            this.SH = entityParent.getSH();
+            this.SX = entityParent.getSX();
+            this.DV = entityParent.getDV();
+            this.HCSN = entityParent.getHCSN();
+        } catch (Exception ex) {
             throw ex;
         }
     }

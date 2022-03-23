@@ -51,6 +51,7 @@ import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.ls.LSException;
 
 import java.io.BufferedReader;
 import java.io.ByteArrayOutputStream;
@@ -61,11 +62,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.text.NumberFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Currency;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -103,7 +107,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
@@ -111,6 +115,10 @@ public class CLocal {
     public static int indexPosition = 0;
     public static int STT = 0;
     public static ArrayList<Bitmap> lstCapture;
+    public static final int _GiamTienNuoc = 10;
+    public static ArrayList<String> lstTT0 = new ArrayList<String>(Arrays.asList("K", "N", "N1", "N2", "N3", "68", "Q"));
+    public static ArrayList<String> lstTBTT = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "66", "80", "F1", "F2", "F3", "F4"));
+    public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5F", "5M", "5Q", "5K", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -125,6 +133,7 @@ public class CLocal {
         editor.putString("jsonCode", "");
         editor.putString("jsonViTriDHN", "");
         editor.putString("jsonPhieuChuyen", "");
+        editor.putString("jsonGiaNuoc", "");
         editor.putString("jsonNam", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
@@ -133,15 +142,13 @@ public class CLocal {
         editor.putBoolean("ToTruong", false);
         editor.putBoolean("Login", false);
         editor.putLong("LoginDate", 0L);
-        editor.putString("ThermalPrinter", "");
-        editor.putString("MethodPrinter", "Intermec");
         editor.putBoolean("SyncTrucTiep", true);
         editor.commit();
         ThermalPrinter = "";
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = null;
         listDocSo = listDocSoView = null;
     }
 
@@ -492,7 +499,7 @@ public class CLocal {
                 lst.get(i).setCEntityParent(entityParentUpdate);
             }
         //goi update lại json hệ thống
-//        updateArrayListToJson();
+        updateArrayListToJson();
     }
 
     //convert tiền thành chữ
@@ -1161,6 +1168,765 @@ public class CLocal {
         AlertDialog alertDialog = builder.create();
         alertDialog.show();
         return alertDialog;
+    }
+
+    public static ArrayList<Integer> TinhTienNuoc(List<Integer> lstGiaNuoc, int GiaBieu, int TyLeSH, int TyLeSX, int TyLeDV, int TyLeHCSN, int TongDinhMuc, int DinhMucHN, int TieuThu) {
+        try {
+            int DinhMuc = TongDinhMuc - DinhMucHN, _SH = 0, _SX = 0, _DV = 0, _HCSN = 0;
+            ///Table GiaNuoc được thiết lập theo bảng giá nước
+            ///1. Đến 4m3/người/tháng
+            ///2. Trên 4m3 đến 6m3/người/tháng
+            ///3. Trên 6m3/người/tháng
+            ///4. Đơn vị sản xuất
+            ///5. Cơ quan, đoàn thể HCSN
+            ///6. Đơn vị kinh doanh, dịch vụ
+            ///7. Hộ nghèo, cận nghèo
+            ///List bắt đầu từ phần tử thứ 0
+            ArrayList<Integer> result = new ArrayList<>();
+            int TongTien = 0, TongTienPhiBVMT = 0;
+            switch (GiaBieu) {
+                ///TƯ GIA
+                case 10:
+                    DinhMucHN = TongDinhMuc;
+                    if (TieuThu <= DinhMucHN) {
+                        TongTien = TieuThu * lstGiaNuoc.get(6);
+                        TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100);
+                    } else if (TieuThu - DinhMucHN <= Math.round((double) DinhMucHN / 2)) {
+                        TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                + ((TieuThu - DinhMucHN) * lstGiaNuoc.get(1));
+                        TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100)
+                                + ((TieuThu - DinhMucHN) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                    } else {
+                        TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                + ((int) Math.round((double) DinhMuc / 2) * lstGiaNuoc.get(1))
+                                + ((TieuThu - DinhMucHN - (int) Math.round((double) DinhMucHN / 2)) * lstGiaNuoc.get(2));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) DinhMuc / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                + ((TieuThu - DinhMucHN - (int) Math.round((double) DinhMucHN / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                    }
+                    break;
+                case 11:
+                case 21:///SH thuần túy
+                    if (TieuThu <= DinhMucHN + DinhMuc) {
+                        double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                        if (Double.isNaN(TyLe) == true)
+                            TyLe = 0;
+                        int TieuThuHN = 0, TieuThuDC = 0;
+                        TieuThuHN = (int) Math.round(TieuThu * TyLe);
+                        TieuThuDC = TieuThu - TieuThuHN;
+                        TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                + (TieuThuDC * lstGiaNuoc.get(0));
+                        TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                    } else if (TieuThu - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                        TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                + (DinhMuc * lstGiaNuoc.get(0))
+                                + ((TieuThu - DinhMucHN - DinhMuc) * lstGiaNuoc.get(1));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                + ((TieuThu - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                    } else {
+                        TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                + (DinhMuc * lstGiaNuoc.get(0))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * lstGiaNuoc.get(1))
+                                + ((TieuThu - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * lstGiaNuoc.get(2));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                + ((TieuThu - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                    }
+
+                    break;
+                case 12:
+                case 22:
+                case 32:
+                case 42:///SX thuần túy
+                    TongTien = TieuThu * lstGiaNuoc.get(3);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 13:
+                case 23:
+                case 33:
+                case 43:///DV thuần túy
+                    TongTien = TieuThu * lstGiaNuoc.get(5);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 14:
+                case 24:///SH + SX
+                    ///Nếu không có tỉ lệ
+                    if (TyLeSH == 0 && TyLeSX == 0) {
+                        if (TieuThu <= DinhMucHN + DinhMuc) {
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(TieuThu * TyLe);
+                            TieuThuDC = TieuThu - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((TieuThu - DinhMucHN - DinhMuc) * lstGiaNuoc.get(3));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((TieuThu - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100));
+                        }
+                    } else
+                    ///Nếu có tỉ lệ SH + SX
+                    {
+                        //int _SH = 0, _SX = 0;
+                        if (TyLeSH != 0)
+                            _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                        _SX = TieuThu - _SH;
+                        if (_SH <= DinhMucHN + DinhMuc) {
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(_SH * TyLe);
+                            TieuThuDC = _SH - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else if (_SH - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((_SH - DinhMucHN - DinhMuc) * lstGiaNuoc.get(1));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * lstGiaNuoc.get(1))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * lstGiaNuoc.get(2));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                        }
+                        TongTien += _SX * lstGiaNuoc.get(3);
+                        TongTienPhiBVMT += _SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100);
+                    }
+                    break;
+                case 15:
+                case 25:///SH + DV
+                    ///Nếu không có tỉ lệ
+                    if (TyLeSH == 0 && TyLeDV == 0) {
+                        if (TieuThu <= DinhMucHN + DinhMuc) {
+                            //double TyLe = Math.Round((double)DinhMucHN / (DinhMucHN + DinhMuc), 2);
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(TieuThu * TyLe);
+                            TieuThuDC = TieuThu - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((TieuThu - DinhMucHN - DinhMuc) * lstGiaNuoc.get(5));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((TieuThu - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                        }
+                    } else
+                    ///Nếu có tỉ lệ SH + DV
+                    {
+                        //int _SH = 0, _DV = 0;
+                        if (TyLeSH != 0)
+                            _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                        _DV = TieuThu - _SH;
+                        if (_SH <= DinhMucHN + DinhMuc) {
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(_SH * TyLe);
+                            TieuThuDC = _SH - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else if (_SH - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((_SH - DinhMucHN - DinhMuc) * lstGiaNuoc.get(1));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * lstGiaNuoc.get(1))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * lstGiaNuoc.get(2));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                        }
+                        TongTien += _DV * lstGiaNuoc.get(5);
+                        TongTienPhiBVMT += _DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100);
+                    }
+                    break;
+                case 16:
+                case 26:///SH + SX + DV
+                    ///Nếu chỉ có tỉ lệ SX + DV mà không có tỉ lệ SH, không xét Định Mức
+                    if (TyLeSX != 0 && TyLeDV != 0 && TyLeSH == 0) {
+                        if (TyLeSX != 0)
+                            _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                        _DV = TieuThu - _SX;
+                        TongTien = (_SX * lstGiaNuoc.get(3))
+                                + (_DV * lstGiaNuoc.get(5));
+                        TongTienPhiBVMT = (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100))
+                                + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                    } else
+                    ///Nếu có đủ 3 tỉ lệ SH + SX + DV
+                    {
+                        //int _SH = 0, _SX = 0, _DV = 0;
+                        if (TyLeSH != 0)
+                            _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                        if (TyLeSX != 0)
+                            _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                        _DV = TieuThu - _SH - _SX;
+                        if (_SH <= DinhMucHN + DinhMuc) {
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(_SH * TyLe);
+                            TieuThuDC = _SH - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else if (_SH - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((_SH - DinhMuc) * lstGiaNuoc.get(1));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * lstGiaNuoc.get(1))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * lstGiaNuoc.get(2));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                        }
+                        TongTien += (_SX * lstGiaNuoc.get(3))
+                                + (_DV * lstGiaNuoc.get(5));
+                        TongTienPhiBVMT += (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100))
+                                + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                    }
+                    break;
+                case 17:
+                case 27:///SH ĐB
+                    TongTien = TieuThu * lstGiaNuoc.get(0);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 18:
+                case 28:
+                case 38:///SH + HCSN
+                    ///Nếu không có tỉ lệ
+                    if (TyLeSH == 0 && TyLeHCSN == 0) {
+                        if (TieuThu <= DinhMucHN + DinhMuc) {
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(TieuThu * TyLe);
+                            TieuThuDC = TieuThu - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((TieuThu - DinhMuc) * lstGiaNuoc.get(4));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((TieuThu - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                        }
+                    } else
+                    ///Nếu có tỉ lệ SH + HCSN
+                    {
+                        //int _SH = 0, _HCSN = 0;
+                        if (TyLeSH != 0)
+                            _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                        _HCSN = TieuThu - _SH;
+                        if (_SH <= DinhMucHN + DinhMuc) {
+                            double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                            if (Double.isNaN(TyLe) == true)
+                                TyLe = 0;
+                            int TieuThuHN = 0, TieuThuDC = 0;
+                            TieuThuHN = (int) Math.round(_SH * TyLe);
+                            TieuThuDC = _SH - TieuThuHN;
+                            TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                    + (TieuThuDC * lstGiaNuoc.get(0));
+                            TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                        } else if (_SH - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((_SH - DinhMucHN - DinhMuc) * lstGiaNuoc.get(1));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                        } else {
+                            TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                    + (DinhMuc * lstGiaNuoc.get(0))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * lstGiaNuoc.get(1))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * lstGiaNuoc.get(2));
+                            TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                    + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                    + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                    + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                        }
+                        TongTien += _HCSN * lstGiaNuoc.get(4);
+                        TongTienPhiBVMT += _HCSN * (int) Math.round((double) lstGiaNuoc.get(4) * lstGiaNuoc.get(7) / 100);
+                    }
+                    break;
+                case 19:
+                case 29:
+                case 39:///SH + HCSN + SX + DV
+                    //int _SH = 0, _HCSN = 0, _SX = 0, _DV = 0;
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    if (TyLeHCSN != 0)
+                        _HCSN = (int) Math.round((double) TieuThu * TyLeHCSN / 100);
+                    if (TyLeSX != 0)
+                        _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                    _DV = TieuThu - _SH - _HCSN - _SX;
+                    if (_SH <= DinhMucHN + DinhMuc) {
+                        double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                        if (Double.isNaN(TyLe) == true)
+                            TyLe = 0;
+                        int TieuThuHN = 0, TieuThuDC = 0;
+                        TieuThuHN = (int) Math.round(_SH * TyLe);
+                        TieuThuDC = _SH - TieuThuHN;
+                        TongTien = (TieuThuHN * lstGiaNuoc.get(6))
+                                + (TieuThuDC * lstGiaNuoc.get(0));
+                        TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + (TieuThuDC * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100));
+                    } else if (_SH - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                        TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                + (DinhMuc * lstGiaNuoc.get(0))
+                                + ((_SH - DinhMucHN - DinhMuc) * lstGiaNuoc.get(1));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                + ((_SH - DinhMucHN - DinhMuc) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
+                    } else {
+                        TongTien = (DinhMucHN * lstGiaNuoc.get(6))
+                                + (DinhMuc * lstGiaNuoc.get(0))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * lstGiaNuoc.get(1))
+                                + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * lstGiaNuoc.get(2));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) lstGiaNuoc.get(0) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
+                    }
+                    TongTien += (_HCSN * lstGiaNuoc.get(4))
+                            + (_SX * lstGiaNuoc.get(3))
+                            + (_DV * lstGiaNuoc.get(5));
+                    TongTienPhiBVMT += (_HCSN * (int) Math.round((double) lstGiaNuoc.get(4) * lstGiaNuoc.get(7) / 100))
+                            + (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100))
+                            + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                    break;
+                ///CƠ QUAN
+                case 31:///SHVM thuần túy
+                    TongTien = TieuThu * lstGiaNuoc.get(4);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(4) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 34:///HCSN + SX
+                    ///Nếu không có tỉ lệ
+                    if (TyLeHCSN == 0 && TyLeSX == 0) {
+                        TongTien = TieuThu * lstGiaNuoc.get(3);
+                        TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100);
+                    } else
+                    ///Nếu có tỉ lệ
+                    {
+                        //int _HCSN = 0, _SX = 0;
+                        if (TyLeHCSN != 0)
+                            _HCSN = (int) Math.round((double) TieuThu * TyLeHCSN / 100);
+                        _SX = TieuThu - _HCSN;
+
+                        TongTien = (_HCSN * lstGiaNuoc.get(4))
+                                + (_SX * lstGiaNuoc.get(3));
+                        TongTienPhiBVMT = (_HCSN * (int) Math.round((double) lstGiaNuoc.get(4) * lstGiaNuoc.get(7) / 100))
+                                + (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100));
+                    }
+                    break;
+                case 35:///HCSN + DV
+                    ///Nếu không có tỉ lệ
+                    if (TyLeHCSN == 0 && TyLeDV == 0) {
+                        TongTien = TieuThu * lstGiaNuoc.get(5);
+                        TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100);
+                    } else
+                    ///Nếu có tỉ lệ
+                    {
+                        //int _HCSN = 0, _DV = 0;
+                        if (TyLeHCSN != 0)
+                            _HCSN = (int) Math.round((double) TieuThu * TyLeHCSN / 100);
+                        _DV = TieuThu - _HCSN;
+                        TongTien = (_HCSN * lstGiaNuoc.get(4))
+                                + (_DV * lstGiaNuoc.get(5));
+                        TongTienPhiBVMT = (_HCSN * (int) Math.round((double) lstGiaNuoc.get(4) * lstGiaNuoc.get(7) / 100))
+                                + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                    }
+                    break;
+                case 36:///HCSN + SX + DV
+                {
+                    if (TyLeHCSN != 0)
+                        _HCSN = (int) Math.round((double) TieuThu * TyLeHCSN / 100);
+                    if (TyLeSX != 0)
+                        _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                    _DV = TieuThu - _HCSN - _SX;
+                    TongTien = (_HCSN * lstGiaNuoc.get(4))
+                            + (_SX * lstGiaNuoc.get(3))
+                            + (_DV * lstGiaNuoc.get(5));
+                    TongTienPhiBVMT = (_HCSN * (int) Math.round((double) lstGiaNuoc.get(4) * lstGiaNuoc.get(7) / 100))
+                            + (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100))
+                            + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                }
+                break;
+                ///NƯỚC NGOÀI
+                case 41:///SHVM thuần túy
+                    TongTien = TieuThu * lstGiaNuoc.get(2);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 44:///SH + SX
+                {
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    _SX = TieuThu - _SH;
+                    TongTien = (_SH * lstGiaNuoc.get(2))
+                            + (_SX * lstGiaNuoc.get(3));
+                    TongTienPhiBVMT = (_SH * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100))
+                            + (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100));
+                }
+                break;
+                case 45:///SH + DV
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    _DV = TieuThu - _SH;
+                    TongTien = (_SH * lstGiaNuoc.get(2))
+                            + (_DV * lstGiaNuoc.get(5));
+                    TongTienPhiBVMT = (_SH * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100))
+                            + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                    break;
+                case 46:///SH + SX + DV
+                {
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    if (TyLeSX != 0)
+                        _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                    _DV = TieuThu - _SH - _SX;
+                    TongTien = (_SH * lstGiaNuoc.get(2))
+                            + (_SX * lstGiaNuoc.get(3))
+                            + (_DV * lstGiaNuoc.get(5));
+                    TongTienPhiBVMT = (_SH * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100))
+                            + (_SX * (int) Math.round((double) lstGiaNuoc.get(3) * lstGiaNuoc.get(7) / 100))
+                            + (_DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100));
+                }
+                break;
+                ///BÁN SỈ
+                case 51:///sỉ khu dân cư - Giảm % tiền nước cho ban quản lý chung cư
+                    if (TieuThu <= DinhMucHN + DinhMuc) {
+                        double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                        if (Double.isNaN(TyLe) == true)
+                            TyLe = 0;
+                        int TieuThuHN = 0, TieuThuDC = 0;
+                        TieuThuHN = (int) Math.round(TieuThu * TyLe);
+                        TieuThuDC = TieuThu - TieuThuHN;
+                        TongTien = (TieuThuHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (TieuThuDC * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (TieuThuDC * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    } else if (TieuThu - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                        TongTien = (DinhMucHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (DinhMuc * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                                + ((TieuThu - DinhMuc) * (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((TieuThu - DinhMuc) * (int) Math.round((double) (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    } else {
+                        TongTien = (DinhMucHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (DinhMuc * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100))
+                                + ((TieuThu - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (lstGiaNuoc.get(2) - lstGiaNuoc.get(2) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((TieuThu - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) (lstGiaNuoc.get(2) - lstGiaNuoc.get(2) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    }
+                    break;
+                case 52:///sỉ khu công nghiệp
+                    TongTien = TieuThu * (lstGiaNuoc.get(3) - lstGiaNuoc.get(3) * _GiamTienNuoc / 100);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) (lstGiaNuoc.get(3) - lstGiaNuoc.get(3) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 53:///sỉ KD - TM
+                    TongTien = TieuThu * (lstGiaNuoc.get(5) - lstGiaNuoc.get(5) * _GiamTienNuoc / 100);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) (lstGiaNuoc.get(5) - lstGiaNuoc.get(5) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 54:///sỉ HCSN
+                    TongTien = TieuThu * (lstGiaNuoc.get(4) - lstGiaNuoc.get(4) * _GiamTienNuoc / 100);
+                    TongTienPhiBVMT = TieuThu * (int) Math.round((double) (lstGiaNuoc.get(4) - lstGiaNuoc.get(4) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100);
+                    break;
+                case 58:
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    if (TyLeHCSN != 0)
+                        _HCSN = (int) Math.round((double) TieuThu * TyLeHCSN / 100);
+                    if (TyLeSX != 0)
+                        _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                    _DV = TieuThu - _SH - _HCSN - _SX;
+                    TongTien = (_SH * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                            + (_HCSN * (lstGiaNuoc.get(4) - lstGiaNuoc.get(4) * _GiamTienNuoc / 100))
+                            + (_SX * (lstGiaNuoc.get(3) - lstGiaNuoc.get(3) * _GiamTienNuoc / 100))
+                            + (_DV * (lstGiaNuoc.get(5) - lstGiaNuoc.get(5) * _GiamTienNuoc / 100));
+                    TongTienPhiBVMT = (_SH * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                            + (_HCSN * (int) Math.round((double) (lstGiaNuoc.get(4) - lstGiaNuoc.get(4) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                            + (_SX * (int) Math.round((double) (lstGiaNuoc.get(3) - lstGiaNuoc.get(3) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                            + (_DV * (int) Math.round((double) (lstGiaNuoc.get(5) - lstGiaNuoc.get(5) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    break;
+                case 59:///sỉ phức tạp
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    if (TyLeHCSN != 0)
+                        _HCSN = (int) Math.round((double) TieuThu * TyLeHCSN / 100);
+                    if (TyLeSX != 0)
+                        _SX = (int) Math.round((double) TieuThu * TyLeSX / 100);
+                    _DV = TieuThu - _SH - _HCSN - _SX;
+                    if (_SH <= DinhMucHN + DinhMuc) {
+                        double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                        if (Double.isNaN(TyLe) == true)
+                            TyLe = 0;
+                        int TieuThuHN = 0, TieuThuDC = 0;
+                        TieuThuHN = (int) Math.round(_SH * TyLe);
+                        TieuThuDC = _SH - TieuThuHN;
+                        TongTien = (TieuThuHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (TieuThuDC * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (TieuThuDC * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    } else if (_SH - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                        TongTien = (DinhMucHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (DinhMuc * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                                + ((_SH - DinhMucHN - DinhMuc) * (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((_SH - DinhMucHN - DinhMuc) * (int) Math.round((double) (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    } else {
+                        TongTien = (DinhMucHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (DinhMuc * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100))
+                                + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (lstGiaNuoc.get(2) - lstGiaNuoc.get(2) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) (lstGiaNuoc.get(2) - lstGiaNuoc.get(2) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    }
+                    TongTien += (_HCSN * (lstGiaNuoc.get(4) - lstGiaNuoc.get(4) * _GiamTienNuoc / 100))
+                            + (_SX * (lstGiaNuoc.get(3) - lstGiaNuoc.get(3) * _GiamTienNuoc / 100))
+                            + (_DV * (lstGiaNuoc.get(5) - lstGiaNuoc.get(5) * _GiamTienNuoc / 100));
+                    TongTienPhiBVMT += (_HCSN * (int) Math.round((double) (lstGiaNuoc.get(4) - lstGiaNuoc.get(4) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                            + (_SX * (int) Math.round((double) (lstGiaNuoc.get(3) - lstGiaNuoc.get(3) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                            + (_DV * (int) Math.round((double) (lstGiaNuoc.get(5) - lstGiaNuoc.get(5) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    break;
+                case 68:///SH giá sỉ - KD giá lẻ
+                    if (TyLeSH != 0)
+                        _SH = (int) Math.round((double) TieuThu * TyLeSH / 100);
+                    _DV = TieuThu - _SH;
+                    if (_SH <= DinhMucHN + DinhMuc) {
+                        double TyLe = (double) DinhMucHN / (DinhMucHN + DinhMuc);
+                        if (Double.isNaN(TyLe) == true)
+                            TyLe = 0;
+                        int TieuThuHN = 0, TieuThuDC = 0;
+                        TieuThuHN = (int) Math.round(_SH * TyLe);
+                        TieuThuDC = _SH - TieuThuHN;
+                        TongTien = (TieuThuHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (TieuThuDC * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (TieuThuHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (TieuThuDC * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    } else if (_SH - DinhMucHN - DinhMuc <= Math.round((double) (DinhMucHN + DinhMuc) / 2)) {
+                        TongTien = (DinhMucHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (DinhMuc * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                                + ((_SH - DinhMucHN - DinhMuc) * (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((_SH - DinhMucHN - DinhMuc) * (int) Math.round((double) (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    } else {
+                        TongTien = (DinhMucHN * (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100))
+                                + (DinhMuc * (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100))
+                                + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (lstGiaNuoc.get(2) - lstGiaNuoc.get(2) * _GiamTienNuoc / 100));
+                        TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) (lstGiaNuoc.get(6) - lstGiaNuoc.get(6) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + (DinhMuc * (int) Math.round((double) (lstGiaNuoc.get(0) - lstGiaNuoc.get(0) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) (DinhMucHN + DinhMuc) / 2) * (int) Math.round((double) (lstGiaNuoc.get(1) - lstGiaNuoc.get(1) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100))
+                                + ((_SH - DinhMucHN - DinhMuc - (int) Math.round((double) (DinhMucHN + DinhMuc) / 2)) * (int) Math.round((double) (lstGiaNuoc.get(2) - lstGiaNuoc.get(2) * _GiamTienNuoc / 100) * lstGiaNuoc.get(7) / 100));
+                    }
+                    TongTien += _DV * lstGiaNuoc.get(5);
+                    TongTienPhiBVMT += _DV * (int) Math.round((double) lstGiaNuoc.get(5) * lstGiaNuoc.get(7) / 100);
+                    break;
+                default:
+                    TongTien = 0;
+                    TongTienPhiBVMT = 0;
+                    break;
+            }
+            result.add(TongTien);
+            result.add(TongTienPhiBVMT);
+            return result;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static ArrayList<Integer> TinhTienNuoc(String DanhBo, int Ky, int Nam, String TuNgay, String DenNgay, int GiaBieu, int TyLeSH, int TyLeSX, int TyLeDV, int TyLeHCSN, int TongDinhMuc, int DinhMucHN, int TieuThu) throws JSONException, ParseException {
+//        DataTable dtGiaNuoc = getDS_GiaNuoc();
+//        //check giảm giá
+//        if (KhongApGiaGiam == false)
+//            checkExists_GiamGiaNuoc(Nam, Ky, GiaBieu, ref dtGiaNuoc);
+        try {
+            ArrayList<Integer> result = new ArrayList<>();
+            int index = -1;
+            int TienNuocNamCu = 0, TienNuocNamMoi = 0, PhiBVMTNamCu = 0, PhiBVMTNamMoi = 0, TienNuoc = 0, ThueGTGT = 0, TDVTN = 0, ThueTDVTN = 0;
+            Date dateTuNgay = convertStringToDate(TuNgay), dateDenNgay = convertStringToDate(DenNgay);
+            Calendar calTuNgay = Calendar.getInstance();
+            calTuNgay.setTime(dateTuNgay);
+            Calendar calDenNgay = Calendar.getInstance();
+            calDenNgay.setTime(dateDenNgay);
+            Calendar calNgayChot = Calendar.getInstance();
+            calNgayChot.set(2019,11,15);
+            for (int i = 0; i < CLocal.jsonGiaNuoc.length(); i++)
+                if (dateTuNgay.compareTo(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(i).getString("NgayTangGia"))) < 0 && convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(i).getString("NgayTangGia")).compareTo(dateDenNgay) < 0) {
+                    index = i;
+                } else if (dateTuNgay.compareTo(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(i).getString("NgayTangGia"))) >= 0) {
+                    index = i;
+                }
+            if (index != -1) {
+                if (dateDenNgay.compareTo(calNgayChot.getTime()) < 0) {
+                    ArrayList<Integer> lstGiaNuoc = new ArrayList<Integer>();
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHTM")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHVM1")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHVM2")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SX")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("HCSN")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("KDDV")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHN")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("PhiBVMT")));
+
+                    ArrayList<Integer> TienNuocNamCus = TinhTienNuoc(lstGiaNuoc, GiaBieu, TyLeSH, TyLeSX, TyLeDV, TyLeHCSN, TongDinhMuc, 0, TieuThu);
+                    TienNuocNamCu = TienNuocNamCus.get(0);
+                    PhiBVMTNamCu = TienNuocNamCus.get(1);
+                } else if (dateTuNgay.compareTo(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia"))) < 0 && convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")).compareTo(dateDenNgay) < 0) {
+                    //int TieuThu_DieuChinhGia;
+                    int TongSoNgay = (int) (getDaysDifference(dateTuNgay, dateDenNgay));
+                    int SoNgayCu = (int) (getDaysDifference(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")), dateTuNgay));
+                    int TieuThuCu = (int) Math.round((double) TieuThu * SoNgayCu / TongSoNgay);
+                    int TieuThuMoi = TieuThu - TieuThuCu;
+                    int TongDinhMucCu = (int) Math.round((double) TongDinhMuc * SoNgayCu / TongSoNgay);
+                    int TongDinhMucMoi = TongDinhMuc - TongDinhMucCu;
+                    int DinhMucHN_Cu = 0, DinhMucHN_Moi = 0;
+                    if (dateTuNgay.compareTo(calNgayChot.getTime()) > 0)
+                        if (TongDinhMucCu != 0 && DinhMucHN != 0 && TongDinhMuc != 0)
+                            DinhMucHN_Cu = (int) Math.round((double) TongDinhMucCu * DinhMucHN / TongDinhMuc);
+                    if (TongDinhMucMoi != 0 && DinhMucHN != 0 && TongDinhMuc != 0)
+                        DinhMucHN_Moi = (int) Math.round((double) TongDinhMucMoi * DinhMucHN / TongDinhMuc);
+                    ArrayList<Integer> lstGiaNuocCu = new ArrayList<Integer>();
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("SHTM")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("SHVM1")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("SHVM2")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("SX")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("HCSN")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("KDDV")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("SHN")));
+                    lstGiaNuocCu.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index - 1).getString("PhiBVMT")));
+                    ArrayList<Integer> lstGiaNuocMoi = new ArrayList<Integer>();
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHTM")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHVM1")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHVM2")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SX")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("HCSN")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("KDDV")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHN")));
+                    lstGiaNuocMoi.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("PhiBVMT")));
+                    //lần đầu áp dụng giá biểu 10, tổng áp giá mới luôn
+                    if (dateTuNgay.compareTo(new Date(2019, 11, 15)) < 0 && new Date(2019, 11, 15).compareTo(dateDenNgay) < 0 && GiaBieu == 10) {
+                        ArrayList<Integer> TienNuocNamCus = TinhTienNuoc(lstGiaNuocCu, GiaBieu, TyLeSH, TyLeSX, TyLeDV, TyLeHCSN, TongDinhMucCu, DinhMucHN_Cu, TieuThuCu);
+                        TienNuocNamCu = TienNuocNamCus.get(0);
+                        PhiBVMTNamCu = TienNuocNamCus.get(1);
+                    } else {
+                        ArrayList<Integer> TienNuocNamCus = TinhTienNuoc(lstGiaNuocCu, GiaBieu, TyLeSH, TyLeSX, TyLeDV, TyLeHCSN, TongDinhMucCu, DinhMucHN_Cu, TieuThuCu);
+                        TienNuocNamCu = TienNuocNamCus.get(0);
+                        PhiBVMTNamCu = TienNuocNamCus.get(1);
+                    }
+                    ArrayList<Integer> TienNuocNamMois = TinhTienNuoc(lstGiaNuocMoi, GiaBieu, TyLeSH, TyLeSX, TyLeDV, TyLeHCSN, TongDinhMucMoi, DinhMucHN_Moi, TieuThuMoi);
+                    TienNuocNamMoi = TienNuocNamMois.get(0);
+                    PhiBVMTNamMoi = TienNuocNamMois.get(1);
+                } else {
+                    ArrayList<Integer> lstGiaNuoc = new ArrayList<Integer>();
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHTM")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHVM1")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHVM2")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SX")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("HCSN")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("KDDV")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHN")));
+                    lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("PhiBVMT")));
+                    ArrayList<Integer> TienNuocNamCus = TinhTienNuoc(lstGiaNuoc, GiaBieu, TyLeSH, TyLeSX, TyLeDV, TyLeHCSN, TongDinhMuc, DinhMucHN, TieuThu);
+                    TienNuocNamCu = TienNuocNamCus.get(0);
+                    PhiBVMTNamCu = TienNuocNamCus.get(1);
+                }
+                for (int i = 0; i < CLocal.jsonKhongTinhPBVMT.length(); i++)
+                    if (CLocal.jsonKhongTinhPBVMT.getJSONObject(i).getString("DanhBo").equals(DanhBo) == true) {
+                        PhiBVMTNamCu = PhiBVMTNamMoi = 0;
+                    }
+                TienNuoc = TienNuocNamCu + TienNuocNamMoi;
+                ThueGTGT = (int) Math.round((double) (TienNuocNamCu + TienNuocNamMoi) * 5 / 100);
+                TDVTN = PhiBVMTNamCu + PhiBVMTNamMoi;
+                //Từ 2022 Phí BVMT -> Tiền Dịch Vụ Thoát Nước
+                if ((calTuNgay.get(Calendar.YEAR) < 2021) || (calTuNgay.get(Calendar.YEAR) == 2021 && calDenNgay.get(Calendar.YEAR) == 2021)) {
+                    ThueTDVTN = 0;
+                } else if (calTuNgay.get(Calendar.YEAR) == 2021 && dateDenNgay.getYear() == 2022) {
+                    ThueTDVTN = (int) Math.round((double) (PhiBVMTNamMoi) * 10 / 100);
+                } else if (calTuNgay.get(Calendar.YEAR) >= 2022) {
+                    ThueTDVTN = (int) Math.round((double) (PhiBVMTNamCu + PhiBVMTNamMoi) * 10 / 100);
+                }
+                result.add(TienNuoc);
+                result.add(ThueGTGT);
+                result.add(TDVTN);
+                result.add(ThueTDVTN);
+                result.add(TienNuoc + ThueGTGT + TDVTN + ThueTDVTN);
+            }
+            return result;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static Date convertStringToDate(String strDate) throws ParseException {
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy").parse(strDate);
+        } catch (ParseException e) {
+            throw e;
+        }
+    }
+
+    public static int getDaysDifference(Date fromDate, Date toDate) {
+        if (fromDate == null || toDate == null)
+            return 0;
+        return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
 }

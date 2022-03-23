@@ -149,14 +149,13 @@ public class MainActivity extends AppCompatActivity {
                     if (CLocal.listDocSo.size() > 2000)
                         CLocal.listDocSo = null;
                 }
-                if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false) {
+                if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false)
                     CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
-                }
-                if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false) {
+                if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false)
                     CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
-                }
-                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
-                CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
+                if (CLocal.sharedPreferencesre.getString("MethodPrinter", "").equals("") == false)
+                    CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
+                    CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 btnAdmin.setVisibility(View.GONE);
                 if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                     //so sánh logout sau 7 ngày
@@ -179,6 +178,8 @@ public class MainActivity extends AppCompatActivity {
                     CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
                     CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
                     CLocal.jsonPhieuChuyen = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", ""));
+                    CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
+                    CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
                     txtUser.setText("Xin chào " + CLocal.HoTen);
                     txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                     imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);

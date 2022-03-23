@@ -60,7 +60,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtDiaChiDHN, edtViTri, edtHieu, edtCo, edtSoThan, edtGiaBieu, edtDinhMuc, edtDinhMucHN, edtDienThoai, edtChiSo, edtTBTT;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
-    private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu,ivPhieuChuyen;
+    private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu, ivPhieuChuyen;
     private TextView txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo2, edtCode2, edtTieuThu2, edtChiSo1, edtCode1, edtTieuThu1, edtChiSo0, edtCode0, edtTieuThu0, edtChiSoMoi, edtCodeMoi, edtTieuThuMoi;
     private CustomAdapterSpinner customAdapterSpinner;
@@ -247,36 +247,126 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivLuu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this) == false) {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
-                    return;
-                }
-                if (lstCapture.size() > 0 && selectedCode != null
-                        && ((((CCode) selectedCode).getCode().contains("F1") == true
-                        || ((CCode) selectedCode).getCode().contains("F2") == true
-                        || ((CCode) selectedCode).getCode().contains("F3") == true
-                        || ((CCode) selectedCode).getCode().contains("F4") == true
-                        || ((CCode) selectedCode).getCode().contains("61") == true
-                        || ((CCode) selectedCode).getCode().contains("63") == true
-                        || ((CCode) selectedCode).getCode().contains("64") == true
-                        || ((CCode) selectedCode).getCode().contains("66") == true
-                        || ((CCode) selectedCode).getCode().contains("68") == true
-                        || ((CCode) selectedCode).getCode().contains("K") == true)
-                        || (((CCode) selectedCode).getCode().contains("F1") == false
-                        && ((CCode) selectedCode).getCode().contains("F2") == false
-                        && ((CCode) selectedCode).getCode().contains("F3") == false
-                        && ((CCode) selectedCode).getCode().contains("F4") == false
-                        && ((CCode) selectedCode).getCode().contains("61") == false
-                        && ((CCode) selectedCode).getCode().contains("63") == false
-                        && ((CCode) selectedCode).getCode().contains("64") == false
-                        && ((CCode) selectedCode).getCode().contains("66") == false
-                        && ((CCode) selectedCode).getCode().contains("68") == false
-                        && ((CCode) selectedCode).getCode().contains("K") == false
-                        && edtChiSo.getText().toString().equals("") == false))) {
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute();
-                } else {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
+                try {
+                    if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this) == false) {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
+                        return;
+                    }
+                    if (lstCapture.size() > 0 && selectedCode != null
+                            && ((((CCode) selectedCode).getCode().contains("F1") == true
+                            || ((CCode) selectedCode).getCode().contains("F2") == true
+                            || ((CCode) selectedCode).getCode().contains("F3") == true
+                            || ((CCode) selectedCode).getCode().contains("F4") == true
+                            || ((CCode) selectedCode).getCode().contains("61") == true
+                            || ((CCode) selectedCode).getCode().contains("63") == true
+                            || ((CCode) selectedCode).getCode().contains("64") == true
+                            || ((CCode) selectedCode).getCode().contains("66") == true
+                            || ((CCode) selectedCode).getCode().contains("68") == true
+                            || ((CCode) selectedCode).getCode().contains("K") == true)
+                            || (((CCode) selectedCode).getCode().contains("F1") == false
+                            && ((CCode) selectedCode).getCode().contains("F2") == false
+                            && ((CCode) selectedCode).getCode().contains("F3") == false
+                            && ((CCode) selectedCode).getCode().contains("F4") == false
+                            && ((CCode) selectedCode).getCode().contains("61") == false
+                            && ((CCode) selectedCode).getCode().contains("63") == false
+                            && ((CCode) selectedCode).getCode().contains("64") == false
+                            && ((CCode) selectedCode).getCode().contains("66") == false
+                            && ((CCode) selectedCode).getCode().contains("68") == false
+                            && ((CCode) selectedCode).getCode().contains("K") == false
+                            && edtChiSo.getText().toString().equals("") == false))) {
+
+                        if (CLocal.lstTT0.contains(((CCode) selectedCode).getCode()) == true
+                                || CLocal.lstTBTT.contains(((CCode) selectedCode).getCode()) == true
+                                || CLocal.lstBinhThuong.contains(((CCode) selectedCode).getCode()) == true) {
+                            entityParent.setSync(false);
+                            entityParent.setCodeMoi(selectedCode.getCode());
+                            entityParent.setChiSoMoi(edtChiSo.getText().toString());
+                            if (CLocal.lstTT0.contains(entityParent.getCodeMoi()) == true)
+                                entityParent.setTieuThuMoi("0");
+                            else if (CLocal.lstTBTT.contains(entityParent.getCodeMoi()) == true)
+                                entityParent.setTieuThuMoi(entityParent.getTBTT());
+                            else if (CLocal.lstBinhThuong.contains(entityParent.getCodeMoi()) == true)
+                                if (entityParent.getCodeMoi().equals("X41") == true)
+                                    entityParent.setTieuThuMoi(String.valueOf(10000 * Integer.parseInt(entityParent.getChiSoMoi()) - Integer.parseInt(entityParent.getChiSo0())));
+                                else if (entityParent.getCodeMoi().equals("X51") == true)
+                                    entityParent.setTieuThuMoi(String.valueOf(100000 * Integer.parseInt(entityParent.getChiSoMoi()) - Integer.parseInt(entityParent.getChiSo0())));
+                                else
+                                    entityParent.setTieuThuMoi(String.valueOf(Integer.parseInt(entityParent.getChiSoMoi()) - Integer.parseInt(entityParent.getChiSo0())));
+
+                            if (entityParent.getCodeMoi().substring(0, 1) == "4" && (entityParent.getCode0().substring(0, 1) == "F" || entityParent.getCode0().substring(0, 1) == "6" || entityParent.getCode0().substring(0, 1) == "K" || entityParent.getCode0().substring(0, 1) == "N"))
+                                entityParent.setCodeMoi("5" + entityParent.getCode0().substring(0, 1));
+                            if (entityParent.getCodeMoi().substring(0, 1) == "F" || entityParent.getCodeMoi() == "61")
+                                entityParent.setChiSoMoi(String.valueOf((Integer.parseInt(entityParent.getChiSo0()) + Integer.parseInt(entityParent.getTBTT()))));
+
+                            ArrayList<Integer> lstTienNuoc = CLocal.TinhTienNuoc(entityParent.getDanhBo().replace(" ", ""), Integer.parseInt(entityParent.getKy())
+                                    , Integer.parseInt(entityParent.getNam()), entityParent.getTuNgay(), entityParent.getDenNgay(), Integer.parseInt(entityParent.getGiaBieu())
+                                    , entityParent.getSH(), entityParent.getSX(), entityParent.getDV(), entityParent.getHCSN()
+                                    , Integer.parseInt(entityParent.getDinhMuc()), Integer.parseInt(entityParent.getDinhMucHN()), Integer.parseInt(entityParent.getTieuThuMoi()));
+                            entityParent.setTienNuoc(lstTienNuoc.get(0).toString());
+                            entityParent.setThueGTGT(lstTienNuoc.get(1).toString());
+                            entityParent.setPhiBVMT(lstTienNuoc.get(2).toString());
+                            entityParent.setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
+                            entityParent.setTongCong(lstTienNuoc.get(4).toString());
+                            if (lstCapture.size() > 0) {
+                                for (int i = 0; i < lstCapture.size(); i++) {
+                                    CLocal.writeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot()
+                                            , entityParent.getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
+                                }
+                            }
+                            CLocal.updateTinhTrangParent(CLocal.listDocSo, entityParent);
+                            String alert = "";
+                            if (Integer.parseInt(entityParent.getTieuThuMoi()) < 0)
+                                alert = "Tiêu Thụ âm = " + entityParent.getTieuThuMoi();
+                            else if (Integer.parseInt(entityParent.getTieuThuMoi()) < Integer.parseInt(entityParent.getTBTT()) * 1.4
+                                    || Integer.parseInt(entityParent.getTieuThuMoi()) >= Integer.parseInt(entityParent.getTBTT()) * 1.4)
+                                alert = "Tiêu Thụ bất thường = " + entityParent.getTieuThuMoi();
+                            //thành công có cảnh báo
+                            if (alert.equals("") == false) {
+                                CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                                CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", "THÀNH CÔNG\r\n" + alert, "Xem Lại", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+//                                        ivSau.performClick();
+                                    }
+                                }, "In", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+                                        ivIn.performClick();
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(new Runnable() {
+                                            @Override
+                                            public void run() {
+                                                ivSau.performClick();
+                                            }
+                                        }, 2000);
+                                    }
+                                }, false);
+                            } else {//thành công không có cảnh báo
+                                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THÀNH CÔNG\r\n", "center");
+                                ivIn.performClick();
+                                final Handler handler = new Handler();
+                                handler.postDelayed(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        ivSau.performClick();
+                                    }
+                                }, 2000);
+                            }
+                            MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+                            myAsyncTaskGhiDocSo_gianTiep.execute();
+                        } else {
+                            MyAsyncTask myAsyncTask = new MyAsyncTask();
+                            myAsyncTask.execute();
+                        }
+                    } else {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
+                    }
+                } catch (Exception e) {
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THẤT BẠI\r\n" + e.getMessage(), "center");
+                    CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
                 }
             }
         });
@@ -527,9 +617,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
-        myAsyncTaskGhiHinhAll.execute();
-        CLocal.updateArrayListToJson();
+        MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+        myAsyncTaskGhiDocSo_gianTiep.execute();
     }
 
     public Uri createImageUri() {
@@ -596,11 +685,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                    entityParent.setSync(true);
                     entityParent.setCodeMoi(selectedCode.getCode());
                     entityParent.setChiSoMoi(edtChiSo.getText().toString());
                     JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
                     entityParent.setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
-                    entityParent.setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
                     entityParent.setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
                     entityParent.setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
                     entityParent.setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
@@ -658,11 +747,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         //thành công có cảnh báo
                         if (alert.equals("") == false) {
                             CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
-                            CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", s + alert, "Đọc Tiếp", new DialogInterface.OnClickListener() {
+                            CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", s + alert, "Xem Lại", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
-                                    ivSau.performClick();
+//                                    ivSau.performClick();
                                 }
                             }, "In", new DialogInterface.OnClickListener() {
                                 @Override
@@ -706,7 +795,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         }
     }
 
-
     public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
 
         @Override
@@ -725,8 +813,14 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
             return null;
         }
-    }
 
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
+            myAsyncTaskGhiHinhAll.execute();
+        }
+    }
 
     public class MyAsyncTaskGhiHinhAll extends AsyncTask<String, Void, Void> {
 
@@ -751,4 +845,32 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             return null;
         }
     }
+
+    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                for (int i = 0; i < CLocal.listDocSoView.size(); i++)
+                    if (CLocal.listDocSoView.get(i).isSync() == false) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                        if (bitmap != null) {
+                            bitmap = CLocal.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(i).getID(), CLocal.listDocSoView.get(i).getCodeMoi(), CLocal.listDocSoView.get(i).getChiSoMoi(), CLocal.listDocSoView.get(i).getTieuThuMoi()
+                                    , CLocal.listDocSoView.get(i).getTienNuoc(), CLocal.listDocSoView.get(i).getThueGTGT(), CLocal.listDocSoView.get(i).getPhiBVMT(), CLocal.listDocSoView.get(i).getPhiBVMT_Thue(), CLocal.listDocSoView.get(i).getTongCong(),
+                                    CLocal.convertBitmapToString(bitmap), CLocal.listDocSoView.get(i).getDot(), CLocal.May);
+                            if (Boolean.parseBoolean(result) == true) {
+                                CLocal.listDocSoView.get(i).setSync(true);
+                                CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(i));
+                            }
+                        }
+                    }
+            } catch (Exception ex) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+            }
+            return null;
+        }
+
+    }
+
 }

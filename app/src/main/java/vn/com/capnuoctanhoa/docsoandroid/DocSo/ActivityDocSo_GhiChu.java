@@ -178,15 +178,15 @@ private CEntityParent entityParent;
                 String result = "";
                 switch (strings[0]) {
                     case "CapNhat":
-                        result = ws.update_GhiChu(entityParent.getDanhBo(), edtSoNha.getText().toString(), edtSoNha.getText().toString()
+                        result = ws.update_GhiChu(entityParent.getDanhBo().replace(" ",""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
                                 , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()),edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
-                        result = ws.update_DienThoai(entityParent.getDanhBo(), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
+                        result = ws.update_DienThoai(entityParent.getDanhBo().replace(" ",""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
                                 , String.valueOf(chkSoChinh.isChecked()), CLocal.MaNV);
                         break;
                     case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(entityParent.getDanhBo());
+                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ",""));
                         break;
                 }
                 if (result.equals("") == false)
@@ -270,7 +270,7 @@ private CEntityParent entityParent;
                 String result = "";
                 switch (strings[0]) {
                     case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(entityParent.getDanhBo());
+                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ",""));
                         break;
                 }
                 if (result.equals("") == false)

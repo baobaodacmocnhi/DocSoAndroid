@@ -200,26 +200,10 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_Code() throws XmlPullParserException, IOException {
-        String SOAP_ACTION = "http://tempuri.org/getDS_Code";
-        String OPERATION_NAME = "getDS_Code";
-        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-
-        return excute(request, SOAP_ACTION);
-    }
-
-    public String getDS_ViTriDHN() throws XmlPullParserException, IOException {
-        String SOAP_ACTION = "http://tempuri.org/getDS_ViTriDHN";
-        String OPERATION_NAME = "getDS_ViTriDHN";
-        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
-
-        return excute(request, SOAP_ACTION);
-    }
-
     //ghi chú
     public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri1, String ViTri2, String Gieng, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
-        String SOAP_ACTION = "http://tempuri.org/update_DienThoai";
-        String OPERATION_NAME = "update_DienThoai";
+        String SOAP_ACTION = "http://tempuri.org/update_GhiChu";
+        String OPERATION_NAME = "update_GhiChu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -427,6 +411,38 @@ public class CWebservice {
     }
 
     //đọc số
+    public String getDS_Code() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_Code";
+        String OPERATION_NAME = "getDS_Code";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDS_ViTriDHN() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_ViTriDHN";
+        String OPERATION_NAME = "getDS_ViTriDHN";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDS_GiaNuoc() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_GiaNuoc";
+        String OPERATION_NAME = "getDS_GiaNuoc";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDS_KhongTinhPBVMT() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_KhongTinhPBVMT";
+        String OPERATION_NAME = "getDS_KhongTinhPBVMT";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     public String getDS_DocSo(String Nam, String Ky, String Dot, String May) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_DocSo";
         String OPERATION_NAME = "getDS_DocSo";
@@ -535,6 +551,86 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("TBTT");
         pi.setValue(TBTT);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String ghiChiSo_GianTiep(String ID, String Code, String ChiSo, String TieuThu, String TienNuoc, String ThueGTGT, String PhiBVMT, String PhiBVMT_Thue, String TongCong, String HinhDHN, String Dot, String MaNV) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/ghiChiSo_GianTiep";
+        String OPERATION_NAME = "ghiChiSo_GianTiep";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("ID");
+        pi.setValue(ID);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Code");
+        pi.setValue(Code);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("ChiSo");
+        pi.setValue(ChiSo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("TieuThu");
+        pi.setValue(TieuThu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("TienNuoc");
+        pi.setValue(TienNuoc);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("ThueGTGT");
+        pi.setValue(ThueGTGT);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("PhiBVMT");
+        pi.setValue(PhiBVMT);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("PhiBVMT_Thue");
+        pi.setValue(PhiBVMT_Thue);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("TongCong");
+        pi.setValue(TongCong);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("HinhDHN");
+        pi.setValue(HinhDHN);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Dot");
+        pi.setValue(Dot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("MaNV");
+        pi.setValue(MaNV);
         pi.setType(String.class);
         request.addProperty(pi);
 
