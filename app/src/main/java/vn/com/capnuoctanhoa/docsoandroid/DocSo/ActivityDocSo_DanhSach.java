@@ -351,7 +351,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
                             if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false
                                     && Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) > 0
-                                    && (Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) < Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 1.4
+                                    && (Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) <= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) - Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 0.4
                                     || Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) >= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 1.4)) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
