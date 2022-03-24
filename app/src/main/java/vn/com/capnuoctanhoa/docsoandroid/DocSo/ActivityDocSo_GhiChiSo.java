@@ -59,7 +59,6 @@ import java.util.Date;
 
 public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     //    private Integer STT = -1;
-    private CEntityParent entityParent;
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtDiaChiDHN, edtViTri, edtHieu, edtCo, edtSoThan, edtGiaBieu, edtDinhMuc, edtDinhMucHN, edtDienThoai, edtChiSo, edtTBTT;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
@@ -143,9 +142,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         try {
 //            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (CLocal.STT > -1) {
-                entityParent = CLocal.listDocSoView.get(CLocal.STT);
                 initial();
-                fillLayout(entityParent);
+                fillLayout(CLocal.listDocSoView.get(CLocal.STT));
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
@@ -184,9 +182,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             public void onClick(View v) {
                 if (CLocal.STT > 0) {
                     CLocal.STT--;
-                    entityParent = CLocal.listDocSoView.get(CLocal.STT);
                     initial();
-                    fillLayout(entityParent);
+                    fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Đầu Danh Sách");
             }
@@ -197,9 +194,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             public void onClick(View v) {
                 if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
                     CLocal.STT++;
-                    entityParent = CLocal.listDocSoView.get(CLocal.STT);
                     initial();
-                    fillLayout(entityParent);
+                    fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                 } else
                     CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Cuối Danh Sách");
             }
@@ -301,7 +297,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             && ((CCode) selectedCode).getCode().contains("K") == false
                             && edtChiSo.getText().toString().equals("") == false))) {
                         if (((CCode) selectedCode).getCode().substring(0, 1).contains("4") &&
-                                (entityParent.getCode0().substring(0, 1).contains("K") || entityParent.getCode0().substring(0, 1).contains("F") || entityParent.getCode0().substring(0, 1).contains("N"))) {
+                                (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).contains("K") || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).contains("F") || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).contains("N"))) {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Vào Code Sai");
                             return;
                         }
@@ -309,31 +305,31 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         if (CLocal.lstTT0.contains(((CCode) selectedCode).getCode()) == true
                                 || CLocal.lstTBTT.contains(((CCode) selectedCode).getCode()) == true
                                 || CLocal.lstBinhThuong.contains(((CCode) selectedCode).getCode()) == true) {
-                            entityParent.setSync(false);
+                            CLocal.listDocSoView.get(CLocal.STT).setSync(false);
                             if (edtChiSo.getText().toString().equals("") == true)
                                 tinhTieuThu();
 
-                            entityParent.setCodeMoi(edtCodeMoi.getText().toString());
-                            entityParent.setChiSoMoi(edtChiSoMoi.getText().toString());
-                            entityParent.setTieuThuMoi(edtTieuThuMoi.getText().toString());
-                            ArrayList<Integer> lstTienNuoc = CLocal.TinhTienNuoc(entityParent.getDanhBo().replace(" ", ""), Integer.parseInt(entityParent.getKy())
-                                    , Integer.parseInt(entityParent.getNam()), entityParent.getTuNgay(), entityParent.getDenNgay(), Integer.parseInt(entityParent.getGiaBieu())
-                                    , entityParent.getSH(), entityParent.getSX(), entityParent.getDV(), entityParent.getHCSN()
-                                    , Integer.parseInt(entityParent.getDinhMuc()), Integer.parseInt(entityParent.getDinhMucHN()), Integer.parseInt(entityParent.getTieuThuMoi()));
-                            entityParent.setTienNuoc(lstTienNuoc.get(0).toString());
-                            entityParent.setThueGTGT(lstTienNuoc.get(1).toString());
-                            entityParent.setPhiBVMT(lstTienNuoc.get(2).toString());
-                            entityParent.setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
-                            entityParent.setTongCong(lstTienNuoc.get(4).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setCodeMoi(edtCodeMoi.getText().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setChiSoMoi(edtChiSoMoi.getText().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setTieuThuMoi(edtTieuThuMoi.getText().toString());
+                            ArrayList<Integer> lstTienNuoc = CLocal.TinhTienNuoc(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy())
+                                    , Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam()), CLocal.listDocSoView.get(CLocal.STT).getTuNgay(), CLocal.listDocSoView.get(CLocal.STT).getDenNgay(), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getGiaBieu())
+                                    , CLocal.listDocSoView.get(CLocal.STT).getSH(), CLocal.listDocSoView.get(CLocal.STT).getSX(), CLocal.listDocSoView.get(CLocal.STT).getDV(), CLocal.listDocSoView.get(CLocal.STT).getHCSN()
+                                    , Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDinhMuc()), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDinhMucHN()), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTieuThuMoi()));
+                            CLocal.listDocSoView.get(CLocal.STT).setTienNuoc(lstTienNuoc.get(0).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setThueGTGT(lstTienNuoc.get(1).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT(lstTienNuoc.get(2).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
                             if (lstCapture.size() > 0) {
                                 for (int i = 0; i < lstCapture.size(); i++) {
-                                    CLocal.writeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot()
-                                            , entityParent.getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
+                                    CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+                                            , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
                                 }
                             }
-                            CLocal.updateTinhTrangParent(CLocal.listDocSo, entityParent);
+                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                             MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
-                            myAsyncTaskGhiDocSo_gianTiep.execute();
+                            myAsyncTaskGhiDocSo_gianTiep.execute(new String[]{String.valueOf(CLocal.STT)});
                             //thành công có cảnh báo
                             if (_alert.equals("") == false) {
                                 CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
@@ -409,9 +405,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 try {
-                    if (entityParent.getCodeMoi().equals("") == false) {
+                    if (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false) {
                         if (CLocal.serviceThermalPrinter != null) {
-                            CLocal.serviceThermalPrinter.printGhiChiSo(entityParent);
+                            CLocal.serviceThermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(CLocal.STT));
                         }
                     } else {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
@@ -461,7 +457,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     }
 
     private void initial() {
-//        entityParent=null;
         lstCapture = new ArrayList<>();
         lstCapture.clear();
         spnCode.setSelection(0);
@@ -563,7 +558,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
         } catch (
                 Exception ex) {
-            CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage(), "center");
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
 
@@ -659,22 +654,21 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         if (CLocal.lstTT0.contains(edtCodeMoi.getText().toString()) == true)
             edtTieuThuMoi.setText("0");
         else if (CLocal.lstTBTT.contains(edtCodeMoi.getText().toString()) == true)
-            edtTieuThuMoi.setText(entityParent.getTBTT());
+            edtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
         else if (CLocal.lstBinhThuong.contains(edtCodeMoi.getText().toString()) == true)
             if (edtCodeMoi.getText().toString().equals("X41") == true)
-                edtTieuThuMoi.setText(String.valueOf(10000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(entityParent.getChiSo0())));
+                edtTieuThuMoi.setText(String.valueOf(10000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
             else if (edtCodeMoi.getText().toString().equals("X51") == true)
-                edtTieuThuMoi.setText(String.valueOf(100000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(entityParent.getChiSo0())));
+                edtTieuThuMoi.setText(String.valueOf(100000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
             else
-                edtTieuThuMoi.setText(String.valueOf(Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(entityParent.getChiSo0())));
-//        edtChiSoMoi.setText(String.valueOf((Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(entityParent.getChiSo0())) * -1));
-        if (edtCodeMoi.getText().toString().substring(0, 1) == "4" && (entityParent.getCode0().substring(0, 1) == "F" || entityParent.getCode0().substring(0, 1) == "6" || entityParent.getCode0().substring(0, 1) == "K" || entityParent.getCode0().substring(0, 1) == "N"))
-            edtCodeMoi.setText("5" + entityParent.getCode0().substring(0, 1));
-        if (edtCodeMoi.getText().toString().substring(0, 1) == "F" || edtCodeMoi.getText().toString() == "61")
-            edtChiSoMoi.setText(String.valueOf((Integer.parseInt(entityParent.getChiSo0()) + Integer.parseInt(entityParent.getTBTT()))));
-        if (edtCodeMoi.getText().toString().substring(0, 1) == "K")
-            edtChiSoMoi.setText(entityParent.getChiSo0());
-        if (edtCodeMoi.getText().toString().substring(0, 1) == "N")
+                edtTieuThuMoi.setText(String.valueOf(Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
+        if (edtCodeMoi.getText().toString().substring(0, 1).equals("4") == true && (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("6") == true || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true))
+            edtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1));
+        if (edtCodeMoi.getText().toString().substring(0, 1).equals("F") == true || edtCodeMoi.getText().toString().equals("61") == true)
+            edtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
+        if (edtCodeMoi.getText().toString().substring(0, 1).equals("K") == true)
+            edtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
+        if (edtCodeMoi.getText().toString().substring(0, 1).equals("N") == true)
             edtChiSoMoi.setText("0");
         if (Integer.parseInt(edtTieuThuMoi.getText().toString()) < 0) {
             _alert = "Tiêu Thụ âm = " + edtTieuThuMoi.getText().toString();
@@ -682,8 +676,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         } else if (Integer.parseInt(edtTieuThuMoi.getText().toString()) == 0) {
             _alert = "Tiêu Thụ = " + edtTieuThuMoi.getText().toString();
             layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-        } else if (Integer.parseInt(edtTieuThuMoi.getText().toString()) <= Integer.parseInt(entityParent.getTBTT()) - Integer.parseInt(entityParent.getTBTT()) * 0.4
-                || Integer.parseInt(edtTieuThuMoi.getText().toString()) >= Integer.parseInt(entityParent.getTBTT()) * 1.4) {
+        } else if (Integer.parseInt(edtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 0.4
+                || Integer.parseInt(edtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.4) {
             _alert = "Tiêu Thụ bất thường = " + edtTieuThuMoi.getText().toString();
             layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
         } else {
@@ -692,18 +686,16 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         }
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        try {
-            if (CLocal.STT > -1) {
-                entityParent = CLocal.listDocSoView.get(CLocal.STT);
-                fillLayout(entityParent);
-            }
-        } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-        }
-    }
+//    @Override
+//    protected void onResume() {
+//        super.onResume();
+//        try {
+//            if (entityParent != null)
+//                fillLayout(entityParent);
+//        } catch (Exception ex) {
+//            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+//        }
+//    }
 
     @Override
     public void onBackPressed() {
@@ -774,24 +766,24 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            imgString += ";" + CLocal.convertBitmapToString(lstCapture.get(i));
                     }
                 }
-                String result = ws.ghiChiSo(entityParent.getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", entityParent.getDot(), CLocal.May, entityParent.getTBTT());
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(CLocal.STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May, CLocal.listDocSoView.get(CLocal.STT).getTBTT());
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    entityParent.setSync(true);
-                    entityParent.setCodeMoi(selectedCode.getCode());
-                    entityParent.setChiSoMoi(edtChiSo.getText().toString());
+                    CLocal.listDocSoView.get(CLocal.STT).setSync(true);
+                    CLocal.listDocSoView.get(CLocal.STT).setCodeMoi(selectedCode.getCode());
+                    CLocal.listDocSoView.get(CLocal.STT).setChiSoMoi(edtChiSo.getText().toString());
                     JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
-                    entityParent.setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
-                    entityParent.setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
-                    entityParent.setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
-                    entityParent.setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
-                    entityParent.setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
-                    entityParent.setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
+                    CLocal.listDocSoView.get(CLocal.STT).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
+                    CLocal.listDocSoView.get(CLocal.STT).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
+                    CLocal.listDocSoView.get(CLocal.STT).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
+                    CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
+                    CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
+                    CLocal.listDocSoView.get(CLocal.STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     if (lstCapture.size() > 0) {
                         for (int i = 0; i < lstCapture.size(); i++) {
-                            CLocal.writeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot()
-                                    , entityParent.getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
+                            CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+                                    , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
                         }
                     }
 //                    if (jsonObject.getString("hoadonton").replace("null", "").equals("") == false) {
@@ -804,7 +796,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                            entityParent.getLstHoaDon().add(entityChild);
 //                        }
 //                    }
-                    CLocal.updateTinhTrangParent(CLocal.listDocSo, entityParent);
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";
@@ -836,7 +828,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                         if (imgString.equals("") == false) {
                             MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
-                            myAsyncTaskGhiHinh.execute(new String[]{entityParent.getID(), imgString});
+                            myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSoView.get(CLocal.STT).getID(), imgString});
                         }
                         //thành công có cảnh báo
                         if (alert.equals("") == false) {
@@ -920,7 +912,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         }
                 }
             } catch (Exception ex) {
-//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }
             return null;
         }
@@ -949,7 +941,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         }
                     }
             } catch (Exception ex) {
-//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }
             return null;
         }
@@ -962,31 +954,40 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     }
 
     public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, Void> {
+        Integer index;
 
         @Override
         protected Void doInBackground(String... strings) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                if (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(CLocal.STT).isSync() == false) {
-                    Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot() + "/" + CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg");
-                    if (bitmap != null) {
-                        bitmap = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
-                        String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(CLocal.STT).getID(), CLocal.listDocSoView.get(CLocal.STT).getCodeMoi(), CLocal.listDocSoView.get(CLocal.STT).getChiSoMoi(), CLocal.listDocSoView.get(CLocal.STT).getTieuThuMoi()
-                                , CLocal.listDocSoView.get(CLocal.STT).getTienNuoc(), CLocal.listDocSoView.get(CLocal.STT).getThueGTGT(), CLocal.listDocSoView.get(CLocal.STT).getPhiBVMT(), CLocal.listDocSoView.get(CLocal.STT).getPhiBVMT_Thue(), CLocal.listDocSoView.get(CLocal.STT).getTongCong(),
-                                CLocal.convertBitmapToString(bitmap), CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May);
-                        if (result.equals("") == false)
-                            jsonObject = new JSONObject(result);
-                        if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                            CLocal.listDocSoView.get(CLocal.STT).setSync(true);
-                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
-                            //CLocal.listDocSoView.remove(CLocal.STT);
-                        }
+                index = Integer.parseInt(strings[0]);
+                if (CLocal.listDocSoView.get(index).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(index).isSync() == false) {
+                    String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getCodeMoi(), CLocal.listDocSoView.get(index).getChiSoMoi(), CLocal.listDocSoView.get(index).getTieuThuMoi()
+                            , CLocal.listDocSoView.get(index).getTienNuoc(), CLocal.listDocSoView.get(index).getThueGTGT(), CLocal.listDocSoView.get(index).getPhiBVMT(), CLocal.listDocSoView.get(index).getPhiBVMT_Thue(), CLocal.listDocSoView.get(index).getTongCong(),
+                            "", CLocal.listDocSoView.get(index).getDot(), CLocal.May);
+                    if (result.equals("") == false)
+                        jsonObject = new JSONObject(result);
+                    if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                        CLocal.listDocSoView.get(index).setSync(true);
+                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(index));
+                        publishProgress();
                     }
+
                 }
             } catch (Exception ex) {
-//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(index).getNam() + "_" + CLocal.listDocSoView.get(index).getKy() + "_" + CLocal.listDocSoView.get(index).getDot() + "/" + CLocal.listDocSoView.get(index).getDanhBo().replace(" ", "") + ".jpg");
+            if (bitmap != null) {
+                MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
+                myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSoView.get(index).getID(), CLocal.convertBitmapToString(bitmap)});
+            }
         }
 
         @Override
@@ -997,6 +998,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     }
 
     public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, Void> {
+        Integer index;
 
         @Override
         protected Void doInBackground(String... strings) {
@@ -1004,25 +1006,33 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject();
                 for (int i = 0; i < CLocal.listDocSoView.size(); i++)
                     if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(i).isSync() == false) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
-                        if (bitmap != null) {
-                            bitmap = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
-                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(i).getID(), CLocal.listDocSoView.get(i).getCodeMoi(), CLocal.listDocSoView.get(i).getChiSoMoi(), CLocal.listDocSoView.get(i).getTieuThuMoi()
-                                    , CLocal.listDocSoView.get(i).getTienNuoc(), CLocal.listDocSoView.get(i).getThueGTGT(), CLocal.listDocSoView.get(i).getPhiBVMT(), CLocal.listDocSoView.get(i).getPhiBVMT_Thue(), CLocal.listDocSoView.get(i).getTongCong(),
-                                    CLocal.convertBitmapToString(bitmap), CLocal.listDocSoView.get(i).getDot(), CLocal.May);
-                            if (result.equals("") == false)
-                                jsonObject = new JSONObject(result);
-                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                                CLocal.listDocSoView.get(i).setSync(true);
-                                CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(i));
-                                //CLocal.listDocSoView.remove(CLocal.STT);
-                            }
+                        index = i;
+                        String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(i).getID(), CLocal.listDocSoView.get(i).getCodeMoi(), CLocal.listDocSoView.get(i).getChiSoMoi(), CLocal.listDocSoView.get(i).getTieuThuMoi()
+                                , CLocal.listDocSoView.get(i).getTienNuoc(), CLocal.listDocSoView.get(i).getThueGTGT(), CLocal.listDocSoView.get(i).getPhiBVMT(), CLocal.listDocSoView.get(i).getPhiBVMT_Thue(), CLocal.listDocSoView.get(i).getTongCong(),
+                                "", CLocal.listDocSoView.get(i).getDot(), CLocal.May);
+                        if (result.equals("") == false)
+                            jsonObject = new JSONObject(result);
+                        if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                            CLocal.listDocSoView.get(i).setSync(true);
+                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(i));
+                            publishProgress();
                         }
+
                     }
             } catch (Exception ex) {
-//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(index).getNam() + "_" + CLocal.listDocSoView.get(index).getKy() + "_" + CLocal.listDocSoView.get(index).getDot() + "/" + CLocal.listDocSoView.get(index).getDanhBo().replace(" ", "") + ".jpg");
+            if (bitmap != null) {
+                MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
+                myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSoView.get(index).getID(), CLocal.convertBitmapToString(bitmap)});
+            }
         }
 
         @Override

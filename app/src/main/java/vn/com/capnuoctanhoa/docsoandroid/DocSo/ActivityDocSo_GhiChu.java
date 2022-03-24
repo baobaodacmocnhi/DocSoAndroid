@@ -36,8 +36,6 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
-    //    private Integer STT = -1;
-    private CEntityParent entityParent;
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
     private Spinner spnViTri1, spnViTri2;
     private Button btnCapNhat, btnCapNhatDT;
@@ -108,12 +106,11 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         });
 
         try {
-//            STT = Integer.parseInt(getIntent().getStringExtra("STT"));
             if (CLocal.STT > -1) {
                 if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
                     ArrayList<String> arrayList = new ArrayList<String>();
                     if (CLocal.STT >= 0 && CLocal.STT < CLocal.listDocSoView.size()) {
-                        entityParent = CLocal.listDocSoView.get(CLocal.STT);
+                      CEntityParent  entityParent = CLocal.listDocSoView.get(CLocal.STT);
                         edtSoNha.setText(entityParent.getSoNha());
                         edtTenDuong.setText(entityParent.getTenDuong());
                         edtGhiChu.setText(entityParent.getGhiChu());
@@ -178,15 +175,15 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 String result = "";
                 switch (strings[0]) {
                     case "CapNhat":
-                        result = ws.update_GhiChu(entityParent.getDanhBo().replace(" ", ""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
+                        result = ws.update_GhiChu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
                                 , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()), edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
-                        result = ws.update_DienThoai(entityParent.getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
+                        result = ws.update_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
                                 , String.valueOf(chkSoChinh.isChecked()), CLocal.MaNV);
                         break;
                     case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ", ""));
+                        result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                         break;
                 }
                 if (result.equals("") == false)
@@ -194,11 +191,11 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                     switch (strings[0]) {
                         case "CapNhat":
-                            entityParent.setSoNha(edtSoNha.getText().toString());
-                            entityParent.setTenDuong(edtTenDuong.getText().toString());
-                            entityParent.setViTri1(spnViTri1.getSelectedItem().toString());
-                            entityParent.setViTri2(spnViTri2.getSelectedItem().toString());
-                            entityParent.setGieng(chkGieng.isChecked());
+                            CLocal.listDocSoView.get(CLocal.STT).setSoNha(edtSoNha.getText().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setTenDuong(edtTenDuong.getText().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setViTri1(spnViTri1.getSelectedItem().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setViTri2(spnViTri2.getSelectedItem().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
                             break;
                         case "CapNhatDT":
 
@@ -207,8 +204,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                             publishProgress(new String[]{"getDSDienThoai", jsonObject.getString("message").replace("null", "")});
                             break;
                     }
-                    CLocal.listDocSoView.get(CLocal.STT).setCEntityParent(entityParent);
-//                    CLocal.updateTinhTrangParent(CLocal.listDocSo, entityParent);
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";
@@ -271,7 +267,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 String result = "";
                 switch (strings[0]) {
                     case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ", ""));
+                        result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                         break;
                 }
                 if (result.equals("") == false)

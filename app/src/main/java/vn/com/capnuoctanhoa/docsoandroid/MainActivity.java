@@ -586,9 +586,35 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                String result = ws.ghi_Hinh(strings[0], strings[1]);
+                if (Boolean.parseBoolean(result) == true) {
+                    for (int i = 0; i < CLocal.listDocSo.size(); i++)
+                        if (CLocal.listDocSo.get(i).getID().equals(strings[0]) == true) {
+                            CLocal.listDocSo.get(i).setGhiHinh(true);
+//                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSo.get(i));
+                        }
+                }
+            } catch (Exception ex) {
+                CLocal.showToastMessage(MainActivity.this, ex.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            CLocal.updateArrayListToJson();
+        }
+    }
+
     public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, Void> {
         ProgressDialog progressDialog;
-
+        Integer index;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -603,25 +629,34 @@ public class MainActivity extends AppCompatActivity {
         protected Void doInBackground(String... strings) {
             try {
                 JSONObject jsonObject = new JSONObject();
-                for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false && CLocal.listDocSo.get(i).isSync() == false) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
-                        if (bitmap != null) {
-                            bitmap = Bitmap.createScaledBitmap(bitmap, 1024, 1024, false);
-                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
-                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                    CLocal.convertBitmapToString(bitmap), CLocal.listDocSo.get(i).getDot(), CLocal.May);
-                            if (result.equals("") == false)
-                                jsonObject = new JSONObject(result);
-                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                                CLocal.listDocSo.get(i).setSync(true);
-                            }
-                        }
+                index = Integer.parseInt(strings[0]);
+                if (CLocal.listDocSo.get(index).getCodeMoi().equals("") == false && CLocal.listDocSo.get(index).isSync() == false) {
+                    String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(index).getID(), CLocal.listDocSo.get(index).getCodeMoi(), CLocal.listDocSo.get(index).getChiSoMoi(), CLocal.listDocSo.get(index).getTieuThuMoi()
+                            , CLocal.listDocSo.get(index).getTienNuoc(), CLocal.listDocSo.get(index).getThueGTGT(), CLocal.listDocSo.get(index).getPhiBVMT(), CLocal.listDocSo.get(index).getPhiBVMT_Thue(), CLocal.listDocSo.get(index).getTongCong(),
+                            "", CLocal.listDocSo.get(index).getDot(), CLocal.May);
+                    if (result.equals("") == false)
+                        jsonObject = new JSONObject(result);
+                    if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                        CLocal.listDocSo.get(index).setSync(true);
+//                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSo.get(index));
+                        publishProgress();
                     }
+
+                }
             } catch (Exception ex) {
-//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                CLocal.showToastMessage(MainActivity.this, ex.getMessage());
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(index).getNam() + "_" + CLocal.listDocSo.get(index).getKy() + "_" + CLocal.listDocSo.get(index).getDot() + "/" + CLocal.listDocSo.get(index).getDanhBo().replace(" ", "") + ".jpg");
+            if (bitmap != null) {
+                MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
+                myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSo.get(index).getID(), CLocal.convertBitmapToString(bitmap)});
+            }
         }
 
         @Override
@@ -636,7 +671,7 @@ public class MainActivity extends AppCompatActivity {
 
     public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, Void> {
         ProgressDialog progressDialog;
-
+        Integer index;
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -652,24 +687,34 @@ public class MainActivity extends AppCompatActivity {
             try {
                 JSONObject jsonObject = new JSONObject();
                 for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
-                        if (bitmap != null) {
-                            bitmap = Bitmap.createScaledBitmap(bitmap, 1024, 1024, false);
-                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
-                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                    CLocal.convertBitmapToString(bitmap), CLocal.listDocSo.get(i).getDot(), CLocal.May);
-                            if (result.equals("") == false)
-                                jsonObject = new JSONObject(result);
-                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                                CLocal.listDocSo.get(i).setSync(true);
-                            }
+                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false ) {
+                        index=i;
+                        String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
+                                , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
+                                "", CLocal.listDocSo.get(i).getDot(), CLocal.May);
+                        if (result.equals("") == false)
+                            jsonObject = new JSONObject(result);
+                        if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                            CLocal.listDocSo.get(i).setSync(true);
+//                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSo.get(i));
+                            publishProgress();
                         }
+
                     }
             } catch (Exception ex) {
-//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+               CLocal.showToastMessage(MainActivity.this, ex.getMessage());
             }
             return null;
+        }
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(index).getNam() + "_" + CLocal.listDocSo.get(index).getKy() + "_" + CLocal.listDocSo.get(index).getDot() + "/" + CLocal.listDocSo.get(index).getDanhBo().replace(" ", "") + ".jpg");
+            if (bitmap != null) {
+                MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
+                myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSo.get(index).getID(), CLocal.convertBitmapToString(bitmap)});
+            }
         }
 
         @Override

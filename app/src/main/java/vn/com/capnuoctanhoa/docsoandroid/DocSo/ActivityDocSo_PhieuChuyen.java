@@ -56,7 +56,6 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
     private RecyclerView recyclerView;
     private CWebservice ws;
     private ArrayList<String> spnName_PhieuChuyen;
-    private CEntityParent entityParent;
     private JSONArray jsonDSDonTu;
     private CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai;
     private String imgPath;
@@ -95,12 +94,6 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 
         try {
             if (CLocal.STT > -1) {
-                if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
-                    ArrayList<String> arrayList = new ArrayList<String>();
-                    if (CLocal.STT >= 0 && CLocal.STT < CLocal.listDocSoView.size()) {
-                        entityParent = CLocal.listDocSoView.get(CLocal.STT);
-                    }
-                }
                 MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
                 myAsyncTaskDisapper.execute(new String[]{"getDSDonTu"});
             }
@@ -274,7 +267,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             try {
                 String result = "";
                 imgString = CLocal.convertBitmapToString(imgCapture);
-                result = ws.ghi_DonTu(entityParent.getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
+                result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
@@ -328,7 +321,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                 String result = "";
                 switch (strings[0]) {
                     case "getDSDonTu":
-                        result = ws.getDS_DonTu(entityParent.getDanhBo().replace(" ", ""));
+                        result = ws.getDS_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                         if (result.equals("") == false)
                             jsonObject = new JSONObject(result);
                         if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
