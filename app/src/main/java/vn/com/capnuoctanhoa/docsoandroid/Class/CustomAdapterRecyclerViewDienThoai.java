@@ -112,20 +112,35 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                 Ky = CLocal.listDocSo.get(0).getKy();
                                 Dot = CLocal.listDocSo.get(0).getDot();
                                 CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                            } else {
-                                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                                editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
-                                editor.commit();
-                                CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                                }.getType());
-                                if (CLocal.listDocSo.size() > 2000)
-                                    CLocal.listDocSo = null;
+
                             }
+                            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                            editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
+                            editor.commit();
+                            CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                            }.getType());
+                            if (CLocal.listDocSo.size() > 2000)
+                                CLocal.listDocSo = null;
+
                             CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
                             Intent returnIntent = new Intent();
                             activity.setResult(Activity.RESULT_OK, returnIntent);
                             activity.finish();
                         } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+            else
+                holder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        try {
+                            CLocal.loadDienThoai = true;
+                            CLocal.DienThoai_DienThoai = holder.txtDienThoai.getText().toString();
+                            CLocal.DienThoai_HoTen = holder.txtHoTen.getText().toString();
+                            CLocal.DienThoai_SoChinh = holder.chkSoChinh.isChecked();
+                        } catch (Exception e) {
                             e.printStackTrace();
                         }
                     }

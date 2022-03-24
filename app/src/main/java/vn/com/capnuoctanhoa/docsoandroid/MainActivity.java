@@ -11,6 +11,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChu;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceFirebaseMessaging;
@@ -24,6 +25,8 @@ import android.content.Intent;
 import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -48,6 +51,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -63,7 +67,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnAdmin;
+    private Button btnAdmin, btnSync, btnSync2;
     private ImageButton imgbtnDangNhap, imgbtnDocSo;
     private TextView txtUser, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
@@ -89,6 +93,24 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityAdmin.class);
                 startActivity(intent);
+            }
+        });
+
+        btnSync = (Button) findViewById(R.id.btnSync);
+        btnSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+                myAsyncTaskGhiDocSo_gianTiep.execute();
+            }
+        });
+
+        btnSync2 = (Button) findViewById(R.id.btnSync2);
+        btnSync2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
+                myAsyncTaskGhiDocSo_gianTiepALL.execute();
             }
         });
 
@@ -155,7 +177,7 @@ public class MainActivity extends AppCompatActivity {
                     CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
                 if (CLocal.sharedPreferencesre.getString("MethodPrinter", "").equals("") == false)
                     CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
-                    CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
+                CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 btnAdmin.setVisibility(View.GONE);
                 if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
                     //so sánh logout sau 7 ngày
@@ -216,6 +238,12 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.showToastMessage(MainActivity.this, ex.getMessage());
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        CLocal.runServiceThermalPrinter(MainActivity.this);
     }
 
     @Override
@@ -558,5 +586,100 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
+    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                for (int i = 0; i < CLocal.listDocSo.size(); i++)
+                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false && CLocal.listDocSo.get(i).isSync() == false) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                        if (bitmap != null) {
+                            bitmap = Bitmap.createScaledBitmap(bitmap, 1024, 1024, false);
+                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
+                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
+                                    CLocal.convertBitmapToString(bitmap), CLocal.listDocSo.get(i).getDot(), CLocal.May);
+                            if (result.equals("") == false)
+                                jsonObject = new JSONObject(result);
+                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                CLocal.listDocSo.get(i).setSync(true);
+                            }
+                        }
+                    }
+            } catch (Exception ex) {
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            CLocal.updateArrayListToJson();
+        }
+    }
+
+    public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, Void> {
+        ProgressDialog progressDialog;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(MainActivity.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected Void doInBackground(String... strings) {
+            try {
+                JSONObject jsonObject = new JSONObject();
+                for (int i = 0; i < CLocal.listDocSo.size(); i++)
+                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                        if (bitmap != null) {
+                            bitmap = Bitmap.createScaledBitmap(bitmap, 1024, 1024, false);
+                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
+                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
+                                    CLocal.convertBitmapToString(bitmap), CLocal.listDocSo.get(i).getDot(), CLocal.May);
+                            if (result.equals("") == false)
+                                jsonObject = new JSONObject(result);
+                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                CLocal.listDocSo.get(i).setSync(true);
+                            }
+                        }
+                    }
+            } catch (Exception ex) {
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void unused) {
+            super.onPostExecute(unused);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            CLocal.updateArrayListToJson();
+        }
+    }
 
 }

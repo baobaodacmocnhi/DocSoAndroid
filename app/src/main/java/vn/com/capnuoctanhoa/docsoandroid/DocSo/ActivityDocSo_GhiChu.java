@@ -36,9 +36,9 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
-//    private Integer STT = -1;
-private CEntityParent entityParent;
-    private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen,edtGhiChu;
+    //    private Integer STT = -1;
+    private CEntityParent entityParent;
+    private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
     private Spinner spnViTri1, spnViTri2;
     private Button btnCapNhat, btnCapNhatDT;
     private CheckBox chkGieng, chkSoChinh;
@@ -64,7 +64,7 @@ private CEntityParent entityParent;
         chkSoChinh = (CheckBox) findViewById(R.id.chkSoChinh);
         btnCapNhatDT = (Button) findViewById(R.id.btnCapNhatDT);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-
+        CLocal.loadDienThoai = false;
         ws = new CWebservice();
 
         try {
@@ -178,15 +178,15 @@ private CEntityParent entityParent;
                 String result = "";
                 switch (strings[0]) {
                     case "CapNhat":
-                        result = ws.update_GhiChu(entityParent.getDanhBo().replace(" ",""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
-                                , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()),edtGhiChu.getText().toString(), CLocal.MaNV);
+                        result = ws.update_GhiChu(entityParent.getDanhBo().replace(" ", ""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
+                                , spnViTri1.getSelectedItem().toString(), spnViTri2.getSelectedItem().toString(), String.valueOf(chkGieng.isChecked()), edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
-                        result = ws.update_DienThoai(entityParent.getDanhBo().replace(" ",""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
+                        result = ws.update_DienThoai(entityParent.getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
                                 , String.valueOf(chkSoChinh.isChecked()), CLocal.MaNV);
                         break;
                     case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ",""));
+                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ", ""));
                         break;
                 }
                 if (result.equals("") == false)
@@ -207,7 +207,8 @@ private CEntityParent entityParent;
                             publishProgress(new String[]{"getDSDienThoai", jsonObject.getString("message").replace("null", "")});
                             break;
                     }
-                    CLocal.updateTinhTrangParent(CLocal.listDocSo, entityParent);
+                    CLocal.listDocSoView.get(CLocal.STT).setCEntityParent(entityParent);
+//                    CLocal.updateTinhTrangParent(CLocal.listDocSo, entityParent);
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";
@@ -270,7 +271,7 @@ private CEntityParent entityParent;
                 String result = "";
                 switch (strings[0]) {
                     case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ",""));
+                        result = ws.getDS_DienThoai(entityParent.getDanhBo().replace(" ", ""));
                         break;
                 }
                 if (result.equals("") == false)
@@ -312,6 +313,7 @@ private CEntityParent entityParent;
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
+
             try {
 //                if (jsonObject != null)
 //                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");

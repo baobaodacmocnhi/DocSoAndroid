@@ -21,6 +21,8 @@ import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.location.LocationManager;
 import android.media.ExifInterface;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
@@ -118,7 +120,11 @@ public class CLocal {
     public static final int _GiamTienNuoc = 10;
     public static ArrayList<String> lstTT0 = new ArrayList<String>(Arrays.asList("K", "N", "N1", "N2", "N3", "68", "Q"));
     public static ArrayList<String> lstTBTT = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "66", "80", "F1", "F2", "F3", "F4"));
-    public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5F", "5M", "5Q", "5K", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
+    public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5F", "5N", "5Q", "5K", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
+    public static boolean loadDienThoai;
+    public static boolean DienThoai_SoChinh;
+    public static String DienThoai_DienThoai;
+    public static String DienThoai_HoTen;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -499,7 +505,7 @@ public class CLocal {
                 lst.get(i).setCEntityParent(entityParentUpdate);
             }
         //goi update lại json hệ thống
-        updateArrayListToJson();
+//        updateArrayListToJson();
     }
 
     //convert tiền thành chữ
@@ -1032,6 +1038,10 @@ public class CLocal {
 
         // Vibrate for 400 milliseconds
         v.vibrate(400);
+
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+        Ringtone r = RingtoneManager.getRingtone(activity, notification);
+        r.play();
     }
 
     /**
@@ -1807,7 +1817,7 @@ public class CLocal {
             Calendar calDenNgay = Calendar.getInstance();
             calDenNgay.setTime(dateDenNgay);
             Calendar calNgayChot = Calendar.getInstance();
-            calNgayChot.set(2019,11,15);
+            calNgayChot.set(2019, 11, 15);
             for (int i = 0; i < CLocal.jsonGiaNuoc.length(); i++)
                 if (dateTuNgay.compareTo(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(i).getString("NgayTangGia"))) < 0 && convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(i).getString("NgayTangGia")).compareTo(dateDenNgay) < 0) {
                     index = i;

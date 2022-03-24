@@ -197,7 +197,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                         }
                     }
                     if (imgCapture != null) {
-                        imgCapture = Bitmap.createScaledBitmap(imgCapture, 2048, 2048, false);
+                        imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
                         imgThumb.setImageBitmap(imgCapture);
                     }
                 }
@@ -216,7 +216,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                         imgCapture = bitmap;
                     }
                     if (imgCapture != null) {
-                        imgCapture = Bitmap.createScaledBitmap(imgCapture, 2048, 2048, false);
+                        imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
                         imgThumb.setImageBitmap(imgCapture);
                     }
                 }
