@@ -662,7 +662,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 edtTieuThuMoi.setText(String.valueOf(100000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
             else
                 edtTieuThuMoi.setText(String.valueOf(Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
-        if (edtCodeMoi.getText().toString().substring(0, 1).equals("4") == true && (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("6") == true || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true))
+        if (edtCodeMoi.getText().toString().substring(0, 1).equals("4") == true
+                && (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true
+                || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true
+                || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true
+                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("6") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68") == false)))
             edtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1));
         if (edtCodeMoi.getText().toString().substring(0, 1).equals("F") == true || edtCodeMoi.getText().toString().equals("61") == true)
             edtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
@@ -898,10 +902,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         }
     }
 
-    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, String> {
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 String result = ws.ghi_Hinh(strings[0], strings[1]);
                 if (Boolean.parseBoolean(result) == true) {
@@ -912,22 +917,25 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         }
                 }
             } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
-    public class MyAsyncTaskGhiHinhAll extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiHinhAll extends AsyncTask<String, Void, String> {
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 for (int i = 0; i < CLocal.listDocSoView.size(); i++)
                     if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(i).isSync() == true && CLocal.listDocSoView.get(i).isGhiHinh() == false) {
@@ -941,23 +949,26 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         }
                     }
             } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
-    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, String> {
         Integer index;
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 JSONObject jsonObject = new JSONObject();
                 index = Integer.parseInt(strings[0]);
@@ -975,9 +986,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
                 }
             } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
@@ -991,17 +1002,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
-    public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, String> {
         Integer index;
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 JSONObject jsonObject = new JSONObject();
                 for (int i = 0; i < CLocal.listDocSoView.size(); i++)
@@ -1020,9 +1034,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
                     }
             } catch (Exception ex) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
@@ -1036,9 +1050,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 

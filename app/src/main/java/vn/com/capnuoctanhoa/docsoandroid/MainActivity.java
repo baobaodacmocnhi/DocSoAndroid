@@ -586,10 +586,11 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, String> {
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 String result = ws.ghi_Hinh(strings[0], strings[1]);
                 if (Boolean.parseBoolean(result) == true) {
@@ -600,21 +601,24 @@ public class MainActivity extends AppCompatActivity {
                         }
                 }
             } catch (Exception ex) {
-                CLocal.showToastMessage(MainActivity.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(MainActivity.this, s);
         }
     }
 
-    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         Integer index;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -626,7 +630,8 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 JSONObject jsonObject = new JSONObject();
                 index = Integer.parseInt(strings[0]);
@@ -644,9 +649,9 @@ public class MainActivity extends AppCompatActivity {
 
                 }
             } catch (Exception ex) {
-                CLocal.showToastMessage(MainActivity.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
@@ -660,18 +665,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(MainActivity.this, s);
         }
     }
 
-    public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, Void> {
+    public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, String> {
         ProgressDialog progressDialog;
         Integer index;
+
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
@@ -683,12 +691,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected Void doInBackground(String... strings) {
+        protected String doInBackground(String... strings) {
+            String error = "";
             try {
                 JSONObject jsonObject = new JSONObject();
                 for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false ) {
-                        index=i;
+                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                        index = i;
                         String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                 , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
                                 "", CLocal.listDocSo.get(i).getDot(), CLocal.May);
@@ -702,9 +711,9 @@ public class MainActivity extends AppCompatActivity {
 
                     }
             } catch (Exception ex) {
-               CLocal.showToastMessage(MainActivity.this, ex.getMessage());
+                error = ex.getMessage();
             }
-            return null;
+            return error;
         }
 
         @Override
@@ -718,12 +727,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(Void unused) {
-            super.onPostExecute(unused);
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
             CLocal.updateArrayListToJson();
+            if (s.equals("") == false)
+                CLocal.showToastMessage(MainActivity.this, s);
         }
     }
 
