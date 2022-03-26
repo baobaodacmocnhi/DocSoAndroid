@@ -66,20 +66,14 @@ public class ThermalPrinter {
         this.arrayList = arrayList;
     }
 
-    public ThermalPrinter(Activity activity) {
-        this.activity = activity;
-        findBluetoothDevice();
-//        for (int i = 0; i < lstBluetoothDevice.size(); i++)
-//            if (lstBluetoothDevice.get(i).getAddress().equals(CLocal.ThermalPrinter)) {
-//                bluetoothDevice = lstBluetoothDevice.get(i);
-//                if (bluetoothDevice != null) {
-//                    openBluetoothPrinter();
-////                    beginListenData();
-//                }
-//            }
-//        bluetoothDevice = bluetoothAdapter.getRemoteDevice(CLocal.ThermalPrinter);
-//        if (bluetoothDevice != null)
-//            openBluetoothPrinter();
+    public ThermalPrinter(Activity activity) throws IOException {
+        try {
+            this.activity = activity;
+            findBluetoothDevice();
+            openBluetoothPrinter();
+        } catch (Exception ex) {
+            throw ex;
+        }
     }
 
     private void findBluetoothDevice() {
@@ -135,6 +129,16 @@ public class ThermalPrinter {
             }
             if (bluetoothSocket == null)
                 CLocal.showToastMessage(activity, "Không Thể Kết Nối Máy In");
+        } catch (Exception e) {
+            throw e;
+        }
+    }
+
+    public boolean isConnectedBluetoothDevice() throws IOException {
+        try {
+            if (bluetoothDevice == null || bluetoothSocket == null)
+                return false;
+            return bluetoothSocket.isConnected();
         } catch (Exception e) {
             throw e;
         }
@@ -212,7 +216,7 @@ public class ThermalPrinter {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void printGhiChiSo(CEntityParent entityParent) throws IOException {
         try {
-            if (getBluetoothDevice() == null)
+            if (getBluetoothDevice() == null || isConnectedBluetoothDevice() == false)
                 openBluetoothPrinter();
             else
                 switch (CLocal.MethodPrinter) {
@@ -779,9 +783,9 @@ public class ThermalPrinter {
                 stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", ""), y, 0));
                 y = handlingYMoreThan450(y, 225);
                 stringBuilder.append(printLine("TRÂN TRỌNG", 3, y, 130, 1, 1));
-                y = handlingYMoreThan450(y, 25);
+                y = handlingYMoreThan450(y, 50);
                 stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
-                y = handlingYMoreThan450(y, 25);
+                y = handlingYMoreThan450(y, 15);
                 stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("Từ kỳ 04/2022 không thu tiền nước", 1, y, 0, 1, 1));

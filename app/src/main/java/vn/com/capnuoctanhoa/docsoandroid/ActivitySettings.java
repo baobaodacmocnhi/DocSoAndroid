@@ -16,6 +16,7 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import vn.com.capnuoctanhoa.docsoandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 
@@ -67,8 +68,8 @@ public class ActivitySettings extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 //                edtIDMobile.setText(CLocal.getAndroidID(ActivitySettings.this));
-               setClipboard(getApplicationContext(),edtIDMobile.getText().toString());
-               CLocal.showToastMessage(getApplicationContext(),"Copied");
+                setClipboard(getApplicationContext(), edtIDMobile.getText().toString());
+                CLocal.showToastMessage(getApplicationContext(), "Copied");
             }
         });
 
@@ -182,7 +183,7 @@ public class ActivitySettings extends AppCompatActivity {
     }
 
     private void setClipboard(Context context, String text) {
-        if(android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
+        if (android.os.Build.VERSION.SDK_INT < android.os.Build.VERSION_CODES.HONEYCOMB) {
             android.text.ClipboardManager clipboard = (android.text.ClipboardManager) context.getSystemService(Context.CLIPBOARD_SERVICE);
             clipboard.setText(text);
         } else {
@@ -207,8 +208,11 @@ public class ActivitySettings extends AppCompatActivity {
 
         @Override
         protected Void doInBackground(Void... voids) {
-            if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
-                thermalPrinter = new ThermalPrinter(ActivitySettings.this);
+            try {
+                if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
+                    thermalPrinter = new ThermalPrinter(ActivitySettings.this);
+            } catch (Exception ex) {
+            }
             return null;
         }
 

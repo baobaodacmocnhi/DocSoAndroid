@@ -407,7 +407,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                             String HinhDHN = "";
                             Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(j).getNam() + "_" + CLocal.listDocSo.get(j).getKy() + "_" + CLocal.listDocSo.get(j).getDot() + "/" + CLocal.listDocSo.get(j).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
-                                HinhDHN = CLocal.convertBitmapToString(Bitmap.createScaledBitmap(bitmap, 1024, 1024, false));
+                                HinhDHN = CLocal.convertBitmapToString(bitmap);
                             }
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                     , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
