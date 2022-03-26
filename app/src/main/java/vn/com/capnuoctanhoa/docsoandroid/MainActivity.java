@@ -67,7 +67,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
-    private Button btnAdmin, btnSync, btnSync2;
+    private Button btnAdmin;
     private ImageButton imgbtnDangNhap, imgbtnDocSo;
     private TextView txtUser, txtVersion;
     private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
@@ -93,24 +93,6 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(MainActivity.this, ActivityAdmin.class);
                 startActivity(intent);
-            }
-        });
-
-        btnSync = (Button) findViewById(R.id.btnSync);
-        btnSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
-                myAsyncTaskGhiDocSo_gianTiep.execute();
-            }
-        });
-
-        btnSync2 = (Button) findViewById(R.id.btnSync2);
-        btnSync2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
-                myAsyncTaskGhiDocSo_gianTiepALL.execute();
             }
         });
 
@@ -173,10 +155,8 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false)
                     CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
-                if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false)
-                    CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
-                if (CLocal.sharedPreferencesre.getString("MethodPrinter", "").equals("") == false)
-                    CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
+                CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
+                CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
                 CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 btnAdmin.setVisibility(View.GONE);
                 if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
@@ -189,6 +169,7 @@ public class MainActivity extends AppCompatActivity {
                     Date dateLogin7 = calendar.getTime();
                     Date currentDate = new Date();
                     if (currentDate.compareTo(dateLogin7) > 0) {
+                        CLocal.ghiListToFileDocSo();
                         MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
                         myAsyncTask_dangXuat.execute("DangXuat");
                     }
@@ -233,17 +214,11 @@ public class MainActivity extends AppCompatActivity {
 //                        startService(intent2);
 //                        bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
 //                    }
-                CLocal.runServiceThermalPrinter(MainActivity.this);
+//                CLocal.runServiceThermalPrinter(MainActivity.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(MainActivity.this, ex.getMessage());
             }
         }
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        CLocal.runServiceThermalPrinter(MainActivity.this);
     }
 
     @Override
@@ -336,7 +311,6 @@ public class MainActivity extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             int count;
             try {
-
                 URL url = new URL(strings[0]);
                 URLConnection conection = url.openConnection();
                 conection.connect();
@@ -377,7 +351,6 @@ public class MainActivity extends AppCompatActivity {
                 input.close();
 
             } catch (Exception e) {
-                Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();
             }
             return null;
         }
@@ -422,7 +395,6 @@ public class MainActivity extends AppCompatActivity {
                         results = result.split(";");
                         return results;
                     } catch (Exception e) {
-                        e.printStackTrace();
                     }
             }
             return null;
@@ -586,156 +558,5 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public class MyAsyncTaskGhiHinh extends AsyncTask<String, Void, String> {
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String error = "";
-            try {
-                String result = ws.ghi_Hinh(strings[0], strings[1]);
-                if (Boolean.parseBoolean(result) == true) {
-                    for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                        if (CLocal.listDocSo.get(i).getID().equals(strings[0]) == true) {
-                            CLocal.listDocSo.get(i).setGhiHinh(true);
-//                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSo.get(i));
-                        }
-                }
-            } catch (Exception ex) {
-                error = ex.getMessage();
-            }
-            return error;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
-                CLocal.showToastMessage(MainActivity.this, s);
-        }
-    }
-
-    public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
-        Integer index;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("Thông Báo");
-            progressDialog.setMessage("Đang xử lý...");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String error = "";
-            try {
-                JSONObject jsonObject = new JSONObject();
-                index = Integer.parseInt(strings[0]);
-                if (CLocal.listDocSo.get(index).getCodeMoi().equals("") == false && CLocal.listDocSo.get(index).isSync() == false) {
-                    String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(index).getID(), CLocal.listDocSo.get(index).getCodeMoi(), CLocal.listDocSo.get(index).getChiSoMoi(), CLocal.listDocSo.get(index).getTieuThuMoi()
-                            , CLocal.listDocSo.get(index).getTienNuoc(), CLocal.listDocSo.get(index).getThueGTGT(), CLocal.listDocSo.get(index).getPhiBVMT(), CLocal.listDocSo.get(index).getPhiBVMT_Thue(), CLocal.listDocSo.get(index).getTongCong(),
-                            "", CLocal.listDocSo.get(index).getDot(), CLocal.May);
-                    if (result.equals("") == false)
-                        jsonObject = new JSONObject(result);
-                    if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                        CLocal.listDocSo.get(index).setSync(true);
-//                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSo.get(index));
-                        publishProgress();
-                    }
-
-                }
-            } catch (Exception ex) {
-                error = ex.getMessage();
-            }
-            return error;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(index).getNam() + "_" + CLocal.listDocSo.get(index).getKy() + "_" + CLocal.listDocSo.get(index).getDot() + "/" + CLocal.listDocSo.get(index).getDanhBo().replace(" ", "") + ".jpg");
-            if (bitmap != null) {
-                MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
-                myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSo.get(index).getID(), CLocal.convertBitmapToString(bitmap)});
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
-            CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
-                CLocal.showToastMessage(MainActivity.this, s);
-        }
-    }
-
-    public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, String> {
-        ProgressDialog progressDialog;
-        Integer index;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(MainActivity.this);
-            progressDialog.setTitle("Thông Báo");
-            progressDialog.setMessage("Đang xử lý...");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... strings) {
-            String error = "";
-            try {
-                JSONObject jsonObject = new JSONObject();
-                for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                    if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
-                        index = i;
-                        String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
-                                , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                "", CLocal.listDocSo.get(i).getDot(), CLocal.May);
-                        if (result.equals("") == false)
-                            jsonObject = new JSONObject(result);
-                        if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                            CLocal.listDocSo.get(i).setSync(true);
-//                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSo.get(i));
-                            publishProgress();
-                        }
-
-                    }
-            } catch (Exception ex) {
-                error = ex.getMessage();
-            }
-            return error;
-        }
-
-        @Override
-        protected void onProgressUpdate(Void... values) {
-            super.onProgressUpdate(values);
-            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(index).getNam() + "_" + CLocal.listDocSo.get(index).getKy() + "_" + CLocal.listDocSo.get(index).getDot() + "/" + CLocal.listDocSo.get(index).getDanhBo().replace(" ", "") + ".jpg");
-            if (bitmap != null) {
-                MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
-                myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSo.get(index).getID(), CLocal.convertBitmapToString(bitmap)});
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
-            CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
-                CLocal.showToastMessage(MainActivity.this, s);
-        }
-    }
 
 }

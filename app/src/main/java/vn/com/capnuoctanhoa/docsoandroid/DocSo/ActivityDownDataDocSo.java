@@ -90,7 +90,10 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 
         //cast to an ArrayAdapter
         ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
-        int spnKyPosition = spnKyAdapter.getPosition(String.valueOf(Calendar.getInstance().get(Calendar.MONTH) + 1));
+        int Ky = Calendar.getInstance().get(Calendar.MONTH) + 1;
+        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 15)
+            Ky++;
+        int spnKyPosition = spnKyAdapter.getPosition((Ky < 10 ? "0" : "") + Ky);
         //set the default according to value
         spnKy.setSelection(spnKyPosition);
 
@@ -399,7 +402,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         enParent.setGiaBieu(jsonObject.getString("GiaBieu").replace("null", ""));
                         enParent.setDinhMuc(jsonObject.getString("DinhMuc").replace("null", ""));
                         enParent.setDinhMucHN(jsonObject.getString("DinhMucHN").replace("null", ""));
-                        enParent.setSH(Integer.parseInt( jsonObject.getString("SH").replace("null", "")));
+                        enParent.setSH(Integer.parseInt(jsonObject.getString("SH").replace("null", "")));
                         enParent.setSX(Integer.parseInt(jsonObject.getString("SX").replace("null", "")));
                         enParent.setDV(Integer.parseInt(jsonObject.getString("DV").replace("null", "")));
                         enParent.setHCSN(Integer.parseInt(jsonObject.getString("HCSN").replace("null", "")));
@@ -407,6 +410,11 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         enParent.setChiSoMoi(jsonObject.getString("CSMoi").replace("null", ""));
                         enParent.setCodeMoi(jsonObject.getString("CodeMoi").replace("null", ""));
                         enParent.setTieuThuMoi(jsonObject.getString("TieuThuMoi").replace("null", ""));
+                        enParent.setTienNuoc(jsonObject.getString("TienNuoc").replace("null", ""));
+                        enParent.setThueGTGT(jsonObject.getString("ThueGTGT").replace("null", ""));
+                        enParent.setPhiBVMT(jsonObject.getString("PhiBVMT").replace("null", ""));
+                        enParent.setPhiBVMT_Thue(jsonObject.getString("PhiBVMT_Thue").replace("null", ""));
+                        enParent.setTongCong(jsonObject.getString("TongCong").replace("null", ""));
                         enParent.setChiSo0(jsonObject.getString("ChiSo0").replace("null", ""));
                         enParent.setCode0(jsonObject.getString("Code0").replace("null", ""));
                         enParent.setTieuThu0(jsonObject.getString("TieuThu0").replace("null", ""));

@@ -29,18 +29,10 @@ public class ServiceAppKilled extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         try {
-            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-            String Nam = "", Ky = "", Dot = "";
-            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                Nam = CLocal.listDocSo.get(0).getNam();
-                Ky = CLocal.listDocSo.get(0).getKy();
-                Dot = CLocal.listDocSo.get(0).getDot();
-                editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
-            }
-            if (CLocal.jsonMessage != null)
-                editor.putString("jsonMessage", CLocal.jsonMessage.toString());
-            editor.commit();
+            CLocal.ghiListToFileDocSo();
+//            if (CLocal.jsonMessage != null)
+//                editor.putString("jsonMessage", CLocal.jsonMessage.toString());
+//            editor.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

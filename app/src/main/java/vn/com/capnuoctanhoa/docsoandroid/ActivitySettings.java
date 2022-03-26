@@ -200,7 +200,7 @@ public class ActivitySettings extends AppCompatActivity {
             super.onPreExecute();
             progressDialog = new ProgressDialog(ActivitySettings.this);
             progressDialog.setTitle("Thông Báo");
-            progressDialog.setMessage("Đang kết nối máy in");
+            progressDialog.setMessage("Đang Lấy Thông Tin Bluetooth");
             progressDialog.setCanceledOnTouchOutside(false);
             progressDialog.show();
         }

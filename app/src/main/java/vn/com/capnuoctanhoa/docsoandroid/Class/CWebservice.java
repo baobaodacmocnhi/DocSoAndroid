@@ -475,6 +475,38 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String getDS_DocSo_Ton(String Nam, String Ky, String Dot, String May) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_DocSo_Ton";
+        String OPERATION_NAME = "getDS_DocSo_Ton";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("Nam");
+        pi.setValue(Nam);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Ky");
+        pi.setValue(Ky);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Dot");
+        pi.setValue(Dot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("May");
+        pi.setValue(May);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     public String getDS_HoaDonTon(String Nam, String Ky, String Dot, String May) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_HoaDonTon";
         String OPERATION_NAME = "getDS_HoaDonTon";

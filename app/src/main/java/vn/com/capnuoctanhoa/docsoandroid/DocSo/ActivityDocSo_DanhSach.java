@@ -25,9 +25,16 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.BufferedInputStream;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -42,6 +49,9 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
@@ -51,6 +61,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CViewChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
+import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_DanhSach extends AppCompatActivity {
@@ -62,7 +73,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     private ArrayList<CViewParent> listParent;
     private ArrayList<CViewChild> listChild;
     private FloatingActionButton floatingActionButton;
-    private ImageView imgviewThuTienHD0, imgviewThongKe;
+    private ImageView ivSync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -82,82 +93,25 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
-        imgviewThuTienHD0 = (ImageView) findViewById(R.id.imgviewThuTienHD0);
-        imgviewThongKe = (ImageView) findViewById(R.id.imgviewThongKe);
+        ivSync = (ImageView) findViewById(R.id.ivSync);
 
-//        imgviewThuTienHD0.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                try {
-//                    AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDocSo_DanhSach.this);
-//                    builder.setMessage("Bạn có chắc chắn Thu Tiền HĐ=0?")
-//                            .setCancelable(false)
-//                            .setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
-//                                        MyAsyncTask_XuLyTrucTiep_Extra myAsyncTask_xuLyTrucTiep_hd0 = new MyAsyncTask_XuLyTrucTiep_Extra();
-//                                        myAsyncTask_xuLyTrucTiep_hd0.execute("HD0");
-//                                    }
-//                                }
-//                            })
-//                            .setPositiveButton("No", new DialogInterface.OnClickListener() {
-//                                public void onClick(DialogInterface dialog, int id) {
-//                                    dialog.cancel();
-//                                }
-//                            });
-//                    AlertDialog alert = builder.create();
-//                    alert.show();
-//                    Button btnPositive = alert.getButton(AlertDialog.BUTTON_POSITIVE);
-//                    Button btnNegative = alert.getButton(AlertDialog.BUTTON_NEGATIVE);
-//                    LinearLayout.LayoutParams layoutParams = (LinearLayout.LayoutParams) btnPositive.getLayoutParams();
-//                    layoutParams.weight = 10;
-//                    layoutParams.gravity = Gravity.CENTER;
-//                    btnPositive.setLayoutParams(layoutParams);
-//                    btnNegative.setLayoutParams(layoutParams);
-//                } catch (Exception ex) {
-//                    CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, ex.getMessage(), "left");
-//                }
-//            }
-//        });
-//
-//        imgviewThongKe.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                int TongHD = 0, TongHDThuHo = 0, TongHDDaThu = 0, TongHDTon = 0;
-//                long TongCong = 0, TongCongThuHo = 0, TongCongDaThu = 0, TongCongTon = 0;
-//                if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-//                    for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-//                        for (int j = 0; j < CLocal.listDocSo.get(i).getLstHoaDon().size(); j++) {
-//                            //tổng
-//                            TongHD++;
-//                            TongCong += Long.parseLong(CLocal.listDocSo.get(i).getLstHoaDon().get(j).getTongCong());
-//                            //thu hộ
-//                            if ((CLocal.listDocSo.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listDocSo.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV) == false)
-//                                    || (CLocal.listDocSo.get(i).getLstHoaDon().get(j).isGiaiTrach() == true && CLocal.listDocSo.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
-//                                    || CLocal.listDocSo.get(i).getLstHoaDon().get(j).isTamThu() == true || CLocal.listDocSo.get(i).getLstHoaDon().get(j).isThuHo() == true) {
-//                                TongHDThuHo++;
-//                                TongCongThuHo += Long.parseLong(CLocal.listDocSo.get(i).getLstHoaDon().get(j).getTongCong());
-//                            }
-//                            //đã thu
-//                            if (CLocal.listDocSo.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == true && CLocal.listDocSo.get(i).getLstHoaDon().get(j).getMaNV_DangNgan().equals(CLocal.MaNV) == true) {
-//                                TongHDDaThu++;
-//                                TongCongDaThu += Long.parseLong(CLocal.listDocSo.get(i).getLstHoaDon().get(j).getTongCong());
-//                            }
-//                            //tồn
-//                            if ((CLocal.listDocSo.get(i).getLstHoaDon().get(j).isDangNgan_DienThoai() == false)
-//                                    && CLocal.listDocSo.get(i).getLstHoaDon().get(j).isGiaiTrach() == false && CLocal.listDocSo.get(i).getLstHoaDon().get(j).isTamThu() == false && CLocal.listDocSo.get(i).getLstHoaDon().get(j).isThuHo() == false) {
-//                                TongHDTon++;
-//                                TongCongTon += Long.parseLong(CLocal.listDocSo.get(i).getLstHoaDon().get(j).getTongCong());
-//                            }
-//                        }
-//                    }
-//                }
-//                CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, "Tổng: " + CLocal.formatMoney(String.valueOf(TongHD), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCong), "đ")
-//                        + "\n\nThu Hộ: " + CLocal.formatMoney(String.valueOf(TongHDThuHo), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongThuHo), "đ")
-//                        + "\n\nĐã Thu: " + CLocal.formatMoney(String.valueOf(TongHDDaThu), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongDaThu), "đ")
-//                        + "\n\nTồn: " + CLocal.formatMoney(String.valueOf(TongHDTon), "hđ") + " = " + CLocal.formatMoney(String.valueOf(TongCongTon), "đ"), "right");
-//            }
-//        });
+        ivSync.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                try {
+                    if (CLocal.checkNetworkAvailable(ActivityDocSo_DanhSach.this) == false) {
+                        CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Không có Internet");
+                        return;
+                    }
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        MyAsyncTaskSyncDocSoTon myAsyncTaskSyncDocSoTon = new MyAsyncTaskSyncDocSoTon();
+                        myAsyncTaskSyncDocSoTon.execute();
+                    }
+                } catch (Exception ex) {
+                    CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, ex.getMessage(), "left");
+                }
+            }
+        });
 
         spnFilter.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -419,5 +373,77 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 //                loadListView();
 //        }
 //    }
+
+    public class MyAsyncTaskSyncDocSoTon extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        CWebservice ws;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityDocSo_DanhSach.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang Xử Lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setIndeterminate(false);
+            progressDialog.setMax(100);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//            progressDialog.setCancelable(true);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ws = new CWebservice();
+            String error = "";
+            try {
+                JSONArray jsonDocSoTon = new JSONArray(ws.getDS_DocSo_Ton(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), CLocal.May));
+                long total = jsonDocSoTon.length();
+                for (int i = 0; i < jsonDocSoTon.length(); i++) {
+                    JSONObject jsonObject = jsonDocSoTon.getJSONObject(i);
+                    for (int j = 0; j < CLocal.listDocSo.size(); j++)
+                        if (jsonObject.getString("DocSoID").replace("null", "").equals(CLocal.listDocSo.get(j).getID()) == true
+                                && CLocal.listDocSo.get(j).getCodeMoi().equals("") == false) {
+                            String HinhDHN = "";
+                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(j).getNam() + "_" + CLocal.listDocSo.get(j).getKy() + "_" + CLocal.listDocSo.get(j).getDot() + "/" + CLocal.listDocSo.get(j).getDanhBo().replace(" ", "") + ".jpg");
+                            if (bitmap != null) {
+                                HinhDHN = CLocal.convertBitmapToString(Bitmap.createScaledBitmap(bitmap, 1024, 1024, false));
+                            }
+                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
+                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
+                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May);
+                            if (result.equals("") == false)
+                                jsonObject = new JSONObject(result);
+                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                CLocal.listDocSo.get(i).setSync(true);
+                            }
+                        }
+                    publishProgress("" + (int) ((i + 1) / total * 100));
+                }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return error;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setProgress(Integer.parseInt(values[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (s.equals("") == false)
+                CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
+            else
+                CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Đã Xử Lý");
+        }
+
+    }
 
 }

@@ -110,7 +110,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
                     ArrayList<String> arrayList = new ArrayList<String>();
                     if (CLocal.STT >= 0 && CLocal.STT < CLocal.listDocSoView.size()) {
-                      CEntityParent  entityParent = CLocal.listDocSoView.get(CLocal.STT);
+                        CEntityParent entityParent = CLocal.listDocSoView.get(CLocal.STT);
                         edtSoNha.setText(entityParent.getSoNha());
                         edtTenDuong.setText(entityParent.getTenDuong());
                         edtGhiChu.setText(entityParent.getGhiChu());
