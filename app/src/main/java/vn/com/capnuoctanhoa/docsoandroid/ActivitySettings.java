@@ -211,6 +211,7 @@ public class ActivitySettings extends AppCompatActivity {
             try {
                 if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
                     thermalPrinter = new ThermalPrinter(ActivitySettings.this);
+                thermalPrinter.findBluetoothDevice();
             } catch (Exception ex) {
             }
             return null;

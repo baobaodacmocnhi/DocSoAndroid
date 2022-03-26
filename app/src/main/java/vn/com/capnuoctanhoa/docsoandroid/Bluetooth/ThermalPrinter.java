@@ -31,7 +31,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 public class ThermalPrinter {
     private Activity activity;
     private BluetoothAdapter bluetoothAdapter;
-    private BluetoothSocket bluetoothSocket;
+    private BluetoothSocket bluetoothSocket = null;
     private static BluetoothDevice bluetoothDevice = null;
     private ArrayList<BluetoothDevice> lstBluetoothDevice;
     private ArrayList<String> arrayList;
@@ -69,14 +69,14 @@ public class ThermalPrinter {
     public ThermalPrinter(Activity activity) throws IOException {
         try {
             this.activity = activity;
-            findBluetoothDevice();
-            openBluetoothPrinter();
+//            findBluetoothDevice();
+//            openBluetoothPrinter();
         } catch (Exception ex) {
             throw ex;
         }
     }
 
-    private void findBluetoothDevice() {
+    public void findBluetoothDevice() {
         try {
             lstBluetoothDevice = new ArrayList<BluetoothDevice>();
             arrayList = new ArrayList<String>();
@@ -105,7 +105,7 @@ public class ThermalPrinter {
         }
     }
 
-    private void openBluetoothPrinter() throws IOException {
+    public void openBluetoothPrinter() throws IOException {
         try {
             if (bluetoothSocket == null) {
                 //Standard uuid from string //
@@ -138,6 +138,7 @@ public class ThermalPrinter {
         try {
             if (bluetoothDevice == null || bluetoothSocket == null)
                 return false;
+            else
             return bluetoothSocket.isConnected();
         } catch (Exception e) {
             throw e;
