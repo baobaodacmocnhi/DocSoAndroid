@@ -397,7 +397,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             ws = new CWebservice();
             String error = "";
             try {
-                JSONArray jsonDocSoTon = new JSONArray(ws.getDS_DocSo_Ton(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), "19"));
+                JSONArray jsonDocSoTon = new JSONArray(ws.getDS_DocSo_Ton(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), CLocal.May));
                 int total = jsonDocSoTon.length();
                 progressDialog.setMax(total);
                 if (jsonDocSoTon != null && jsonDocSoTon.length() > 0)
