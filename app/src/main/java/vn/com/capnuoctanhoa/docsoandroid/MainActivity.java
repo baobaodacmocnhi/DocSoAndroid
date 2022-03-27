@@ -155,7 +155,10 @@ public class MainActivity extends AppCompatActivity {
                 }
                 if (CLocal.sharedPreferencesre.getString("jsonMessage", "").equals("") == false)
                     CLocal.jsonMessage = new JSONArray(CLocal.sharedPreferencesre.getString("jsonMessage", ""));
-                CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
+                if (CLocal.sharedPreferencesre.getString("ThermalPrinter", "").equals("") == false)
+                    CLocal.ThermalPrinter = CLocal.sharedPreferencesre.getString("ThermalPrinter", "");
+                else
+                    CLocal.ThermalPrinter = "";
                 CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
                 CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 btnAdmin.setVisibility(View.GONE);
@@ -214,7 +217,8 @@ public class MainActivity extends AppCompatActivity {
 //                        startService(intent2);
 //                        bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
 //                    }
-//                CLocal.runServiceThermalPrinter(MainActivity.this);
+                if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+                    CLocal.runServiceThermalPrinter(MainActivity.this);
             } catch (Exception ex) {
                 CLocal.showToastMessage(MainActivity.this, ex.getMessage());
             }

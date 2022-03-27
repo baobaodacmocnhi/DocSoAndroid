@@ -130,6 +130,8 @@ public class ThermalPrinter {
             }
             if (bluetoothSocket == null)
                 CLocal.showToastMessage(activity, "Không Thể Kết Nối Máy In");
+            else
+                CLocal.showToastMessage(activity, "Đã Kết Nối Máy In");
         } catch (Exception e) {
             throw e;
         }

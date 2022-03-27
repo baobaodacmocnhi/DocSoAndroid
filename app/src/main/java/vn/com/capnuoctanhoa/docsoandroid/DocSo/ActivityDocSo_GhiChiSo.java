@@ -76,7 +76,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private CMarshMallowPermission cMarshMallowPermission;
     private CWebservice ws;
     private String _alert;
-    private ThermalPrinter thermalPrinter;
+//    private ThermalPrinter thermalPrinter;
     private boolean firstload = true;
 
     @Override
@@ -402,8 +402,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 public void onClick(View view) {
                     try {
                         if (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false) {
-                            if (thermalPrinter != null) {
-                                thermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(CLocal.STT));
+//                            if (thermalPrinter != null) {
+//                                thermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(CLocal.STT));
+//                            }
+                            if (CLocal.serviceThermalPrinter != null) {
+                                CLocal.serviceThermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(CLocal.STT));
                             }
                         } else {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
@@ -448,15 +451,21 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
 
-        try {
-            thermalPrinter = new ThermalPrinter(ActivityDocSo_GhiChiSo.this);
-            if (thermalPrinter != null) {
-                thermalPrinter.findBluetoothDevice();
-                thermalPrinter.openBluetoothPrinter();
-            }
-        } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-        }
+//        try {
+//            if (CLocal.ThermalPrinter == null || CLocal.ThermalPrinter.equals("") == true) {
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa Cấu Hình Máy In");
+//            } else {
+////                thermalPrinter = new ThermalPrinter(ActivityDocSo_GhiChiSo.this);
+////                if (thermalPrinter != null) {
+////                    thermalPrinter.findBluetoothDevice();
+////                    thermalPrinter.openBluetoothPrinter();
+////                }
+//                MyAsyncTask_ConnectPrinter myAsyncTask_connectPrinter = new MyAsyncTask_ConnectPrinter();
+//                myAsyncTask_connectPrinter.execute();
+//            }
+//        } catch (Exception ex) {
+//            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+//        }
     }
 
     @Override
@@ -744,7 +753,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        thermalPrinter.disconnectBluetoothDevice();
+//        if (thermalPrinter != null)
+//            thermalPrinter.disconnectBluetoothDevice();
     }
 
     public Uri createImageUri() {
@@ -1083,5 +1093,30 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
+
+//    public class MyAsyncTask_ConnectPrinter extends AsyncTask<String, String, String> {
+//        String error = "";
+//
+//        @Override
+//        protected String doInBackground(String... strings) {
+//            try {
+//                thermalPrinter = new ThermalPrinter(ActivityDocSo_GhiChiSo.this);
+//                if (thermalPrinter != null) {
+//                    thermalPrinter.findBluetoothDevice();
+//                    thermalPrinter.openBluetoothPrinter();
+//                }
+//            } catch (Exception e) {
+//                error = e.getMessage();
+//            }
+//            return error;
+//        }
+//
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            if (s.equals("") == false)
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
+//        }
+//    }
 
 }

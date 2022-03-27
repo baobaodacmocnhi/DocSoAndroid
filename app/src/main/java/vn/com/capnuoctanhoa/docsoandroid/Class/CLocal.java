@@ -113,7 +113,7 @@ public class CLocal {
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
-//    public static ServiceThermalPrinter serviceThermalPrinter;
+    public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
     public static int STT = 0;
     public static ArrayList<Bitmap> lstCapture;
@@ -150,8 +150,8 @@ public class CLocal {
         editor.putBoolean("Login", false);
         editor.putLong("LoginDate", 0L);
         editor.commit();
-        ThermalPrinter = "";
-        MaNV = HoTen = May = MaTo = DienThoai = IDMobile = "";
+
+        MaNV = HoTen = May = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
         jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = null;
@@ -1047,34 +1047,33 @@ public class CLocal {
     /**
      * Defines callbacks for service binding, passed to bindService()
      */
-//    private static ServiceConnection mConnection = new ServiceConnection() {
-//
-//        @Override
-//        public void onServiceConnected(ComponentName className, IBinder service) {
-//            // We've bound to LocalService, cast the IBinder and get LocalService instance
-//            ServiceThermalPrinter.LocalBinder binder = (ServiceThermalPrinter.LocalBinder) service;
-//            CLocal.serviceThermalPrinter = binder.getService();
-////            mBound = true;
-//        }
-//
-//        @Override
-//        public void onServiceDisconnected(ComponentName arg0) {
-////            mBound = false;
-//        }
-//    };
-//
-//    public static void runServiceThermalPrinter(Activity activity) {
-//        if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
-//            if (CLocal.checkBluetoothAvaible() == false) {
-//                CLocal.openBluetoothSettings(activity);
-//            } else if (CLocal.checkServiceRunning(activity, ServiceThermalPrinter.class) == false) {
-//                Intent intent2 = new Intent(activity, ServiceThermalPrinter.class);
-////                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
-//                activity.startService(intent2);
-//                activity.bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
-//            }
-//    }
+    private static ServiceConnection mConnection = new ServiceConnection() {
 
+        @Override
+        public void onServiceConnected(ComponentName className, IBinder service) {
+            // We've bound to LocalService, cast the IBinder and get LocalService instance
+            ServiceThermalPrinter.LocalBinder binder = (ServiceThermalPrinter.LocalBinder) service;
+            CLocal.serviceThermalPrinter = binder.getService();
+//            mBound = true;
+        }
+
+        @Override
+        public void onServiceDisconnected(ComponentName arg0) {
+//            mBound = false;
+        }
+    };
+
+    public static void runServiceThermalPrinter(Activity activity) {
+        if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+            if (CLocal.checkBluetoothAvaible() == false) {
+                CLocal.openBluetoothSettings(activity);
+            } else if (CLocal.checkServiceRunning(activity, ServiceThermalPrinter.class) == false) {
+                Intent intent2 = new Intent(activity, ServiceThermalPrinter.class);
+//                intent2.putExtra("ThermalPrinter", CLocal.ThermalPrinter);
+                activity.startService(intent2);
+                activity.bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
+            }
+    }
     public static String readFile(String path, String filename) throws IOException {
         try {
             File dir = new File(path);
