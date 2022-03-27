@@ -145,6 +145,14 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     lstDienThoai.add(entityParent);
                 }
                 customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);
+                customAdapterRecyclerViewDienThoai.setClickItemListener(new CustomAdapterRecyclerViewDienThoai.entityParentListener() {
+                    @Override
+                    public void onClick(CEntityParent entityParent) {
+                        edtDienThoai.setText(entityParent.getDienThoai());
+                        edtHoTen.setText(entityParent.getHoTen());
+                        chkSoChinh.setChecked(entityParent.isSoChinh());
+                    }
+                });
                 recyclerView.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);

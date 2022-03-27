@@ -69,6 +69,7 @@ public class ThermalPrinter {
     public ThermalPrinter(Activity activity) throws IOException {
         try {
             this.activity = activity;
+            lstBluetoothDevice = new ArrayList<BluetoothDevice>();
 //            findBluetoothDevice();
 //            openBluetoothPrinter();
         } catch (Exception ex) {
@@ -139,7 +140,7 @@ public class ThermalPrinter {
             if (bluetoothDevice == null || bluetoothSocket == null)
                 return false;
             else
-            return bluetoothSocket.isConnected();
+                return bluetoothSocket.isConnected();
         } catch (Exception e) {
             throw e;
         }

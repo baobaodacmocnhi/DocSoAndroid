@@ -140,13 +140,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
         try {
-            thermalPrinter = new ThermalPrinter(ActivityDocSo_GhiChiSo.this);
-            thermalPrinter.findBluetoothDevice();
-            thermalPrinter.openBluetoothPrinter();
-        } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-        }
-        try {
 
             if (CLocal.STT > -1) {
                 initial();
@@ -182,7 +175,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (CLocal.STT > 0) {
-                        firstload = false;
                         CLocal.STT--;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
@@ -195,7 +187,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
-                        firstload = false;
                         CLocal.STT++;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
@@ -456,6 +447,16 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
+
+        try {
+            thermalPrinter = new ThermalPrinter(ActivityDocSo_GhiChiSo.this);
+            if (thermalPrinter != null) {
+                thermalPrinter.findBluetoothDevice();
+                thermalPrinter.openBluetoothPrinter();
+            }
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+        }
     }
 
     @Override
@@ -627,6 +628,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_0_1));
             }
         }
+        firstload = false;
     }
 
     @Override
@@ -647,17 +649,21 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        if (imgPath != null && imgPath != "") {
-                            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                            bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
-                            imgCapture = bitmap;
+                    try {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            if (imgPath != null && imgPath != "") {
+                                Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+                                bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+                                imgCapture = bitmap;
+                            }
                         }
-                    }
-                    if (imgCapture != null) {
-                        lstCapture = new ArrayList<>();
-                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
-                        loadRecyclerViewImage();
+                        if (imgCapture != null) {
+                            lstCapture = new ArrayList<>();
+                            lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                            loadRecyclerViewImage();
+                        }
+                    } catch (Exception ex) {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
                     }
                 }
             });
@@ -667,17 +673,21 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
-                        Uri uri = result.getData().getData();
-                        String strPath = CLocal.getPathFromUri(ActivityDocSo_GhiChiSo.this, uri);
-                        Bitmap bitmap = BitmapFactory.decodeFile(strPath);
-                        bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
-                        imgCapture = bitmap;
-                    }
-                    if (imgCapture != null) {
-                        lstCapture = new ArrayList<>();
-                        lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
-                        loadRecyclerViewImage();
+                    try {
+                        if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
+                            Uri uri = result.getData().getData();
+                            String strPath = CLocal.getPathFromUri(ActivityDocSo_GhiChiSo.this, uri);
+                            Bitmap bitmap = BitmapFactory.decodeFile(strPath);
+                            bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+                            imgCapture = bitmap;
+                        }
+                        if (imgCapture != null) {
+                            lstCapture = new ArrayList<>();
+                            lstCapture.add(Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false));
+                            loadRecyclerViewImage();
+                        }
+                    } catch (Exception ex) {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
                     }
                 }
             });
@@ -709,7 +719,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //            CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
 //        }
 //    }
-
 
     @Override
     protected void onResume() {

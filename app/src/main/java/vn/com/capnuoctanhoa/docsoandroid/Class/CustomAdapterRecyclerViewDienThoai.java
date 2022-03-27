@@ -22,7 +22,6 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import androidx.appcompat.app.AlertDialog;
 import androidx.recyclerview.widget.RecyclerView;
 
 import vn.com.capnuoctanhoa.docsoandroid.R;
@@ -30,6 +29,15 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<CustomAdapterRecyclerViewDienThoai.RecyclerViewHolder> {
     private Activity activity;
     private ArrayList<CEntityParent> mDisplayedValues;
+    private entityParentListener entityParentListener;
+
+    public interface entityParentListener {
+        void onClick(CEntityParent entityParent);
+    }
+
+    public void setClickItemListener(entityParentListener entityParentListener) {
+        this.entityParentListener = entityParentListener;
+    }
 
     public CustomAdapterRecyclerViewDienThoai(Activity activity, ArrayList<CEntityParent> mDisplayedValues) {
         super();
@@ -101,11 +109,12 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                     }, false);
                 }
             });
-            if (DanhBo.length() != 11)//downfile
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    try {
+                        if (entityParent.getDanhBo().length() != 11)//downfile
+                        {
                             String Nam = "", Ky = "", Dot = "";
                             if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                                 Nam = CLocal.listDocSo.get(0).getNam();
@@ -126,25 +135,16 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                             Intent returnIntent = new Intent();
                             activity.setResult(Activity.RESULT_OK, returnIntent);
                             activity.finish();
-                        } catch (IOException e) {
-                            e.printStackTrace();
+                        } else if (entityParent.getDienThoai().length() == 10) {
+                            entityParentListener.onClick(entityParent);
                         }
+                    } catch (IOException e) {
+                        e.printStackTrace();
                     }
-                });
-            else
-                holder.itemView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        try {
-                            CLocal.loadDienThoai = true;
-                            CLocal.DienThoai_DienThoai = holder.txtDienThoai.getText().toString();
-                            CLocal.DienThoai_HoTen = holder.txtHoTen.getText().toString();
-                            CLocal.DienThoai_SoChinh = holder.chkSoChinh.isChecked();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                    }
-                });
+                }
+            });
+
+
         }
     }
 

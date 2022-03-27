@@ -157,10 +157,11 @@ public class ActivitySettings extends AppCompatActivity {
             //add danh sách thiết bị vào listview
             arrayBluetoothAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_checked, thermalPrinter.getArrayList());
             lstView.setAdapter(arrayBluetoothAdapter);
-        } else {
-            MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
-            myAsyncTask_thermal.execute();
         }
+//        else {
+//            MyAsyncTask_Thermal myAsyncTask_thermal = new MyAsyncTask_Thermal();
+//            myAsyncTask_thermal.execute();
+//        }
     }
 
     @Override
@@ -211,7 +212,8 @@ public class ActivitySettings extends AppCompatActivity {
             try {
                 if (thermalPrinter == null || thermalPrinter.getBluetoothDevice() == null)
                     thermalPrinter = new ThermalPrinter(ActivitySettings.this);
-                thermalPrinter.findBluetoothDevice();
+                if (thermalPrinter != null)
+                    thermalPrinter.findBluetoothDevice();
             } catch (Exception ex) {
             }
             return null;
