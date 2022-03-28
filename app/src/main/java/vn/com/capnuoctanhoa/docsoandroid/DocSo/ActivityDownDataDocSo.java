@@ -297,7 +297,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
         spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedMaNV = spnID_NhanVien.get(position);
+                selectedMaNV =  (Integer.parseInt(spnID_NhanVien.get(position)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(position)) ;
             }
 
             @Override
@@ -355,12 +355,12 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     selectedMaNV = CLocal.May;
                 if (selectedMaNV.equals("0")) {
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), String.valueOf(spnID_NhanVien.get(i))));
+                        JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
                         for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
                             CLocal.jsonDocSo.put(jsonObject);
                         }
-                        jsonResult = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), String.valueOf(spnID_NhanVien.get(i))));
+                        jsonResult = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
                         for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
                             CLocal.jsonHoaDonTon.put(jsonObject);
@@ -378,10 +378,10 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         JSONObject jsonObject = CLocal.jsonDocSo.getJSONObject(i);
                         CEntityParent enParent = new CEntityParent();
                         ///thiết lập khởi tạo 1 lần đầu để sort
-                        if (jsonObject.has("ModifyDate") == false)
-                            enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
-                        else
-                            enParent.setModifyDate(jsonObject.getString("ModifyDate"));
+//                        if (jsonObject.has("ModifyDate") == false)
+//                        enParent.setModifyDate(CLocal.DateFormat.format(new Date()));
+//                        else
+//                            enParent.setModifyDate(jsonObject.getString("ModifyDate"));
                         enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
 
                         String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
@@ -436,6 +436,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         enParent.setTuNgay(jsonObject.getString("TuNgay").replace("null", ""));
                         enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
                         enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
+                        enParent.setPhanMay(jsonObject.getString("PhanMay").replace("null", ""));
                         if (CLocal.jsonHoaDonTon != null && CLocal.jsonHoaDonTon.length() > 0)
                             for (int k = 0; k < CLocal.jsonHoaDonTon.length(); k++) {
                                 JSONObject jsonObjectChild = CLocal.jsonHoaDonTon.getJSONObject(k);
@@ -445,7 +446,6 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                                     entityChild.setKy(jsonObjectChild.getString("KyHD").replace("null", ""));
                                     entityChild.setTongCong(jsonObjectChild.getString("TongCong").replace("null", ""));
                                     enParent.getLstHoaDon().add(entityChild);
-                                    CLocal.jsonHoaDonTon.remove(k);
                                 }
                             }
                         CLocal.listDocSo.add(enParent);

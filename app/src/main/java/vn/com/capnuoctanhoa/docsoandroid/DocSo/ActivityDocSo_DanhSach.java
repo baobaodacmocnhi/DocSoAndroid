@@ -68,8 +68,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     private Spinner spnFilter, spnSort, spnNhanVien;
     private ListView lstView;
     private CustomAdapterListView customAdapterListView;
-    private TextView txtTongHD;
-    private long TongDC;
+    private TextView txtTongHD, txtNotSync;
+    private long TongDC, TongNotSync;
     private ArrayList<CViewParent> listParent;
     private ArrayList<CViewChild> listChild;
     private FloatingActionButton floatingActionButton;
@@ -91,6 +91,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
+        txtNotSync = (TextView) findViewById(R.id.txtNotSync);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         ivSync = (ImageView) findViewById(R.id.ivSync);
@@ -269,6 +270,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             listParent = new ArrayList<CViewParent>();
             CLocal.listDocSoView = new ArrayList<CEntityParent>();
             TongDC = 0;
+            TongNotSync = 0;
             switch (spnFilter.getSelectedItem().toString()) {
                 case "Chưa Đọc":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
@@ -324,6 +326,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             customAdapterListView = new CustomAdapterListView(this, listParent);
             lstView.setAdapter(customAdapterListView);
             txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
+            txtNotSync.setText(String.valueOf(TongNotSync));
             lstView.setSelection(CLocal.indexPosition);
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_DanhSach.this, ex.getMessage());
@@ -339,13 +342,15 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
             enViewParent.setRow1a(enParent.getMLT());
             if (enParent.getCodeMoi().equals("") == false)
-                enViewParent.setRow1b("Code " + enParent.getCodeMoi());
+                enViewParent.setRow1b(enParent.getCodeMoi() + "-" + enParent.getChiSoMoi() + "-" + enParent.getTieuThuMoi());
             enViewParent.setRow2a(enParent.getDanhBo());
-            if (enParent.getChiSoMoi().equals("") == false)
-                enViewParent.setRow2b("CS " + enParent.getChiSoMoi() + " - TT " + enParent.getTieuThuMoi());
+//            if (enParent.getChiSoMoi().equals("") == false)
+//                enViewParent.setRow2b("CS " + enParent.getChiSoMoi() + " - TT " + enParent.getTieuThuMoi());
+            enViewParent.setRow2b(enParent.getModifyDate());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
-
+            if (enParent.isSync() == false)
+                TongNotSync++;
             TongDC++;
 
             listParent.add(enViewParent);
@@ -414,7 +419,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                             }
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                     , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May);
+                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
                             JSONObject jsonObject = null;
                             if (result.equals("") == false)
                                 jsonObject = new JSONObject(result);

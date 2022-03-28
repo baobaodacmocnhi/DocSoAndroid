@@ -78,9 +78,8 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 CLocal.initialCLocal();
                 intent = new Intent(this, ActivityDangNhap.class);
             } else if (remoteMessage.getData().get("Action").equals("DocSo") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                //action HanhThu cập nhật GiaiTrach,TamThu,ThuHo cho HanhThu
-                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
-                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), remoteMessage.getData().get("ValueUpdate"), remoteMessage.getData().get("ID"));
+                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
                 intent = new Intent(this, ActivityDocSo_DanhSach.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
@@ -108,8 +107,8 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
             NotificationChannel mChannel = notificationManager.getNotificationChannel("DocSoNotification_ID");
             if (mChannel == null) {
-                mChannel = new NotificationChannel("DocSoNotification_ID", "ThuTienNotification_Name", NotificationManager.IMPORTANCE_HIGH);
-                mChannel.setDescription("ThuTienNotification_Des");
+                mChannel = new NotificationChannel("DocSoNotification_ID", "DocSoNotification_Name", NotificationManager.IMPORTANCE_HIGH);
+                mChannel.setDescription("DocSoNotification_Des");
                 mChannel.enableVibration(true);
                 mChannel.setVibrationPattern(new long[]{0, 1000});
                 notificationManager.createNotificationChannel(mChannel);

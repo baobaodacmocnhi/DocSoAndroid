@@ -59,7 +59,7 @@ public class CEntityParent {
     private int SX;
     private int DV;
     private int HCSN;
-
+    private String PhanMay;
 
     public CEntityParent() {
         this.ID = "";
@@ -115,7 +115,7 @@ public class CEntityParent {
         this.SX = 0;
         this.DV = 0;
         this.HCSN = 0;
-
+        this.PhanMay="";
     }
 
     public String getID() {
@@ -550,6 +550,14 @@ public class CEntityParent {
         this.HCSN = HCSN;
     }
 
+    public String getPhanMay() {
+        return PhanMay;
+    }
+
+    public void setPhanMay(String phanMay) {
+        PhanMay = phanMay;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -606,6 +614,7 @@ public class CEntityParent {
             this.SX = entityParent.getSX();
             this.DV = entityParent.getDV();
             this.HCSN = entityParent.getHCSN();
+            this.PhanMay = entityParent.getPhanMay();
         } catch (Exception ex) {
             throw ex;
         }

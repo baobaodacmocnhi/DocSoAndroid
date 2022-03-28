@@ -178,7 +178,10 @@ public class MainActivity extends AppCompatActivity {
                     }
                     CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                     CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
-                    CLocal.May = CLocal.sharedPreferencesre.getString("May", "");
+                    if (CLocal.sharedPreferencesre.getString("May", "").replace("null","").equals("") == false)
+                        CLocal.May = (Integer.parseInt(CLocal.sharedPreferencesre.getString("May", "")) < 10 ? "0" : "") + Integer.parseInt(CLocal.sharedPreferencesre.getString("May", ""));
+                    else
+                        CLocal.May=" ";
                     CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
                     CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
                     CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));

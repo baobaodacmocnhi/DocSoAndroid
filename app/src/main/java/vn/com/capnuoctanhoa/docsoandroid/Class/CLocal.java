@@ -1120,6 +1120,9 @@ public class CLocal {
             if (!dir.exists()) {
                 dir.mkdir();
             }
+            File dir2 = new File(path, filename);
+            if (dir2.exists())
+                dir2.delete();
             if (value != null) {
                 File file = new File(dir, filename);
                 FileOutputStream fOut = new FileOutputStream(file);
@@ -1841,12 +1844,10 @@ public class CLocal {
                     lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("KDDV")));
                     lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("SHN")));
                     lstGiaNuoc.add(Integer.parseInt(CLocal.jsonGiaNuoc.getJSONObject(index).getString("PhiBVMT")));
-
                     ArrayList<Integer> TienNuocNamCus = TinhTienNuoc(lstGiaNuoc, GiaBieu, TyLeSH, TyLeSX, TyLeDV, TyLeHCSN, TongDinhMuc, 0, TieuThu);
                     TienNuocNamCu = TienNuocNamCus.get(0);
                     PhiBVMTNamCu = TienNuocNamCus.get(1);
                 } else if (dateTuNgay.compareTo(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia"))) < 0 && convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")).compareTo(dateDenNgay) < 0) {
-                    //int TieuThu_DieuChinhGia;
                     int TongSoNgay = (int) (getDaysDifference(dateTuNgay, dateDenNgay));
                     int SoNgayCu = (int) (getDaysDifference(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")), dateTuNgay));
                     int TieuThuCu = (int) Math.round((double) TieuThu * SoNgayCu / TongSoNgay);
