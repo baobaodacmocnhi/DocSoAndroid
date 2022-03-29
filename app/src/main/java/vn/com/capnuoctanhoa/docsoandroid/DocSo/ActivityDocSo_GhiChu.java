@@ -62,7 +62,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         chkSoChinh = (CheckBox) findViewById(R.id.chkSoChinh);
         btnCapNhatDT = (Button) findViewById(R.id.btnCapNhatDT);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        CLocal.loadDienThoai = false;
         ws = new CWebservice();
 
         try {

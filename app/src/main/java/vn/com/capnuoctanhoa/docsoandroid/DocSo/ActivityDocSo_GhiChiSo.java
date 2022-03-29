@@ -607,9 +607,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 edtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
             else if (CLocal.lstBinhThuong.contains(edtCodeMoi.getText().toString()) == true)
                 if (edtCodeMoi.getText().toString().equals("X41") == true)
-                    edtTieuThuMoi.setText(String.valueOf(10000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
+                    edtTieuThuMoi.setText(String.valueOf(10000 + Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
                 else if (edtCodeMoi.getText().toString().equals("X51") == true)
-                    edtTieuThuMoi.setText(String.valueOf(100000 * Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
+                    edtTieuThuMoi.setText(String.valueOf(100000 + Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
                 else
                     edtTieuThuMoi.setText(String.valueOf(Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
             if (edtCodeMoi.getText().toString().substring(0, 1).equals("4") == true
@@ -620,9 +620,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 edtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1));
             if (edtCodeMoi.getText().toString().substring(0, 1).equals("F") == true || edtCodeMoi.getText().toString().equals("61") == true)
                 edtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
-            if (edtCodeMoi.getText().toString().substring(0, 1).equals("K") == true)
+            else if (edtCodeMoi.getText().toString().substring(0, 1).equals("K") == true)
                 edtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
-            if (edtCodeMoi.getText().toString().substring(0, 1).equals("N") == true)
+            else if (edtCodeMoi.getText().toString().substring(0, 1).equals("N") == true||edtCodeMoi.getText().toString().substring(0, 1).equals("63") == true)
                 edtChiSoMoi.setText("0");
             tinhTieuThu_CanhBaoMau();
         }

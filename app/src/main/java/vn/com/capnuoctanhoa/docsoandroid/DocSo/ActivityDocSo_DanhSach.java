@@ -349,7 +349,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             enViewParent.setRow2b(enParent.getModifyDate());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
-            if (enParent.isSync() == false)
+            if (enParent.getCodeMoi().equals("") == false && enParent.isSync() == false)
                 TongNotSync++;
             TongDC++;
 

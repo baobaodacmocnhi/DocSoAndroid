@@ -120,11 +120,7 @@ public class CLocal {
     public static final int _GiamTienNuoc = 10;
     public static ArrayList<String> lstTT0 = new ArrayList<String>(Arrays.asList("K", "N", "N1", "N2", "N3", "68", "Q"));
     public static ArrayList<String> lstTBTT = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "66", "80", "F1", "F2", "F3", "F4"));
-    public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5F", "5N", "5Q", "5K", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
-    public static boolean loadDienThoai;
-    public static boolean DienThoai_SoChinh;
-    public static String DienThoai_DienThoai;
-    public static String DienThoai_HoTen;
+    public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5F", "5Q", "5K", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
@@ -150,7 +146,6 @@ public class CLocal {
         editor.putBoolean("Login", false);
         editor.putLong("LoginDate", 0L);
         editor.commit();
-
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;

@@ -322,7 +322,8 @@ public class ThermalPrinter {
                     stringBuilder.append(escpStyle(pad("Tổng cộng:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth) + "\n", 0b10000));
                     int TongCong = Integer.parseInt(entityParent.getTongCong());
                     if (entityParent.getLstHoaDon().size() > 0) {
-                        stringBuilder.append("Nợ cũ: ").append('\n');
+                        stringBuilder.append("Nợ cũ:").append('\n');
+                        stringBuilder.append("(bỏ qua nếu đã thanh toán)").append('\n');
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
                             stringBuilder.append("   Kỳ " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong()))).append('\n');
@@ -728,6 +729,8 @@ public class ThermalPrinter {
                     int TongCong = Integer.parseInt(entityParent.getTongCong());
                     if (entityParent.getLstHoaDon().size() > 0) {
                         stringBuilder.append(printLine("Nợ cũ:", 1, y, 0, 1, 1));
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("(bỏ qua nếu đã thanh toán)", 1, y, 0, 1, 1));
                         y = handlingYMoreThan450(y, 25);
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
