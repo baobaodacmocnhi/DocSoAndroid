@@ -1024,6 +1024,7 @@ public class CLocal {
         data_json = data_json.replace("\"{", "{");
         data_json = data_json.replace("}\",", "},");
         data_json = data_json.replace("}\"", "}");
+        data_json = data_json.replace(":,", ":null,");
         return data_json;
     }
 

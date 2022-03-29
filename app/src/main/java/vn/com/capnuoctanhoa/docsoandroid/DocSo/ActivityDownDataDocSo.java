@@ -20,6 +20,7 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -297,7 +298,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
         spnNhanVien.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                selectedMaNV =  (Integer.parseInt(spnID_NhanVien.get(position)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(position)) ;
+                selectedMaNV = (Integer.parseInt(spnID_NhanVien.get(position)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(position));
             }
 
             @Override
@@ -355,6 +356,8 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     selectedMaNV = CLocal.May;
                 if (selectedMaNV.equals("0")) {
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
+                        if(Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))))==false)
+                            return new String[]{"false", "Chưa đến ngày đọc số"};
                         JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
                         for (int j = 0; j < jsonResult.length(); j++) {
                             JSONObject jsonObject = jsonResult.getJSONObject(j);
@@ -367,9 +370,40 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         }
                     }
                 } else {
+                    if(Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV))==false)
+                        return new String[]{"false", "Chưa đến ngày đọc số"};
                     CLocal.jsonDocSo = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
                     CLocal.jsonHoaDonTon = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
                 }
+//                if (selectedMaNV.equals("0")) {
+//                    for (int i = 1; i < spnID_NhanVien.size(); i++) {
+//                        JSONObject jsonOResult = new JSONObject(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
+//                        if (jsonOResult != null)
+//                            if (Boolean.parseBoolean(jsonOResult.getString("success").replace("null", "")) == true) {
+//                                JSONArray jsonAResult = new JSONArray(CLocal.convertStandardJSONString(jsonOResult.getString("message").replace("null", "")));
+//                                for (int j = 0; j < jsonAResult.length(); j++) {
+//                                    JSONObject jsonObject = jsonAResult.getJSONObject(j);
+//                                    CLocal.jsonDocSo.put(jsonObject);
+//                                }
+//                            } else {
+//                                return new String[]{"false", jsonOResult.getString("error").replace("null", "")};
+//                            }
+//                        JSONArray jsonAResult = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
+//                        for (int j = 0; j < jsonAResult.length(); j++) {
+//                            JSONObject jsonObject = jsonAResult.getJSONObject(j);
+//                            CLocal.jsonHoaDonTon.put(jsonObject);
+//                        }
+//                    }
+//                } else {
+//                    JSONObject jsonOResult = new JSONObject(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
+//                    if (jsonOResult != null)
+//                        if (Boolean.parseBoolean(jsonOResult.getString("success").replace("null", "")) == true) {
+//                            CLocal.jsonDocSo = new JSONArray(CLocal.convertStandardJSONString(jsonOResult.getString("message").replace("null", "")));
+//                        } else {
+//                            return new String[]{"false", jsonOResult.getString("error").replace("null", "")};
+//                        }
+//                    CLocal.jsonHoaDonTon = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
+//                }
 
                 if (CLocal.jsonDocSo != null) {
                     //khởi tạo ArrayList CEntityParent

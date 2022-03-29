@@ -69,7 +69,13 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CLocal.showDialog(activity, "Xác nhận", "", "Ok", new DialogInterface.OnClickListener() {
+                    CLocal.showDialog(activity, "Xác nhận", "", "Cancel", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.dismiss();
+
+                        }
+                    }, "Ok", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             dialog.dismiss();
@@ -99,12 +105,6 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                 }
                             }
                             notifyDataSetChanged();
-                        }
-                    }, "Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-
                         }
                     }, false);
                 }
