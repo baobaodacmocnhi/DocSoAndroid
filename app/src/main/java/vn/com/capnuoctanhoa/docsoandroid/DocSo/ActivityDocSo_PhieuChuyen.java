@@ -40,6 +40,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
@@ -185,12 +186,12 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     if (result.getResultCode() == Activity.RESULT_OK) {
                         if (imgPath != null && imgPath != "") {
                             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                            bitmap = CLocal.imageOreintationValidator(bitmap, imgPath);
+                            bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
                             imgCapture = bitmap;
                         }
                     }
                     if (imgCapture != null) {
-                        imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
+                        imgCapture = CBitmap.scale(imgCapture,1024);
                         imgThumb.setImageBitmap(imgCapture);
                     }
                 }
@@ -205,11 +206,11 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                         Uri uri = result.getData().getData();
                         String strPath = CLocal.getPathFromUri(ActivityDocSo_PhieuChuyen.this, uri);
                         Bitmap bitmap = BitmapFactory.decodeFile(strPath);
-                        bitmap = CLocal.imageOreintationValidator(bitmap, strPath);
+                        bitmap = CBitmap.imageOreintationValidator(bitmap, strPath);
                         imgCapture = bitmap;
                     }
                     if (imgCapture != null) {
-                        imgCapture = Bitmap.createScaledBitmap(imgCapture, 1024, 1024, false);
+                        imgCapture = CBitmap.scale(imgCapture,1024);
                         imgThumb.setImageBitmap(imgCapture);
                     }
                 }
@@ -266,7 +267,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 String result = "";
-                imgString = CLocal.convertBitmapToString(imgCapture);
+                imgString = CBitmap.convertBitmapToString(imgCapture);
                 result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
                 if (result.equals("") == false)
                     jsonObject = new JSONObject(result);

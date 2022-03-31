@@ -9,59 +9,42 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AbsListView;
 import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
-import java.io.BufferedInputStream;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.net.URL;
-import java.net.URLConnection;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
-import java.util.Date;
 
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.SearchView;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CLocation;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CSort;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
-import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_DanhSach extends AppCompatActivity {
@@ -104,10 +87,26 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Không có Internet");
                         return;
                     }
-                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                        MyAsyncTaskSyncDocSoTon myAsyncTaskSyncDocSoTon = new MyAsyncTaskSyncDocSoTon();
-                        myAsyncTaskSyncDocSoTon.execute();
-                    }
+                    CLocal.showDialog(ActivityDocSo_DanhSach.this, "Đồng hộ Lệch so với server", ""
+                            , "Sync Code", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                        MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
+                                        myAsyncTaskSyncCodeTon.execute();
+                                    }
+                                }
+                            }, "Sync Hình", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                        MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
+                                        myAsyncTaskSyncHinhTon.execute();
+                                    }
+                                }
+                            }, true);
                 } catch (Exception ex) {
                     CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, ex.getMessage(), "left");
                 }
@@ -379,7 +378,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 //        }
 //    }
 
-    public class MyAsyncTaskSyncDocSoTon extends AsyncTask<String, String, String> {
+    public class MyAsyncTaskSyncCodeTon extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
         CWebservice ws;
 
@@ -411,11 +410,12 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", "")) == true
                                 && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false
                                 && (CLocal.listDocSo.get(i).getCodeMoi().equals(jsonObjectDocSoTon.getString("CodeMoi").replace("null", "")) == false
-                                || Integer.parseInt(CLocal.listDocSo.get(i).getChiSoMoi()) != Integer.parseInt(jsonObjectDocSoTon.getString("CSMoi").replace("null", "")))) {
+                                || Integer.parseInt(CLocal.listDocSo.get(i).getChiSoMoi()) != Integer.parseInt(jsonObjectDocSoTon.getString("CSMoi").replace("null", ""))
+                                || CLocal.listDocSo.get(i).isGhiHinh() == false)) {
                             String HinhDHN = "";
                             Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
-                                HinhDHN = CLocal.convertBitmapToString(bitmap);
+                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
                             }
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                     , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
@@ -425,6 +425,75 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                                 jsonObject = new JSONObject(result);
                             if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                                 CLocal.listDocSo.get(i).setSync(true);
+                                CLocal.listDocSo.get(i).setGhiHinh(true);
+                            }
+                        }
+                        publishProgress(String.valueOf(i));
+                    }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return error;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            progressDialog.setProgress(Integer.parseInt(values[0]));
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            if (s.equals("") == false)
+                CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
+            else
+                CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Đã Xử Lý");
+        }
+
+    }
+
+    public class MyAsyncTaskSyncHinhTon extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        CWebservice ws;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityDocSo_DanhSach.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang Xử Lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.setIndeterminate(false);
+//            progressDialog.setMax(100);
+            progressDialog.setProgressStyle(ProgressDialog.STYLE_HORIZONTAL);
+//            progressDialog.setCancelable(true);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ws = new CWebservice();
+            String error = "";
+            try {
+                JSONArray jsonDocSoTon = new JSONArray(ws.getDS_Hinh_Ton(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), CLocal.May));
+                int total = jsonDocSoTon.length();
+                progressDialog.setMax(total);
+                if (jsonDocSoTon != null && jsonDocSoTon.length() > 0)
+                    for (int i = 0; i < jsonDocSoTon.length(); i++) {
+                        JSONObject jsonObjectDocSoTon = jsonDocSoTon.getJSONObject(i);
+                        if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", "")) == true
+                                && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            String HinhDHN = "";
+                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                            if (bitmap != null) {
+                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
+                                if (Boolean.parseBoolean(result) == true)
+                                    CLocal.listDocSo.get(i).setGhiHinh(true);
                             }
                         }
                         publishProgress(String.valueOf(i));

@@ -69,44 +69,45 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    CLocal.showDialog(activity, "Xác nhận", "", "Cancel", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
+                    CLocal.showDialog(activity, "Xác nhận", ""
+                            , "Cancel", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
 
-                        }
-                    }, "Ok", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                            mDisplayedValues.remove(ID);
-                            //sđt
-                            if (DanhBo.length() == 11) {
-                                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                                myAsyncTask.execute(new String[]{entityParent.getDanhBo(), entityParent.getDienThoai()});
-                            } else {
-                                try {//downfile
-                                    String Nam = "", Ky = "", Dot = "";
-                                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                                        Nam = CLocal.listDocSo.get(0).getNam();
-                                        Ky = CLocal.listDocSo.get(0).getKy();
-                                        Dot = CLocal.listDocSo.get(0).getDot();
-                                    }
-                                    if ((Nam + "_" + Ky + "_" + Dot + ".txt").equals(entityParent.getDienThoai()) == true) {
-                                        CLocal.listDocSo = null;
-                                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                                        editor.putString("jsonDocSo", "");
-                                        editor.commit();
-                                    }
-                                    CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
-                                    CLocal.deleteFile(CLocal.pathAppPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
-                                } catch (IOException e) {
-                                    e.printStackTrace();
                                 }
-                            }
-                            notifyDataSetChanged();
-                        }
-                    }, false);
+                            }, "Ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+                                    mDisplayedValues.remove(ID);
+                                    //sđt
+                                    if (DanhBo.length() == 11) {
+                                        MyAsyncTask myAsyncTask = new MyAsyncTask();
+                                        myAsyncTask.execute(new String[]{entityParent.getDanhBo(), entityParent.getDienThoai()});
+                                    } else {
+                                        try {//downfile
+                                            String Nam = "", Ky = "", Dot = "";
+                                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                                Nam = CLocal.listDocSo.get(0).getNam();
+                                                Ky = CLocal.listDocSo.get(0).getKy();
+                                                Dot = CLocal.listDocSo.get(0).getDot();
+                                            }
+                                            if ((Nam + "_" + Ky + "_" + Dot + ".txt").equals(entityParent.getDienThoai()) == true) {
+                                                CLocal.listDocSo = null;
+                                                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                                                editor.putString("jsonDocSo", "");
+                                                editor.commit();
+                                            }
+                                            CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
+                                            CLocal.deleteFile(CLocal.pathAppPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
+                                        } catch (IOException e) {
+                                            e.printStackTrace();
+                                        }
+                                    }
+                                    notifyDataSetChanged();
+                                }
+                            }, false);
                 }
             });
             holder.itemView.setOnClickListener(new View.OnClickListener() {

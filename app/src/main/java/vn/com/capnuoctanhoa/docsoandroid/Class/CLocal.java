@@ -173,11 +173,6 @@ public class CLocal {
         return photoFile.getAbsolutePath();
     }
 
-    public static String getTime() {
-        Date dateCapNhat = new Date();
-        return CLocal.DateFormat.format(dateCapNhat);
-    }
-
     public static boolean checkNetworkAvailable(Activity activity) {
         ConnectivityManager connectivityManager = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = connectivityManager.getActiveNetworkInfo();
@@ -503,27 +498,6 @@ public class CLocal {
 //        updateArrayListToJson();
     }
 
-    //convert tiền thành chữ
-    public static String formatMoney(String price, String symbol) {
-
-        NumberFormat format = new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)
-        format.setCurrency(Currency.getInstance(Locale.US));//Or default locale
-
-        price = (!TextUtils.isEmpty(price)) ? price : "0";
-        price = price.trim();
-        price = format.format(Double.parseDouble(price));
-        price = price.replaceAll(",", "\\.");
-
-        if (price.endsWith(".00")) {
-            int centsIndex = price.lastIndexOf(".00");
-            if (centsIndex != -1) {
-                price = price.substring(0, centsIndex);
-            }
-        }
-        price = String.format("%s " + symbol, price);
-        return price;
-    }
-
     public File createFile(Activity activity) {
         File filesDir = activity.getExternalFilesDir(Environment.DIRECTORY_PICTURES);
         File file = null;
@@ -534,61 +508,6 @@ public class CLocal {
             e.printStackTrace();
         }
         return file;
-    }
-
-    public static Bitmap imageOreintationValidator(Bitmap bitmap, String path) {
-        ExifInterface ei;
-        try {
-            ei = new ExifInterface(path);
-            int orientation = ei.getAttributeInt(ExifInterface.TAG_ORIENTATION,
-                    ExifInterface.ORIENTATION_NORMAL);
-            switch (orientation) {
-                case ExifInterface.ORIENTATION_ROTATE_90:
-                    bitmap = rotateImage(bitmap, 90);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_180:
-                    bitmap = rotateImage(bitmap, 180);
-                    break;
-                case ExifInterface.ORIENTATION_ROTATE_270:
-                    bitmap = rotateImage(bitmap, 270);
-                    break;
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        return bitmap;
-    }
-
-    public static Bitmap rotateImage(Bitmap source, float angle) {
-
-        Bitmap bitmap = null;
-        Matrix matrix = new Matrix();
-        matrix.postRotate(angle);
-        try {
-            bitmap = Bitmap.createBitmap(source, 0, 0, source.getWidth(), source.getHeight(),
-                    matrix, true);
-        } catch (OutOfMemoryError err) {
-            err.printStackTrace();
-        }
-        return bitmap;
-    }
-
-    public static String convertBitmapToString(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        String str = Base64.encodeToString(stream.toByteArray(), Base64.NO_WRAP);
-        return str;
-    }
-
-    public static byte[] convertBitmapToByteArray(Bitmap bitmap) {
-        ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-        return stream.toByteArray();
-    }
-
-    public static Bitmap convertByteArrayToBitmap(byte[] bytes) {
-        return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
     }
 
     public static String getPathFromUri(final Context context, final Uri uri) {
@@ -732,185 +651,6 @@ public class CLocal {
         return "com.google.android.apps.photos.content".equals(uri.getAuthority());
     }
 
-    //region Thermal Printer
-
-    // Created by imrankst1221@gmail.com
-    // UNICODE 0x23 = #
-    public static final byte[] UNICODE_TEXT = new byte[]{0x23, 0x23, 0x23,
-            0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23,
-            0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23, 0x23,
-            0x23, 0x23, 0x23};
-
-    private static String hexStr = "0123456789ABCDEF";
-    private static String[] binaryArray = {"0000", "0001", "0010", "0011",
-            "0100", "0101", "0110", "0111", "1000", "1001", "1010", "1011",
-            "1100", "1101", "1110", "1111"};
-
-    public static byte[] decodeBitmap(Bitmap bmp) {
-        int bmpWidth = bmp.getWidth();
-        int bmpHeight = bmp.getHeight();
-
-        List<String> list = new ArrayList<String>(); //binaryString list
-        StringBuffer sb;
-
-
-        int bitLen = bmpWidth / 8;
-        int zeroCount = bmpWidth % 8;
-
-        String zeroStr = "";
-        if (zeroCount > 0) {
-            bitLen = bmpWidth / 8 + 1;
-            for (int i = 0; i < (8 - zeroCount); i++) {
-                zeroStr = zeroStr + "0";
-            }
-        }
-
-        for (int i = 0; i < bmpHeight; i++) {
-            sb = new StringBuffer();
-            for (int j = 0; j < bmpWidth; j++) {
-                int color = bmp.getPixel(j, i);
-
-                int r = (color >> 16) & 0xff;
-                int g = (color >> 8) & 0xff;
-                int b = color & 0xff;
-
-                // if color close to white，bit='0', else bit='1'
-                if (r > 160 && g > 160 && b > 160)
-                    sb.append("0");
-                else
-                    sb.append("1");
-            }
-            if (zeroCount > 0) {
-                sb.append(zeroStr);
-            }
-            list.add(sb.toString());
-        }
-
-        List<String> bmpHexList = binaryListToHexStringList(list);
-        String commandHexString = "1D763000";
-        String widthHexString = Integer
-                .toHexString(bmpWidth % 8 == 0 ? bmpWidth / 8
-                        : (bmpWidth / 8 + 1));
-        if (widthHexString.length() > 2) {
-//            Log.e("decodeBitmap error", " width is too large");
-            return null;
-        } else if (widthHexString.length() == 1) {
-            widthHexString = "0" + widthHexString;
-        }
-        widthHexString = widthHexString + "00";
-
-        String heightHexString = Integer.toHexString(bmpHeight);
-        if (heightHexString.length() > 2) {
-//            Log.e("decodeBitmap error", " height is too large");
-            return null;
-        } else if (heightHexString.length() == 1) {
-            heightHexString = "0" + heightHexString;
-        }
-        heightHexString = heightHexString + "00";
-
-        List<String> commandList = new ArrayList<String>();
-        commandList.add(commandHexString + widthHexString + heightHexString);
-        commandList.addAll(bmpHexList);
-
-        return hexList2Byte(commandList);
-    }
-
-    public static List<String> binaryListToHexStringList(List<String> list) {
-        List<String> hexList = new ArrayList<String>();
-        for (String binaryStr : list) {
-            StringBuffer sb = new StringBuffer();
-            for (int i = 0; i < binaryStr.length(); i += 8) {
-                String str = binaryStr.substring(i, i + 8);
-
-                String hexString = myBinaryStrToHexString(str);
-                sb.append(hexString);
-            }
-            hexList.add(sb.toString());
-        }
-        return hexList;
-
-    }
-
-    public static String myBinaryStrToHexString(String binaryStr) {
-        String hex = "";
-        String f4 = binaryStr.substring(0, 4);
-        String b4 = binaryStr.substring(4, 8);
-        for (int i = 0; i < binaryArray.length; i++) {
-            if (f4.equals(binaryArray[i]))
-                hex += hexStr.substring(i, i + 1);
-        }
-        for (int i = 0; i < binaryArray.length; i++) {
-            if (b4.equals(binaryArray[i]))
-                hex += hexStr.substring(i, i + 1);
-        }
-
-        return hex;
-    }
-
-    public static byte[] hexList2Byte(List<String> list) {
-        List<byte[]> commandList = new ArrayList<byte[]>();
-
-        for (String hexStr : list) {
-            commandList.add(hexStringToBytes(hexStr));
-        }
-        byte[] bytes = sysCopy(commandList);
-        return bytes;
-    }
-
-    public static byte[] hexStringToBytes(String hexString) {
-        if (hexString == null || hexString.equals("")) {
-            return null;
-        }
-        hexString = hexString.toUpperCase();
-        int length = hexString.length() / 2;
-        char[] hexChars = hexString.toCharArray();
-        byte[] d = new byte[length];
-        for (int i = 0; i < length; i++) {
-            int pos = i * 2;
-            d[i] = (byte) (charToByte(hexChars[pos]) << 4 | charToByte(hexChars[pos + 1]));
-        }
-        return d;
-    }
-
-    public static byte[] sysCopy(List<byte[]> srcArrays) {
-        int len = 0;
-        for (byte[] srcArray : srcArrays) {
-            len += srcArray.length;
-        }
-        byte[] destArray = new byte[len];
-        int destLen = 0;
-        for (byte[] srcArray : srcArrays) {
-            System.arraycopy(srcArray, 0, destArray, destLen, srcArray.length);
-            destLen += srcArray.length;
-        }
-        return destArray;
-    }
-
-    private static byte charToByte(char c) {
-        return (byte) "0123456789ABCDEF".indexOf(c);
-    }
-
-    public static String BitmapToString(Bitmap bitmap) {
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
-        byte[] b = baos.toByteArray();
-        String temp = Base64.encodeToString(b, Base64.DEFAULT);
-        return temp;
-    }
-
-    public static Bitmap StringToBitmap(String encodedString) {
-        try {
-            byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
-            Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);
-            return bitmap;
-        } catch (Exception e) {
-            e.getMessage();
-            return null;
-        }
-    }
-
-    //endregion
-
     //region ConvertMoneyToWord
 
     public static HashMap<String, String> hm_tien = new HashMap<String, String>() {
@@ -927,6 +667,7 @@ public class CLocal {
             put("9", "chín");
         }
     };
+
     public static HashMap<String, String> hm_hanh = new HashMap<String, String>() {
         {
             put("1", "đồng");
@@ -995,7 +736,33 @@ public class CLocal {
         return kq;
     }
 
+    //convert tiền thành chữ
+    public static String formatMoney(String price, String symbol) {
+
+        NumberFormat format = new DecimalFormat("#,##0.00");// #,##0.00 ¤ (¤:// Currency symbol)
+        format.setCurrency(Currency.getInstance(Locale.US));//Or default locale
+
+        price = (!TextUtils.isEmpty(price)) ? price : "0";
+        price = price.trim();
+        price = format.format(Double.parseDouble(price));
+        price = price.replaceAll(",", "\\.");
+
+        if (price.endsWith(".00")) {
+            int centsIndex = price.lastIndexOf(".00");
+            if (centsIndex != -1) {
+                price = price.substring(0, centsIndex);
+            }
+        }
+        price = String.format("%s " + symbol, price);
+        return price;
+    }
+
     //endregion
+
+    public static String getTime() {
+        Date dateCapNhat = new Date();
+        return CLocal.DateFormat.format(dateCapNhat);
+    }
 
     public static String convertTimestampToDate(long time) {
         Calendar cal = Calendar.getInstance();
@@ -1026,6 +793,20 @@ public class CLocal {
         data_json = data_json.replace("}\"", "}");
         data_json = data_json.replace(":,", ":null,");
         return data_json;
+    }
+
+    public static Date convertStringToDate(String strDate) throws ParseException {
+        try {
+            return new SimpleDateFormat("dd/MM/yyyy").parse(strDate);
+        } catch (ParseException e) {
+            throw e;
+        }
+    }
+
+    public static int getDaysDifference(Date fromDate, Date toDate) {
+        if (fromDate == null || toDate == null)
+            return 0;
+        return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
     }
 
     public static void vibrate(Activity activity) {
@@ -1070,6 +851,7 @@ public class CLocal {
                 activity.bindService(intent2, mConnection, Context.BIND_AUTO_CREATE);
             }
     }
+
     public static String readFile(String path, String filename) throws IOException {
         try {
             File dir = new File(path);
@@ -1160,6 +942,22 @@ public class CLocal {
             File directory = new File(path);
             File[] files = directory.listFiles();
             return files;
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static void ghiListToFileDocSo() throws IOException {
+        try {
+            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+            String Nam = "", Ky = "", Dot = "";
+            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                Nam = CLocal.listDocSo.get(0).getNam();
+                Ky = CLocal.listDocSo.get(0).getKy();
+                Dot = CLocal.listDocSo.get(0).getDot();
+                editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
+            }
         } catch (Exception ex) {
             throw ex;
         }
@@ -1928,34 +1726,6 @@ public class CLocal {
         }
     }
 
-    public static Date convertStringToDate(String strDate) throws ParseException {
-        try {
-            return new SimpleDateFormat("dd/MM/yyyy").parse(strDate);
-        } catch (ParseException e) {
-            throw e;
-        }
-    }
 
-    public static int getDaysDifference(Date fromDate, Date toDate) {
-        if (fromDate == null || toDate == null)
-            return 0;
-        return (int) ((toDate.getTime() - fromDate.getTime()) / (1000 * 60 * 60 * 24));
-    }
-
-    public static void ghiListToFileDocSo() throws IOException {
-        try {
-            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-            String Nam = "", Ky = "", Dot = "";
-            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                Nam = CLocal.listDocSo.get(0).getNam();
-                Ky = CLocal.listDocSo.get(0).getKy();
-                Dot = CLocal.listDocSo.get(0).getDot();
-                editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
-            }
-        } catch (Exception ex) {
-            throw ex;
-        }
-    }
 
 }
