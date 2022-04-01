@@ -149,7 +149,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute(new String[]{"CapNhat", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked)});
+                    myAsyncTask.execute(new String[]{"Sua", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked)});
                 }
             });
 
@@ -202,7 +202,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                     case "Xoa":
                         result = ws.delete_DienThoai(strings[1], strings[2]);
                         break;
-                    case "CapNhat":
+                    case "Sua":
                         result = ws.update_DienThoai(strings[1], strings[2], strings[3], strings[4], CLocal.MaNV);
                         break;
                 }
