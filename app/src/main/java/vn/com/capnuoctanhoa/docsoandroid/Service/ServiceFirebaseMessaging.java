@@ -5,9 +5,12 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -26,6 +29,7 @@ import java.util.Random;
 import androidx.core.app.NotificationCompat;
 
 import vn.com.capnuoctanhoa.docsoandroid.ActivityDangNhap;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
@@ -48,20 +52,6 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         myAsyncTask.execute();
     }
 
-    public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            try {
-                CWebservice ws = new CWebservice();
-                ws.updateUID(CLocal.sharedPreferencesre.getString("MaNV", ""), CLocal.sharedPreferencesre.getString("UID", ""));
-            } catch (Exception ex) {
-                CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
-            }
-            return null;
-        }
-    }
-
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
@@ -77,9 +67,15 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             if (remoteMessage.getData().get("Action").equals("DangXuat")) {
                 CLocal.initialCLocal();
                 intent = new Intent(this, ActivityDangNhap.class);
-            } else if (remoteMessage.getData().get("Action").equals("DocSo") && CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
-                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+            } else if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                if (remoteMessage.getData().get("Action").equals("DocSo")) {
+                    CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+                    CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+                } else if (remoteMessage.getData().get("NameUpdate").equals("CodeTon")) {
+                    sendCodeTonToServer(remoteMessage.getData().get("ID"));
+                } else if (remoteMessage.getData().get("NameUpdate").equals("HinhTon")) {
+                    sendHinhTonToServer(remoteMessage.getData().get("ID"));
+                }
                 intent = new Intent(this, ActivityDocSo_DanhSach.class);
             } else {
                 intent = new Intent(this, MainActivity.class);
@@ -158,6 +154,96 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         int id = random.nextInt(9999 - 1000) + 1000;
 //        int id = 1000;
         notificationManager.notify(id, notificationBuilder.build());
+    }
+
+    public void sendCodeTonToServer(String ID) {
+        MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
+        myAsyncTaskSyncCodeTon.execute(new String[]{ID});
+    }
+
+    public void sendHinhTonToServer(String ID) {
+        MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
+        myAsyncTaskSyncHinhTon.execute(new String[]{ID});
+    }
+
+    public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            try {
+                CWebservice ws = new CWebservice();
+                ws.updateUID(CLocal.sharedPreferencesre.getString("MaNV", ""), CLocal.sharedPreferencesre.getString("UID", ""));
+            } catch (Exception ex) {
+                CLocal.showToastMessage(getApplicationContext(), ex.getMessage());
+            }
+            return null;
+        }
+    }
+
+    public class MyAsyncTaskSyncCodeTon extends AsyncTask<String, String, String> {
+        CWebservice ws;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ws = new CWebservice();
+            String error = "";
+            try {
+                String ID = strings[0];
+                if (ID != null && ID.equals("") == false)
+                    for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                        if (CLocal.listDocSo.get(i).getID().equals(ID) == true && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            String HinhDHN = "";
+                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                            if (bitmap != null) {
+                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                            }
+                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
+                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
+                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
+                            JSONObject jsonObject = null;
+                            if (result.equals("") == false)
+                                jsonObject = new JSONObject(result);
+                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                CLocal.listDocSo.get(i).setSync(true);
+                                CLocal.listDocSo.get(i).setGhiHinh(true);
+                            }
+                        }
+                    }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return error;
+        }
+    }
+
+    public class MyAsyncTaskSyncHinhTon extends AsyncTask<String, String, String> {
+        CWebservice ws;
+
+        @Override
+        protected String doInBackground(String... strings) {
+            ws = new CWebservice();
+            String error = "";
+            try {
+                String ID = strings[0];
+                if (ID != null && ID.equals("") == false)
+                    for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                        if (CLocal.listDocSo.get(i).getID().equals(ID) == true
+                                && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            String HinhDHN = "";
+                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                            if (bitmap != null) {
+                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
+                                if (Boolean.parseBoolean(result) == true)
+                                    CLocal.listDocSo.get(i).setGhiHinh(true);
+                            }
+                        }
+                    }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return error;
+        }
     }
 
 }

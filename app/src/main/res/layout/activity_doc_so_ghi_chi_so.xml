@@ -403,246 +403,246 @@
                 tools:ignore="SpeakableTextPresentCheck" />
 
 
-<!--            <LinearLayout-->
-<!--                android:id="@+id/linearLayout2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:baselineAligned="false"-->
-<!--                android:orientation="horizontal"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtGiaBieu">-->
+            <!--            <LinearLayout-->
+            <!--                android:id="@+id/linearLayout2"-->
+            <!--                android:layout_width="match_parent"-->
+            <!--                android:layout_height="wrap_content"-->
+            <!--                android:baselineAligned="false"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toStartOf="parent"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/edtGiaBieu">-->
 
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
+            <!--                <LinearLayout-->
+            <!--                    android:layout_width="wrap_content"-->
+            <!--                    android:layout_height="wrap_content"-->
+            <!--                    android:orientation="vertical">-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="Code: "-->
-<!--                        android:textSize="18sp" />-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:text="Code: "-->
+            <!--                        android:textSize="18sp" />-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="Chỉ số: "-->
-<!--                        android:textSize="18sp" />-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:text="Chỉ số: "-->
+            <!--                        android:textSize="18sp" />-->
 
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="Tiêu thụ: "-->
-<!--                        android:textSize="18sp" />-->
+            <!--                    <TextView-->
+            <!--                        android:layout_width="wrap_content"-->
+            <!--                        android:layout_height="wrap_content"-->
+            <!--                        android:layout_gravity="center_vertical"-->
+            <!--                        android:text="Tiêu thụ: "-->
+            <!--                        android:textSize="18sp" />-->
 
-<!--                </LinearLayout>-->
+            <!--                </LinearLayout>-->
 
 
-<!--                <LinearLayout-->
+            <!--                <LinearLayout-->
 
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:baselineAligned="false"-->
-<!--                    android:orientation="horizontal">-->
-<!--                    &lt;!&ndash;ky hien tai - 3&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_3_1"-->
-<!--                        android:orientation="vertical">-->
+            <!--                    android:layout_width="match_parent"-->
+            <!--                    android:layout_height="match_parent"-->
+            <!--                    android:baselineAligned="false"-->
+            <!--                    android:orientation="horizontal">-->
+            <!--                    &lt;!&ndash;ky hien tai - 3&ndash;&gt;-->
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:background="@color/colorCSC_SL_3_1"-->
+            <!--                        android:orientation="vertical">-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode2"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtCode2"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo2"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtChiSo2"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu2"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-<!--                    &lt;!&ndash;ky hien tai - 2&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_2_1"-->
-<!--                        android:orientation="vertical">-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtTieuThu2"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
+            <!--                    &lt;!&ndash;ky hien tai - 2&ndash;&gt;-->
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:background="@color/colorCSC_SL_2_1"-->
+            <!--                        android:orientation="vertical">-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtCode1"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtChiSo1"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-<!--                    &lt;!&ndash;ky hien tai - 1&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_1_1"-->
-<!--                        android:orientation="vertical">-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtTieuThu1"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
+            <!--                    &lt;!&ndash;ky hien tai - 1&ndash;&gt;-->
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:background="@color/colorCSC_SL_1_1"-->
+            <!--                        android:orientation="vertical">-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode0"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtCode0"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo0"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtChiSo0"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu0"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtTieuThu0"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
 
-<!--                    &lt;!&ndash;ky hien tai&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_0_1"-->
-<!--                        android:orientation="vertical">-->
+            <!--                    &lt;!&ndash;ky hien tai&ndash;&gt;-->
+            <!--                    <LinearLayout-->
+            <!--                        android:layout_width="0dp"-->
+            <!--                        android:layout_height="match_parent"-->
+            <!--                        android:layout_weight="1"-->
+            <!--                        android:background="@color/colorCSC_SL_0_1"-->
+            <!--                        android:orientation="vertical">-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtCode"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtChiSo"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
 
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
+            <!--                        <View-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="1dp"-->
+            <!--                            android:background="@color/colorChuaThu" />-->
 
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-<!--                </LinearLayout>-->
-<!--            </LinearLayout>-->
+            <!--                        <TextView-->
+            <!--                            android:id="@+id/txtTieuThu"-->
+            <!--                            android:layout_width="match_parent"-->
+            <!--                            android:layout_height="wrap_content"-->
+            <!--                            android:layout_gravity="center_vertical"-->
+            <!--                            android:layout_weight="1"-->
+            <!--                            android:gravity="center_horizontal|center_vertical"-->
+            <!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
+            <!--                            android:textStyle="bold" />-->
+            <!--                    </LinearLayout>-->
+            <!--                </LinearLayout>-->
+            <!--            </LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
@@ -940,15 +940,27 @@
                 app:layout_constraintTop_toTopOf="@+id/spnCode"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="0dp"
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/recyclerView"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="100dp"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/spnCode"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/edtChiSo" />-->
+            <ImageView
+                android:id="@+id/imgThumb"
+                android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:orientation="horizontal"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:contentDescription="TODO"
+                android:src="@android:drawable/ic_menu_gallery"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spnCode"
-                app:layout_constraintTop_toBottomOf="@+id/edtChiSo" />
+                app:layout_constraintTop_toBottomOf="@+id/edtChiSo"
+                tools:ignore="ImageContrastCheck" />
 
             <ImageButton
                 android:id="@+id/ibtnChupHinh"
@@ -1010,20 +1022,20 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toTopOf="@+id/textView33"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_truoc_foreground"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/ic_truoc_foreground" />
 
     <ImageView
         android:id="@+id/ivSau"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toTopOf="@+id/textView34"
         app:layout_constraintStart_toEndOf="@+id/ivTruoc"
-        app:srcCompat="@drawable/ic_sau_foreground"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/ic_sau_foreground" />
 
     <ImageView
         android:id="@+id/ivPhieuChuyen"

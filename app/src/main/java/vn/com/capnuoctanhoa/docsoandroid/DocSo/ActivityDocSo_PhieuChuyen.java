@@ -105,11 +105,10 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(imgCapture!=null) {
+                if (imgCapture != null) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
-                }
-                else
+                } else
                     CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Hình ảnh");
             }
         });
@@ -117,21 +116,6 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-//                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
-//                        cMarshMallowPermission.requestPermissionForExternalStorage();
-//                    }
-//                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false)
-//                        return;
-//                }
-//                imgCapture = null;
-//                Uri imgUri = createImageUri();
-//                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-//                if (intent.resolveActivity(ActivityDocSo_PhieuChuyen.this.getPackageManager()) != null) {
-//                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
-//                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                    activityResultLauncher_ChupHinh.launch(intent);
-//                }
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                     if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
                         cMarshMallowPermission.requestPermissionForExternalStorage();
@@ -140,20 +124,40 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                         return;
                 }
                 imgCapture = null;
-                if (Build.VERSION.SDK_INT <= 19) {
-                    Intent intent = new Intent();
-                    intent.setType("image/*");
-                    intent.setAction(Intent.ACTION_GET_CONTENT);
-                    intent.addCategory(Intent.CATEGORY_OPENABLE);
-                    activityResultLauncher_ChonHinh.launch(intent);
-                } else if (Build.VERSION.SDK_INT > 19) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    activityResultLauncher_ChonHinh.launch(intent);
+                Uri imgUri = createImageUri();
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                if (intent.resolveActivity(ActivityDocSo_PhieuChuyen.this.getPackageManager()) != null) {
+                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
+                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                    activityResultLauncher_ChupHinh.launch(intent);
                 }
+//                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+//                        cMarshMallowPermission.requestPermissionForExternalStorage();
+//                    }
+//                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false)
+//                        return;
+//                }
+//                imgCapture = null;
+//                if (Build.VERSION.SDK_INT <= 19) {
+//                    Intent intent = new Intent();
+//                    intent.setType("image/*");
+//                    intent.setAction(Intent.ACTION_GET_CONTENT);
+//                    intent.addCategory(Intent.CATEGORY_OPENABLE);
+//                    activityResultLauncher_ChonHinh.launch(intent);
+//                } else if (Build.VERSION.SDK_INT > 19) {
+//                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+//                    activityResultLauncher_ChonHinh.launch(intent);
+//                }
             }
         });
 
-
+        imgThumb.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CLocal.showImgThumb(ActivityDocSo_PhieuChuyen.this, imgCapture);
+            }
+        });
     }
 
     private void fillDSDonTu() {
@@ -187,12 +191,9 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                         if (imgPath != null && imgPath != "") {
                             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
                             bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
-                            imgCapture = bitmap;
+                            imgCapture = CBitmap.scale(bitmap, 1024);
+                            imgThumb.setImageBitmap(imgCapture);
                         }
-                    }
-                    if (imgCapture != null) {
-                        imgCapture = CBitmap.scale(imgCapture,1024);
-                        imgThumb.setImageBitmap(imgCapture);
                     }
                 }
             });
@@ -207,10 +208,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                         String strPath = CLocal.getPathFromUri(ActivityDocSo_PhieuChuyen.this, uri);
                         Bitmap bitmap = BitmapFactory.decodeFile(strPath);
                         bitmap = CBitmap.imageOreintationValidator(bitmap, strPath);
-                        imgCapture = bitmap;
-                    }
-                    if (imgCapture != null) {
-                        imgCapture = CBitmap.scale(imgCapture,1024);
+                        imgCapture = CBitmap.scale(bitmap, 1024);
                         imgThumb.setImageBitmap(imgCapture);
                     }
                 }

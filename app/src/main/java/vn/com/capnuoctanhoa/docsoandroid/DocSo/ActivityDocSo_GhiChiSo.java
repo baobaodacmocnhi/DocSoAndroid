@@ -61,7 +61,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private EditText edtMLT, edtDanhBo, edtHoTen, edtDiaChi, edtDiaChiDHN, edtViTri, edtHieu, edtCo, edtSoThan, edtGiaBieu, edtDinhMuc, edtDinhMucHN, edtDienThoai, edtChiSo, edtTBTT;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
-    private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu, ivPhieuChuyen;
+    private ImageView ivTruoc, ivSau, ivGhiChu, ivIn, ivLuu, ivPhieuChuyen, imgThumb;
     private TextView txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo2, edtCode2, edtTieuThu2, edtChiSo1, edtCode1, edtTieuThu1, edtChiSo0, edtCode0, edtTieuThu0, edtChiSoMoi, edtCodeMoi, edtTieuThuMoi;
     private LinearLayout layoutMoi;
@@ -69,8 +69,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
-    private ArrayList<Bitmap> lstCapture;
-    private RecyclerView recyclerView;
+    //    private RecyclerView recyclerView;
     private ImageButton ibtnChupHinh;
     private Button btnChonHinh;
     private CustomAdapterRecyclerViewImage customAdapterRecyclerViewImage;
@@ -136,7 +135,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ivPhieuChuyen = (ImageView) findViewById(R.id.ivPhieuChuyen);
         ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
         btnChonHinh = (Button) findViewById(R.id.btnChonHinh);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+//        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
@@ -172,6 +172,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT > 0) {
                         CLocal.STT--;
+                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT > 0)
+                            CLocal.STT--;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                     } else
@@ -184,6 +186,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
                         CLocal.STT++;
+                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT < CLocal.listDocSoView.size() - 1)
+                            CLocal.STT++;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                     } else
@@ -207,7 +211,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
                         intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
                         intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-//                    startActivityForResult(intent, 1);
                         activityResultLauncher_ChupHinh.launch(intent);
                     }
                 }
@@ -229,13 +232,18 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         intent.setType("image/*");
                         intent.setAction(Intent.ACTION_GET_CONTENT);
                         intent.addCategory(Intent.CATEGORY_OPENABLE);
-//                    startActivityForResult(intent, 2);
                         activityResultLauncher_ChonHinh.launch(intent);
                     } else if (Build.VERSION.SDK_INT > 19) {
                         Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-//                    startActivityForResult(intent, 2);
                         activityResultLauncher_ChonHinh.launch(intent);
                     }
+                }
+            });
+
+            imgThumb.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    CLocal.showImgThumb(ActivityDocSo_GhiChiSo.this, imgCapture);
                 }
             });
 
@@ -264,7 +272,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
                             return;
                         }
-                        if (lstCapture.size() > 0 && selectedCode != null
+                        if (imgCapture != null && selectedCode != null
                                 && ((((CCode) selectedCode).getCode().contains("F1") == true
                                 || ((CCode) selectedCode).getCode().contains("F2") == true
                                 || ((CCode) selectedCode).getCode().contains("F3") == true
@@ -313,12 +321,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT(lstTienNuoc.get(2).toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
-                                if (lstCapture.size() > 0) {
-                                    for (int i = 0; i < lstCapture.size(); i++) {
-                                        CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
-                                                , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
-                                    }
-                                }
+//                                if (imgCapture != null) {
+//                                    CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+//                                            , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
+//                                }
                                 CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                                 MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
                                 myAsyncTaskGhiDocSo_gianTiep.execute(new String[]{String.valueOf(CLocal.STT)});
@@ -367,7 +373,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                             }
                                         }, false);
                                 } else {//thành công không có cảnh báo
-                                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THÀNH CÔNG\r\n\r\n", "center");
+//                                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THÀNH CÔNG\r\n\r\n", "center");
                                     ivIn.performClick();
                                     final Handler handler = new Handler();
                                     handler.postDelayed(new Runnable() {
@@ -444,7 +450,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             }
 
             if (savedInstanceState != null) {
-                lstCapture = CLocal.lstCapture;
+                imgCapture = CLocal.imgCapture;
                 loadRecyclerViewImage();
             }
 
@@ -472,12 +478,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onSaveInstanceState(@NonNull Bundle outState) {
         super.onSaveInstanceState(outState);
-        CLocal.lstCapture = lstCapture;
+        CLocal.imgCapture = imgCapture;
     }
 
     private void initial() {
-        lstCapture = new ArrayList<>();
-        lstCapture.clear();
+        imgCapture = null;
         spnCode.setSelection(0);
         selectedCode = (CCode) spnCode.getItemAtPosition(0);
         edtChiSo.setText("");
@@ -513,12 +518,13 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     }
 
     private void loadRecyclerViewImage() {
-        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
-        recyclerView.setHasFixedSize(true);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        recyclerView.setLayoutManager(layoutManager);
-        recyclerView.setAdapter(customAdapterRecyclerViewImage);
+//        customAdapterRecyclerViewImage = new CustomAdapterRecyclerViewImage(this, lstCapture);
+//        recyclerView.setHasFixedSize(true);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
+//        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        recyclerView.setLayoutManager(layoutManager);
+//        recyclerView.setAdapter(customAdapterRecyclerViewImage);
+        imgThumb.setImageBitmap(imgCapture);
     }
 
     private void selectValue(String value) {
@@ -570,7 +576,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
                 if (bitmap != null) {
                     bitmap = CBitmap.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
-                    lstCapture.add(bitmap);
+                    imgCapture = bitmap;
                     loadRecyclerViewImage();
                 }
                 playTinhTieuThu = true;
@@ -671,13 +677,11 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             if (imgPath != null && imgPath != "") {
                                 Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
                                 bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
-                                imgCapture = bitmap;
+                                imgCapture = CBitmap.scale(bitmap, 1024);
+                                loadRecyclerViewImage();
+                                CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+                                        , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
                             }
-                        }
-                        if (imgCapture != null) {
-                            lstCapture = new ArrayList<>();
-                            lstCapture.add(CBitmap.scale(imgCapture, 1024));
-                            loadRecyclerViewImage();
                         }
                     } catch (Exception ex) {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
@@ -696,12 +700,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             String strPath = CLocal.getPathFromUri(ActivityDocSo_GhiChiSo.this, uri);
                             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
                             bitmap = CBitmap.imageOreintationValidator(bitmap, strPath);
-                            imgCapture = bitmap;
-                        }
-                        if (imgCapture != null) {
-                            lstCapture = new ArrayList<>();
-                            lstCapture.add(CBitmap.scale(imgCapture, 1024));
+                            imgCapture = CBitmap.scale(bitmap, 1024);
                             loadRecyclerViewImage();
+                            CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+                                    , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
                         }
                     } catch (Exception ex) {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
@@ -822,13 +824,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             try {
                 jsonObject = new JSONObject();
-                if (lstCapture.size() > 0) {
-                    for (int i = 0; i < lstCapture.size(); i++) {
-                        if (imgString.equals("") == true)
-                            imgString = CBitmap.convertBitmapToString(lstCapture.get(i));
-//                        else
-//                            imgString += ";" + CLocal.convertBitmapToString(lstCapture.get(i));
-                    }
+                if (imgCapture != null && imgString.equals("") == true) {
+                    imgString = CBitmap.convertBitmapToString(imgCapture);
                 }
                 CLocal.listDocSoView.get(CLocal.STT).setModifyDate(CLocal.DateFormat.format(new Date()));
                 String result = ws.ghiChiSo(CLocal.listDocSoView.get(CLocal.STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May, CLocal.listDocSoView.get(CLocal.STT).getTBTT());
@@ -847,12 +844,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
-                    if (lstCapture.size() > 0) {
-                        for (int i = 0; i < lstCapture.size(); i++) {
-                            CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
-                                    , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", lstCapture.get(i));
-                        }
-                    }
+//                    if (imgCapture != null) {
+//                        CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+//                                , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
+//                    }
                     CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                     return "THÀNH CÔNG";
                 } else
@@ -928,7 +923,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                     }
                                 }, false);
                         } else {//thành công không có cảnh báo
-                            CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
+//                            CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
                             ivIn.performClick();
                             final Handler handler = new Handler();
                             handler.postDelayed(new Runnable() {

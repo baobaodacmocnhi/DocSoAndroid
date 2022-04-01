@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -84,7 +85,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                     //sđt
                                     if (DanhBo.length() == 11) {
                                         MyAsyncTask myAsyncTask = new MyAsyncTask();
-                                        myAsyncTask.execute(new String[]{entityParent.getDanhBo(), entityParent.getDienThoai()});
+                                        myAsyncTask.execute(new String[]{"Xoa", entityParent.getDanhBo(), entityParent.getDienThoai()});
                                     } else {
                                         try {//downfile
                                             String Nam = "", Ky = "", Dot = "";
@@ -144,7 +145,13 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                     }
                 }
             });
-
+            holder.chkSoChinh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute(new String[]{"CapNhat", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked)});
+                }
+            });
 
         }
     }
@@ -189,11 +196,17 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
         @Override
         protected String doInBackground(String... strings) {
             try {
+                String result = "";
                 CWebservice ws = new CWebservice();
-                String result = ws.delete_DienThoai(strings[0], strings[1]);
-
+                switch (strings[0]) {
+                    case "Xoa":
+                        result = ws.delete_DienThoai(strings[1], strings[2]);
+                        break;
+                    case "CapNhat":
+                        result = ws.update_DienThoai(strings[1], strings[2], strings[3], strings[4], CLocal.MaNV);
+                        break;
+                }
                 jsonObject = new JSONObject(result);
-
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
                     return "THÀNH CÔNG";
                 } else
