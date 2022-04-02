@@ -55,6 +55,11 @@
             android:exported="false"
             android:label="Ghi Chỉ Số Nước"
             android:configChanges="orientation|screenSize|keyboardHidden"/>
+        <activity
+            android:name=".DocSo.ActivityDocSo_GhiChiSo2"
+            android:exported="false"
+            android:label="Ghi Chỉ Số Nước"
+            android:configChanges="orientation|screenSize|keyboardHidden"/>
 
         <service
             android:name=".Service.ServiceThermalPrinter"

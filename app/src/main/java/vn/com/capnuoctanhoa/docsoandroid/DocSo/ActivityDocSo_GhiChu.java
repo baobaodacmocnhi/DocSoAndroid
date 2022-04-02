@@ -27,6 +27,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -160,6 +161,24 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             } catch (Exception ex) {
                 Toast.makeText(getApplicationContext(), ex.toString(), Toast.LENGTH_SHORT).show();
             }
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        String sdt = "";
+        for (int x = recyclerView.getChildCount(), i = 0; i < x; i++) {
+            RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
+            TextView txtDienThoai = (TextView) holder.itemView.findViewById(R.id.txtDienThoai);
+            TextView txtHoTen = (TextView) holder.itemView.findViewById(R.id.txtHoTen);
+            CheckBox chkSoChinh = (CheckBox) holder.itemView.findViewById(R.id.chkSoChinh);
+            if (chkSoChinh.isChecked() == true)
+                if (sdt.equals("") == true)
+                    sdt = txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString();
+                else
+                    sdt += " | " + txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString();
+        }
+        CLocal.listDocSoView.get(CLocal.STT).setDienThoai(sdt);
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {

@@ -183,10 +183,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 int i = Integer.parseInt(STT.getText().toString()) - 1;
                 CLocal.indexPosition = i;
                 Intent intent;
-                intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChiSo.class);
+                intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChiSo2.class);
                 CLocal.STT = i;
-//                intent.putExtra("STT", String.valueOf(i));
-//                startActivityForResult(intent, 1);
                 activityResultLauncher_GhiChiSo.launch(intent);
                 return false;
             }

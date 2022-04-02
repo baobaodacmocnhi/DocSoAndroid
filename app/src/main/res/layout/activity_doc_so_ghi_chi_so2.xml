@@ -11,8 +11,10 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toTopOf="@+id/ivTruoc"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -23,74 +25,80 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Ghi Chú"
                 android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtGhiChu" />
+                app:layout_constraintTop_toTopOf="@+id/txtGhiChu" />
 
-            <EditText
-                android:id="@+id/edtGhiChu"
+            <TextView
+                android:id="@+id/txtGhiChu"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:focusable="false"
+
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
-                app:layout_constraintTop_toBottomOf="@+id/edtHoTen"
-                tools:ignore="SpeakableTextPresentCheck" />
+                app:layout_constraintTop_toBottomOf="@+id/txtHoTen"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/textView16"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="SĐT"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu" />
+                app:layout_constraintTop_toTopOf="@+id/txtDienThoai" />
 
-            <EditText
-                android:id="@+id/edtDienThoai"
+            <TextView
+                android:id="@+id/txtDienThoai"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:focusable="false"
+
                 android:inputType="textPersonName"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu"
-                tools:ignore="SpeakableTextPresentCheck" />
+                app:layout_constraintTop_toBottomOf="@+id/txtGhiChu"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <TextView
                 android:id="@+id/textView10"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="MLT"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtMLT" />
+                app:layout_constraintTop_toTopOf="@+id/txtMLT" />
 
             <TextView
-                android:id="@+id/edtMLT"
+                android:id="@+id/txtMLT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:autofillHints=""
-                android:ems="10"
-                android:inputType="number"
-                android:minHeight="48dp"
+                android:ems="8"
+                android:textColor="@color/colorMLT"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -100,22 +108,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Danh Bộ"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtDanhBo" />
+                app:layout_constraintTop_toTopOf="@+id/txtDanhBo" />
 
             <TextView
-                android:id="@+id/edtDanhBo"
+                android:id="@+id/txtDanhBo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:autofillHints=""
                 android:ems="8"
-                android:inputType="number"
-                android:minHeight="48dp"
+                android:textColor="@color/colorDanhBo"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView"
-                app:layout_constraintTop_toBottomOf="@+id/edtMLT"
+                app:layout_constraintTop_toBottomOf="@+id/txtMLT"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -123,26 +133,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="VT"
-                app:layout_constraintStart_toEndOf="@+id/edtDanhBo"
-                app:layout_constraintTop_toTopOf="@+id/edtViTri" />
+                app:layout_constraintStart_toEndOf="@+id/txtDanhBo"
+                app:layout_constraintTop_toTopOf="@+id/txtViTri" />
 
             <TextView
-                android:id="@+id/edtViTri"
+                android:id="@+id/txtViTri"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
-                app:layout_constraintTop_toBottomOf="@+id/edtMLT"
+                app:layout_constraintTop_toTopOf="@+id/txtDanhBo"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -150,24 +158,25 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Họ Tên"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtHoTen" />
+                app:layout_constraintTop_toTopOf="@+id/txtHoTen" />
 
-            <EditText
-                android:id="@+id/edtHoTen"
+            <TextView
+                android:id="@+id/txtHoTen"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
-                app:layout_constraintStart_toStartOf="@+id/edtDanhBo"
-                app:layout_constraintTop_toBottomOf="@+id/edtDiaChiDHN"
+                app:layout_constraintStart_toStartOf="@+id/txtDanhBo"
+                app:layout_constraintTop_toBottomOf="@+id/txtDiaChiDHN"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -175,23 +184,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Địa Chỉ"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtDiaChi" />
+                app:layout_constraintTop_toTopOf="@+id/txtDiaChi" />
 
-            <EditText
-                android:id="@+id/edtDiaChi"
+            <TextView
+                android:id="@+id/txtDiaChi"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="@+id/edtHoTen"
-                app:layout_constraintTop_toBottomOf="@+id/edtHieu"
+                app:layout_constraintStart_toStartOf="@+id/txtHoTen"
+                app:layout_constraintTop_toBottomOf="@+id/txtHieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -199,28 +209,26 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Địa Chỉ ĐHN"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtDiaChi" />
+                app:layout_constraintTop_toTopOf="@+id/txtDiaChiDHN" />
 
-            <EditText
-                android:id="@+id/edtDiaChiDHN"
+            <TextView
+                android:id="@+id/txtDiaChiDHN"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorMLT"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
-                app:layout_constraintTop_toBottomOf="@+id/edtDiaChi"
+                app:layout_constraintTop_toBottomOf="@+id/txtDiaChi"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -228,22 +236,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Hiệu"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtHieu" />
+                app:layout_constraintTop_toTopOf="@+id/txtHieu" />
 
-            <EditText
-                android:id="@+id/edtHieu"
+            <TextView
+                android:id="@+id/txtHieu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:autofillHints=""
+                android:layout_marginTop="8dp"
                 android:ems="3"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/edtDanhBo"
+                app:layout_constraintTop_toBottomOf="@+id/txtDanhBo"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -251,24 +259,21 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Cỡ"
-                app:layout_constraintStart_toEndOf="@+id/edtHieu"
-                app:layout_constraintTop_toTopOf="@+id/edtCo" />
+                app:layout_constraintStart_toEndOf="@+id/txtHieu"
+                app:layout_constraintTop_toTopOf="@+id/txtCo" />
 
-            <EditText
-                android:id="@+id/edtCo"
+            <TextView
+                android:id="@+id/txtCo"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-
-                android:autofillHints=""
-                android:ems="2"
-                android:inputType="textPersonName"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
+                android:ems="1"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
-                app:layout_constraintTop_toTopOf="@+id/edtHieu"
+                app:layout_constraintTop_toTopOf="@+id/txtHieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -276,26 +281,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="Số Thân"
-                app:layout_constraintStart_toEndOf="@+id/edtCo"
-                app:layout_constraintTop_toTopOf="@+id/edtSoThan" />
+                app:layout_constraintStart_toEndOf="@+id/txtCo"
+                app:layout_constraintTop_toTopOf="@+id/txtSoThan" />
 
-            <EditText
-                android:id="@+id/edtSoThan"
+            <TextView
+                android:id="@+id/txtSoThan"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:autofillHints=""
                 android:ems="6"
-                android:inputType="textPersonName"
-                android:minHeight="48dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorMLT"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
-                app:layout_constraintTop_toTopOf="@+id/edtHieu"
+                app:layout_constraintTop_toTopOf="@+id/txtHieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -303,26 +306,24 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="GB"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu" />
+                app:layout_constraintTop_toTopOf="@+id/txtGiaBieu" />
 
-            <EditText
-                android:id="@+id/edtGiaBieu"
+            <TextView
+                android:id="@+id/txtGiaBieu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:autofillHints=""
+                android:layout_marginTop="8dp"
                 android:ems="2"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
-                android:textColor="@color/colorPrimaryDark"
+                android:textColor="@color/colorMLT"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView13"
-                app:layout_constraintTop_toBottomOf="@+id/edtDienThoai"
+                app:layout_constraintTop_toBottomOf="@+id/txtDienThoai"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -330,24 +331,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="ĐM"
-                app:layout_constraintStart_toEndOf="@+id/edtGiaBieu"
-                app:layout_constraintTop_toTopOf="@+id/edtDinhMuc" />
+                app:layout_constraintStart_toEndOf="@+id/txtGiaBieu"
+                app:layout_constraintTop_toTopOf="@+id/txtDinhMuc" />
 
-            <EditText
-                android:id="@+id/edtDinhMuc"
+            <TextView
+                android:id="@+id/txtDinhMuc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:autofillHints=""
                 android:ems="3"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView14"
-                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
+                app:layout_constraintTop_toTopOf="@+id/txtGiaBieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -355,24 +354,22 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="ĐMHN"
-                app:layout_constraintStart_toEndOf="@+id/edtDinhMuc"
-                app:layout_constraintTop_toTopOf="@+id/edtDinhMucHN" />
+                app:layout_constraintStart_toEndOf="@+id/txtDinhMuc"
+                app:layout_constraintTop_toTopOf="@+id/txtDinhMucHN" />
 
-            <EditText
-                android:id="@+id/edtDinhMucHN"
+            <TextView
+                android:id="@+id/txtDinhMucHN"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:autofillHints=""
                 android:ems="2"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
+                android:textSize="20sp"
+                android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView15"
-                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
+                app:layout_constraintTop_toTopOf="@+id/txtGiaBieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -380,325 +377,68 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="5dp"
                 android:text="TBTT"
-                app:layout_constraintStart_toEndOf="@+id/edtDinhMucHN"
-                app:layout_constraintTop_toTopOf="@+id/edtTBTT" />
+                app:layout_constraintStart_toEndOf="@+id/txtDinhMucHN"
+                app:layout_constraintTop_toTopOf="@+id/txtTBTT" />
 
-            <EditText
-                android:id="@+id/edtTBTT"
+            <TextView
+                android:id="@+id/txtTBTT"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:autofillHints=""
                 android:ems="2"
                 android:gravity="center_horizontal"
-                android:inputType="number"
-                android:minWidth="48dp"
-                android:minHeight="48dp"
                 android:textColor="@color/colorDanhBo"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView19"
-                app:layout_constraintTop_toTopOf="@+id/edtGiaBieu"
+                app:layout_constraintTop_toTopOf="@+id/txtGiaBieu"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-
-<!--            <LinearLayout-->
-<!--                android:id="@+id/linearLayout2"-->
-<!--                android:layout_width="match_parent"-->
-<!--                android:layout_height="wrap_content"-->
-<!--                android:baselineAligned="false"-->
-<!--                android:orientation="horizontal"-->
-<!--                app:layout_constraintEnd_toEndOf="parent"-->
-<!--                app:layout_constraintStart_toStartOf="parent"-->
-<!--                app:layout_constraintTop_toBottomOf="@+id/edtGiaBieu">-->
-
-<!--                <LinearLayout-->
-<!--                    android:layout_width="wrap_content"-->
-<!--                    android:layout_height="wrap_content"-->
-<!--                    android:orientation="vertical">-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="Code: "-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="Chỉ số: "-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                    <TextView-->
-<!--                        android:layout_width="wrap_content"-->
-<!--                        android:layout_height="wrap_content"-->
-<!--                        android:layout_gravity="center_vertical"-->
-<!--                        android:text="Tiêu thụ: "-->
-<!--                        android:textSize="18sp" />-->
-
-<!--                </LinearLayout>-->
-
-
-<!--                <LinearLayout-->
-
-<!--                    android:layout_width="match_parent"-->
-<!--                    android:layout_height="match_parent"-->
-<!--                    android:baselineAligned="false"-->
-<!--                    android:orientation="horizontal">-->
-<!--                    &lt;!&ndash;ky hien tai - 3&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_3_1"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode2"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo2"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu2"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-<!--                    &lt;!&ndash;ky hien tai - 2&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_2_1"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu1"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-<!--                    &lt;!&ndash;ky hien tai - 1&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_1_1"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode0"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo0"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu0"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-
-<!--                    &lt;!&ndash;ky hien tai&ndash;&gt;-->
-<!--                    <LinearLayout-->
-<!--                        android:layout_width="0dp"-->
-<!--                        android:layout_height="match_parent"-->
-<!--                        android:layout_weight="1"-->
-<!--                        android:background="@color/colorCSC_SL_0_1"-->
-<!--                        android:orientation="vertical">-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtCode"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtChiSo"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-
-<!--                        <View-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="1dp"-->
-<!--                            android:background="@color/colorChuaThu" />-->
-
-<!--                        <TextView-->
-<!--                            android:id="@+id/txtTieuThu"-->
-<!--                            android:layout_width="match_parent"-->
-<!--                            android:layout_height="wrap_content"-->
-<!--                            android:layout_gravity="center_vertical"-->
-<!--                            android:layout_weight="1"-->
-<!--                            android:gravity="center_horizontal|center_vertical"-->
-<!--                            android:textAppearance="?android:attr/textAppearanceMedium"-->
-<!--                            android:textStyle="bold" />-->
-<!--                    </LinearLayout>-->
-<!--                </LinearLayout>-->
-<!--            </LinearLayout>-->
 
             <LinearLayout
                 android:id="@+id/linearLayout2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:baselineAligned="false"
                 android:orientation="horizontal"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtGiaBieu">
+                app:layout_constraintTop_toBottomOf="@+id/txtGiaBieu">
 
                 <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <View
-                        android:id="@+id/view"
-                        android:layout_width="match_parent"
-                        android:layout_height="10dp"
-                        android:background="@color/colorChuaThu" />
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_vertical"
+                        android:text="Code"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Code: "
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="22dp"
-                        android:background="@color/colorChuaThu" />
+                        android:text="Chỉ số"
+                        android:textSize="20sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
-                        android:text="Chỉ số: "
-                        android:textSize="18sp" />
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="20dp"
-                        android:background="@color/colorChuaThu" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center_vertical"
-                        android:text="Tiêu thụ: "
-                        android:textSize="18sp" />
+                        android:text="Tiêu thụ"
+                        android:textSize="20sp" />
 
                 </LinearLayout>
 
+
                 <LinearLayout
+
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:baselineAligned="false"
@@ -706,189 +446,218 @@
                     <!--ky hien tai - 3-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_3_1"
                         android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edtCode2"
+                        <TextView
+                            android:id="@+id/txtCode2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/edtChiSo2"
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
 
-                        <EditText
-                            android:id="@+id/edtTieuThu2"
+                        <TextView
+                            android:id="@+id/txtChiSo2"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
+
+                        <TextView
+                            android:id="@+id/txtTieuThu2"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
                     <!--ky hien tai - 2-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_2_1"
                         android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edtCode1"
+                        <TextView
+                            android:id="@+id/txtCode1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/edtChiSo1"
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
 
-                        <EditText
-                            android:id="@+id/edtTieuThu1"
+                        <TextView
+                            android:id="@+id/txtChiSo1"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
+
+                        <TextView
+                            android:id="@+id/txtTieuThu1"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
                     <!--ky hien tai - 1-->
                     <LinearLayout
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_1_1"
                         android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edtCode0"
+                        <TextView
+                            android:id="@+id/txtCode0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/edtChiSo0"
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
 
-                        <EditText
-                            android:id="@+id/edtTieuThu0"
+                        <TextView
+                            android:id="@+id/txtChiSo0"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
+
+                        <TextView
+                            android:id="@+id/txtTieuThu0"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
+
                     <!--ky hien tai-->
                     <LinearLayout
                         android:id="@+id/layoutMoi"
                         android:layout_width="0dp"
-                        android:layout_height="wrap_content"
+                        android:layout_height="match_parent"
                         android:layout_weight="1"
                         android:background="@color/colorCSC_SL_0_1"
                         android:orientation="vertical">
 
-                        <EditText
-                            android:id="@+id/edtCodeMoi"
+                        <TextView
+                            android:id="@+id/txtCode"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
 
-                        <EditText
-                            android:id="@+id/edtChiSoMoi"
+                        <View
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
 
-                        <EditText
-                            android:id="@+id/edtTieuThuMoi"
+                        <TextView
+                            android:id="@+id/txtChiSo"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:autofillHints=""
-                            android:ems="10"
-                            android:focusable="false"
-                            android:inputType="number"
-                            android:textAlignment="center"
-                            android:textStyle="bold"
-                            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/colorChuaThu" />
+
+                        <TextView
+                            android:id="@+id/txtTieuThu"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:layout_weight="1"
+                            android:gravity="center_horizontal|center_vertical"
+                            android:textAppearance="?android:attr/textAppearanceMedium"
+                            android:textSize="20sp"
+                            android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
-
             </LinearLayout>
+
 
             <TextView
                 android:id="@+id/textView17"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="Code"
                 android:textSize="16sp"
                 android:textStyle="bold"
@@ -900,6 +669,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_weight="1"
                 android:gravity="center"
@@ -915,12 +685,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="8dp"
                 android:text="CSM"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/spnCode"
-                app:layout_constraintTop_toTopOf="@+id/spnCode" />
+                app:layout_constraintTop_toTopOf="@+id/edtChiSo" />
 
             <EditText
                 android:id="@+id/edtChiSo"
@@ -931,7 +701,7 @@
                 android:autofillHints=""
                 android:ems="4"
                 android:inputType="number"
-                android:minHeight="48dp"
+
                 android:textAlignment="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
@@ -940,15 +710,26 @@
                 app:layout_constraintTop_toTopOf="@+id/spnCode"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recyclerView"
-                android:layout_width="0dp"
-                android:layout_height="100dp"
-                android:orientation="horizontal"
+            <!--            <androidx.recyclerview.widget.RecyclerView-->
+            <!--                android:id="@+id/recyclerView"-->
+            <!--                android:layout_width="0dp"-->
+            <!--                android:layout_height="100dp"-->
+            <!--                android:orientation="horizontal"-->
+            <!--                app:layout_constraintBottom_toBottomOf="parent"-->
+            <!--                app:layout_constraintEnd_toEndOf="parent"-->
+            <!--                app:layout_constraintStart_toEndOf="@+id/spnCode"-->
+            <!--                app:layout_constraintTop_toBottomOf="@+id/edtChiSo" />-->
+            <ImageView
+                android:id="@+id/imgThumb"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:src="@android:drawable/ic_menu_gallery"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/spnCode"
-                app:layout_constraintTop_toBottomOf="@+id/edtChiSo" />
+                app:layout_constraintTop_toBottomOf="@+id/edtChiSo"
+                tools:ignore="ImageContrastCheck" />
 
             <ImageButton
                 android:id="@+id/ibtnChupHinh"
@@ -964,7 +745,7 @@
                 android:id="@+id/btnChonHinh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
+                android:layout_marginTop="32dp"
                 android:text="Chọn hình"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/spnCode"
@@ -1010,20 +791,20 @@
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="8dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toTopOf="@+id/textView33"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/ic_truoc_foreground"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/ic_truoc_foreground" />
 
     <ImageView
         android:id="@+id/ivSau"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginStart="16dp"
+        android:contentDescription="TODO"
         app:layout_constraintBottom_toTopOf="@+id/textView34"
         app:layout_constraintStart_toEndOf="@+id/ivTruoc"
-        app:srcCompat="@drawable/ic_sau_foreground"
-        android:contentDescription="TODO" />
+        app:srcCompat="@drawable/ic_sau_foreground" />
 
     <ImageView
         android:id="@+id/ivPhieuChuyen"
