@@ -615,7 +615,7 @@ public class CLocal {
 
         ImageView imageView = new ImageView(activity);
         imageView.setImageBitmap(bitmap);
-        builder.addContentView(imageView, new RelativeLayout.LayoutParams(1000, 1000));
+        builder.addContentView(imageView, new RelativeLayout.LayoutParams(1024, 1024));
         builder.show();
     }
 
