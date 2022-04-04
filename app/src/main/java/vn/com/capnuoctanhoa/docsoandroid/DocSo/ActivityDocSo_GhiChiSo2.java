@@ -153,8 +153,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT > 0) {
                         CLocal.STT--;
-//                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT > 0)
-//                            CLocal.STT--;
+                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT > 0)
+                            CLocal.STT--;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                     } else
@@ -167,8 +167,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
                         CLocal.STT++;
-//                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT < CLocal.listDocSoView.size() - 1)
-//                            CLocal.STT++;
+                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT < CLocal.listDocSoView.size() - 1)
+                            CLocal.STT++;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                     } else
