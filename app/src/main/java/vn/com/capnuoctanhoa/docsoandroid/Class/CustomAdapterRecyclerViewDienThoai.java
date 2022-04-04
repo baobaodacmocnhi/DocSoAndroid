@@ -123,7 +123,6 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                 Ky = CLocal.listDocSo.get(0).getKy();
                                 Dot = CLocal.listDocSo.get(0).getDot();
                                 CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-
                             }
                             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                             editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));

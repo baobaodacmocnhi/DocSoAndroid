@@ -18,11 +18,14 @@ import android.os.PowerManager;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Random;
 
@@ -30,6 +33,7 @@ import androidx.core.app.NotificationCompat;
 
 import vn.com.capnuoctanhoa.docsoandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
@@ -59,16 +63,20 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         if (remoteMessage.getData().containsKey("Action"))
             if (remoteMessage.getData().get("Action").equals("DangXuat")) {
                 CLocal.initialCLocal();
-            } else if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                if (remoteMessage.getData().get("Action").equals("DocSo")) {
-                    CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
-                    CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
-                } else if (remoteMessage.getData().get("NameUpdate").equals("CodeTon")) {
-                    sendCodeTonToServer(remoteMessage.getData().get("ID"));
-                } else if (remoteMessage.getData().get("NameUpdate").equals("HinhTon")) {
-                    sendHinhTonToServer(remoteMessage.getData().get("ID"));
-                }
             }
+        if (remoteMessage.getData().get("Action").equals("DocSo") == true) {
+            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+            }
+        } else if (remoteMessage.getData().get("Action").equals("Ton") == true) {
+            if (remoteMessage.getData().get("NameUpdate").equals("CodeTon") == true) {
+                sendCodeTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
+            } else if (remoteMessage.getData().get("NameUpdate").equals("HinhTon") == true) {
+                sendHinhTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
+            }
+        }
+
     }
 //    @Override
 //    public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -174,14 +182,14 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 //        notificationManager.notify(id, notificationBuilder.build());
 //    }
 
-    public void sendCodeTonToServer(String ID) {
+    public void sendCodeTonToServer(String ID, String Dot) {
         MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
-        myAsyncTaskSyncCodeTon.execute(new String[]{ID});
+        myAsyncTaskSyncCodeTon.execute(new String[]{ID, Dot});
     }
 
-    public void sendHinhTonToServer(String ID) {
+    public void sendHinhTonToServer(String ID, String Dot) {
         MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
-        myAsyncTaskSyncHinhTon.execute(new String[]{ID});
+        myAsyncTaskSyncHinhTon.execute(new String[]{ID, Dot});
     }
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -207,26 +215,59 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             String error = "";
             try {
                 String ID = strings[0];
-                if (ID != null && ID.equals("") == false)
-                    for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                        if (CLocal.listDocSo.get(i).getID().equals(ID) == true && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
-                            String HinhDHN = "";
-                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
-                            if (bitmap != null) {
-                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
-                            }
-                            String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
-                                    , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
-                            JSONObject jsonObject = null;
-                            if (result.equals("") == false)
-                                jsonObject = new JSONObject(result);
-                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                                CLocal.listDocSo.get(i).setSync(true);
-                                CLocal.listDocSo.get(i).setGhiHinh(true);
+                if (ID != null && ID.equals("") == false) {
+                    String Nam = "", Ky = "", Dot = "";
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        Nam = CLocal.listDocSo.get(0).getNam();
+                        Ky = CLocal.listDocSo.get(0).getKy();
+                        Dot = CLocal.listDocSo.get(0).getDot();
+                    }
+                    if (ID.substring(0, 4).equals(Nam) == true && ID.substring(5, 2).equals(Ky) == true && strings[1].equals(Dot) == true)
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).getID().equals(ID) == true && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                                String HinhDHN = "";
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                if (bitmap != null) {
+                                    HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                }
+                                String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
+                                        , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
+                                        HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
+                                JSONObject jsonObject = null;
+                                if (result.equals("") == false)
+                                    jsonObject = new JSONObject(result);
+                                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                    CLocal.listDocSo.get(i).setSync(true);
+                                    CLocal.listDocSo.get(i).setGhiHinh(true);
+                                }
                             }
                         }
+                    else {
+                        ArrayList<CEntityParent> listDocSo = new Gson().fromJson(CLocal.readFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(5, 2) + "_" + strings[1] + ".txt"), new TypeToken<ArrayList<CEntityParent>>() {
+                        }.getType());
+                        for (int i = 0; i < listDocSo.size(); i++) {
+                            if (listDocSo.get(i).getID().equals(ID) == true && listDocSo.get(i).getCodeMoi().equals("") == false) {
+                                String HinhDHN = "";
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                if (bitmap != null) {
+                                    HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                }
+                                String result = ws.ghiChiSo_GianTiep(listDocSo.get(i).getID(), listDocSo.get(i).getCodeMoi(), listDocSo.get(i).getChiSoMoi(), listDocSo.get(i).getTieuThuMoi()
+                                        , listDocSo.get(i).getTienNuoc(), listDocSo.get(i).getThueGTGT(), listDocSo.get(i).getPhiBVMT(), listDocSo.get(i).getPhiBVMT_Thue(), listDocSo.get(i).getTongCong(),
+                                        HinhDHN, listDocSo.get(i).getDot(), CLocal.May, listDocSo.get(i).getModifyDate());
+                                JSONObject jsonObject = null;
+                                if (result.equals("") == false)
+                                    jsonObject = new JSONObject(result);
+                                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                    listDocSo.get(i).setSync(true);
+                                    listDocSo.get(i).setGhiHinh(true);
+                                }
+                            }
+                        }
+                        CLocal.writeFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(5, 2) + "_" + strings[1] + ".txt", new Gson().toJsonTree(listDocSo).getAsJsonArray().toString());
                     }
+                }
+
             } catch (Exception e) {
                 error = e.getMessage();
             }
@@ -244,19 +285,46 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             try {
                 String ID = strings[0];
                 if (ID != null && ID.equals("") == false)
-                    for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                        if (CLocal.listDocSo.get(i).getID().equals(ID) == true
-                                && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
-                            String HinhDHN = "";
-                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
-                            if (bitmap != null) {
-                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
-                                String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
-                                if (Boolean.parseBoolean(result) == true)
-                                    CLocal.listDocSo.get(i).setGhiHinh(true);
+                {
+                    String Nam = "", Ky = "", Dot = "";
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        Nam = CLocal.listDocSo.get(0).getNam();
+                        Ky = CLocal.listDocSo.get(0).getKy();
+                        Dot = CLocal.listDocSo.get(0).getDot();
+                    }
+                    if (ID.substring(0, 4).equals(Nam) == true && ID.substring(5, 2).equals(Ky) == true && strings[1].equals(Dot) == true)
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).getID().equals(ID) == true
+                                    && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                                String HinhDHN = "";
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                if (bitmap != null) {
+                                    HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                    String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
+                                    if (Boolean.parseBoolean(result) == true)
+                                        CLocal.listDocSo.get(i).setGhiHinh(true);
+                                }
                             }
                         }
+                    else {
+                        ArrayList<CEntityParent> listDocSo = new Gson().fromJson(CLocal.readFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(5, 2) + "_" + strings[1] + ".txt"), new TypeToken<ArrayList<CEntityParent>>() {
+                        }.getType());
+                        for (int i = 0; i < listDocSo.size(); i++) {
+                            if (listDocSo.get(i).getID().equals(ID) == true
+                                    && listDocSo.get(i).getCodeMoi().equals("") == false) {
+                                String HinhDHN = "";
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                if (bitmap != null) {
+                                    HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                    String result = ws.ghi_Hinh(listDocSo.get(i).getID(), HinhDHN);
+                                    if (Boolean.parseBoolean(result) == true)
+                                        listDocSo.get(i).setGhiHinh(true);
+                                }
+                            }
+                        }
+                        CLocal.writeFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(5, 2) + "_" + strings[1] + ".txt", new Gson().toJsonTree(listDocSo).getAsJsonArray().toString());
                     }
+                }
             } catch (Exception e) {
                 error = e.getMessage();
             }
