@@ -282,7 +282,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && ((CCode) selectedCode).getCode().equals("5K") == false)
                                     || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && ((CCode) selectedCode).getCode().equals("5F") == false)
                                     || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && ((CCode) selectedCode).getCode().equals("5N") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("4") == true && (((CCode) selectedCode).getCode().equals("5F") == false || ((CCode) selectedCode).getCode().equals("5K") == false || ((CCode) selectedCode).getCode().equals("5N") == false))) {
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("4") == true && (((CCode) selectedCode).getCode().equals("5F") == true || ((CCode) selectedCode).getCode().equals("5K") == true || ((CCode) selectedCode).getCode().equals("5N") == true))) {
                                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                                 return;
                             }
