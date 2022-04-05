@@ -19,6 +19,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -54,8 +55,8 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
-    private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT
-    , txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
+    private CheckBox chkLocDaDoc;
+    private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT, txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
@@ -80,6 +81,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
+        chkLocDaDoc = (CheckBox) findViewById(R.id.chkLocDaDoc);
         txtMLT = (TextView) findViewById(R.id.txtMLT);
         txtDanhBo = (TextView) findViewById(R.id.txtDanhBo);
         txtHoTen = (TextView) findViewById(R.id.txtHoTen);
@@ -153,8 +155,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT > 0) {
                         CLocal.STT--;
-                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT > 0)
-                            CLocal.STT--;
+                        if (chkLocDaDoc.isChecked() == true)
+                            while (CLocal.STT > 0 && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().substring(0, 1).equals("F") == false)
+                                CLocal.STT--;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                     } else
@@ -167,8 +170,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
                         CLocal.STT++;
-                        while (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.STT < CLocal.listDocSoView.size() - 1)
-                            CLocal.STT++;
+                        if (chkLocDaDoc.isChecked() == true)
+                            while (CLocal.STT < CLocal.listDocSoView.size() - 1 && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().substring(0, 1).equals("F") == false)
+                                CLocal.STT++;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                     } else
@@ -254,31 +258,30 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             return;
                         }
                         if (imgCapture != null && selectedCode != null
-                                && ((((CCode) selectedCode).getCode().contains("F1") == true
-                                || ((CCode) selectedCode).getCode().contains("F2") == true
-                                || ((CCode) selectedCode).getCode().contains("F3") == true
-                                || ((CCode) selectedCode).getCode().contains("F4") == true
-                                || ((CCode) selectedCode).getCode().contains("61") == true
-                                || ((CCode) selectedCode).getCode().contains("63") == true
-                                || ((CCode) selectedCode).getCode().contains("64") == true
-                                || ((CCode) selectedCode).getCode().contains("66") == true
-                                || ((CCode) selectedCode).getCode().contains("68") == true
-                                || ((CCode) selectedCode).getCode().contains("K") == true)
-                                || (((CCode) selectedCode).getCode().contains("F1") == false
-                                && ((CCode) selectedCode).getCode().contains("F2") == false
-                                && ((CCode) selectedCode).getCode().contains("F3") == false
-                                && ((CCode) selectedCode).getCode().contains("F4") == false
-                                && ((CCode) selectedCode).getCode().contains("61") == false
-                                && ((CCode) selectedCode).getCode().contains("63") == false
-                                && ((CCode) selectedCode).getCode().contains("64") == false
-                                && ((CCode) selectedCode).getCode().contains("66") == false
-                                && ((CCode) selectedCode).getCode().contains("68") == false
-                                && ((CCode) selectedCode).getCode().contains("K") == false
+                                && ((((CCode) selectedCode).getCode().equals("F1") == true
+                                || ((CCode) selectedCode).getCode().equals("F2") == true
+                                || ((CCode) selectedCode).getCode().equals("F3") == true
+                                || ((CCode) selectedCode).getCode().equals("F4") == true
+                                || ((CCode) selectedCode).getCode().equals("61") == true
+                                || ((CCode) selectedCode).getCode().equals("63") == true
+                                || ((CCode) selectedCode).getCode().equals("64") == true
+                                || ((CCode) selectedCode).getCode().equals("66") == true
+                                || ((CCode) selectedCode).getCode().equals("68") == true
+                                || ((CCode) selectedCode).getCode().equals("K") == true)
+                                || (((CCode) selectedCode).getCode().equals("F1") == false
+                                && ((CCode) selectedCode).getCode().equals("F2") == false
+                                && ((CCode) selectedCode).getCode().equals("F3") == false
+                                && ((CCode) selectedCode).getCode().equals("F4") == false
+                                && ((CCode) selectedCode).getCode().equals("61") == false
+                                && ((CCode) selectedCode).getCode().equals("63") == false
+                                && ((CCode) selectedCode).getCode().equals("64") == false
+                                && ((CCode) selectedCode).getCode().equals("66") == false
+                                && ((CCode) selectedCode).getCode().equals("68") == false
+                                && ((CCode) selectedCode).getCode().equals("K") == false
                                 && edtChiSo.getText().toString().equals("") == false))) {
-                            if (((CCode) selectedCode).getCode().substring(0, 1).contains("4") &&
-                                    (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).contains("K")
-                                            || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).contains("F")
-                                            || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).contains("N"))) {
+                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && ((CCode) selectedCode).getCode().substring(0, 1).equals("5K") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && ((CCode) selectedCode).getCode().substring(0, 1).equals("5F") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && ((CCode) selectedCode).getCode().substring(0, 1).equals("5N") == false)) {
                                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                                 return;
                             }

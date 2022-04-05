@@ -60,6 +60,8 @@ public class CEntityParent {
     private int DV;
     private int HCSN;
     private String PhanMay;
+    private boolean ChuBao;
+
 
     public CEntityParent() {
         this.ID = "";
@@ -115,7 +117,8 @@ public class CEntityParent {
         this.SX = 0;
         this.DV = 0;
         this.HCSN = 0;
-        this.PhanMay="";
+        this.PhanMay = "";
+        this.ChuBao = false;
     }
 
     public String getID() {
@@ -558,6 +561,14 @@ public class CEntityParent {
         PhanMay = phanMay;
     }
 
+    public boolean isChuBao() {
+        return ChuBao;
+    }
+
+    public void setChuBao(boolean chuBao) {
+        ChuBao = chuBao;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -615,6 +626,7 @@ public class CEntityParent {
             this.DV = entityParent.getDV();
             this.HCSN = entityParent.getHCSN();
             this.PhanMay = entityParent.getPhanMay();
+            this.ChuBao = entityParent.isChuBao();
         } catch (Exception ex) {
             throw ex;
         }

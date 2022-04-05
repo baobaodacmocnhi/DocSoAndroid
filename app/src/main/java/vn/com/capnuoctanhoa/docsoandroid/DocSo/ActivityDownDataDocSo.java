@@ -356,7 +356,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     selectedMaNV = CLocal.May;
                 if (selectedMaNV.equals("0")) {
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        if(Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))))==false)
+                        if (Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i)))) == false)
                             return new String[]{"false", "Chưa đến ngày đọc số"};
                         JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
                         for (int j = 0; j < jsonResult.length(); j++) {
@@ -370,7 +370,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         }
                     }
                 } else {
-                    if(Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV))==false)
+                    if (Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV)) == false)
                         return new String[]{"false", "Chưa đến ngày đọc số"};
                     CLocal.jsonDocSo = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
                     CLocal.jsonHoaDonTon = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
@@ -471,6 +471,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
                         enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
                         enParent.setPhanMay(jsonObject.getString("PhanMay").replace("null", ""));
+                        enParent.setChuBao(Boolean.parseBoolean(jsonObject.getString("ChuBao").replace("null", "")));
                         if (CLocal.jsonHoaDonTon != null && CLocal.jsonHoaDonTon.length() > 0)
                             for (int k = 0; k < CLocal.jsonHoaDonTon.length(); k++) {
                                 JSONObject jsonObjectChild = CLocal.jsonHoaDonTon.getJSONObject(k);

@@ -162,14 +162,14 @@ public class CustomAdapterListView extends BaseAdapter implements Filterable {
                     constraint = constraint.toString().toLowerCase();
                     for (int i = 0; i < mOriginalValues.size(); i++) {
 //                        String data = mOriginalValues.get(i).getName1();
-                        if (mOriginalValues.get(i).getRow1a().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow1b().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow2a().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow2b().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow3a().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow3b().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow4a().toLowerCase().startsWith(constraint.toString())
-                                || mOriginalValues.get(i).getRow4b().toLowerCase().startsWith(constraint.toString())) {
+                        if (mOriginalValues.get(i).getRow1a().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow1b().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow2a().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow2b().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow3a().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow3b().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow4a().toLowerCase().contains(constraint.toString())
+                                || mOriginalValues.get(i).getRow4b().toLowerCase().contains(constraint.toString())) {
                             CViewParent entity = new CViewParent();
                             entity.setSTT(mOriginalValues.get(i).getSTT());
                             entity.setID(mOriginalValues.get(i).getID());

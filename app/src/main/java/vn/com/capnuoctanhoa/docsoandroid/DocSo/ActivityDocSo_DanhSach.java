@@ -311,6 +311,15 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         }
                     }
                     break;
+                case "Chủ Báo":
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false && CLocal.listDocSo.get(i).isChuBao() == true) {
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
+                    break;
                 default:
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
