@@ -279,13 +279,13 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                 && ((CCode) selectedCode).getCode().equals("68") == false
                                 && ((CCode) selectedCode).getCode().equals("K") == false
                                 && edtChiSo.getText().toString().equals("") == false))) {
-                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && ((CCode) selectedCode).getCode().substring(0, 1).equals("5K") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && ((CCode) selectedCode).getCode().substring(0, 1).equals("5F") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && ((CCode) selectedCode).getCode().substring(0, 1).equals("5N") == false)) {
+                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && ((CCode) selectedCode).getCode().equals("5K") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && ((CCode) selectedCode).getCode().equals("5F") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && ((CCode) selectedCode).getCode().equals("5N") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("4") == true && (((CCode) selectedCode).getCode().equals("5F") == false || ((CCode) selectedCode).getCode().equals("5K") == false || ((CCode) selectedCode).getCode().equals("5N") == false))) {
                                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                                 return;
                             }
-
                             if (CLocal.lstTT0.contains(((CCode) selectedCode).getCode()) == true
                                     || CLocal.lstTBTT.contains(((CCode) selectedCode).getCode()) == true
                                     || CLocal.lstBinhThuong.contains(((CCode) selectedCode).getCode()) == true) {
