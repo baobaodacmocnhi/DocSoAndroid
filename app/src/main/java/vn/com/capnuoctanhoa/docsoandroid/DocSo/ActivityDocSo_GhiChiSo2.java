@@ -774,7 +774,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-                jsonObject = new JSONObject();
+
                 if (imgCapture != null && imgString.equals("") == true) {
                     imgString = CBitmap.convertBitmapToString(imgCapture);
                 }
@@ -962,7 +962,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String error = "";
             try {
-                JSONObject jsonObject = new JSONObject();
+                JSONObject jsonObject = null;
                 index = Integer.parseInt(strings[0]);
                 if (CLocal.listDocSoView.get(index).getCodeMoi().equals("") == false
                         && CLocal.listDocSoView.get(index).isSync() == false) {
@@ -1005,7 +1005,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String error = "";
             try {
-                JSONObject jsonObject = new JSONObject();
+                JSONObject jsonObject = null;
                 for (int i = 0; i < CLocal.listDocSoView.size(); i++)
                     if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == false)
                         if (CLocal.listDocSoView.get(i).isSync() == false) {

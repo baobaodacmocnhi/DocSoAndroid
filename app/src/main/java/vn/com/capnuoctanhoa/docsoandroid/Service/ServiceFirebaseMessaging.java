@@ -5,7 +5,6 @@ import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -27,23 +26,23 @@ import org.json.JSONObject;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Objects;
 import java.util.Random;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
-import vn.com.capnuoctanhoa.docsoandroid.ActivityDangNhap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
-import vn.com.capnuoctanhoa.docsoandroid.MainActivity;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 
     @Override
-    public void onNewToken(String s) {
+    public void onNewToken(@NonNull String s) {
         super.onNewToken(s);
         sendRegistrationToServer(s);
     }
@@ -51,40 +50,40 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
     public void sendRegistrationToServer(String token) {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
         editor.putString("UID", token);
-        editor.commit();
+        editor.apply();
         MyAsyncTask myAsyncTask = new MyAsyncTask();
         myAsyncTask.execute();
     }
 
     @Override
-    public void onMessageReceived(RemoteMessage remoteMessage) {
+    public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         //liên kết hàm [spSendNotificationToClient] sqlserver
         if (remoteMessage.getData().containsKey("Action"))
-            if (remoteMessage.getData().get("Action").equals("DangXuat")) {
+            if (Objects.equals(remoteMessage.getData().get("Action"), "DangXuat")) {
                 CLocal.initialCLocal();
-            } else if (remoteMessage.getData().get("Action").equals("DocSo") == true) {
+            } else if (Objects.equals(remoteMessage.getData().get("Action"), "DocSo")) {
                 if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                     CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
                     CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
                 }
-            } else if (remoteMessage.getData().get("Action").equals("Ton") == true) {
-                if (remoteMessage.getData().get("NameUpdate").equals("CodeTon") == true) {
+            } else if (Objects.equals(remoteMessage.getData().get("Action"), "Ton")) {
+                if (Objects.equals(remoteMessage.getData().get("NameUpdate"), "CodeTon")) {
                     sendCodeTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
-                } else if (remoteMessage.getData().get("NameUpdate").equals("HinhTon") == true) {
+                } else if (Objects.equals(remoteMessage.getData().get("NameUpdate"), "HinhTon")) {
                     sendHinhTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
                 }
-            } else if (remoteMessage.getData().get("Action").equals("ChuBao") == true) {
+            } else if (Objects.equals(remoteMessage.getData().get("Action"), "ChuBao")) {
                 try {
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0)
                         for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == true && CLocal.listDocSo.get(i).getID().equals(remoteMessage.getData().get("ID")) == true) {
-                                JSONObject jsonObjectC = new JSONObject(remoteMessage.getData().get("ValueUpdate").replace("null", ""));
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") && CLocal.listDocSo.get(i).getID().equals(remoteMessage.getData().get("ID"))) {
+                                JSONObject jsonObjectC = new JSONObject(Objects.requireNonNull(remoteMessage.getData().get("ValueUpdate")).replace("null", ""));
                                 CLocal.listDocSo.get(i).setSync(true);
                                 CLocal.listDocSo.get(i).setChuBao(true);
                                 CLocal.listDocSo.get(i).setCodeMoi(jsonObjectC.getString("CodeMoi").replace("null", ""));
                                 CLocal.listDocSo.get(i).setChiSoMoi(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
-                                if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
+                                if (!jsonObjectC.getString("CSC").replace("null", "").equals(""))
                                     CLocal.listDocSo.get(i).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
                                 CLocal.listDocSo.get(i).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
                                 CLocal.listDocSo.get(i).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
@@ -95,13 +94,13 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                             }
                     if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0)
                         for (int i = 0; i < CLocal.listDocSoView.size(); i++)
-                            if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == true && CLocal.listDocSoView.get(i).getID().equals(remoteMessage.getData().get("ID")) == true) {
-                                JSONObject jsonObjectC = new JSONObject(remoteMessage.getData().get("ValueUpdate").replace("null", ""));
+                            if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") && CLocal.listDocSoView.get(i).getID().equals(remoteMessage.getData().get("ID"))) {
+                                JSONObject jsonObjectC = new JSONObject(Objects.requireNonNull(remoteMessage.getData().get("ValueUpdate")).replace("null", ""));
                                 CLocal.listDocSoView.get(i).setSync(true);
                                 CLocal.listDocSoView.get(i).setChuBao(true);
                                 CLocal.listDocSoView.get(i).setCodeMoi(jsonObjectC.getString("CodeMoi").replace("null", ""));
                                 CLocal.listDocSoView.get(i).setChiSoMoi(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
-                                if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
+                                if (!jsonObjectC.getString("CSC").replace("null", "").equals(""))
                                     CLocal.listDocSoView.get(i).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
                                 CLocal.listDocSoView.get(i).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
                                 CLocal.listDocSoView.get(i).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
@@ -110,7 +109,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                                 CLocal.listDocSoView.get(i).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                                 CLocal.listDocSoView.get(i).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                             }
-                } catch (Exception ex) {
+                } catch (Exception ignored) {
 
                 }
                 //Calling method to generate notification
@@ -130,7 +129,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                     jsonObject.put("Title", remoteMessage.getData().get("Title"));
                     jsonObject.put("Content", remoteMessage.getData().get("Body"));
                     CLocal.jsonMessage.put(jsonObject);
-                } catch (Exception ex) {
+                } catch (Exception ignored) {
                 }
 
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
@@ -177,12 +176,12 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 
                 PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
                 boolean isScreenOn = false;
-                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+//                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
                     isScreenOn = powerManager.isInteractive();
-                }
-                if (isScreenOn == false) {
+//                }
+                if (!isScreenOn) {
                     @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "MyLock");
-                    wl.acquire();
+                    wl.acquire(60 * 1000L /*10 minutes*/);
                     wl.release();
 //                PowerManager.WakeLock wl_cpu = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MyCpuLock");
 //                wl_cpu.acquire(10000);
@@ -300,12 +299,12 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 
     public void sendCodeTonToServer(String ID, String Dot) {
         MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
-        myAsyncTaskSyncCodeTon.execute(new String[]{ID, Dot});
+        myAsyncTaskSyncCodeTon.execute(ID, Dot);
     }
 
     public void sendHinhTonToServer(String ID, String Dot) {
         MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
-        myAsyncTaskSyncHinhTon.execute(new String[]{ID, Dot});
+        myAsyncTaskSyncHinhTon.execute(ID, Dot);
     }
 
     public class MyAsyncTask extends AsyncTask<Void, Void, Void> {
@@ -331,16 +330,16 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             String error = "";
             try {
                 String ID = strings[0];
-                if (ID != null && ID.equals("") == false) {
+                if (ID != null && !ID.equals("")) {
                     String Nam = "", Ky = "", Dot = "";
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         Nam = CLocal.listDocSo.get(0).getNam();
                         Ky = CLocal.listDocSo.get(0).getKy();
                         Dot = CLocal.listDocSo.get(0).getDot();
                     }
-                    if (ID.substring(0, 4).equals(Nam) == true && ID.substring(4, 6).equals(Ky) == true && strings[1].equals(Dot) == true)
+                    if (ID.substring(0, 4).equals(Nam) && ID.substring(4, 6).equals(Ky) && strings[1].equals(Dot))
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getID().equals(ID) == true && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            if (CLocal.listDocSo.get(i).getID().equals(ID) && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
                                 String HinhDHN = "";
                                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
@@ -350,9 +349,9 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                                         , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
                                         HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
                                 JSONObject jsonObject = null;
-                                if (result.equals("") == false)
+                                if (!result.equals(""))
                                     jsonObject = new JSONObject(result);
-                                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                                     CLocal.listDocSo.get(i).setSync(true);
                                     CLocal.listDocSo.get(i).setGhiHinh(true);
                                 }
@@ -362,7 +361,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         ArrayList<CEntityParent> listDocSo = new Gson().fromJson(CLocal.readFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(4, 6) + "_" + strings[1] + ".txt"), new TypeToken<ArrayList<CEntityParent>>() {
                         }.getType());
                         for (int i = 0; i < listDocSo.size(); i++) {
-                            if (listDocSo.get(i).getID().equals(ID) == true && listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            if (listDocSo.get(i).getID().equals(ID) && !listDocSo.get(i).getCodeMoi().equals("")) {
                                 String HinhDHN = "";
                                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
@@ -372,9 +371,9 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                                         , listDocSo.get(i).getTienNuoc(), listDocSo.get(i).getThueGTGT(), listDocSo.get(i).getPhiBVMT(), listDocSo.get(i).getPhiBVMT_Thue(), listDocSo.get(i).getTongCong(),
                                         HinhDHN, listDocSo.get(i).getDot(), CLocal.May, listDocSo.get(i).getModifyDate());
                                 JSONObject jsonObject = null;
-                                if (result.equals("") == false)
+                                if (!result.equals(""))
                                     jsonObject = new JSONObject(result);
-                                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                                     listDocSo.get(i).setSync(true);
                                     listDocSo.get(i).setGhiHinh(true);
                                 }
@@ -399,23 +398,23 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
             String error = "";
             try {
                 String ID = strings[0];
-                if (ID != null && ID.equals("") == false) {
+                if (ID != null && !ID.equals("")) {
                     String Nam = "", Ky = "", Dot = "";
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         Nam = CLocal.listDocSo.get(0).getNam();
                         Ky = CLocal.listDocSo.get(0).getKy();
                         Dot = CLocal.listDocSo.get(0).getDot();
                     }
-                    if (ID.substring(0, 4).equals(Nam) == true && ID.substring(4, 6).equals(Ky) == true && strings[1].equals(Dot) == true)
+                    if (ID.substring(0, 4).equals(Nam) && ID.substring(4, 6).equals(Ky) && strings[1].equals(Dot))
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getID().equals(ID) == true
-                                    && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
-                                String HinhDHN = "";
+                            if (CLocal.listDocSo.get(i).getID().equals(ID)
+                                    && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
+                                String HinhDHN;
                                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                     String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
-                                    if (Boolean.parseBoolean(result) == true)
+                                    if (Boolean.parseBoolean(result))
                                         CLocal.listDocSo.get(i).setGhiHinh(true);
                                 }
                             }
@@ -424,14 +423,14 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         ArrayList<CEntityParent> listDocSo = new Gson().fromJson(CLocal.readFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(4, 6) + "_" + strings[1] + ".txt"), new TypeToken<ArrayList<CEntityParent>>() {
                         }.getType());
                         for (int i = 0; i < listDocSo.size(); i++) {
-                            if (listDocSo.get(i).getID().equals(ID) == true
-                                    && listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            if (listDocSo.get(i).getID().equals(ID)
+                                    && !listDocSo.get(i).getCodeMoi().equals("")) {
                                 String HinhDHN = "";
                                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                     String result = ws.ghi_Hinh(listDocSo.get(i).getID(), HinhDHN);
-                                    if (Boolean.parseBoolean(result) == true)
+                                    if (Boolean.parseBoolean(result))
                                         listDocSo.get(i).setGhiHinh(true);
                                 }
                             }
