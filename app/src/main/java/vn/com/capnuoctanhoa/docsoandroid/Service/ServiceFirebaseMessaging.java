@@ -63,137 +63,136 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
         if (remoteMessage.getData().containsKey("Action"))
             if (remoteMessage.getData().get("Action").equals("DangXuat")) {
                 CLocal.initialCLocal();
-            }
-        if (remoteMessage.getData().get("Action").equals("DocSo") == true) {
-            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
-                CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
-            }
-        } else if (remoteMessage.getData().get("Action").equals("Ton") == true) {
-            if (remoteMessage.getData().get("NameUpdate").equals("CodeTon") == true) {
-                sendCodeTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
-            } else if (remoteMessage.getData().get("NameUpdate").equals("HinhTon") == true) {
-                sendHinhTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
-            }
-        } else if (remoteMessage.getData().get("Action").equals("ChuBao") == true) {
-            try {
-                if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0)
-                    for (int i = 0; i < CLocal.listDocSo.size(); i++)
-                        if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == true && CLocal.listDocSo.get(i).getID().equals(remoteMessage.getData().get("ID")) == true) {
-                            JSONObject jsonObjectC = new JSONObject(remoteMessage.getData().get("ValueUpdate").replace("null", ""));
-                            CLocal.listDocSo.get(i).setSync(true);
-                            CLocal.listDocSo.get(i).setChuBao(true);
-                            CLocal.listDocSo.get(i).setCodeMoi(jsonObjectC.getString("CodeMoi").replace("null", ""));
-                            CLocal.listDocSo.get(i).setChiSoMoi(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
-                            if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
-                                CLocal.listDocSo.get(i).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
-                            CLocal.listDocSo.get(i).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
-                            CLocal.listDocSo.get(i).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
-                            CLocal.listDocSo.get(i).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
-                            CLocal.listDocSo.get(i).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
-                            CLocal.listDocSo.get(i).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
-                            CLocal.listDocSo.get(i).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
-                        }
-                if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0)
-                    for (int i = 0; i < CLocal.listDocSoView.size(); i++)
-                        if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == true && CLocal.listDocSoView.get(i).getID().equals(remoteMessage.getData().get("ID")) == true) {
-                            JSONObject jsonObjectC = new JSONObject(remoteMessage.getData().get("ValueUpdate").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setSync(true);
-                            CLocal.listDocSoView.get(i).setChuBao(true);
-                            CLocal.listDocSoView.get(i).setCodeMoi(jsonObjectC.getString("CodeMoi").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setChiSoMoi(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
-                            if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
-                                CLocal.listDocSoView.get(i).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
-                            CLocal.listDocSoView.get(i).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
-                        }
-            } catch (Exception ex) {
+            } else if (remoteMessage.getData().get("Action").equals("DocSo") == true) {
+                if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                    CLocal.updateValueChild(CLocal.listDocSo, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+                    CLocal.updateValueChild(CLocal.listDocSoView, remoteMessage.getData().get("NameUpdate"), "", remoteMessage.getData().get("ID"));
+                }
+            } else if (remoteMessage.getData().get("Action").equals("Ton") == true) {
+                if (remoteMessage.getData().get("NameUpdate").equals("CodeTon") == true) {
+                    sendCodeTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
+                } else if (remoteMessage.getData().get("NameUpdate").equals("HinhTon") == true) {
+                    sendHinhTonToServer(remoteMessage.getData().get("ID"), remoteMessage.getData().get("ValueUpdate"));
+                }
+            } else if (remoteMessage.getData().get("Action").equals("ChuBao") == true) {
+                try {
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0)
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++)
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == true && CLocal.listDocSo.get(i).getID().equals(remoteMessage.getData().get("ID")) == true) {
+                                JSONObject jsonObjectC = new JSONObject(remoteMessage.getData().get("ValueUpdate").replace("null", ""));
+                                CLocal.listDocSo.get(i).setSync(true);
+                                CLocal.listDocSo.get(i).setChuBao(true);
+                                CLocal.listDocSo.get(i).setCodeMoi(jsonObjectC.getString("CodeMoi").replace("null", ""));
+                                CLocal.listDocSo.get(i).setChiSoMoi(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
+                                if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
+                                    CLocal.listDocSo.get(i).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
+                                CLocal.listDocSo.get(i).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
+                                CLocal.listDocSo.get(i).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
+                                CLocal.listDocSo.get(i).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
+                                CLocal.listDocSo.get(i).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
+                                CLocal.listDocSo.get(i).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
+                                CLocal.listDocSo.get(i).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
+                            }
+                    if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0)
+                        for (int i = 0; i < CLocal.listDocSoView.size(); i++)
+                            if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == true && CLocal.listDocSoView.get(i).getID().equals(remoteMessage.getData().get("ID")) == true) {
+                                JSONObject jsonObjectC = new JSONObject(remoteMessage.getData().get("ValueUpdate").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setSync(true);
+                                CLocal.listDocSoView.get(i).setChuBao(true);
+                                CLocal.listDocSoView.get(i).setCodeMoi(jsonObjectC.getString("CodeMoi").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setChiSoMoi(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
+                                if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
+                                    CLocal.listDocSoView.get(i).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setPhiBVMT(jsonObjectC.getString("PhiBVMT").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
+                                CLocal.listDocSoView.get(i).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
+                            }
+                } catch (Exception ex) {
 
-            }
-            //Calling method to generate notification
+                }
+                //Calling method to generate notification
 //        Random random = new Random();
 //        int UNIQUE_INT_VALUE_FOR_EVERY_CALL=random.nextInt(9999 - 1000) + 1000;;
-            int UNIQUE_INT_VALUE_FOR_EVERY_CALL = 0;
-            Intent intent = new Intent(this, ActivityDocSo_DanhSach.class);
-            PendingIntent pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
-            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
-            pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
-            try {
-                if (CLocal.jsonMessage == null)
-                    CLocal.jsonMessage = new JSONArray();
-                JSONObject jsonObject = new JSONObject();
-                SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-                jsonObject.put("NgayNhan", currentDate.format(new Date()));
-                jsonObject.put("Title", remoteMessage.getData().get("Title"));
-                jsonObject.put("Content", remoteMessage.getData().get("Body"));
-                CLocal.jsonMessage.put(jsonObject);
-            } catch (Exception ex) {
-            }
-
-            Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            NotificationCompat.Builder notificationBuilder = null;
-
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
-                NotificationChannel mChannel = notificationManager.getNotificationChannel("DocSoNotification_ID");
-                if (mChannel == null) {
-                    mChannel = new NotificationChannel("DocSoNotification_ID", "DocSoNotification_Name", NotificationManager.IMPORTANCE_HIGH);
-                    mChannel.setDescription("DocSoNotification_Des");
-                    mChannel.enableVibration(true);
-                    mChannel.setVibrationPattern(new long[]{0, 1000});
-                    notificationManager.createNotificationChannel(mChannel);
+                int UNIQUE_INT_VALUE_FOR_EVERY_CALL = 0;
+                Intent intent = new Intent(this, ActivityDocSo_DanhSach.class);
+                PendingIntent pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                pendingIntent = PendingIntent.getActivity(this, UNIQUE_INT_VALUE_FOR_EVERY_CALL, intent, 0);
+                try {
+                    if (CLocal.jsonMessage == null)
+                        CLocal.jsonMessage = new JSONArray();
+                    JSONObject jsonObject = new JSONObject();
+                    SimpleDateFormat currentDate = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                    jsonObject.put("NgayNhan", currentDate.format(new Date()));
+                    jsonObject.put("Title", remoteMessage.getData().get("Title"));
+                    jsonObject.put("Content", remoteMessage.getData().get("Body"));
+                    CLocal.jsonMessage.put(jsonObject);
+                } catch (Exception ex) {
                 }
-                notificationBuilder = new NotificationCompat.Builder(this, "DocSoNotification_ID");
 
-                notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(remoteMessage.getData().get("Title"))
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("Body")))
-                        .setContentText(remoteMessage.getData().get("Body"))
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setVibrate(new long[]{0, 1000})
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                NotificationCompat.Builder notificationBuilder = null;
+
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
+                    NotificationChannel mChannel = notificationManager.getNotificationChannel("DocSoNotification_ID");
+                    if (mChannel == null) {
+                        mChannel = new NotificationChannel("DocSoNotification_ID", "DocSoNotification_Name", NotificationManager.IMPORTANCE_HIGH);
+                        mChannel.setDescription("DocSoNotification_Des");
+                        mChannel.enableVibration(true);
+                        mChannel.setVibrationPattern(new long[]{0, 1000});
+                        notificationManager.createNotificationChannel(mChannel);
+                    }
+                    notificationBuilder = new NotificationCompat.Builder(this, "DocSoNotification_ID");
+
+                    notificationBuilder.setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(remoteMessage.getData().get("Title"))
+                            .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("Body")))
+                            .setContentText(remoteMessage.getData().get("Body"))
+                            .setDefaults(Notification.DEFAULT_ALL)
+                            .setAutoCancel(true)
+                            .setSound(defaultSoundUri)
+                            .setVibrate(new long[]{0, 1000})
 //                    .setGroup("vn.com.capnuoctanhoa.docsoandroid")
 //                    .setGroupSummary(true)
-                        .setContentIntent(pendingIntent);
-            } else {
-                notificationBuilder = new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
-                        .setContentTitle(remoteMessage.getData().get("Title"))
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("Body")))
-                        .setContentText(remoteMessage.getData().get("Body"))
-                        .setDefaults(Notification.DEFAULT_ALL)
-                        .setAutoCancel(true)
-                        .setSound(defaultSoundUri)
-                        .setVibrate(new long[]{0, 1000})
+                            .setContentIntent(pendingIntent);
+                } else {
+                    notificationBuilder = new NotificationCompat.Builder(this)
+                            .setSmallIcon(R.mipmap.ic_launcher)
+                            .setContentTitle(remoteMessage.getData().get("Title"))
+                            .setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getData().get("Body")))
+                            .setContentText(remoteMessage.getData().get("Body"))
+                            .setDefaults(Notification.DEFAULT_ALL)
+                            .setAutoCancel(true)
+                            .setSound(defaultSoundUri)
+                            .setVibrate(new long[]{0, 1000})
 //                    .setGroup("vn.com.capnuoctanhoa.docsoandroid")
 //                    .setGroupSummary(true)
-                        .setContentIntent(pendingIntent);
-            }
+                            .setContentIntent(pendingIntent);
+                }
 
-            PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-            boolean isScreenOn = false;
-            if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
-                isScreenOn = powerManager.isInteractive();
-            }
-            if (isScreenOn == false) {
-                @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "MyLock");
-                wl.acquire();
-                wl.release();
+                PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
+                boolean isScreenOn = false;
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
+                    isScreenOn = powerManager.isInteractive();
+                }
+                if (isScreenOn == false) {
+                    @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "MyLock");
+                    wl.acquire();
+                    wl.release();
 //                PowerManager.WakeLock wl_cpu = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,"MyCpuLock");
 //                wl_cpu.acquire(10000);
-            }
+                }
 
-            Random random = new Random();
-            int id = random.nextInt(9999 - 1000) + 1000;
+                Random random = new Random();
+                int id = random.nextInt(9999 - 1000) + 1000;
 //        int id = 1000;
-            notificationManager.notify(id, notificationBuilder.build());
-        }
+                notificationManager.notify(id, notificationBuilder.build());
+            }
     }
 //    @Override
 //    public void onMessageReceived(RemoteMessage remoteMessage) {
@@ -384,7 +383,6 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         CLocal.writeFile(CLocal.pathAppDownload, ID.substring(0, 4) + "_" + ID.substring(4, 6) + "_" + strings[1] + ".txt", new Gson().toJsonTree(listDocSo).getAsJsonArray().toString());
                     }
                 }
-
             } catch (Exception e) {
                 error = e.getMessage();
             }

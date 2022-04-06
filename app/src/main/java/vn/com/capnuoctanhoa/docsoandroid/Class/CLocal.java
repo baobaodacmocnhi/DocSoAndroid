@@ -111,7 +111,7 @@ public class CLocal {
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
     public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
-    public static boolean Admin, Doi, ToTruong, SyncTrucTiep;
+    public static boolean Admin, Doi, ToTruong, SyncTrucTiep, LocDaDoc = false;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;

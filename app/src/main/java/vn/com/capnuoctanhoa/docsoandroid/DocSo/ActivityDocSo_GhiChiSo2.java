@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -123,6 +124,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
 
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
+        chkLocDaDoc.setChecked(CLocal.LocDaDoc);
         try {
             if (CLocal.jsonCode != null && CLocal.jsonCode.length() > 0) {
                 spnName_Code = new ArrayList<>();
@@ -147,6 +149,13 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 @Override
                 public void onNothingSelected(AdapterView<?> parent) {
 
+                }
+            });
+
+            chkLocDaDoc.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    CLocal.LocDaDoc = isChecked;
                 }
             });
 
@@ -279,9 +288,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                 && ((CCode) selectedCode).getCode().equals("68") == false
                                 && ((CCode) selectedCode).getCode().equals("K") == false
                                 && edtChiSo.getText().toString().equals("") == false))) {
-                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && ((CCode) selectedCode).getCode().equals("5K") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && ((CCode) selectedCode).getCode().equals("5F") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && ((CCode) selectedCode).getCode().equals("5N") == false)
+                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("5") == true && ((CCode) selectedCode).getCode().equals("5K") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("5") == true && ((CCode) selectedCode).getCode().equals("5F") == false)
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("5") == true && ((CCode) selectedCode).getCode().equals("5N") == false)
                                     || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("4") == true && (((CCode) selectedCode).getCode().equals("5F") == true || ((CCode) selectedCode).getCode().equals("5K") == true || ((CCode) selectedCode).getCode().equals("5N") == true))) {
                                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                                 return;
@@ -877,7 +886,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                     }
                 } else
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, s, "center");
-            } catch (JSONException e) {
+            } catch (Exception e) {
                 CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, e.getMessage(), "center");
             }
         }
