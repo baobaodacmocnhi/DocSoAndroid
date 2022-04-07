@@ -36,7 +36,6 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
@@ -51,7 +50,6 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewImage;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
@@ -67,8 +65,6 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
-    private ImageButton ibtnChupHinh;
-    private Button btnChonHinh;
     private CMarshMallowPermission cMarshMallowPermission;
     private CWebservice ws;
     private String _alert;
@@ -118,8 +114,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         ivIn = (ImageView) findViewById(R.id.ivIn);
         ivLuu = (ImageView) findViewById(R.id.ivLuu);
         ivPhieuChuyen = (ImageView) findViewById(R.id.ivPhieuChuyen);
-        ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
-        btnChonHinh = (Button) findViewById(R.id.btnChonHinh);
+        ImageButton ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
+        Button btnChonHinh = (Button) findViewById(R.id.btnChonHinh);
         imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
         cMarshMallowPermission = new CMarshMallowPermission(this);
@@ -142,7 +138,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                     selectedCode = (CCode) parent.getItemAtPosition(position);
-                    if (txtChiSoMoi.getText().toString().equals("") == false)
+                    if (!txtChiSoMoi.getText().toString().equals(""))
                         tinhTieuThu();
                 }
 
@@ -164,8 +160,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT > 0) {
                         CLocal.STT--;
-                        if (chkLocDaDoc.isChecked() == true)
-                            while (CLocal.STT > 0 && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().substring(0, 1).equals("F") == false)
+                        if (chkLocDaDoc.isChecked())
+                            while (CLocal.STT > 0 && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().charAt(0) != 'F')
                                 CLocal.STT--;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
@@ -179,8 +175,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onClick(View v) {
                     if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
                         CLocal.STT++;
-                        if (chkLocDaDoc.isChecked() == true)
-                            while (CLocal.STT < CLocal.listDocSoView.size() - 1 && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().substring(0, 1).equals("F") == false)
+                        if (chkLocDaDoc.isChecked())
+                            while (CLocal.STT < CLocal.listDocSoView.size() - 1 && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().charAt(0) != 'F')
                                 CLocal.STT++;
                         initial();
                         fillLayout(CLocal.listDocSoView.get(CLocal.STT));
@@ -193,10 +189,10 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                        if (!cMarshMallowPermission.checkPermissionForExternalStorage()) {
                             cMarshMallowPermission.requestPermissionForExternalStorage();
                         }
-                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == false)
+                        if (!cMarshMallowPermission.checkPermissionForExternalStorage())
                             return;
                     }
                     imgCapture = null;
@@ -214,10 +210,10 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 @Override
                 public void onClick(View v) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                        if (!cMarshMallowPermission.checkPermissionForExternalStorage()) {
                             cMarshMallowPermission.requestPermissionForExternalStorage();
                         }
-                        if (cMarshMallowPermission.checkPermissionForExternalStorage() == false)
+                        if (!cMarshMallowPermission.checkPermissionForExternalStorage())
                             return;
                     }
                     imgCapture = null;
@@ -262,44 +258,44 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                        if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this) == false) {
+                        if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this)) {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
                             return;
                         }
                         if (imgCapture != null && selectedCode != null
-                                && ((((CCode) selectedCode).getCode().equals("F1") == true
-                                || ((CCode) selectedCode).getCode().equals("F2") == true
-                                || ((CCode) selectedCode).getCode().equals("F3") == true
-                                || ((CCode) selectedCode).getCode().equals("F4") == true
-                                || ((CCode) selectedCode).getCode().equals("61") == true
-                                || ((CCode) selectedCode).getCode().equals("63") == true
-                                || ((CCode) selectedCode).getCode().equals("64") == true
-                                || ((CCode) selectedCode).getCode().equals("66") == true
-                                || ((CCode) selectedCode).getCode().equals("68") == true
-                                || ((CCode) selectedCode).getCode().equals("K") == true)
-                                || (((CCode) selectedCode).getCode().equals("F1") == false
-                                && ((CCode) selectedCode).getCode().equals("F2") == false
-                                && ((CCode) selectedCode).getCode().equals("F3") == false
-                                && ((CCode) selectedCode).getCode().equals("F4") == false
-                                && ((CCode) selectedCode).getCode().equals("61") == false
-                                && ((CCode) selectedCode).getCode().equals("63") == false
-                                && ((CCode) selectedCode).getCode().equals("64") == false
-                                && ((CCode) selectedCode).getCode().equals("66") == false
-                                && ((CCode) selectedCode).getCode().equals("68") == false
-                                && ((CCode) selectedCode).getCode().equals("K") == false
-                                && edtChiSo.getText().toString().equals("") == false))) {
-                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("5") == true && ((CCode) selectedCode).getCode().equals("5K") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("5") == true && ((CCode) selectedCode).getCode().equals("5F") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("5") == true && ((CCode) selectedCode).getCode().equals("5N") == false)
-                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("4") == true && (((CCode) selectedCode).getCode().equals("5F") == true || ((CCode) selectedCode).getCode().equals("5K") == true || ((CCode) selectedCode).getCode().equals("5N") == true))) {
+                                && ((((CCode) selectedCode).getCode().equals("F1")
+                                || ((CCode) selectedCode).getCode().equals("F2")
+                                || ((CCode) selectedCode).getCode().equals("F3")
+                                || ((CCode) selectedCode).getCode().equals("F4")
+                                || ((CCode) selectedCode).getCode().equals("61")
+                                || ((CCode) selectedCode).getCode().equals("63")
+                                || ((CCode) selectedCode).getCode().equals("64")
+                                || ((CCode) selectedCode).getCode().equals("66")
+                                || ((CCode) selectedCode).getCode().equals("68")
+                                || ((CCode) selectedCode).getCode().equals("K"))
+                                || (!((CCode) selectedCode).getCode().equals("F1")
+                                && !((CCode) selectedCode).getCode().equals("F2")
+                                && !((CCode) selectedCode).getCode().equals("F3")
+                                && !((CCode) selectedCode).getCode().equals("F4")
+                                && !((CCode) selectedCode).getCode().equals("61")
+                                && !((CCode) selectedCode).getCode().equals("63")
+                                && !((CCode) selectedCode).getCode().equals("64")
+                                && !((CCode) selectedCode).getCode().equals("66")
+                                && !((CCode) selectedCode).getCode().equals("68")
+                                && !((CCode) selectedCode).getCode().equals("K")
+                                && !edtChiSo.getText().toString().equals("")))) {
+                            if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !((CCode) selectedCode).getCode().equals("5K"))
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !((CCode) selectedCode).getCode().equals("5F"))
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !((CCode) selectedCode).getCode().equals("5N"))
+                                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '4' && (((CCode) selectedCode).getCode().equals("5F") || ((CCode) selectedCode).getCode().equals("5K") || ((CCode) selectedCode).getCode().equals("5N")))) {
                                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                                 return;
                             }
-                            if (CLocal.lstTT0.contains(((CCode) selectedCode).getCode()) == true
-                                    || CLocal.lstTBTT.contains(((CCode) selectedCode).getCode()) == true
-                                    || CLocal.lstBinhThuong.contains(((CCode) selectedCode).getCode()) == true) {
+                            if (CLocal.lstTT0.contains(((CCode) selectedCode).getCode())
+                                    || CLocal.lstTBTT.contains(((CCode) selectedCode).getCode())
+                                    || CLocal.lstBinhThuong.contains(((CCode) selectedCode).getCode())) {
                                 CLocal.listDocSoView.get(CLocal.STT).setSync(false);
-                                if (edtChiSo.getText().toString().equals("") == true)
+                                if (edtChiSo.getText().toString().equals(""))
                                     tinhTieuThu();
                                 CLocal.listDocSoView.get(CLocal.STT).setModifyDate(CLocal.DateFormat.format(new Date()));
                                 CLocal.listDocSoView.get(CLocal.STT).setCodeMoi(txtCodeMoi.getText().toString());
@@ -316,11 +312,11 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
                                 CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                                 MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
-                                myAsyncTaskGhiDocSo_gianTiep.execute(new String[]{String.valueOf(CLocal.STT)});
+                                myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
                                 //thành công có cảnh báo
-                                if (_alert.equals("") == false) {
+                                if (!_alert.equals("")) {
                                     CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
-                                    if (_alert.contains("= 0") == true)
+                                    if (_alert.contains("= 0"))
                                         CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", "THÀNH CÔNG\r\n" + _alert, "Đọc Tiếp", new DialogInterface.OnClickListener() {
                                             @Override
                                             public void onClick(DialogInterface dialog, int which) {
@@ -392,7 +388,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 @Override
                 public void onClick(View view) {
                     try {
-                        if (CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") == false) {
+                        if (!CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("")) {
 //                            if (thermalPrinter != null) {
 //                                thermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(CLocal.STT));
 //                            }
@@ -411,7 +407,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             ivGhiChu.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this) == false) {
+                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this)) {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
                         return;
                     }
@@ -423,7 +419,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             ivPhieuChuyen.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this) == false) {
+                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this)) {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
                         return;
                     }
@@ -547,7 +543,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 txtCodeMoi.setText(entityParent.getCodeMoi());
                 txtTieuThuMoi.setText(entityParent.getTieuThuMoi());
                 tinhTieuThu_CanhBaoMau();
-                if (entityParent.getCodeMoi().equals("") == false && entityParent.getChiSoMoi().equals("") == false) {
+                if (!entityParent.getCodeMoi().equals("") && !entityParent.getChiSoMoi().equals("")) {
                     selectValue(entityParent.getCodeMoi());
                     edtChiSo.setText(entityParent.getChiSoMoi());
                 }
@@ -579,7 +575,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     }
 
     public void tinhTieuThu() {
-        if (playTinhTieuThu == true) {
+        if (playTinhTieuThu) {
             String strChiSo = "";
             if (edtChiSo.getText().toString().equals("") == true)
                 strChiSo = "0";
@@ -587,35 +583,35 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 strChiSo = edtChiSo.getText().toString();
             txtCodeMoi.setText(selectedCode.getCode());
             txtChiSoMoi.setText(strChiSo);
-            if (CLocal.lstTT0.contains(txtCodeMoi.getText().toString()) == true)
+            if (CLocal.lstTT0.contains(txtCodeMoi.getText().toString()))
                 txtTieuThuMoi.setText("0");
-            else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString()) == true)
+            else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString()))
                 txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
-            else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()) == true)
-                if (txtCodeMoi.getText().toString().equals("X41") == true)
+            else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()))
+                if (txtCodeMoi.getText().toString().equals("X41"))
                     txtTieuThuMoi.setText(String.valueOf(10000 + Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
-                else if (txtCodeMoi.getText().toString().equals("X51") == true)
+                else if (txtCodeMoi.getText().toString().equals("X51"))
                     txtTieuThuMoi.setText(String.valueOf(100000 + Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
                 else
                     txtTieuThuMoi.setText(String.valueOf(Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
-            if (txtCodeMoi.getText().toString().substring(0, 1).equals("4") == true
-                    && (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("F") == true
-                    || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("K") == true
-                    || CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("N") == true
-                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1).equals("6") == true && CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68") == false)))
-                txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().substring(0, 1));
-            if (txtCodeMoi.getText().toString().substring(0, 1).equals("F") == true || txtCodeMoi.getText().toString().equals("61") == true)
+            if (txtCodeMoi.getText().toString().charAt(0) == '4' == true
+                    && (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F'
+                    || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K'
+                    || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N'
+                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '6' && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68"))))
+                txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
+            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61"))
                 txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
-            else if (txtCodeMoi.getText().toString().substring(0, 1).equals("K") == true)
+            else if (txtCodeMoi.getText().toString().charAt(0) == 'K')
                 txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
-            else if (txtCodeMoi.getText().toString().substring(0, 1).equals("63") == true)
+            else if (txtCodeMoi.getText().toString().equals("63"))
                 txtChiSoMoi.setText("0");
             tinhTieuThu_CanhBaoMau();
         }
     }
 
     public void tinhTieuThu_CanhBaoMau() {
-        if (txtTieuThuMoi.getText().toString().equals("") == false) {
+        if (!txtTieuThuMoi.getText().toString().equals("")) {
             if (Integer.parseInt(txtTieuThuMoi.getText().toString()) < 0) {
                 _alert = "Tiêu Thụ âm = " + txtTieuThuMoi.getText().toString();
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
@@ -745,8 +741,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             } else {
                 // từ android 5.0 trở lên ta có thể sử dụng Uri.fromFile() và FileProvider.getUriForFile() để trả về uri file sau khi chụp.
                 // Nhưng bắt buộc từ Android 7.0 trở lên ta phải sử dụng FileProvider.getUriForFile() để trả về uri cho file đó.
-                Uri photoURI = FileProvider.getUriForFile(this, "docso_file_provider", photoFile);
-                uri = photoURI;
+                uri = FileProvider.getUriForFile(this, "docso_file_provider", photoFile);
             }
             imgPath = photoFile.getAbsolutePath();
             return uri;
@@ -774,20 +769,19 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         @Override
         protected String doInBackground(String... strings) {
             try {
-
-                if (imgCapture != null && imgString.equals("") == true) {
+                if (imgCapture != null && imgString.equals("")) {
                     imgString = CBitmap.convertBitmapToString(imgCapture);
                 }
                 CLocal.listDocSoView.get(CLocal.STT).setModifyDate(CLocal.DateFormat.format(new Date()));
                 String result = ws.ghiChiSo(CLocal.listDocSoView.get(CLocal.STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May, CLocal.listDocSoView.get(CLocal.STT).getTBTT());
-                if (result.equals("") == false)
+                if (!result.equals(""))
                     jsonObject = new JSONObject(result);
-                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                     CLocal.listDocSoView.get(CLocal.STT).setSync(true);
                     CLocal.listDocSoView.get(CLocal.STT).setCodeMoi(selectedCode.getCode());
                     CLocal.listDocSoView.get(CLocal.STT).setChiSoMoi(edtChiSo.getText().toString());
                     JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
-                    if (jsonObjectC.getString("CSC").replace("null", "").equals("") == false)
+                    if (!jsonObjectC.getString("CSC").replace("null", "").equals(""))
                         CLocal.listDocSoView.get(CLocal.STT).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
@@ -814,20 +808,20 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             try {
                 if (jsonObject != null) {
                     String error = "", alert = "";
-                    if (jsonObject.getString("error").replace("null", "").equals("") == false)
+                    if (!jsonObject.getString("error").replace("null", "").equals(""))
                         error = "\r\n" + jsonObject.getString("error").replace("null", "");
-                    if (jsonObject.getString("alert").replace("null", "").equals("") == false)
+                    if (!jsonObject.getString("alert").replace("null", "").equals(""))
                         alert = "\r\n" + jsonObject.getString("alert").replace("null", "");
                     //báo thành công
-                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                        if (imgString.equals("") == false) {
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        if (!imgString.equals("")) {
                             MyAsyncTaskGhiHinh myAsyncTaskGhiHinh = new MyAsyncTaskGhiHinh();
-                            myAsyncTaskGhiHinh.execute(new String[]{CLocal.listDocSoView.get(CLocal.STT).getID(), imgString});
+                            myAsyncTaskGhiHinh.execute(CLocal.listDocSoView.get(CLocal.STT).getID(), imgString);
                         }
                         //thành công có cảnh báo
-                        if (alert.equals("") == false) {
+                        if (!alert.equals("")) {
                             CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
-                            if (alert.contains("= 0") == true)
+                            if (alert.contains("= 0"))
                                 CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", s + alert, "Đọc Tiếp", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -899,9 +893,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             String error = "";
             try {
                 String result = ws.ghi_Hinh(strings[0], strings[1]);
-                if (Boolean.parseBoolean(result) == true) {
+                if (Boolean.parseBoolean(result)) {
                     for (int i = 0; i < CLocal.listDocSoView.size(); i++)
-                        if (CLocal.listDocSoView.get(i).getID().equals(strings[0]) == true) {
+                        if (CLocal.listDocSoView.get(i).getID().equals(strings[0])) {
                             CLocal.listDocSoView.get(i).setGhiHinh(true);
                             CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(i));
                         }
@@ -916,7 +910,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
+            if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
         }
     }
@@ -928,13 +922,13 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             String error = "";
             try {
                 for (int i = 0; i < CLocal.listDocSoView.size(); i++)
-                    if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == false
-                            && CLocal.listDocSoView.get(i).isSync() == true
-                            && CLocal.listDocSoView.get(i).isGhiHinh() == false) {
+                    if (!CLocal.listDocSoView.get(i).getCodeMoi().equals("")
+                            && CLocal.listDocSoView.get(i).isSync()
+                            && !CLocal.listDocSoView.get(i).isGhiHinh()) {
                         Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
                         if (bitmap != null) {
                             String result = ws.ghi_Hinh(CLocal.listDocSoView.get(i).getID(), CBitmap.convertBitmapToString(bitmap));
-                            if (Boolean.parseBoolean(result) == true) {
+                            if (Boolean.parseBoolean(result)) {
                                 CLocal.listDocSoView.get(i).setGhiHinh(true);
                                 CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(i));
                             }
@@ -950,7 +944,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
+            if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
         }
     }
@@ -964,19 +958,19 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             try {
                 JSONObject jsonObject = null;
                 index = Integer.parseInt(strings[0]);
-                if (CLocal.listDocSoView.get(index).getCodeMoi().equals("") == false
-                        && CLocal.listDocSoView.get(index).isSync() == false) {
+                if (!CLocal.listDocSoView.get(index).getCodeMoi().equals("")
+                        && !CLocal.listDocSoView.get(index).isSync()) {
                     String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getCodeMoi(), CLocal.listDocSoView.get(index).getChiSoMoi(), CLocal.listDocSoView.get(index).getTieuThuMoi()
                             , CLocal.listDocSoView.get(index).getTienNuoc(), CLocal.listDocSoView.get(index).getThueGTGT(), CLocal.listDocSoView.get(index).getPhiBVMT(), CLocal.listDocSoView.get(index).getPhiBVMT_Thue(), CLocal.listDocSoView.get(index).getTongCong(),
                             "", CLocal.listDocSoView.get(index).getDot(), CLocal.May, CLocal.listDocSoView.get(index).getModifyDate());
-                    if (result.equals("") == false)
+                    if (!result.equals(""))
                         jsonObject = new JSONObject(result);
-                    if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                    if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                         CLocal.listDocSoView.get(index).setSync(true);
                         Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(index).getNam() + "_" + CLocal.listDocSoView.get(index).getKy() + "_" + CLocal.listDocSoView.get(index).getDot() + "/" + CLocal.listDocSoView.get(index).getDanhBo().replace(" ", "") + ".jpg");
                         if (bitmap != null) {
                             String result2 = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), CBitmap.convertBitmapToString(bitmap));
-                            if (Boolean.parseBoolean(result2) == true) {
+                            if (Boolean.parseBoolean(result2)) {
                                 CLocal.listDocSoView.get(index).setGhiHinh(true);
                             }
                         }
@@ -993,7 +987,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
+            if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
         }
     }
@@ -1007,20 +1001,20 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             try {
                 JSONObject jsonObject = null;
                 for (int i = 0; i < CLocal.listDocSoView.size(); i++)
-                    if (CLocal.listDocSoView.get(i).getCodeMoi().equals("") == false)
-                        if (CLocal.listDocSoView.get(i).isSync() == false) {
+                    if (!CLocal.listDocSoView.get(i).getCodeMoi().equals(""))
+                        if (!CLocal.listDocSoView.get(i).isSync()) {
                             index = i;
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(i).getID(), CLocal.listDocSoView.get(i).getCodeMoi(), CLocal.listDocSoView.get(i).getChiSoMoi(), CLocal.listDocSoView.get(i).getTieuThuMoi()
                                     , CLocal.listDocSoView.get(i).getTienNuoc(), CLocal.listDocSoView.get(i).getThueGTGT(), CLocal.listDocSoView.get(i).getPhiBVMT(), CLocal.listDocSoView.get(i).getPhiBVMT_Thue(), CLocal.listDocSoView.get(i).getTongCong(),
                                     "", CLocal.listDocSoView.get(i).getDot(), CLocal.May, CLocal.listDocSoView.get(i).getModifyDate());
-                            if (result.equals("") == false)
+                            if (!result.equals(""))
                                 jsonObject = new JSONObject(result);
-                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                                 CLocal.listDocSoView.get(i).setSync(true);
                                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     String result2 = ws.ghi_Hinh(CLocal.listDocSoView.get(i).getID(), CBitmap.convertBitmapToString(bitmap));
-                                    if (Boolean.parseBoolean(result2) == true) {
+                                    if (Boolean.parseBoolean(result2)) {
                                         CLocal.listDocSoView.get(i).setGhiHinh(true);
                                     }
                                 }
@@ -1037,7 +1031,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
-            if (s.equals("") == false)
+            if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
         }
     }

@@ -352,7 +352,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghi_DonTu(String DanhBo, String NoiDung, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
+    public String ghi_DonTu(String DanhBo, String NoiDung, String GhiChu,String Hinh, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghi_DonTu";
         String OPERATION_NAME = "ghi_DonTu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -372,6 +372,12 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("GhiChu");
         pi.setValue(GhiChu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Hinh");
+        pi.setValue(Hinh);
         pi.setType(String.class);
         request.addProperty(pi);
 

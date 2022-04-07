@@ -14,7 +14,6 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.media.Image;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
@@ -27,7 +26,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -51,14 +49,10 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
     private Spinner spnPhieuChuyen;
     private EditText edtGhiChu;
-    private Button btnCapNhat;
     private ImageView imgThumb;
-    private ImageButton ibtnChupHinh;
     private RecyclerView recyclerView;
-    private CWebservice ws;
     private ArrayList<String> spnName_PhieuChuyen;
     private JSONArray jsonDSDonTu;
-    private CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission cMarshMallowPermission;
@@ -70,13 +64,11 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 
         spnPhieuChuyen = (Spinner) findViewById(R.id.spnPhieuChuyen);
         edtGhiChu = (EditText) findViewById(R.id.edtGhiChu);
-        btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
+        Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         imgThumb = (ImageView) findViewById(R.id.imgThumb);
-        ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
-        recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
+        ImageButton ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
 
-        ws = new CWebservice();
         cMarshMallowPermission = new CMarshMallowPermission(this);
         try {
             if (CLocal.jsonPhieuChuyen != null && CLocal.jsonPhieuChuyen.length() > 0) {
@@ -96,7 +88,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         try {
             if (CLocal.STT > -1) {
                 MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
-                myAsyncTaskDisapper.execute(new String[]{"getDSDonTu"});
+                myAsyncTaskDisapper.execute("getDSDonTu");
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, ex.getMessage());
@@ -105,11 +97,11 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (imgCapture != null) {
+                if (!edtGhiChu.getText().toString().equals("") && imgCapture != null) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
                     myAsyncTask.execute();
                 } else
-                    CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Hình ảnh");
+                    CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
             }
         });
 
@@ -117,10 +109,10 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
+                    if (!cMarshMallowPermission.checkPermissionForExternalStorage()) {
                         cMarshMallowPermission.requestPermissionForExternalStorage();
                     }
-                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false)
+                    if (!cMarshMallowPermission.checkPermissionForExternalStorage())
                         return;
                 }
                 imgCapture = null;
@@ -171,7 +163,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     entityParent.setDienThoai(jsonObject.getString("CreateDate").replace("null", "") + "-" + jsonObject.getString("NoiDung").replace("null", "") + "-" + jsonObject.getString("TinhTrang").replace("null", ""));
                     lstDienThoai.add(entityParent);
                 }
-                customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_PhieuChuyen.this, lstDienThoai);
+                CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_PhieuChuyen.this, lstDienThoai);
                 recyclerView.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
                 layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -188,7 +180,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                 @Override
                 public void onActivityResult(ActivityResult result) {
                     if (result.getResultCode() == Activity.RESULT_OK) {
-                        if (imgPath != null && imgPath != "") {
+                        if (imgPath != null && !imgPath.equals("")) {
                             Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
                             bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
                             imgCapture = CBitmap.scale(bitmap, 1024);
@@ -235,8 +227,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             } else {
                 // từ android 5.0 trở lên ta có thể sử dụng Uri.fromFile() và FileProvider.getUriForFile() để trả về uri file sau khi chụp.
                 // Nhưng bắt buộc từ Android 7.0 trở lên ta phải sử dụng FileProvider.getUriForFile() để trả về uri cho file đó.
-                Uri photoURI = FileProvider.getUriForFile(this, "docso_file_provider", photoFile);
-                uri = photoURI;
+                uri = FileProvider.getUriForFile(this, "docso_file_provider", photoFile);
             }
             imgPath = photoFile.getAbsolutePath();
             return uri;
@@ -248,8 +239,6 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        JSONObject jsonObject = null;
-        String imgString;
 
         @Override
         protected void onPreExecute() {
@@ -263,19 +252,23 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            String error = "";
             try {
+                CWebservice ws = new CWebservice();
+                JSONObject jsonObject = null;
                 String result = "";
-                imgString = CBitmap.convertBitmapToString(imgCapture);
-                result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
-                if (result.equals("") == false)
+                String imgString = CBitmap.convertBitmapToString(imgCapture);
+                result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), imgString, CLocal.MaNV);
+                if (!result.equals(""))
                     jsonObject = new JSONObject(result);
-                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    return "THÀNH CÔNG";
-                } else
-                    return "THẤT BẠI";
+                if (jsonObject != null)
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                    } else
+                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
             } catch (Exception e) {
-                return e.getMessage();
+                error = e.getMessage();
             }
+            return error;
         }
 
         @Override
@@ -284,64 +277,45 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            try {
-                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    if (jsonObject.getString("message").replace("null", "").equals("") == false) {
-                        JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
-                        MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
-                        myAsyncTaskDisapper.execute(new String[]{"ghiHinhDonTu", jsonObjectC.getString("TieuThu").replace("null", ""), imgString});
-                    }
-                    CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
-                } else
-                    CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
-            } catch (Exception e) {
-                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, e.getMessage(), "center");
-            }
+            if (!s.equals(""))
+                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
+            else
+                finish();
         }
     }
 
     public class MyAsyncTaskDisapper extends AsyncTask<String, String, String> {
-        //        ProgressDialog progressDialog;
-        JSONObject jsonObject = null;
+        ProgressDialog progressDialog;
 
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-//            progressDialog = new ProgressDialog(ActivityDocSo_PhieuChuyen.this);
-//            progressDialog.setTitle("Thông Báo");
-//            progressDialog.setMessage("Đang xử lý...");
-//            progressDialog.setCanceledOnTouchOutside(false);
-//            progressDialog.show();
+            progressDialog = new ProgressDialog(ActivityDocSo_PhieuChuyen.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
         }
 
         @Override
         protected String doInBackground(String... strings) {
+            String error = "";
             try {
+                CWebservice ws = new CWebservice();
+                JSONObject jsonObject = null;
                 String result = "";
-                switch (strings[0]) {
-                    case "getDSDonTu":
-                        result = ws.getDS_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
-                        if (result.equals("") == false)
-                            jsonObject = new JSONObject(result);
-                        if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                            publishProgress(new String[]{jsonObject.getString("message").replace("null", "")});
-                            return "THÀNH CÔNG";
-                        } else
-                            return "THẤT BẠI";
-                    case "ghiHinhDonTu":
-                        result = ws.ghi_Hinh_DonTu(strings[1], strings[2], CLocal.MaNV);
-                        if (result.equals("") == false)
-                            jsonObject = new JSONObject(result);
-                        if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                            publishProgress(new String[]{jsonObject.getString("message").replace("null", "")});
-                            return "THÀNH CÔNG";
-                        } else
-                            return "THẤT BẠI";
-                }
-                return null;
+                result = ws.getDS_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                if (!result.equals(""))
+                    jsonObject = new JSONObject(result);
+                if (jsonObject != null)
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        publishProgress(jsonObject.getString("message").replace("null", ""));
+                    } else
+                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
             } catch (Exception e) {
-                return e.getMessage();
+                error = e.getMessage();
             }
+            return error;
         }
 
         @Override
@@ -360,17 +334,11 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-//            if (progressDialog != null) {
-//                progressDialog.dismiss();
-//            }
-            try {
-//                if (jsonObject != null)
-//                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
-//                else
-//                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
-            } catch (Exception e) {
-                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, e.getMessage(), "center");
+            if (progressDialog != null) {
+                progressDialog.dismiss();
             }
+            if (!s.equals(""))
+                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
         }
 
     }

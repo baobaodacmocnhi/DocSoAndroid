@@ -4,34 +4,25 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewDienThoai;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewImage;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 import android.app.ProgressDialog;
-import android.app.VoiceInteractor;
-import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -39,13 +30,10 @@ import java.util.ArrayList;
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
     private Spinner spnViTri1, spnViTri2;
-    private Button btnCapNhat, btnCapNhatDT;
     private CheckBox chkGieng, chkSoChinh;
-    private CWebservice ws;
     private ArrayList<String> spnName_ViTriDHN;
     private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
-    private CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,13 +45,12 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         spnViTri1 = (Spinner) findViewById(R.id.spnViTri1);
         spnViTri2 = (Spinner) findViewById(R.id.spnViTri2);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
-        btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
+        Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
         chkSoChinh = (CheckBox) findViewById(R.id.chkSoChinh);
-        btnCapNhatDT = (Button) findViewById(R.id.btnCapNhatDT);
+        Button btnCapNhatDT = (Button) findViewById(R.id.btnCapNhatDT);
         recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-        ws = new CWebservice();
 
         try {
             if (CLocal.jsonViTriDHN != null && CLocal.jsonViTriDHN.length() > 0) {
@@ -84,7 +71,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         btnCapNhat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this) == false) {
+                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
                     CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
                     return;
                 }
@@ -96,7 +83,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         btnCapNhatDT.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this) == false) {
+                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
                     CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
                     return;
                 }
@@ -114,15 +101,15 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         edtSoNha.setText(entityParent.getSoNha());
                         edtTenDuong.setText(entityParent.getTenDuong());
                         edtGhiChu.setText(entityParent.getGhiChu());
-                        if (entityParent.getViTri1().equals("") == false)
+                        if (!entityParent.getViTri1().equals(""))
                             spnViTri1.setSelection(((ArrayAdapter) spnViTri1.getAdapter()).getPosition(entityParent.getViTri1()));
-                        if (entityParent.getViTri2().equals("") == false)
+                        if (!entityParent.getViTri2().equals(""))
                             spnViTri2.setSelection(((ArrayAdapter) spnViTri2.getAdapter()).getPosition(entityParent.getViTri2()));
                         chkGieng.setChecked(entityParent.isGieng());
                     }
                 }
-                MyAsyncTaskDT myAsyncTaskDT = new MyAsyncTaskDT();
-                myAsyncTaskDT.execute("getDSDienThoai");
+                MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
+                myAsyncTaskDisapper.execute();
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
@@ -144,7 +131,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     entityParent.setDiaChi(jsonObject.getString("GhiChu").replace("null", ""));
                     lstDienThoai.add(entityParent);
                 }
-                customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);
+                CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);
                 customAdapterRecyclerViewDienThoai.setClickItemListener(new CustomAdapterRecyclerViewDienThoai.entityParentListener() {
                     @Override
                     public void onClick(CEntityParent entityParent) {
@@ -172,8 +159,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             TextView txtDienThoai = (TextView) holder.itemView.findViewById(R.id.txtDienThoai);
             TextView txtHoTen = (TextView) holder.itemView.findViewById(R.id.txtHoTen);
             CheckBox chkSoChinh = (CheckBox) holder.itemView.findViewById(R.id.chkSoChinh);
-            if (chkSoChinh.isChecked() == true)
-                if (sdt.equals("") == true)
+            if (chkSoChinh.isChecked())
+                if (sdt.equals(""))
                     sdt = txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString();
                 else
                     sdt += " | " + txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString();
@@ -183,7 +170,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        JSONObject jsonObject = null;
 
         @Override
         protected void onPreExecute() {
@@ -197,7 +183,10 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            String error = "";
             try {
+                CWebservice ws = new CWebservice();
+                JSONObject jsonObject = null;
                 String result = "";
                 switch (strings[0]) {
                     case "CapNhat":
@@ -208,51 +197,37 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         result = ws.update_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
                                 , String.valueOf(chkSoChinh.isChecked()), CLocal.MaNV);
                         break;
-                    case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
-                        break;
                 }
-                if (result.equals("") == false)
+                if (!result.equals(""))
                     jsonObject = new JSONObject(result);
-                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    switch (strings[0]) {
-                        case "CapNhat":
-                            CLocal.listDocSoView.get(CLocal.STT).setSoNha(edtSoNha.getText().toString());
-                            CLocal.listDocSoView.get(CLocal.STT).setTenDuong(edtTenDuong.getText().toString());
-                            CLocal.listDocSoView.get(CLocal.STT).setViTri1(spnViTri1.getSelectedItem().toString());
-                            CLocal.listDocSoView.get(CLocal.STT).setViTri2(spnViTri2.getSelectedItem().toString());
-                            CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
-                            break;
-                        case "CapNhatDT":
+                if (jsonObject != null)
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        switch (strings[0]) {
+                            case "CapNhat":
+                                CLocal.listDocSoView.get(CLocal.STT).setSoNha(edtSoNha.getText().toString());
+                                CLocal.listDocSoView.get(CLocal.STT).setTenDuong(edtTenDuong.getText().toString());
+                                CLocal.listDocSoView.get(CLocal.STT).setViTri1(spnViTri1.getSelectedItem().toString());
+                                CLocal.listDocSoView.get(CLocal.STT).setViTri2(spnViTri2.getSelectedItem().toString());
+                                CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
+                                break;
+                            case "CapNhatDT":
 
-                            break;
-                        case "getDSDienThoai":
-                            publishProgress(new String[]{"getDSDienThoai", jsonObject.getString("message").replace("null", "")});
-                            break;
-                    }
-                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
-                    return "THÀNH CÔNG";
-                } else
-                    return "THẤT BẠI";
+                                break;
+                        }
+                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
+                    } else
+                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
             } catch (Exception e) {
-                return e.getMessage();
+                error = e.getMessage();
             }
+            return error;
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             if (values != null) {
-                switch (values[0]) {
-                    case "getDSDienThoai":
-                        try {
-                            jsonDSDienThoai = new JSONArray(values[1]);
-                            fillDSDienThoai();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
-                }
+
             }
         }
 
@@ -262,20 +237,15 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            try {
-                if (jsonObject != null)
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
-                else
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
-            } catch (Exception e) {
-                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, e.getMessage(), "center");
-            }
+            if (!s.equals(""))
+                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
+            else
+                finish();
         }
     }
 
-    public class MyAsyncTaskDT extends AsyncTask<String, String, String> {
+    public class MyAsyncTaskDisapper extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        JSONObject jsonObject = null;
 
         @Override
         protected void onPreExecute() {
@@ -289,42 +259,34 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... strings) {
+            String error = "";
             try {
+                CWebservice ws = new CWebservice();
+                JSONObject jsonObject = null;
                 String result = "";
-                switch (strings[0]) {
-                    case "getDSDienThoai":
-                        result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
-                        break;
-                }
-                if (result.equals("") == false)
+                result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                if (!result.equals(""))
                     jsonObject = new JSONObject(result);
-                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    switch (strings[0]) {
-                        case "getDSDienThoai":
-                            publishProgress(new String[]{"getDSDienThoai", jsonObject.getString("message").replace("null", "")});
-                            break;
-                    }
-                    return "THÀNH CÔNG";
-                } else
-                    return "THẤT BẠI";
+                if (jsonObject != null)
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        publishProgress(jsonObject.getString("message").replace("null", ""));
+                    } else
+                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
             } catch (Exception e) {
-                return e.getMessage();
+                error = e.getMessage();
             }
+            return error;
         }
 
         @Override
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
             if (values != null) {
-                switch (values[0]) {
-                    case "getDSDienThoai":
-                        try {
-                            jsonDSDienThoai = new JSONArray(values[1]);
-                            fillDSDienThoai();
-                        } catch (Exception e) {
-                            e.printStackTrace();
-                        }
-                        break;
+                try {
+                    jsonDSDienThoai = new JSONArray(values[1]);
+                    fillDSDienThoai();
+                } catch (Exception e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -335,15 +297,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-
-            try {
-//                if (jsonObject != null)
-//                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
-//                else
-//                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
-            } catch (Exception e) {
-                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, e.getMessage(), "center");
-            }
+            if (!s.equals(""))
+                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
         }
 
     }

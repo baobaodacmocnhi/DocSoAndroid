@@ -162,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
                 CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 btnAdmin.setVisibility(View.GONE);
-                if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
+                if (CLocal.sharedPreferencesre.getBoolean("Login", false)) {
                     //so sánh logout sau 7 ngày
                     long millis = CLocal.sharedPreferencesre.getLong("LoginDate", 0L);
                     Date dateLogin = new Date(millis);
@@ -178,7 +178,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                     CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                     CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
-                    if (CLocal.sharedPreferencesre.getString("May", "").replace("null","").equals("") == false)
+                    if (!CLocal.sharedPreferencesre.getString("May", "").replace("null", "").equals(""))
                         CLocal.May = (Integer.parseInt(CLocal.sharedPreferencesre.getString("May", "")) < 10 ? "0" : "") + Integer.parseInt(CLocal.sharedPreferencesre.getString("May", ""));
                     else
                         CLocal.May=" ";
@@ -192,15 +192,15 @@ public class MainActivity extends AppCompatActivity {
                     txtUser.setText("Xin chào\n" + CLocal.HoTen);
                     txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                     imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
-                    if (CLocal.sharedPreferencesre.getBoolean("Admin", false) == true) {
+                    if (CLocal.sharedPreferencesre.getBoolean("Admin", false)) {
                         CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
                         btnAdmin.setVisibility(View.VISIBLE);
                     }
-                    if (CLocal.sharedPreferencesre.getBoolean("Doi", false) == true && CLocal.sharedPreferencesre.getString("jsonTo", "").equals("") == false) {
+                    if (CLocal.sharedPreferencesre.getBoolean("Doi", false) && !CLocal.sharedPreferencesre.getString("jsonTo", "").equals("")) {
                         CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
                         CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
                         CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                    } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) == true && CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("") == false) {
+                    } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) && !CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("")) {
                         CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                         CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                         CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
@@ -256,7 +256,7 @@ public class MainActivity extends AppCompatActivity {
     private void updateApp(String versionServer) {
         try {
             String versionDevice = packageInfo.versionName;
-            if (versionServer.equals("") == false && versionServer.equals("False") == false && versionServer.equals("java.net.ConnectException: Connection refused") == false && versionDevice.equals(versionServer) == false) {
+            if (!versionServer.equals("") && !versionServer.equals("False") && !versionServer.equals("java.net.ConnectException: Connection refused") && !versionDevice.equals(versionServer)) {
                 if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
                     MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
                     myAsyncTask.execute("http://113.161.88.180:81/app/docso.apk");
@@ -291,7 +291,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (s.contains("Connection refused") == false) {
+            if (!s.contains("Connection refused")) {
                 updateApp(s);
             }
         }
@@ -413,7 +413,7 @@ public class MainActivity extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (Boolean.parseBoolean(s[0]) == true) {
+            if (Boolean.parseBoolean(s[0])) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                 builder.setTitle("Thông Báo");
                 builder.setMessage("Bạn đã hết 3 ngày đăng nhập\nVui lòng đăng nhập lại");

@@ -41,7 +41,7 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(ActivityDangNhap.this) == false) {
+                if (!CLocal.checkNetworkAvailable(ActivityDangNhap.this)) {
                     Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
@@ -53,12 +53,12 @@ public class ActivityDangNhap extends AppCompatActivity {
         btnDangXuat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (CLocal.checkNetworkAvailable(ActivityDangNhap.this) == false) {
+                if (!CLocal.checkNetworkAvailable(ActivityDangNhap.this)) {
                     Toast.makeText(ActivityDangNhap.this, "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
                 MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute(new String[]{"DangXuat"});
+                myAsyncTask.execute("DangXuat");
 
                 Reload();
             }
@@ -88,7 +88,7 @@ public class ActivityDangNhap extends AppCompatActivity {
     public void Reload() {
         edtUsername.setText("");
         edtPassword.setText("");
-        if (CLocal.sharedPreferencesre.getBoolean("Login", false) == true) {
+        if (CLocal.sharedPreferencesre.getBoolean("Login", false)) {
             txtUser.setText("Xin chào " + CLocal.sharedPreferencesre.getString("HoTen", ""));
             txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
             edtUsername.setVisibility(View.INVISIBLE);
@@ -107,7 +107,6 @@ public class ActivityDangNhap extends AppCompatActivity {
 
     public class MyAsyncTask extends AsyncTask<String, String, String[]> {
         ProgressDialog progressDialog;
-        CWebservice ws = new CWebservice();
 
         @Override
         protected void onPreExecute() {
@@ -121,6 +120,7 @@ public class ActivityDangNhap extends AppCompatActivity {
 
         @Override
         protected String[] doInBackground(String... strings) {
+            CWebservice ws = new CWebservice();
             String result = "";
             String[] results = new String[]{};
             switch (strings[0]) {
@@ -128,7 +128,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     try {
                         result = ws.dangNhaps(edtUsername.getText().toString(), edtPassword.getText().toString(), CLocal.IDMobile, CLocal.sharedPreferencesre.getString("UID", ""));
                         results = result.split(";");
-                        if (Boolean.parseBoolean(results[0]) == true) {
+                        if (Boolean.parseBoolean(results[0])) {
                             CLocal.initialCLocal();
                             JSONArray jsonArray = new JSONArray(results[1]);
                             JSONObject jsonObject = jsonArray.getJSONObject(0);
@@ -150,15 +150,15 @@ public class ActivityDangNhap extends AppCompatActivity {
                             editor.putString("jsonPhieuChuyen",ws.getDS_PhieuChuyen());
                             editor.putString("jsonGiaNuoc",ws.getDS_GiaNuoc());
                             editor.putString("jsonKhongTinhPBVMT",ws.getDS_KhongTinhPBVMT());
-                            if (Boolean.parseBoolean(jsonObject.getString("Doi")) == true) {
+                            if (Boolean.parseBoolean(jsonObject.getString("Doi"))) {
                                 editor.putString("jsonTo", ws.getDSTo());
                                 editor.putString("jsonNhanVien", ws.getDS_NhanVien());
-                            } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong")) == true) {
+                            } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong"))) {
                                 editor.putString("jsonNhanVien", ws.getDSNhanVienTo(jsonObject.getString("MaTo")));
                             }
                             editor.putBoolean("Login", true);
                             editor.putLong("LoginDate", new Date().getTime());
-                            editor.commit();
+                            editor.apply();
 
                             publishProgress("DangNhap");
                         }
@@ -170,7 +170,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                     try {
                         result = ws.dangXuats_Person(CLocal.sharedPreferencesre.getString("Username", ""), CLocal.sharedPreferencesre.getString("UID", ""));
                         results = result.split(";");
-                        if (Boolean.parseBoolean(results[0]) == true) {
+                        if (Boolean.parseBoolean(results[0])) {
                             publishProgress("DangXuat");
                         }
                         return results;
@@ -202,7 +202,7 @@ public class ActivityDangNhap extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (Boolean.parseBoolean(s[0]) == true) {
+            if (Boolean.parseBoolean(s[0])) {
                 finish();
             } else
                 CLocal.showPopupMessage(ActivityDangNhap.this, "THẤT BẠI\n" + s[1], "center");

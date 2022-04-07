@@ -83,7 +83,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try {
-                    if (CLocal.checkNetworkAvailable(ActivityDocSo_DanhSach.this) == false) {
+                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_DanhSach.this)) {
                         CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Không có Internet");
                         return;
                     }
@@ -272,7 +272,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "Chưa Đọc":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == true) {
+                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }
@@ -282,7 +282,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "Đã Đọc":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }
@@ -292,7 +292,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "F":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false && CLocal.listDocSo.get(i).getCodeMoi().substring(0, 1).equals("F") == true) {
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("") && CLocal.listDocSo.get(i).getCodeMoi().charAt(0) == 'F') {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }
@@ -302,7 +302,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "Bất Thường":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("")
                                     && (Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) <= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) - Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 0.4
                                     || Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) >= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 1.4)) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
@@ -314,7 +314,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "Chủ Báo":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (CLocal.listDocSo.get(i).getCodeMoi().equals("") == false && CLocal.listDocSo.get(i).isChuBao() == true) {
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("") && CLocal.listDocSo.get(i).isChuBao()) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }
@@ -348,7 +348,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             enViewParent.setID(String.valueOf(enParent.getID()));
 
             enViewParent.setRow1a(enParent.getMLT());
-            if (enParent.getCodeMoi().equals("") == false)
+            if (!enParent.getCodeMoi().equals(""))
                 enViewParent.setRow1b(enParent.getCodeMoi() + "-" + enParent.getChiSoMoi() + "-" + enParent.getTieuThuMoi());
             enViewParent.setRow2a(enParent.getDanhBo());
 //            if (enParent.getChiSoMoi().equals("") == false)
@@ -356,7 +356,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             enViewParent.setRow2b(enParent.getModifyDate());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
-            if (enParent.getCodeMoi().equals("") == false && enParent.isSync() == false)
+            if (!enParent.getCodeMoi().equals("") && !enParent.isSync())
                 TongNotSync++;
             TongDC++;
 
@@ -412,14 +412,14 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 JSONArray jsonDocSoTon = new JSONArray(ws.getDS_DocSo_Ton(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), CLocal.May));
                 int total = jsonDocSoTon.length();
                 progressDialog.setMax(total);
-                if (jsonDocSoTon != null && jsonDocSoTon.length() > 0)
+                if (jsonDocSoTon.length() > 0)
                     for (int i = 0; i < jsonDocSoTon.length(); i++) {
                         JSONObject jsonObjectDocSoTon = jsonDocSoTon.getJSONObject(i);
-                        if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", "")) == true
-                                && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false
-                                && (CLocal.listDocSo.get(i).getCodeMoi().equals(jsonObjectDocSoTon.getString("CodeMoi").replace("null", "")) == false
+                        if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", ""))
+                                && !CLocal.listDocSo.get(i).getCodeMoi().equals("")
+                                && (!CLocal.listDocSo.get(i).getCodeMoi().equals(jsonObjectDocSoTon.getString("CodeMoi").replace("null", ""))
                                 || Integer.parseInt(CLocal.listDocSo.get(i).getChiSoMoi()) != Integer.parseInt(jsonObjectDocSoTon.getString("CSMoi").replace("null", ""))
-                                || CLocal.listDocSo.get(i).isGhiHinh() == false)) {
+                                || !CLocal.listDocSo.get(i).isGhiHinh())) {
                             String HinhDHN = "";
                             Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
@@ -429,9 +429,9 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                                     , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
                                     HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
                             JSONObject jsonObject = null;
-                            if (result.equals("") == false)
+                            if (!result.equals(""))
                                 jsonObject = new JSONObject(result);
-                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
+                            if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                                 CLocal.listDocSo.get(i).setSync(true);
                                 CLocal.listDocSo.get(i).setGhiHinh(true);
                             }
@@ -456,7 +456,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (s.equals("") == false)
+            if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
             else
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Đã Xử Lý");
@@ -490,17 +490,17 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 JSONArray jsonDocSoTon = new JSONArray(ws.getDS_Hinh_Ton(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), CLocal.May));
                 int total = jsonDocSoTon.length();
                 progressDialog.setMax(total);
-                if (jsonDocSoTon != null && jsonDocSoTon.length() > 0)
+                if (jsonDocSoTon.length() > 0)
                     for (int i = 0; i < jsonDocSoTon.length(); i++) {
                         JSONObject jsonObjectDocSoTon = jsonDocSoTon.getJSONObject(i);
-                        if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", "")) == true
-                                && CLocal.listDocSo.get(i).getCodeMoi().equals("") == false) {
+                        if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", ""))
+                                && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
                             String HinhDHN = "";
                             Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
                                 HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                 String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
-                                if (Boolean.parseBoolean(result) == true)
+                                if (Boolean.parseBoolean(result))
                                     CLocal.listDocSo.get(i).setGhiHinh(true);
                             }
                         }
@@ -524,7 +524,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            if (s.equals("") == false)
+            if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
             else
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Đã Xử Lý");

@@ -601,19 +601,19 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     }
 
     public void tinhTieuThu() {
-        if (playTinhTieuThu == true) {
+        if (playTinhTieuThu) {
             String strChiSo = "";
-            if (edtChiSo.getText().toString().equals("") == true)
+            if (edtChiSo.getText().toString().equals(""))
                 strChiSo = "0";
             else
                 strChiSo = edtChiSo.getText().toString();
             edtCodeMoi.setText(selectedCode.getCode());
             edtChiSoMoi.setText(strChiSo);
-            if (CLocal.lstTT0.contains(edtCodeMoi.getText().toString()) == true)
+            if (CLocal.lstTT0.contains(edtCodeMoi.getText().toString()))
                 edtTieuThuMoi.setText("0");
-            else if (CLocal.lstTBTT.contains(edtCodeMoi.getText().toString()) == true)
+            else if (CLocal.lstTBTT.contains(edtCodeMoi.getText().toString()))
                 edtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
-            else if (CLocal.lstBinhThuong.contains(edtCodeMoi.getText().toString()) == true)
+            else if (CLocal.lstBinhThuong.contains(edtCodeMoi.getText().toString()))
                 if (edtCodeMoi.getText().toString().equals("X41") == true)
                     edtTieuThuMoi.setText(String.valueOf(10000 + Integer.parseInt(edtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
                 else if (edtCodeMoi.getText().toString().equals("X51") == true)

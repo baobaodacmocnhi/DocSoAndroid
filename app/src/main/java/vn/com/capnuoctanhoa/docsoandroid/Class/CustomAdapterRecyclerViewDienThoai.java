@@ -17,7 +17,6 @@ import android.widget.TextView;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
@@ -28,8 +27,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<CustomAdapterRecyclerViewDienThoai.RecyclerViewHolder> {
-    private Activity activity;
-    private ArrayList<CEntityParent> mDisplayedValues;
+    private final Activity activity;
+    private final ArrayList<CEntityParent> mDisplayedValues;
     private entityParentListener entityParentListener;
 
     public interface entityParentListener {
@@ -65,7 +64,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 holder.chkSoChinh.setVisibility(View.INVISIBLE);
             holder.chkSoChinh.setChecked(entityParent.isSoChinh());
             holder.txtGhiChu.setText(entityParent.getDiaChi());
-            if (entityParent.isAnXoa() == true)
+            if (entityParent.isAnXoa())
                 holder.imageButton.setVisibility(View.INVISIBLE);
             holder.imageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -85,7 +84,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                     //sđt
                                     if (DanhBo.length() == 11) {
                                         MyAsyncTask myAsyncTask = new MyAsyncTask();
-                                        myAsyncTask.execute(new String[]{"Xoa", entityParent.getDanhBo(), entityParent.getDienThoai()});
+                                        myAsyncTask.execute("Xoa", entityParent.getDanhBo(), entityParent.getDienThoai());
                                     } else {
                                         try {//downfile
                                             String Nam = "", Ky = "", Dot = "";
@@ -94,11 +93,11 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                                 Ky = CLocal.listDocSo.get(0).getKy();
                                                 Dot = CLocal.listDocSo.get(0).getDot();
                                             }
-                                            if ((Nam + "_" + Ky + "_" + Dot + ".txt").equals(entityParent.getDienThoai()) == true) {
+                                            if ((Nam + "_" + Ky + "_" + Dot + ".txt").equals(entityParent.getDienThoai())) {
                                                 CLocal.listDocSo = null;
                                                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                                                 editor.putString("jsonDocSo", "");
-                                                editor.commit();
+                                                editor.apply();
                                             }
                                             CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
                                             CLocal.deleteFile(CLocal.pathAppPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
@@ -126,7 +125,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                             }
                             SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                             editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
-                            editor.commit();
+                            editor.apply();
                             CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
                             }.getType());
                             if (CLocal.listDocSo.size() > 2000)
@@ -148,7 +147,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute(new String[]{"Sua", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked)});
+                    myAsyncTask.execute("Sua", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked));
                 }
             });
 
@@ -180,7 +179,6 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
         ProgressDialog progressDialog;
-        JSONObject jsonObject = null;
 
         @Override
         protected void onPreExecute() {
@@ -194,9 +192,11 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
 
         @Override
         protected String doInBackground(String... strings) {
+            String error = "";
             try {
-                String result = "";
                 CWebservice ws = new CWebservice();
+                JSONObject jsonObject = null;
+                String result = "";
                 switch (strings[0]) {
                     case "Xoa":
                         result = ws.delete_DienThoai(strings[1], strings[2]);
@@ -205,14 +205,17 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                         result = ws.update_DienThoai(strings[1], strings[2], strings[3], strings[4], CLocal.MaNV);
                         break;
                 }
-                jsonObject = new JSONObject(result);
-                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", "")) == true) {
-                    return "THÀNH CÔNG";
-                } else
-                    return "THẤT BẠI";
+                if (!result.equals(""))
+                    jsonObject = new JSONObject(result);
+                if (jsonObject != null)
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+
+                    } else
+                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
             } catch (Exception ex) {
-                return "THẤT BẠI";
+                error = ex.getMessage();
             }
+            return error;
         }
 
         @Override
@@ -226,11 +229,8 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
-            try {
-                CLocal.showPopupMessage(activity, s + "\r\n" + jsonObject.getString("error").replace("null", ""), "center");
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+            if (!s.equals(""))
+                CLocal.showPopupMessage(activity, s, "center");
         }
 
     }
