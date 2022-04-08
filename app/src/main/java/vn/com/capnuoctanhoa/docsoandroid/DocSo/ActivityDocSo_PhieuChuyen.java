@@ -20,7 +20,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -78,7 +77,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     spnName_PhieuChuyen.add(jsonObject.getString("Name").replace("null", ""));
                 }
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_PhieuChuyen);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_PhieuChuyen);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnPhieuChuyen.setAdapter(adapter);
         } catch (Exception e) {
@@ -94,35 +93,30 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, ex.getMessage());
         }
 
-        btnCapNhat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (!edtGhiChu.getText().toString().equals("") && imgCapture != null) {
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute();
-                } else
-                    CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
-            }
+        btnCapNhat.setOnClickListener(v -> {
+            if (!edtGhiChu.getText().toString().equals("") && imgCapture != null) {
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute();
+            } else
+                CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
         });
 
-        ibtnChupHinh.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    if (!cMarshMallowPermission.checkPermissionForExternalStorage()) {
-                        cMarshMallowPermission.requestPermissionForExternalStorage();
-                    }
-                    if (!cMarshMallowPermission.checkPermissionForExternalStorage())
-                        return;
+        ibtnChupHinh.setOnClickListener(view -> {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                if (!cMarshMallowPermission.checkPermissionForExternalStorage()) {
+                    cMarshMallowPermission.requestPermissionForExternalStorage();
                 }
-                imgCapture = null;
-                Uri imgUri = createImageUri();
-                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(ActivityDocSo_PhieuChuyen.this.getPackageManager()) != null) {
-                    intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
-                    intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                    activityResultLauncher_ChupHinh.launch(intent);
-                }
+                if (!cMarshMallowPermission.checkPermissionForExternalStorage())
+                    return;
+            }
+            imgCapture = null;
+            Uri imgUri = createImageUri();
+            Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+            if (intent.resolveActivity(ActivityDocSo_PhieuChuyen.this.getPackageManager()) != null) {
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
+                intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                activityResultLauncher_ChupHinh.launch(intent);
+            }
 //                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
 //                    if (cMarshMallowPermission.checkPermissionForExternalStorage() == false) {
 //                        cMarshMallowPermission.requestPermissionForExternalStorage();
@@ -141,15 +135,9 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 //                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
 //                    activityResultLauncher_ChonHinh.launch(intent);
 //                }
-            }
         });
 
-        imgThumb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                CLocal.showImgThumb(ActivityDocSo_PhieuChuyen.this, imgCapture);
-            }
-        });
+        imgThumb.setOnClickListener(v -> CLocal.showImgThumb(ActivityDocSo_PhieuChuyen.this, imgCapture));
     }
 
     private void fillDSDonTu() {
@@ -256,9 +244,8 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             try {
                 CWebservice ws = new CWebservice();
                 JSONObject jsonObject = null;
-                String result = "";
                 String imgString = CBitmap.convertBitmapToString(imgCapture);
-                result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), imgString, CLocal.MaNV);
+                String result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), imgString, CLocal.MaNV);
                 if (!result.equals(""))
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null)
@@ -303,8 +290,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             try {
                 CWebservice ws = new CWebservice();
                 JSONObject jsonObject = null;
-                String result = "";
-                result = ws.getDS_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                String result = ws.getDS_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                 if (!result.equals(""))
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null)

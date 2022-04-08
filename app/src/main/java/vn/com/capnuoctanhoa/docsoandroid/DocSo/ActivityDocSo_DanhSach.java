@@ -48,7 +48,8 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_DanhSach extends AppCompatActivity {
-    private Spinner spnFilter, spnSort, spnNhanVien;
+    private Spinner spnFilter;
+    private Spinner spnSort;
     private ListView lstView;
     private CustomAdapterListView customAdapterListView;
     private TextView txtTongHD, txtNotSync;
@@ -56,7 +57,6 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     private ArrayList<CViewParent> listParent;
     private ArrayList<CViewChild> listChild;
     private FloatingActionButton floatingActionButton;
-    private ImageView ivSync;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,45 +71,36 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
-        spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
+        Spinner spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtNotSync = (TextView) findViewById(R.id.txtNotSync);
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
-        ivSync = (ImageView) findViewById(R.id.ivSync);
+        ImageView ivSync = (ImageView) findViewById(R.id.ivSync);
 
-        ivSync.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_DanhSach.this)) {
-                        CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Không có Internet");
-                        return;
-                    }
-                    CLocal.showDialog(ActivityDocSo_DanhSach.this, "Đồng hộ Lệch so với server", ""
-                            , "Sync Code", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                                        MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
-                                        myAsyncTaskSyncCodeTon.execute();
-                                    }
-                                }
-                            }, "Sync Hình", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                                        MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
-                                        myAsyncTaskSyncHinhTon.execute();
-                                    }
-                                }
-                            }, true);
-                } catch (Exception ex) {
-                    CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, ex.getMessage(), "left");
+        ivSync.setOnClickListener(v -> {
+            try {
+                if (!CLocal.checkNetworkAvailable(ActivityDocSo_DanhSach.this)) {
+                    CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Không có Internet");
+                    return;
                 }
+                CLocal.showDialog(ActivityDocSo_DanhSach.this, "Đồng hộ Lệch so với server", ""
+                        , "Sync Code", (dialog, which) -> {
+                            dialog.dismiss();
+                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
+                                myAsyncTaskSyncCodeTon.execute();
+                            }
+                        }, "Sync Hình", (dialog, which) -> {
+                            dialog.dismiss();
+                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
+                                myAsyncTaskSyncHinhTon.execute();
+                            }
+                        }, true);
+            } catch (Exception ex) {
+                CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, ex.getMessage(), "left");
             }
         });
 
@@ -131,13 +122,13 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 if (listParent != null && listParent.size() > 0)
                     switch (spnSort.getSelectedItem().toString()) {
                         case "Thời Gian Tăng":
-                            Collections.sort(listParent, new CSort("ModifyDate", -1));
+                            listParent.sort(new CSort("ModifyDate", -1));
                             break;
                         case "Thời Gian Giảm":
-                            Collections.sort(listParent, new CSort("ModifyDate", 1));
+                            listParent.sort(new CSort("ModifyDate", 1));
                             break;
                         default:
-                            Collections.sort(listParent, new CSort("", -1));
+                            listParent.sort(new CSort("", -1));
                             break;
                     }
                 if (customAdapterListView != null)
@@ -176,26 +167,18 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             }
         });
 
-        lstView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
-            @Override
-            public boolean onItemLongClick(AdapterView<?> parent, final View view, int position, long id) {
-                TextView STT = (TextView) view.findViewById(R.id.lvSTT);
-                int i = Integer.parseInt(STT.getText().toString()) - 1;
-                CLocal.indexPosition = i;
-                Intent intent;
-                intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChiSo2.class);
-                CLocal.STT = i;
-                activityResultLauncher_GhiChiSo.launch(intent);
-                return false;
-            }
+        lstView.setOnItemLongClickListener((parent, view, position, id) -> {
+            TextView STT = (TextView) view.findViewById(R.id.lvSTT);
+            int i = Integer.parseInt(STT.getText().toString()) - 1;
+            CLocal.indexPosition = i;
+            Intent intent;
+            intent = new Intent(getApplicationContext(), ActivityDocSo_GhiChiSo2.class);
+            CLocal.STT = i;
+            activityResultLauncher_GhiChiSo.launch(intent);
+            return false;
         });
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                lstView.smoothScrollToPosition(0);
-            }
-        });
+        floatingActionButton.setOnClickListener(v -> lstView.smoothScrollToPosition(0));
 
         loadListView();
     }
@@ -216,19 +199,10 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
         SearchView searchView = (SearchView) menu.findItem(R.id.menu_search).getActionView();
         searchView.setSearchableInfo(searchManager.getSearchableInfo(getComponentName()));
-        searchView.setOnSearchClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        searchView.setOnSearchClickListener(v -> {
 
-            }
         });
-        searchView.setOnCloseListener(new SearchView.OnCloseListener() {
-            @Override
-            public boolean onClose() {
-
-                return false;
-            }
-        });
+        searchView.setOnCloseListener(() -> false);
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -264,8 +238,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
     public void loadListView() {
         try {
-            listParent = new ArrayList<CViewParent>();
-            CLocal.listDocSoView = new ArrayList<CEntityParent>();
+            listParent = new ArrayList<>();
+            CLocal.listDocSoView = new ArrayList<>();
             TongDC = 0;
             TongNotSync = 0;
             switch (spnFilter.getSelectedItem().toString()) {
@@ -368,12 +342,9 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
     ActivityResultLauncher<Intent> activityResultLauncher_GhiChiSo = registerForActivityResult(
             new ActivityResultContracts.StartActivityForResult(),
-            new ActivityResultCallback<ActivityResult>() {
-                @Override
-                public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        loadListView();
-                    }
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    loadListView();
                 }
             });
 
@@ -495,10 +466,9 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         JSONObject jsonObjectDocSoTon = jsonDocSoTon.getJSONObject(i);
                         if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", ""))
                                 && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
-                            String HinhDHN = "";
                             Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
-                                HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                String HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                 String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
                                 if (Boolean.parseBoolean(result))
                                     CLocal.listDocSo.get(i).setGhiHinh(true);

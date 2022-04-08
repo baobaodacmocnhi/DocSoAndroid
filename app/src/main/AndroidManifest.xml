@@ -129,6 +129,10 @@
             android:name=".DocSo.ActivityDownDataDocSo"
             android:label="Tải Dữ Liệu Đọc Số"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
+            android:name=".QuanLy.ActivityQuanLy"
+            android:label="Quản Lý"
+            android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>

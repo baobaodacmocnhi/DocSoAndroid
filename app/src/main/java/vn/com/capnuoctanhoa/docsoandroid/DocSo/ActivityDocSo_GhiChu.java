@@ -10,10 +10,10 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterRecyclerViewDienThoai;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
+import android.annotation.SuppressLint;
 import android.app.ProgressDialog;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -60,7 +60,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     spnName_ViTriDHN.add(jsonObject.getString("KyHieu").replace("null", ""));
                 }
             }
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_ViTriDHN);
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_ViTriDHN);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnViTri1.setAdapter(adapter);
             spnViTri2.setAdapter(adapter);
@@ -68,35 +68,28 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        btnCapNhat.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
-                    return;
-                }
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute("CapNhat");
+        btnCapNhat.setOnClickListener(view -> {
+            if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
+                return;
             }
+            MyAsyncTask myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute("CapNhat");
         });
 
-        btnCapNhatDT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
-                    return;
-                }
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute("CapNhatDT");
+        btnCapNhatDT.setOnClickListener(view -> {
+            if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
+                return;
             }
+            MyAsyncTask myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute("CapNhatDT");
         });
 
         try {
             if (CLocal.STT > -1) {
                 if (CLocal.listDocSoView != null && CLocal.listDocSoView.size() > 0) {
-                    ArrayList<String> arrayList = new ArrayList<String>();
-                    if (CLocal.STT >= 0 && CLocal.STT < CLocal.listDocSoView.size()) {
+                    if (CLocal.STT < CLocal.listDocSoView.size()) {
                         CEntityParent entityParent = CLocal.listDocSoView.get(CLocal.STT);
                         edtSoNha.setText(entityParent.getSoNha());
                         edtTenDuong.setText(entityParent.getTenDuong());
@@ -117,7 +110,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
 
     }
 
-    private void fillDSDienThoai() {
+    public void fillDSDienThoai() {
         if (jsonDSDienThoai != null)
             try {
                 ArrayList<CEntityParent> lstDienThoai = new ArrayList<>();
@@ -132,13 +125,10 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     lstDienThoai.add(entityParent);
                 }
                 CustomAdapterRecyclerViewDienThoai customAdapterRecyclerViewDienThoai = new CustomAdapterRecyclerViewDienThoai(ActivityDocSo_GhiChu.this, lstDienThoai);
-                customAdapterRecyclerViewDienThoai.setClickItemListener(new CustomAdapterRecyclerViewDienThoai.entityParentListener() {
-                    @Override
-                    public void onClick(CEntityParent entityParent) {
-                        edtDienThoai.setText(entityParent.getDienThoai());
-                        edtHoTen.setText(entityParent.getHoTen());
-                        chkSoChinh.setChecked(entityParent.isSoChinh());
-                    }
+                customAdapterRecyclerViewDienThoai.setClickItemListener(entityParent -> {
+                    edtDienThoai.setText(entityParent.getDienThoai());
+                    edtHoTen.setText(entityParent.getHoTen());
+                    chkSoChinh.setChecked(entityParent.isSoChinh());
                 });
                 recyclerView.setHasFixedSize(true);
                 LinearLayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
@@ -153,19 +143,19 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        String sdt = "";
+        StringBuilder sdt = new StringBuilder();
         for (int x = recyclerView.getChildCount(), i = 0; i < x; i++) {
             RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
             TextView txtDienThoai = (TextView) holder.itemView.findViewById(R.id.txtDienThoai);
             TextView txtHoTen = (TextView) holder.itemView.findViewById(R.id.txtHoTen);
             CheckBox chkSoChinh = (CheckBox) holder.itemView.findViewById(R.id.chkSoChinh);
             if (chkSoChinh.isChecked())
-                if (sdt.equals(""))
-                    sdt = txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString();
+                if (sdt.toString().equals(""))
+                    sdt = new StringBuilder(txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString());
                 else
-                    sdt += " | " + txtDienThoai.getText().toString() + " " + txtHoTen.getText().toString();
+                    sdt.append(" | ").append(txtDienThoai.getText().toString()).append(" ").append(txtHoTen.getText().toString());
         }
-        CLocal.listDocSoView.get(CLocal.STT).setDienThoai(sdt);
+        CLocal.listDocSoView.get(CLocal.STT).setDienThoai(sdt.toString());
     }
 
     public class MyAsyncTask extends AsyncTask<String, String, String> {
@@ -224,14 +214,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         }
 
         @Override
-        protected void onProgressUpdate(String... values) {
-            super.onProgressUpdate(values);
-            if (values != null) {
-
-            }
-        }
-
-        @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
             if (progressDialog != null) {
@@ -263,8 +245,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             try {
                 CWebservice ws = new CWebservice();
                 JSONObject jsonObject = null;
-                String result = "";
-                result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                String result = ws.getDS_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                 if (!result.equals(""))
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null)
@@ -283,7 +264,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             super.onProgressUpdate(values);
             if (values != null) {
                 try {
-                    jsonDSDienThoai = new JSONArray(values[1]);
+                    jsonDSDienThoai = new JSONArray(values[0]);
                     fillDSDienThoai();
                 } catch (Exception e) {
                     e.printStackTrace();

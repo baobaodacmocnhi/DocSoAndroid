@@ -135,7 +135,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
                 NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-                NotificationCompat.Builder notificationBuilder = null;
+                NotificationCompat.Builder notificationBuilder;
 
                 if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.O) {
                     NotificationChannel mChannel = notificationManager.getNotificationChannel("DocSoNotification_ID");
@@ -175,9 +175,9 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                 }
 
                 PowerManager powerManager = (PowerManager) getSystemService(Context.POWER_SERVICE);
-                boolean isScreenOn = false;
+                boolean isScreenOn;
 //                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT_WATCH) {
-                    isScreenOn = powerManager.isInteractive();
+                isScreenOn = powerManager.isInteractive();
 //                }
                 if (!isScreenOn) {
                     @SuppressLint("InvalidWakeLockTag") PowerManager.WakeLock wl = powerManager.newWakeLock(PowerManager.FULL_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP | PowerManager.ON_AFTER_RELEASE, "MyLock");
@@ -425,10 +425,9 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         for (int i = 0; i < listDocSo.size(); i++) {
                             if (listDocSo.get(i).getID().equals(ID)
                                     && !listDocSo.get(i).getCodeMoi().equals("")) {
-                                String HinhDHN = "";
                                 Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
-                                    HinhDHN = CBitmap.convertBitmapToString(bitmap);
+                                    String HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                     String result = ws.ghi_Hinh(listDocSo.get(i).getID(), HinhDHN);
                                     if (Boolean.parseBoolean(result))
                                         listDocSo.get(i).setGhiHinh(true);

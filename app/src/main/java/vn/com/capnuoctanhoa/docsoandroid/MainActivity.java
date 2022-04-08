@@ -13,6 +13,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChu;
+import vn.com.capnuoctanhoa.docsoandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceFirebaseMessaging;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceThermalPrinter;
@@ -68,9 +69,11 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
     private Button btnAdmin;
-    private ImageButton imgbtnDangNhap, imgbtnDocSo;
-    private TextView txtUser, txtVersion;
-    private CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
+    private ImageButton imgbtnDangNhap;
+    private ImageButton imgbtnQuanLy;
+    private TextView txtUser;
+    private TextView txtQuanLy;
+    private final CMarshMallowPermission cMarshMallowPermission = new CMarshMallowPermission(MainActivity.this);
     private String pathdownloaded;
     private PackageInfo packageInfo;
     private CWebservice ws = new CWebservice();
@@ -105,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        imgbtnDocSo = (ImageButton) findViewById(R.id.imgbtnDocSo);
+        ImageButton imgbtnDocSo = (ImageButton) findViewById(R.id.imgbtnDocSo);
         imgbtnDocSo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -114,8 +117,18 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        imgbtnQuanLy = (ImageButton) findViewById(R.id.imgbtnQuanLy);
+        imgbtnQuanLy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, ActivityQuanLy.class);
+                startActivity(intent);
+            }
+        });
+
         txtUser = (TextView) findViewById(R.id.txtUser);
-        txtVersion = (TextView) findViewById(R.id.txtVersion);
+        TextView txtVersion = (TextView) findViewById(R.id.txtVersion);
+        txtQuanLy = (TextView) findViewById(R.id.txtQuanLy);
         try {
             packageInfo = MainActivity.this.getPackageManager().getPackageInfo(getPackageName(), 0);
         } catch (Exception ex) {
@@ -162,6 +175,8 @@ public class MainActivity extends AppCompatActivity {
                 CLocal.MethodPrinter = CLocal.sharedPreferencesre.getString("MethodPrinter", "Intermec");
                 CLocal.SyncTrucTiep = CLocal.sharedPreferencesre.getBoolean("SyncTrucTiep", true);
                 btnAdmin.setVisibility(View.GONE);
+                imgbtnQuanLy.setVisibility(View.GONE);
+                txtQuanLy.setVisibility(View.GONE);
                 if (CLocal.sharedPreferencesre.getBoolean("Login", false)) {
                     //so sánh logout sau 7 ngày
                     long millis = CLocal.sharedPreferencesre.getLong("LoginDate", 0L);
@@ -200,10 +215,14 @@ public class MainActivity extends AppCompatActivity {
                         CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
                         CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
                         CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                        imgbtnQuanLy.setVisibility(View.VISIBLE);
+                        txtQuanLy.setVisibility(View.VISIBLE);
                     } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) && !CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("")) {
                         CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                         CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
                         CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
+                        imgbtnQuanLy.setVisibility(View.VISIBLE);
+                        txtQuanLy.setVisibility(View.VISIBLE);
                     }
                 } else {
                     txtUser.setText("Xin hãy đăng nhập");
