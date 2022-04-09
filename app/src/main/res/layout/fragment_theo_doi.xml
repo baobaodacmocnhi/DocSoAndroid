@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".QuanLy.FragmentTheoDoi">
+
+    <LinearLayout
+        android:id="@+id/layoutTo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TextView
+            android:id="@+id/textView25"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="Tổ:"
+            android:textSize="14sp"
+            tools:layout_editor_absoluteX="145dp"
+            tools:layout_editor_absoluteY="48dp" />
+
+        <Spinner
+            android:id="@+id/spnTo"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SpeakableTextPresentCheck"
+            tools:layout_editor_absoluteY="8dp" />
+
+        <Button
+            android:id="@+id/btnXem"
+            style="@style/ButtonThuTien"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Xem" />
+    </LinearLayout>
+
+    <TextView
+            android:id="@+id/textView28"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Năm"
+            android:textSize="14sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/spnNam" />
+
+        <Spinner
+            android:id="@+id/spnNam"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/textView28"
+            app:layout_constraintTop_toBottomOf="@+id/layoutTo"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+        <Spinner
+            android:id="@+id/spnKy"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:entries="@array/ky_array"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/textView29"
+            app:layout_constraintTop_toTopOf="@+id/spnNam" />
+
+        <TextView
+            android:id="@+id/textView29"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Kỳ"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/spnNam"
+            app:layout_constraintTop_toTopOf="@+id/spnKy" />
+
+        <Spinner
+            android:id="@+id/spnDot"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_marginStart="8dp"
+            android:entries="@array/dot_array"
+            android:gravity="center"
+            android:textAlignment="center"
+            app:layout_constraintStart_toEndOf="@+id/textView30"
+            app:layout_constraintTop_toTopOf="@+id/spnNam" />
+
+        <TextView
+            android:id="@+id/textView30"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="16dp"
+            android:text="Đợt"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@+id/spnKy"
+            app:layout_constraintTop_toTopOf="@+id/spnDot" />
+
+    <FrameLayout
+        android:id="@+id/frameLayout"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:background="@color/colorListView"
+        app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
+        app:layout_constraintTop_toBottomOf="@+id/spnDot"
+        tools:layout_editor_absoluteX="411dp">
+
+        <ListView
+            android:id="@+id/lstView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:nestedScrollingEnabled="false">
+
+
+        </ListView>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/txtTongHD"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+
+        android:layout_weight="1"
+        android:text="Tổng HĐ"
+        android:textColor="@color/colorSoTien"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="32dp"
+        android:clickable="true"
+        app:backgroundTint="@android:color/holo_green_light"
+        app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:srcCompat="@android:drawable/stat_sys_upload"
+        tools:ignore="SpeakableTextPresentCheck" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

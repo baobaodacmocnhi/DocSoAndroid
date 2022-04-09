@@ -44,6 +44,11 @@
         <item>Bất Thường</item>
         <item>Chủ Báo</item>
     </string-array>
+    <string-array name="filter_theodoidocso_array">
+        <item>Tất Cả</item>
+        <item>HĐ=0</item>
+        <item>Bất Thường</item>
+    </string-array>
     <string-array name="sort_array">
         <item>MLT</item>
         <item>Thời Gian Tăng</item>

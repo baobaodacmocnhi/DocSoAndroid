@@ -352,7 +352,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghi_DonTu(String DanhBo, String NoiDung, String GhiChu,String Hinh, String MaNV) throws XmlPullParserException, IOException {
+    public String ghi_DonTu(String DanhBo, String NoiDung, String GhiChu, String Hinh, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghi_DonTu";
         String OPERATION_NAME = "ghi_DonTu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -659,7 +659,7 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String ghiChiSo_GianTiep(String ID, String Code, String ChiSo, String TieuThu, String TienNuoc, String ThueGTGT, String PhiBVMT, String PhiBVMT_Thue, String TongCong, String HinhDHN, String Dot, String MaNV,String NgayDS) throws XmlPullParserException, IOException {
+    public String ghiChiSo_GianTiep(String ID, String Code, String ChiSo, String TieuThu, String TienNuoc, String ThueGTGT, String PhiBVMT, String PhiBVMT_Thue, String TongCong, String HinhDHN, String Dot, String MaNV, String NgayDS) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghiChiSo_GianTiep";
         String OPERATION_NAME = "ghiChiSo_GianTiep";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -794,5 +794,69 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    //quản lý
+    public String getDS_TheoDoi(String MaTo, String Nam, String Ky, String Dot) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_TheoDoi";
+        String OPERATION_NAME = "getDS_TheoDoi";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaTo");
+        pi.setValue(MaTo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Nam");
+        pi.setValue(Nam);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Ky");
+        pi.setValue(Ky);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Dot");
+        pi.setValue(Dot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
+
+    public String getDS_BatThuong(String MaTo, String Nam, String Ky, String Dot) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_BatThuong";
+        String OPERATION_NAME = "getDS_BatThuong";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("MaTo");
+        pi.setValue(MaTo);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Nam");
+        pi.setValue(Nam);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Ky");
+        pi.setValue(Ky);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("Dot");
+        pi.setValue(Dot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
 
 }

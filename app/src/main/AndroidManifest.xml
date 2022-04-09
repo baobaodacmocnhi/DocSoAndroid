@@ -41,10 +41,13 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DocSo.ActivityDocSo_View"
+            android:exported="false" />
+        <activity
             android:name=".DocSo.ActivityDocSo_PhieuChuyen"
             android:exported="false"
             android:label="Phiếu Chuyển"
-            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert"/>
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_GhiChu"
             android:exported="false"
@@ -52,14 +55,14 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_GhiChiSo"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
-            android:label="Ghi Chỉ Số Nước"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:label="Ghi Chỉ Số Nước" />
         <activity
             android:name=".DocSo.ActivityDocSo_GhiChiSo2"
+            android:configChanges="orientation|screenSize|keyboardHidden"
             android:exported="false"
-            android:label="Ghi Chỉ Số Nước"
-            android:configChanges="orientation|screenSize|keyboardHidden"/>
+            android:label="Ghi Chỉ Số Nước" />
 
         <service
             android:name=".Service.ServiceThermalPrinter"

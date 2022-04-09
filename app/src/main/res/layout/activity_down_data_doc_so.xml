@@ -37,6 +37,7 @@
             android:gravity="center"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SpeakableTextPresentCheck"
             tools:layout_editor_absoluteY="8dp" />
     </LinearLayout>
 
@@ -71,6 +72,7 @@
             android:gravity="center"
             android:textAlignment="center"
             app:layout_constraintEnd_toEndOf="parent"
+            tools:ignore="SpeakableTextPresentCheck"
             tools:layout_editor_absoluteY="8dp" />
     </LinearLayout>
 
@@ -173,7 +175,8 @@
         android:gravity="center"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView26"
-        app:layout_constraintTop_toBottomOf="@+id/layoutNhanVien" />
+        app:layout_constraintTop_toBottomOf="@+id/layoutNhanVien"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <Spinner
         android:id="@+id/spnDot"

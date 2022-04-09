@@ -75,10 +75,10 @@ public class ActivityQuanLy extends AppCompatActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    FragmentGiao tab0 = new FragmentGiao();
+                    FragmentTheoDoi tab0 = new FragmentTheoDoi();
                     return tab0;
                 case 1:
-                    FragmentDangNgan tab1 = new FragmentDangNgan();
+                    FragmentBatThuong tab1 = new FragmentBatThuong();
                     return tab1;
                 default:
                     return null;
@@ -95,9 +95,9 @@ public class ActivityQuanLy extends AppCompatActivity {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "Giao";
+                    return "Theo Dõi";
                 case 1:
-                    return "Đăng Ngân";
+                    return "Bất Thường";
                 default:
                     return null;
             }

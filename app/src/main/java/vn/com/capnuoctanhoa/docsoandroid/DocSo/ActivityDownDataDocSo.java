@@ -352,11 +352,11 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
             try {
                 CLocal.jsonDocSo = new JSONArray();
                 CLocal.jsonHoaDonTon = new JSONArray();
-                if (CLocal.Doi == false && CLocal.ToTruong == false)
+                if (!CLocal.Doi && !CLocal.ToTruong)
                     selectedMaNV = CLocal.May;
                 if (selectedMaNV.equals("0")) {
                     for (int i = 1; i < spnID_NhanVien.size(); i++) {
-                        if (Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i)))) == false)
+                        if (!Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i)))))
                             return new String[]{"false", "Chưa đến ngày đọc số"};
                         JSONArray jsonResult = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), (Integer.parseInt(spnID_NhanVien.get(i)) < 10 ? "0" : "") + Integer.parseInt(spnID_NhanVien.get(i))));
                         for (int j = 0; j < jsonResult.length(); j++) {
@@ -370,7 +370,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         }
                     }
                 } else {
-                    if (Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV)) == false)
+                    if (!Boolean.parseBoolean(ws.checkNgayDoc(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV)))
                         return new String[]{"false", "Chưa đến ngày đọc số"};
                     CLocal.jsonDocSo = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
                     CLocal.jsonHoaDonTon = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));

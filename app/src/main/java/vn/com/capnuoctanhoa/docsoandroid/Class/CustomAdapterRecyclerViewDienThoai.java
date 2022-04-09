@@ -70,13 +70,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                 @Override
                 public void onClick(View v) {
                     CLocal.showDialog(activity, "Xác nhận", ""
-                            , "Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-
-                                }
-                            }, "Ok", new DialogInterface.OnClickListener() {
+                            , "Cancel", (dialog, which) -> dialog.dismiss(), "Ok", new DialogInterface.OnClickListener() {
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
@@ -110,45 +104,39 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                             }, false);
                 }
             });
-            holder.itemView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        if (entityParent.getDanhBo().length() != 11)//downfile
-                        {
-                            String Nam = "", Ky = "", Dot = "";
-                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                                Nam = CLocal.listDocSo.get(0).getNam();
-                                Ky = CLocal.listDocSo.get(0).getKy();
-                                Dot = CLocal.listDocSo.get(0).getDot();
-                                CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-                            }
-                            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-                            editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
-                            editor.apply();
-                            CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
-                            }.getType());
-                            if (CLocal.listDocSo.size() > 2000)
-                                CLocal.listDocSo = null;
-
-                            CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
-                            Intent returnIntent = new Intent();
-                            activity.setResult(Activity.RESULT_OK, returnIntent);
-                            activity.finish();
-                        } else if (entityParent.getDienThoai().length() == 10) {
-                            entityParentListener.onClick(entityParent);
+            holder.itemView.setOnClickListener(v -> {
+                try {
+                    if (entityParent.getDanhBo().length() != 11)//downfile
+                    {
+                        String Nam = "", Ky = "", Dot = "";
+                        if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                            Nam = CLocal.listDocSo.get(0).getNam();
+                            Ky = CLocal.listDocSo.get(0).getKy();
+                            Dot = CLocal.listDocSo.get(0).getDot();
+                            CLocal.writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
                         }
-                    } catch (IOException e) {
-                        e.printStackTrace();
+                        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                        editor.putString("jsonDocSo", CLocal.readFile(CLocal.pathAppDownload, entityParent.getDienThoai()));
+                        editor.apply();
+                        CLocal.listDocSo = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonDocSo", ""), new TypeToken<ArrayList<CEntityParent>>() {
+                        }.getType());
+                        if (CLocal.listDocSo.size() > 2000)
+                            CLocal.listDocSo = null;
+
+                        CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
+                        Intent returnIntent = new Intent();
+                        activity.setResult(Activity.RESULT_OK, returnIntent);
+                        activity.finish();
+                    } else if (entityParent.getDienThoai().length() == 10) {
+                        entityParentListener.onClick(entityParent);
                     }
+                } catch (IOException e) {
+                    e.printStackTrace();
                 }
             });
-            holder.chkSoChinh.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute("Sua", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked));
-                }
+            holder.chkSoChinh.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("Sua", entityParent.getDanhBo(), entityParent.getDienThoai(), entityParent.getHoTen(), String.valueOf(isChecked));
             });
 
         }

@@ -447,6 +447,7 @@
                     android:orientation="horizontal">
                     <!--ky hien tai - 3-->
                     <LinearLayout
+                        android:id="@+id/layout2"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -498,6 +499,7 @@
                     </LinearLayout>
                     <!--ky hien tai - 2-->
                     <LinearLayout
+                        android:id="@+id/layout1"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -549,6 +551,7 @@
                     </LinearLayout>
                     <!--ky hien tai - 1-->
                     <LinearLayout
+                        android:id="@+id/layout0"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"

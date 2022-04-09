@@ -5,7 +5,6 @@ import android.app.NotificationManager;
 import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -25,10 +24,7 @@ import android.widget.TextView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
-import androidx.activity.result.ActivityResult;
-import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
@@ -41,21 +37,18 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CSort;
-import vn.com.capnuoctanhoa.docsoandroid.Class.CViewChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_DanhSach extends AppCompatActivity {
-    private Spinner spnFilter;
-    private Spinner spnSort;
+    private Spinner spnFilter,spnSort;
     private ListView lstView;
     private CustomAdapterListView customAdapterListView;
     private TextView txtTongHD, txtNotSync;
     private long TongDC, TongNotSync;
-    private ArrayList<CViewParent> listParent;
-    private ArrayList<CViewChild> listChild;
+    private ArrayList<CViewParent> lstParent;
     private FloatingActionButton floatingActionButton;
 
     @Override
@@ -119,16 +112,16 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (listParent != null && listParent.size() > 0)
+                if (lstParent != null && lstParent.size() > 0)
                     switch (spnSort.getSelectedItem().toString()) {
                         case "Thời Gian Tăng":
-                            listParent.sort(new CSort("ModifyDate", -1));
+                            lstParent.sort(new CSort("ModifyDate", -1));
                             break;
                         case "Thời Gian Giảm":
-                            listParent.sort(new CSort("ModifyDate", 1));
+                            lstParent.sort(new CSort("ModifyDate", 1));
                             break;
                         default:
-                            listParent.sort(new CSort("", -1));
+                            lstParent.sort(new CSort("", -1));
                             break;
                     }
                 if (customAdapterListView != null)
@@ -238,7 +231,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
     public void loadListView() {
         try {
-            listParent = new ArrayList<>();
+            lstParent = new ArrayList<>();
             CLocal.listDocSoView = new ArrayList<>();
             TongDC = 0;
             TongNotSync = 0;
@@ -304,7 +297,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                     }
                     break;
             }
-            customAdapterListView = new CustomAdapterListView(this, listParent);
+            customAdapterListView = new CustomAdapterListView(this, lstParent);
             lstView.setAdapter(customAdapterListView);
             txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
             txtNotSync.setText(String.valueOf(TongNotSync));
@@ -318,23 +311,19 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         try {
             CViewParent enViewParent = new CViewParent();
             enViewParent.setModifyDate(enParent.getModifyDate());
-            enViewParent.setSTT(String.valueOf(listParent.size() + 1));
+            enViewParent.setSTT(String.valueOf(lstParent.size() + 1));
             enViewParent.setID(String.valueOf(enParent.getID()));
-
             enViewParent.setRow1a(enParent.getMLT());
             if (!enParent.getCodeMoi().equals(""))
                 enViewParent.setRow1b(enParent.getCodeMoi() + "-" + enParent.getChiSoMoi() + "-" + enParent.getTieuThuMoi());
             enViewParent.setRow2a(enParent.getDanhBo());
-//            if (enParent.getChiSoMoi().equals("") == false)
-//                enViewParent.setRow2b("CS " + enParent.getChiSoMoi() + " - TT " + enParent.getTieuThuMoi());
             enViewParent.setRow2b(enParent.getModifyDate());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
             if (!enParent.getCodeMoi().equals("") && !enParent.isSync())
                 TongNotSync++;
             TongDC++;
-
-            listParent.add(enViewParent);
+            lstParent.add(enViewParent);
         } catch (Exception e) {
             e.printStackTrace();
         }

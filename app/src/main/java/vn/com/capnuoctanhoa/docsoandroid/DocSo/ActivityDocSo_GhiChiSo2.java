@@ -61,7 +61,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     private ImageView ivSau;
     private ImageView ivIn;
     private ImageView imgThumb;
-    private LinearLayout layoutMoi;
+    private LinearLayout layout2, layout1, layout0, layoutMoi;
     private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
@@ -105,6 +105,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         txtChiSoMoi = (TextView) findViewById(R.id.txtChiSo);
         txtCodeMoi = (TextView) findViewById(R.id.txtCode);
         txtTieuThuMoi = (TextView) findViewById(R.id.txtTieuThu);
+        layout2 = (LinearLayout) findViewById(R.id.layout2);
+        layout1 = (LinearLayout) findViewById(R.id.layout1);
+        layout0 = (LinearLayout) findViewById(R.id.layout0);
         layoutMoi = (LinearLayout) findViewById(R.id.layoutMoi);
         edtChiSo = (EditText) findViewById(R.id.edtChiSo);
         spnCode = (Spinner) findViewById(R.id.spnCode);
@@ -146,6 +149,18 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
+            });
+
+            layout2.setOnClickListener(v -> {
+
+            });
+
+            layout1.setOnClickListener(v -> {
+
+            });
+
+            layout0.setOnClickListener(v -> {
+
             });
 
             chkLocDaDoc.setOnCheckedChangeListener((buttonView, isChecked) -> CLocal.LocDaDoc = isChecked);
