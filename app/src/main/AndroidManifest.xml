@@ -42,7 +42,9 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".DocSo.ActivityDocSo_View"
-            android:exported="false" />
+            android:exported="false"
+            android:label="Thông Tin"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_PhieuChuyen"
             android:exported="false"

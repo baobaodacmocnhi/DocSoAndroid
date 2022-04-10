@@ -1,5 +1,6 @@
 package vn.com.capnuoctanhoa.docsoandroid.QuanLy;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -39,6 +40,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo2;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_View;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class FragmentBatThuong extends Fragment {
@@ -188,6 +190,12 @@ public class FragmentBatThuong extends Fragment {
                     Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
                 }
+                ProgressDialog progressDialog;
+                progressDialog = new ProgressDialog(getActivity());
+                progressDialog.setTitle("Thông Báo");
+                progressDialog.setMessage("Đang xử lý...");
+                progressDialog.setCanceledOnTouchOutside(false);
+                progressDialog.show();
                 ExecutorService executor = Executors.newSingleThreadExecutor();
                 Handler handler = new Handler(Looper.getMainLooper());
                 executor.execute(() -> {
@@ -210,86 +218,96 @@ public class FragmentBatThuong extends Fragment {
                             }
                         else
                             jsonArray = new JSONArray(ws.getDS_BatThuong(CLocal.MaTo, spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString()));
+                    if(jsonArray!=null)
+                    {
+                        //khởi tạo ArrayList CEntityParent
+                        lstEParent = new ArrayList<>();
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
+                            CEntityParent enParent = new CEntityParent();
+                            ///thiết lập khởi tạo 1 lần đầu để sort
+                            enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
+
+                            if(!jsonObject.getString("MLT").replace("null", "").equals("")) {
+                                String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
+                                enParent.setMLT(strMLT);
+                            }
+                            if(!jsonObject.getString("DanhBo").replace("null", "").equals("")) {
+                                String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo").replace("null", "")).insert(7, " ").insert(4, " ").toString();
+                                enParent.setDanhBo(strDanhBo);
+                            }
+
+                            enParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
+                            enParent.setDiaChi(jsonObject.getString("DiaChi").replace("null", ""));
+                            enParent.setSoNha(jsonObject.getString("SoNha").replace("null", ""));
+                            enParent.setTenDuong(jsonObject.getString("TenDuong").replace("null", ""));
+                            enParent.setHieu(jsonObject.getString("Hieu").replace("null", ""));
+                            enParent.setCo(jsonObject.getString("Co").replace("null", ""));
+                            enParent.setSoThan(jsonObject.getString("SoThan").replace("null", ""));
+                            enParent.setViTri1(jsonObject.getString("ViTri1").replace("null", ""));
+                            enParent.setViTri2(jsonObject.getString("ViTri2").replace("null", ""));
+                            enParent.setGiaBieu(jsonObject.getString("GiaBieu").replace("null", ""));
+                            enParent.setDinhMuc(jsonObject.getString("DinhMuc").replace("null", ""));
+                            enParent.setDinhMucHN(jsonObject.getString("DinhMucHN").replace("null", ""));
+                            enParent.setSH(Integer.parseInt(jsonObject.getString("SH").replace("null", "")));
+                            enParent.setSX(Integer.parseInt(jsonObject.getString("SX").replace("null", "")));
+                            enParent.setDV(Integer.parseInt(jsonObject.getString("DV").replace("null", "")));
+                            enParent.setHCSN(Integer.parseInt(jsonObject.getString("HCSN").replace("null", "")));
+                            enParent.setTBTT(jsonObject.getString("TBTT").replace("null", ""));
+                            enParent.setChiSoMoi(jsonObject.getString("CSMoi").replace("null", ""));
+                            enParent.setCodeMoi(jsonObject.getString("CodeMoi").replace("null", ""));
+                            enParent.setTieuThuMoi(jsonObject.getString("TieuThuMoi").replace("null", ""));
+                            enParent.setTienNuoc(jsonObject.getString("TienNuoc").replace("null", ""));
+                            enParent.setThueGTGT(jsonObject.getString("ThueGTGT").replace("null", ""));
+                            enParent.setPhiBVMT(jsonObject.getString("PhiBVMT").replace("null", ""));
+                            enParent.setPhiBVMT_Thue(jsonObject.getString("PhiBVMT_Thue").replace("null", ""));
+                            enParent.setTongCong(jsonObject.getString("TongCong").replace("null", ""));
+                            enParent.setChiSo0(jsonObject.getString("ChiSo0").replace("null", ""));
+                            enParent.setCode0(jsonObject.getString("Code0").replace("null", ""));
+                            enParent.setTieuThu0(jsonObject.getString("TieuThu0").replace("null", ""));
+                            enParent.setChiSo1(jsonObject.getString("ChiSo1").replace("null", ""));
+                            enParent.setCode1(jsonObject.getString("Code1").replace("null", ""));
+                            enParent.setTieuThu1(jsonObject.getString("TieuThu1").replace("null", ""));
+                            enParent.setChiSo2(jsonObject.getString("ChiSo2").replace("null", ""));
+                            enParent.setCode2(jsonObject.getString("Code2").replace("null", ""));
+                            enParent.setTieuThu2(jsonObject.getString("TieuThu2").replace("null", ""));
+                            enParent.setGieng(Boolean.parseBoolean(jsonObject.getString("Gieng").replace("null", "")));
+                            enParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
+                            enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
+                            enParent.setNam(jsonObject.getString("Nam").replace("null", ""));
+                            enParent.setKy(jsonObject.getString("Ky").replace("null", ""));
+                            enParent.setDot(jsonObject.getString("Dot").replace("null", ""));
+                            enParent.setNgayThuTien(jsonObject.getString("NgayThuTien").replace("null", ""));
+                            if (jsonObject.has("CuaHangThuHo") == true)
+                                enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
+                            enParent.setTuNgay(jsonObject.getString("TuNgay").replace("null", ""));
+                            enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
+                            enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
+                            enParent.setPhanMay(jsonObject.getString("PhanMay").replace("null", ""));
+                            enParent.setChuBao(Boolean.parseBoolean(jsonObject.getString("ChuBao").replace("null", "")));
+                            lstEParent.add(enParent);
+                        }
+                    }
                     } catch (Exception ex) {
                         error = ex.getMessage();
                     }
 
                     String finalError = error;
-                    JSONArray finalJsonArray = jsonArray;
                     handler.post(() -> {
                         //UI Thread work here
                         try {
                             if (!finalError.equals(""))
                                 CLocal.showPopupMessage(getActivity(), finalError, "center");
                             else {
-                                if (finalJsonArray != null) {
-                                    //khởi tạo ArrayList CEntityParent
-                                    lstEParent = new ArrayList<>();
-                                    for (int i = 0; i < finalJsonArray.length(); i++) {
-                                        JSONObject jsonObject = finalJsonArray.getJSONObject(i);
-                                        CEntityParent enParent = new CEntityParent();
-                                        ///thiết lập khởi tạo 1 lần đầu để sort
-                                        enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
-
-                                        String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
-                                        enParent.setMLT(strMLT);
-
-                                        String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo").replace("null", "")).insert(7, " ").insert(4, " ").toString();
-                                        enParent.setDanhBo(strDanhBo);
-
-                                        enParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
-                                        enParent.setDiaChi(jsonObject.getString("DiaChi").replace("null", ""));
-                                        enParent.setSoNha(jsonObject.getString("SoNha").replace("null", ""));
-                                        enParent.setTenDuong(jsonObject.getString("TenDuong").replace("null", ""));
-                                        enParent.setHieu(jsonObject.getString("Hieu").replace("null", ""));
-                                        enParent.setCo(jsonObject.getString("Co").replace("null", ""));
-                                        enParent.setSoThan(jsonObject.getString("SoThan").replace("null", ""));
-                                        enParent.setViTri1(jsonObject.getString("ViTri1").replace("null", ""));
-                                        enParent.setViTri2(jsonObject.getString("ViTri2").replace("null", ""));
-                                        enParent.setGiaBieu(jsonObject.getString("GiaBieu").replace("null", ""));
-                                        enParent.setDinhMuc(jsonObject.getString("DinhMuc").replace("null", ""));
-                                        enParent.setDinhMucHN(jsonObject.getString("DinhMucHN").replace("null", ""));
-                                        enParent.setSH(Integer.parseInt(jsonObject.getString("SH").replace("null", "")));
-                                        enParent.setSX(Integer.parseInt(jsonObject.getString("SX").replace("null", "")));
-                                        enParent.setDV(Integer.parseInt(jsonObject.getString("DV").replace("null", "")));
-                                        enParent.setHCSN(Integer.parseInt(jsonObject.getString("HCSN").replace("null", "")));
-                                        enParent.setTBTT(jsonObject.getString("TBTT").replace("null", ""));
-                                        enParent.setChiSoMoi(jsonObject.getString("CSMoi").replace("null", ""));
-                                        enParent.setCodeMoi(jsonObject.getString("CodeMoi").replace("null", ""));
-                                        enParent.setTieuThuMoi(jsonObject.getString("TieuThuMoi").replace("null", ""));
-                                        enParent.setTienNuoc(jsonObject.getString("TienNuoc").replace("null", ""));
-                                        enParent.setThueGTGT(jsonObject.getString("ThueGTGT").replace("null", ""));
-                                        enParent.setPhiBVMT(jsonObject.getString("PhiBVMT").replace("null", ""));
-                                        enParent.setPhiBVMT_Thue(jsonObject.getString("PhiBVMT_Thue").replace("null", ""));
-                                        enParent.setTongCong(jsonObject.getString("TongCong").replace("null", ""));
-                                        enParent.setChiSo0(jsonObject.getString("ChiSo0").replace("null", ""));
-                                        enParent.setCode0(jsonObject.getString("Code0").replace("null", ""));
-                                        enParent.setTieuThu0(jsonObject.getString("TieuThu0").replace("null", ""));
-                                        enParent.setChiSo1(jsonObject.getString("ChiSo1").replace("null", ""));
-                                        enParent.setCode1(jsonObject.getString("Code1").replace("null", ""));
-                                        enParent.setTieuThu1(jsonObject.getString("TieuThu1").replace("null", ""));
-                                        enParent.setChiSo2(jsonObject.getString("ChiSo2").replace("null", ""));
-                                        enParent.setCode2(jsonObject.getString("Code2").replace("null", ""));
-                                        enParent.setTieuThu2(jsonObject.getString("TieuThu2").replace("null", ""));
-                                        enParent.setGieng(Boolean.parseBoolean(jsonObject.getString("Gieng").replace("null", "")));
-                                        enParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
-                                        enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
-                                        enParent.setNam(jsonObject.getString("Nam").replace("null", ""));
-                                        enParent.setKy(jsonObject.getString("Ky").replace("null", ""));
-                                        enParent.setDot(jsonObject.getString("Dot").replace("null", ""));
-                                        enParent.setNgayThuTien(jsonObject.getString("NgayThuTien").replace("null", ""));
-                                        if (jsonObject.has("CuaHangThuHo") == true)
-                                            enParent.setCuaHangThuHo(jsonObject.getString("CuaHangThuHo").replace("null", ""));
-                                        enParent.setTuNgay(jsonObject.getString("TuNgay").replace("null", ""));
-                                        enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
-                                        enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
-                                        enParent.setPhanMay(jsonObject.getString("PhanMay").replace("null", ""));
-                                        enParent.setChuBao(Boolean.parseBoolean(jsonObject.getString("ChuBao").replace("null", "")));
-                                        lstEParent.add(enParent);
-                                    }
+                                    loadListView();
+                                if (progressDialog != null) {
+                                    progressDialog.dismiss();
                                 }
                             }
                         } catch (Exception ex) {
+                            if (progressDialog != null) {
+                                progressDialog.dismiss();
+                            }
                             CLocal.showPopupMessage(getActivity(), ex.getMessage(), "center");
                         }
                     });
@@ -302,6 +320,7 @@ public class FragmentBatThuong extends Fragment {
 
     public void loadListView() {
         try {
+            CLocal.listDocSoView=new ArrayList<>();
             lstVParent = new ArrayList<>();
             switch (spnFilter.getSelectedItem().toString()) {
                 case "HĐ=0":
@@ -356,6 +375,7 @@ public class FragmentBatThuong extends Fragment {
             enViewParent.setRow2b(enParent.getModifyDate());
             enViewParent.setRow3a(enParent.getHoTen());
             enViewParent.setRow4a(enParent.getSoNha() + " " + enParent.getTenDuong());
+            Tong++;
             lstVParent.add(enViewParent);
         } catch (Exception e) {
             e.printStackTrace();

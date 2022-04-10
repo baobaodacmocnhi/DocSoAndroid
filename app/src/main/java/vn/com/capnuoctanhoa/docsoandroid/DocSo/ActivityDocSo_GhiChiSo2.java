@@ -152,15 +152,92 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             });
 
             layout2.setOnClickListener(v -> {
-
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
+                int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
+                switch (Ky) {
+                    case 1:
+                        Nam--;
+                        Ky = 10;
+                        break;
+                    case 2:
+                        Nam--;
+                        Ky = 11;
+                        break;
+                    case 3:
+                        Nam--;
+                        Ky = 12;
+                        break;
+                    default:
+                        Ky -= 3;
+                        break;
+                }
+                intent.putExtra("Nam", String.valueOf(Nam));
+                intent.putExtra("Ky", (Ky < 10 ? "0" : "") + Ky);
+                startActivity(intent);
             });
 
             layout1.setOnClickListener(v -> {
-
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
+                int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
+                switch (Ky) {
+                    case 1:
+                        Nam--;
+                        Ky = 11;
+                        break;
+                    case 2:
+                        Nam--;
+                        Ky = 12;
+                        break;
+                    case 3:
+                        Nam--;
+                        Ky = 1;
+                        break;
+                    default:
+                        Ky -= 2;
+                        break;
+                }
+                intent.putExtra("Nam", String.valueOf(Nam));
+                intent.putExtra("Ky",(Ky < 10 ? "0" : "") + Ky);
+                startActivity(intent);
             });
 
             layout0.setOnClickListener(v -> {
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
+                int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
+                switch (Ky) {
+                    case 1:
+                        Nam--;
+                        Ky = 12;
+                        break;
+                    case 2:
+                        Nam--;
+                        Ky = 1;
+                        break;
+                    case 3:
+                        Nam--;
+                        Ky = 2;
+                        break;
+                    default:
+                        Ky--;
+                        break;
+                }
+                intent.putExtra("Nam", String.valueOf(Nam));
+                intent.putExtra("Ky", (Ky < 10 ? "0" : "") + Ky);
+                startActivity(intent);
+            });
 
+            layoutMoi.setOnClickListener(v -> {
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                intent.putExtra("Nam",CLocal.listDocSoView.get(CLocal.STT).getNam());
+                intent.putExtra("Ky", CLocal.listDocSoView.get(CLocal.STT).getKy());
+                startActivity(intent);
             });
 
             chkLocDaDoc.setOnCheckedChangeListener((buttonView, isChecked) -> CLocal.LocDaDoc = isChecked);

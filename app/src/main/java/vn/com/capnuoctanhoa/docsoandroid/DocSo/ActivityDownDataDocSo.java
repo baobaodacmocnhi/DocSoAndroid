@@ -418,12 +418,14 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 //                            enParent.setModifyDate(jsonObject.getString("ModifyDate"));
                         enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
 
-                        String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
-                        enParent.setMLT(strMLT);
-
-                        String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo").replace("null", "")).insert(7, " ").insert(4, " ").toString();
-                        enParent.setDanhBo(strDanhBo);
-
+                        if(!jsonObject.getString("MLT").replace("null", "").equals("")) {
+                            String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
+                            enParent.setMLT(strMLT);
+                        }
+                        if(!jsonObject.getString("DanhBo").replace("null", "").equals("")) {
+                            String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo").replace("null", "")).insert(7, " ").insert(4, " ").toString();
+                            enParent.setDanhBo(strDanhBo);
+                        }
                         enParent.setHoTen(jsonObject.getString("HoTen").replace("null", ""));
                         enParent.setDiaChi(jsonObject.getString("DiaChi").replace("null", ""));
                         enParent.setSoNha(jsonObject.getString("SoNha").replace("null", ""));
