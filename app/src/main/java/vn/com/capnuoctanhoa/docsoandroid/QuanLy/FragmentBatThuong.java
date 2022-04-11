@@ -320,6 +320,7 @@ public class FragmentBatThuong extends Fragment {
 
     public void loadListView() {
         try {
+            Tong=0;
             CLocal.listDocSoView=new ArrayList<>();
             lstVParent = new ArrayList<>();
             switch (spnFilter.getSelectedItem().toString()) {

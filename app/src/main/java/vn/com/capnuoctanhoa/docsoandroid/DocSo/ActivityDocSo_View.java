@@ -31,9 +31,10 @@ public class ActivityDocSo_View extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_so_view);
 
-        TextView txtTuNgay,txtDenNgay, txtCode, txtChiSo, txtTieuThu;
+        TextView txtKy,txtTuNgay,txtDenNgay, txtCode, txtChiSo, txtTieuThu;
         ImageView imgThumb;
 
+        txtKy = (TextView) findViewById(R.id.txtKy);
         txtTuNgay = (TextView) findViewById(R.id.txtTuNgay);
         txtDenNgay = (TextView) findViewById(R.id.txtDenNgay);
         txtCode = (TextView) findViewById(R.id.txtCode);
@@ -77,6 +78,7 @@ public class ActivityDocSo_View extends AppCompatActivity {
                     else {
                         if (Boolean.parseBoolean(finalJsonObject.getString("success").replace("null", ""))) {
                             JSONObject jsonObjectC = new JSONObject(finalJsonObject.getString("message").replace("null", ""));
+                            txtKy.setText(getIntent().getStringExtra("Ky")+"/"+getIntent().getStringExtra("Nam"));
                             txtTuNgay.setText(jsonObjectC.getString("TuNgay").replace("null", ""));
                             txtDenNgay.setText(jsonObjectC.getString("DenNgay").replace("null", ""));
                             txtCode.setText(jsonObjectC.getString("CodeMoi").replace("null", ""));
