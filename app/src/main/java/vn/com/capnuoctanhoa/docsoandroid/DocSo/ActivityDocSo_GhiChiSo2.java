@@ -62,7 +62,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     private ImageView ivIn;
     private ImageView imgThumb;
     private LinearLayout layout2, layout1, layout0, layoutMoi;
-    private CCode selectedCode = null;
+    //    private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
     private CMarshMallowPermission cMarshMallowPermission;
@@ -143,7 +143,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             spnCode.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
                 @Override
                 public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                    selectedCode = (CCode) parent.getItemAtPosition(position);
+//                    selectedCode = (CCode) parent.getItemAtPosition(position);
                     if (!txtChiSoMoi.getText().toString().equals(""))
                         tinhTieuThu();
                 }
@@ -336,6 +336,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
                         return;
                     }
+                    CCode selectedCode = (CCode) spnCode.getSelectedItem();
                     if (imgCapture != null && selectedCode != null
                             && ((selectedCode.getCode().equals("F1")
                             || selectedCode.getCode().equals("F2")
@@ -503,7 +504,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     private void initial() {
         imgCapture = null;
         spnCode.setSelection(0);
-        selectedCode = (CCode) spnCode.getItemAtPosition(0);
+//        selectedCode = (CCode) spnCode.getItemAtPosition(0);
         edtChiSo.setText("");
         imgThumb.setImageBitmap(imgCapture);
         //
@@ -541,7 +542,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             CCode code = (CCode) spnCode.getItemAtPosition(i);
             if (code.getCode().equals(value)) {
                 spnCode.setSelection(i);
-                selectedCode = (CCode) spnCode.getItemAtPosition(i);
+//                selectedCode = (CCode) spnCode.getItemAtPosition(i);
                 break;
             }
         }
@@ -616,7 +617,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 strChiSo = "0";
             else
                 strChiSo = edtChiSo.getText().toString();
-            txtCodeMoi.setText(selectedCode.getCode());
+            txtCodeMoi.setText(((CCode) spnCode.getSelectedItem()).getCode());
             txtChiSoMoi.setText(strChiSo);
             if (CLocal.lstTT0.contains(txtCodeMoi.getText().toString()))
                 txtTieuThuMoi.setText("0");
@@ -810,6 +811,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 if (imgCapture != null && imgString.equals("")) {
                     imgString = CBitmap.convertBitmapToString(imgCapture);
                 }
+                CCode selectedCode = (CCode) spnCode.getSelectedItem();
                 CLocal.listDocSoView.get(CLocal.STT).setModifyDate(CLocal.DateFormat.format(new Date()));
                 String result = ws.ghiChiSo(CLocal.listDocSoView.get(CLocal.STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May, CLocal.listDocSoView.get(CLocal.STT).getTBTT());
                 if (!result.equals(""))
