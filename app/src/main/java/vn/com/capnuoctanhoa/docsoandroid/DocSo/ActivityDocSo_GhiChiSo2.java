@@ -70,6 +70,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     private String _alert;
     //    private ThermalPrinter thermalPrinter;
     private boolean playTinhTieuThu = false;
+    private boolean flagQuanLy = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -125,6 +126,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         ws = new CWebservice();
         chkLocDaDoc.setChecked(CLocal.LocDaDoc);
         try {
+            if (getIntent().hasExtra("QuanLy"))
+                flagQuanLy = Boolean.parseBoolean(getIntent().getStringExtra("QuanLy"));
             if (CLocal.jsonCode != null && CLocal.jsonCode.length() > 0) {
                 spnName_Code = new ArrayList<>();
                 for (int i = 0; i < CLocal.jsonCode.length(); i++) {
@@ -201,7 +204,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                         break;
                 }
                 intent.putExtra("Nam", String.valueOf(Nam));
-                intent.putExtra("Ky",(Ky < 10 ? "0" : "") + Ky);
+                intent.putExtra("Ky", (Ky < 10 ? "0" : "") + Ky);
                 startActivity(intent);
             });
 
@@ -235,7 +238,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             layoutMoi.setOnClickListener(v -> {
                 Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
                 intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
-                intent.putExtra("Nam",CLocal.listDocSoView.get(CLocal.STT).getNam());
+                intent.putExtra("Nam", CLocal.listDocSoView.get(CLocal.STT).getNam());
                 intent.putExtra("Ky", CLocal.listDocSoView.get(CLocal.STT).getKy());
                 startActivity(intent);
             });
@@ -334,37 +337,37 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                         return;
                     }
                     if (imgCapture != null && selectedCode != null
-                            && ((((CCode) selectedCode).getCode().equals("F1")
-                            || ((CCode) selectedCode).getCode().equals("F2")
-                            || ((CCode) selectedCode).getCode().equals("F3")
-                            || ((CCode) selectedCode).getCode().equals("F4")
-                            || ((CCode) selectedCode).getCode().equals("61")
-                            || ((CCode) selectedCode).getCode().equals("63")
-                            || ((CCode) selectedCode).getCode().equals("64")
-                            || ((CCode) selectedCode).getCode().equals("66")
-                            || ((CCode) selectedCode).getCode().equals("68")
-                            || ((CCode) selectedCode).getCode().equals("K"))
-                            || (!((CCode) selectedCode).getCode().equals("F1")
-                            && !((CCode) selectedCode).getCode().equals("F2")
-                            && !((CCode) selectedCode).getCode().equals("F3")
-                            && !((CCode) selectedCode).getCode().equals("F4")
-                            && !((CCode) selectedCode).getCode().equals("61")
-                            && !((CCode) selectedCode).getCode().equals("63")
-                            && !((CCode) selectedCode).getCode().equals("64")
-                            && !((CCode) selectedCode).getCode().equals("66")
-                            && !((CCode) selectedCode).getCode().equals("68")
-                            && !((CCode) selectedCode).getCode().equals("K")
+                            && ((selectedCode.getCode().equals("F1")
+                            || selectedCode.getCode().equals("F2")
+                            || selectedCode.getCode().equals("F3")
+                            || selectedCode.getCode().equals("F4")
+                            || selectedCode.getCode().equals("61")
+                            || selectedCode.getCode().equals("63")
+                            || selectedCode.getCode().equals("64")
+                            || selectedCode.getCode().equals("66")
+                            || selectedCode.getCode().equals("68")
+                            || selectedCode.getCode().equals("K"))
+                            || (!selectedCode.getCode().equals("F1")
+                            && !selectedCode.getCode().equals("F2")
+                            && !selectedCode.getCode().equals("F3")
+                            && !selectedCode.getCode().equals("F4")
+                            && !selectedCode.getCode().equals("61")
+                            && !selectedCode.getCode().equals("63")
+                            && !selectedCode.getCode().equals("64")
+                            && !selectedCode.getCode().equals("66")
+                            && !selectedCode.getCode().equals("68")
+                            && !selectedCode.getCode().equals("K")
                             && !edtChiSo.getText().toString().equals("")))) {
-                        if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !((CCode) selectedCode).getCode().equals("5K"))
-                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !((CCode) selectedCode).getCode().equals("5F"))
-                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !((CCode) selectedCode).getCode().equals("5N"))
-                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '4' && (((CCode) selectedCode).getCode().equals("5F") || ((CCode) selectedCode).getCode().equals("5K") || ((CCode) selectedCode).getCode().equals("5N")))) {
+                        if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5K"))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5F"))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5N"))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '4' && (((CCode) selectedCode).getCode().equals("5F") || selectedCode.getCode().equals("5K") || selectedCode.getCode().equals("5N")))) {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                             return;
                         }
-                        if (CLocal.lstTT0.contains(((CCode) selectedCode).getCode())
-                                || CLocal.lstTBTT.contains(((CCode) selectedCode).getCode())
-                                || CLocal.lstBinhThuong.contains(((CCode) selectedCode).getCode())) {
+                        if (CLocal.lstTT0.contains(selectedCode.getCode())
+                                || CLocal.lstTBTT.contains(selectedCode.getCode())
+                                || CLocal.lstBinhThuong.contains(selectedCode.getCode())) {
                             CLocal.listDocSoView.get(CLocal.STT).setSync(false);
                             if (edtChiSo.getText().toString().equals(""))
                                 tinhTieuThu();
@@ -382,8 +385,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
                             CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
                             CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
-                            MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
-                            myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
+//                            MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+//                            myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
                             //thành công có cảnh báo
                             if (!_alert.equals("")) {
                                 CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
@@ -411,8 +414,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                 handler.postDelayed(() -> ivSau.performClick(), 1000);
                             }
                         } else {
-                            MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
-                            myAsyncTaskTrucTiep.execute();
+//                            MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
+//                            myAsyncTaskTrucTiep.execute();
                         }
                         CLocal.hideKeyboard(ActivityDocSo_GhiChiSo2.this);
                     } else {
@@ -733,23 +736,26 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
-        MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
-        myAsyncTaskGhiHinhAll.execute();
-        MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
-        myAsyncTaskGhiDocSo_gianTiepALL.execute();
+        if (!flagQuanLy) {
+            MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
+            myAsyncTaskGhiHinhAll.execute();
+            MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
+            myAsyncTaskGhiDocSo_gianTiepALL.execute();
+        }
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
         try {
-            CLocal.ghiListToFileDocSo();
+            if (!flagQuanLy) {
+                CLocal.ghiListToFileDocSo();
+            }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
         }
 //        if (thermalPrinter != null)
 //            thermalPrinter.disconnectBluetoothDevice();
-
     }
 
     public Uri createImageUri() {

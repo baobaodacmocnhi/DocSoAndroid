@@ -191,6 +191,7 @@ public class FragmentTheoDoi extends Fragment {
                         if (!finalError.equals(""))
                             CLocal.showPopupMessage(getActivity(), finalError, "center");
                         else {
+                            Tong = DaDoc = ChuaDoc = CodeF = 0;
                             List<String> data = new ArrayList<>();
                             for (int i = 0; i < finalJsonArray.length(); i++) {
                                 JSONObject jsonObject = finalJsonArray.getJSONObject(i);
@@ -209,7 +210,7 @@ public class FragmentTheoDoi extends Fragment {
                                     android.R.layout.simple_list_item_1,
                                     data);
                             lstView.setAdapter(adapter);
-                            txtTongHD.setText(Tong+" | "+DaDoc+" | "+ChuaDoc+" | "+CodeF);
+                            txtTongHD.setText(Tong + " | " + DaDoc + " | " + ChuaDoc + " | " + CodeF);
                             if (progressDialog != null) {
                                 progressDialog.dismiss();
                             }
