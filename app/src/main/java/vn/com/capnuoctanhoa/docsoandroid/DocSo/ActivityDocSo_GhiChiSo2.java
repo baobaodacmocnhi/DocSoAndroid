@@ -386,11 +386,11 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
                             CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
                             CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
-//                            MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
-//                            myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
+                            MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+                            myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
                             //thành công có cảnh báo
                             if (!_alert.equals("")) {
-                                CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
+//                                CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
                                 if (_alert.contains("= 0"))
                                     CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", "THÀNH CÔNG\r\n" + _alert, "Đọc Tiếp", (dialog, which) -> {
                                         dialog.dismiss();
@@ -415,8 +415,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                 handler.postDelayed(() -> ivSau.performClick(), 1000);
                             }
                         } else {
-//                            MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
-//                            myAsyncTaskTrucTiep.execute();
+                            MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
+                            myAsyncTaskTrucTiep.execute();
                         }
                         CLocal.hideKeyboard(ActivityDocSo_GhiChiSo2.this);
                     } else {
