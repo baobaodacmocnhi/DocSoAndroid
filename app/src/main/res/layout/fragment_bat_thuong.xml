@@ -54,17 +54,17 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="@+id/spnNam" />
 
-        <Spinner
-            android:id="@+id/spnNam"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:layout_marginTop="8dp"
-            android:gravity="center"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView28"
-            app:layout_constraintTop_toBottomOf="@+id/layoutTo"
-            tools:ignore="SpeakableTextPresentCheck" />
+    <Spinner
+        android:id="@+id/spnNam"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/textView28"
+        app:layout_constraintTop_toBottomOf="@+id/layoutTo"
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <TextView
         android:id="@+id/textView29"
@@ -78,15 +78,15 @@
         app:layout_constraintTop_toTopOf="@+id/spnKy" />
 
     <Spinner
-            android:id="@+id/spnKy"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_marginStart="8dp"
-            android:entries="@array/ky_array"
-            android:gravity="center"
-            android:textAlignment="center"
-            app:layout_constraintStart_toEndOf="@+id/textView29"
-            app:layout_constraintTop_toTopOf="@+id/spnNam" />
+        android:id="@+id/spnKy"
+        android:layout_width="100dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:entries="@array/ky_array"
+        android:gravity="center"
+        android:textAlignment="center"
+        app:layout_constraintStart_toEndOf="@+id/textView29"
+        app:layout_constraintTop_toTopOf="@+id/spnNam" />
 
     <TextView
             android:id="@+id/textView30"
@@ -101,7 +101,7 @@
 
     <Spinner
         android:id="@+id/spnDot"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
         android:entries="@array/dot_array"
@@ -115,9 +115,10 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:entries="@array/filter_theodoidocso_array"
-        app:layout_constraintStart_toEndOf="@+id/spnDot"
-        app:layout_constraintTop_toTopOf="@+id/spnDot" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/spnNam" />
 
     <FrameLayout
         android:id="@+id/frameLayout"
@@ -126,7 +127,7 @@
         android:background="@color/colorListView"
         app:layout_constraintBottom_toTopOf="@+id/txtTongHD"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnNam">
+        app:layout_constraintTop_toBottomOf="@+id/spnFilter">
 
         <ListView
             android:id="@+id/lstView"
@@ -143,6 +144,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
 
+        android:layout_marginStart="8dp"
         android:layout_weight="1"
         android:text="Tổng HĐ"
         android:textColor="@color/colorSoTien"
