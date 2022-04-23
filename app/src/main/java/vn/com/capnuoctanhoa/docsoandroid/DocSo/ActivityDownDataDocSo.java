@@ -461,6 +461,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         enParent.setCode2(jsonObject.getString("Code2").replace("null", ""));
                         enParent.setTieuThu2(jsonObject.getString("TieuThu2").replace("null", ""));
                         enParent.setGieng(Boolean.parseBoolean(jsonObject.getString("Gieng").replace("null", "")));
+                        enParent.setKhoaTu(Boolean.parseBoolean(jsonObject.getString("KhoaTu").replace("null", "")));
                         enParent.setDienThoai(jsonObject.getString("DienThoai").replace("null", ""));
                         enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
                         enParent.setNam(jsonObject.getString("Nam").replace("null", ""));

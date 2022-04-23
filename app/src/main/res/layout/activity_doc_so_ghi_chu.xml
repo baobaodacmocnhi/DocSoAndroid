@@ -21,7 +21,7 @@
 
             <EditText
                 android:id="@+id/edtSoNha"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:autofillHints=""
@@ -67,12 +67,11 @@
                 android:id="@+id/edtTenDuong"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView27"
                 app:layout_constraintTop_toBottomOf="@+id/edtSoNha"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -91,15 +90,20 @@
                 android:id="@+id/chkGieng"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginLeft="8dp"
                 android:layout_marginEnd="8dp"
-                android:layout_marginRight="8dp"
                 android:minHeight="48dp"
                 android:text="Giếng"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/edtSoNha"
+                app:layout_constraintEnd_toStartOf="@+id/chkKhoaTu"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <CheckBox
+                android:id="@+id/chkKhoaTu"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:minHeight="48dp"
+                android:text="Khóa Từ"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/chkGieng" />
 
             <Spinner
                 android:id="@+id/spnViTri2"
@@ -147,6 +151,7 @@
                 android:id="@+id/textView40"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
                 android:text="-------------------------------------------------------------"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -179,13 +184,13 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="32dp"
+                android:layout_marginTop="8dp"
                 android:autofillHints=""
                 android:ems="5"
                 android:inputType="phone"
                 android:minHeight="48dp"
                 app:layout_constraintStart_toEndOf="@+id/textView30"
-                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu"
+                app:layout_constraintTop_toBottomOf="@+id/textView40"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
