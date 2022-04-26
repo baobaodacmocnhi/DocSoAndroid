@@ -2,7 +2,6 @@ package vn.com.capnuoctanhoa.docsoandroid.DocSo;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -558,7 +557,20 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 txtHoTen.setText(entityParent.getHoTen());
                 txtDiaChi.setText(entityParent.getDiaChi());
                 txtDiaChiDHN.setText(entityParent.getSoNha() + " " + entityParent.getTenDuong());
-                txtViTri.setText(entityParent.getViTri1() + " - " + entityParent.getViTri2());
+                String str = "";
+                if (entityParent.isViTriNgoai())
+                    str = "Ngoài";
+                if (entityParent.isViTriHop())
+                    if (str.equals(""))
+                        str = "Hộp";
+                    else
+                        str += " - Hộp";
+                if (entityParent.getViTri().equals(""))
+                    if (str.equals(""))
+                        str = entityParent.getViTri();
+                    else
+                        str += " - " + entityParent.getViTri();
+                txtViTri.setText(str);
                 txtHieu.setText(entityParent.getHieu());
                 txtCo.setText(entityParent.getCo());
                 txtSoThan.setText(entityParent.getSoThan());
@@ -602,7 +614,20 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         try {
             if (entityParent != null) {
                 txtDiaChiDHN.setText(entityParent.getSoNha() + " " + entityParent.getTenDuong());
-                txtViTri.setText(entityParent.getViTri1() + " - " + entityParent.getViTri2());
+                String str = "";
+                if (entityParent.isViTriNgoai())
+                    str = "Ngoài";
+                if (entityParent.isViTriHop())
+                    if (str.equals(""))
+                        str = "Hộp";
+                    else
+                        str += " - Hộp";
+                if (entityParent.getViTri().equals(""))
+                    if (str.equals(""))
+                        str = entityParent.getViTri();
+                    else
+                        str += " - " + entityParent.getViTri();
+                txtViTri.setText(str);
                 txtDienThoai.setText(entityParent.getDienThoai());
             }
         } catch (

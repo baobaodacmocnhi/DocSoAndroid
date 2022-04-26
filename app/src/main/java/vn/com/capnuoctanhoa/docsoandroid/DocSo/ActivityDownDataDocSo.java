@@ -20,7 +20,6 @@ import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -28,7 +27,6 @@ import org.json.JSONObject;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -433,8 +431,9 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         enParent.setHieu(jsonObject.getString("Hieu").replace("null", ""));
                         enParent.setCo(jsonObject.getString("Co").replace("null", ""));
                         enParent.setSoThan(jsonObject.getString("SoThan").replace("null", ""));
-                        enParent.setViTri1(jsonObject.getString("ViTri1").replace("null", ""));
-                        enParent.setViTri2(jsonObject.getString("ViTri2").replace("null", ""));
+                        enParent.setViTri(jsonObject.getString("ViTri").replace("null", ""));
+                        enParent.setViTriNgoai(Boolean.parseBoolean(jsonObject.getString("ViTriNgoai").replace("null", "")));
+                        enParent.setViTriHop(Boolean.parseBoolean(jsonObject.getString("ViTriHop").replace("null", "")));
                         enParent.setGiaBieu(jsonObject.getString("GiaBieu").replace("null", ""));
                         enParent.setDinhMuc(jsonObject.getString("DinhMuc").replace("null", ""));
                         enParent.setDinhMucHN(jsonObject.getString("DinhMucHN").replace("null", ""));

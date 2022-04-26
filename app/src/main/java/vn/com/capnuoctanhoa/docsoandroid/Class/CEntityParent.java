@@ -1,7 +1,5 @@
 package vn.com.capnuoctanhoa.docsoandroid.Class;
 
-import android.graphics.Bitmap;
-
 import java.util.ArrayList;
 
 public class CEntityParent {
@@ -21,8 +19,9 @@ public class CEntityParent {
     private String GiaBieu;
     private String DinhMuc;
     private String DinhMucHN;
-    private String ViTri1;
-    private String ViTri2;
+    private String ViTri;
+    private boolean ViTriNgoai;
+    private boolean ViTriHop;
     private boolean Gieng;
     private boolean KhoaTu;
     private String DienThoai;
@@ -81,10 +80,11 @@ public class CEntityParent {
         this.GiaBieu = "";
         this.DinhMuc = "";
         this.DinhMucHN = "";
-        this.ViTri1 = "";
-        this.ViTri2 = "";
+        this.ViTri = "";
+        this.ViTriNgoai = false;
+        this.ViTriHop = false;
         this.Gieng = false;
-        this.KhoaTu=false;
+        this.KhoaTu = false;
         this.DienThoai = "";
         this.ChiSoMoi = "";
         this.CodeMoi = "";
@@ -251,20 +251,28 @@ public class CEntityParent {
         DinhMucHN = dinhMucHN;
     }
 
-    public String getViTri1() {
-        return ViTri1;
+    public String getViTri() {
+        return ViTri;
     }
 
-    public void setViTri1(String viTri1) {
-        ViTri1 = viTri1;
+    public void setViTri(String viTri) {
+        ViTri = viTri;
     }
 
-    public String getViTri2() {
-        return ViTri2;
+    public boolean isViTriNgoai() {
+        return ViTriNgoai;
     }
 
-    public void setViTri2(String viTri2) {
-        ViTri2 = viTri2;
+    public void setViTriNgoai(boolean viTriNgoai) {
+        ViTriNgoai = viTriNgoai;
+    }
+
+    public boolean isViTriHop() {
+        return ViTriHop;
+    }
+
+    public void setViTriHop(boolean viTriHop) {
+        ViTriHop = viTriHop;
     }
 
     public boolean isGieng() {
@@ -597,10 +605,11 @@ public class CEntityParent {
             this.GiaBieu = entityParent.getGiaBieu();
             this.DinhMuc = entityParent.getDinhMuc();
             this.DinhMucHN = entityParent.getDinhMucHN();
-            this.ViTri1 = entityParent.getViTri1();
-            this.ViTri2 = entityParent.getViTri2();
+            this.ViTri = entityParent.getViTri();
+            this.ViTriNgoai = entityParent.isViTriNgoai();
+            this.ViTriHop = entityParent.isViTriHop();
             this.Gieng = entityParent.isGieng();
-            this.KhoaTu=entityParent.isKhoaTu();
+            this.KhoaTu = entityParent.isKhoaTu();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();
             this.CodeMoi = entityParent.getCodeMoi();

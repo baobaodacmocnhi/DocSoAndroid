@@ -2,7 +2,6 @@ package vn.com.capnuoctanhoa.docsoandroid.QuanLy;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -22,25 +21,21 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.gson.Gson;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo2;
-import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_View;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class FragmentBatThuong extends Fragment {
@@ -244,8 +239,9 @@ public class FragmentBatThuong extends Fragment {
                                 enParent.setHieu(jsonObject.getString("Hieu").replace("null", ""));
                                 enParent.setCo(jsonObject.getString("Co").replace("null", ""));
                                 enParent.setSoThan(jsonObject.getString("SoThan").replace("null", ""));
-                                enParent.setViTri1(jsonObject.getString("ViTri1").replace("null", ""));
-                                enParent.setViTri2(jsonObject.getString("ViTri2").replace("null", ""));
+                                enParent.setViTri(jsonObject.getString("ViTri1").replace("null", ""));
+                                enParent.setViTriNgoai(Boolean.parseBoolean(jsonObject.getString("ViTriNgoai").replace("null", "")));
+                                enParent.setViTriHop(Boolean.parseBoolean(jsonObject.getString("ViTriHop").replace("null", "")));
                                 enParent.setGiaBieu(jsonObject.getString("GiaBieu").replace("null", ""));
                                 enParent.setDinhMuc(jsonObject.getString("DinhMuc").replace("null", ""));
                                 enParent.setDinhMucHN(jsonObject.getString("DinhMucHN").replace("null", ""));

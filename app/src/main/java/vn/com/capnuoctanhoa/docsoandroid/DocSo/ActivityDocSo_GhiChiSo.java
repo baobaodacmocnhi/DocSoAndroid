@@ -7,10 +7,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.content.FileProvider;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
-import vn.com.capnuoctanhoa.docsoandroid.Bluetooth.ThermalPrinter;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
@@ -547,7 +544,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 edtHoTen.setText(entityParent.getHoTen());
                 edtDiaChi.setText(entityParent.getDiaChi());
                 edtDiaChiDHN.setText(entityParent.getSoNha() + " " + entityParent.getTenDuong());
-                edtViTri.setText(entityParent.getViTri1() + " - " + entityParent.getViTri2());
+//                edtViTri.setText(entityParent.getViTri() + " - " + entityParent.getViTri2());
                 edtHieu.setText(entityParent.getHieu());
                 edtCo.setText(entityParent.getCo());
                 edtSoThan.setText(entityParent.getSoThan());
@@ -591,7 +588,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         try {
             if (entityParent != null) {
                 edtDiaChiDHN.setText(entityParent.getSoNha() + " " + entityParent.getTenDuong());
-                edtViTri.setText(entityParent.getViTri1() + " - " + entityParent.getViTri2());
+//                edtViTri.setText(entityParent.getViTri() + " - " + entityParent.getViTri2());
                 edtDienThoai.setText(entityParent.getDienThoai());
             }
         } catch (

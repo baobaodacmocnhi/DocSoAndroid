@@ -33,25 +33,34 @@
                 app:layout_constraintTop_toTopOf="parent"
                 tools:ignore="SpeakableTextPresentCheck" />
 
-            <TextView
-                android:id="@+id/textView29"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_marginTop="16dp"
-                android:text="Vị Trí 2"
-                app:layout_constraintStart_toEndOf="@+id/spnViTri1"
-                app:layout_constraintTop_toTopOf="@+id/spnViTri2" />
-
             <Spinner
-                android:id="@+id/spnViTri1"
+                android:id="@+id/spnViTri"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:minHeight="48dp"
-                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintStart_toEndOf="@+id/chkViTriHop"
                 app:layout_constraintTop_toBottomOf="@+id/edtTenDuong"
                 tools:ignore="SpeakableTextPresentCheck" />
+
+            <CheckBox
+                android:id="@+id/chkViTriNgoai"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Ngoài"
+                app:layout_constraintStart_toEndOf="@+id/textView28"
+                app:layout_constraintTop_toTopOf="@+id/spnViTri" />
+
+            <CheckBox
+                android:id="@+id/chkViTriHop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Hộp"
+                app:layout_constraintStart_toEndOf="@+id/chkViTriNgoai"
+                app:layout_constraintTop_toTopOf="@+id/chkViTriNgoai" />
 
             <TextView
                 android:id="@+id/textView27"
@@ -82,9 +91,9 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="16dp"
-                android:text="Vị Trí 1"
+                android:text="Vị Trí"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/spnViTri1" />
+                app:layout_constraintTop_toTopOf="@+id/spnViTri" />
 
             <CheckBox
                 android:id="@+id/chkGieng"
@@ -100,33 +109,24 @@
                 android:id="@+id/chkKhoaTu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="8dp"
                 android:minHeight="48dp"
                 android:text="Khóa Từ"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/chkGieng" />
 
-            <Spinner
-                android:id="@+id/spnViTri2"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:minHeight="48dp"
-                app:layout_constraintStart_toEndOf="@+id/textView29"
-                app:layout_constraintTop_toTopOf="@+id/spnViTri1"
-                tools:ignore="SpeakableTextPresentCheck" />
-
             <EditText
                 android:id="@+id/edtGhiChu"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btnCapNhat"
                 app:layout_constraintStart_toEndOf="@+id/textView39"
-                app:layout_constraintTop_toBottomOf="@+id/spnViTri2"
+                app:layout_constraintTop_toBottomOf="@+id/spnViTri"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -145,7 +145,7 @@
                 android:layout_height="wrap_content"
                 android:text="Cập Nhật"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/spnViTri2" />
+                app:layout_constraintTop_toTopOf="@+id/edtGhiChu" />
 
             <TextView
                 android:id="@+id/textView40"
