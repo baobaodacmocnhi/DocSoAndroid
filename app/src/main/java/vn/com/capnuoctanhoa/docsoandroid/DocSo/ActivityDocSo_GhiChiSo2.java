@@ -559,15 +559,15 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 txtDiaChiDHN.setText(entityParent.getSoNha() + " " + entityParent.getTenDuong());
                 String str = "";
                 if (entityParent.isViTriNgoai())
-                    str = "Ngoài";
+                    str += "Ngoài";
                 if (entityParent.isViTriHop())
                     if (str.equals(""))
-                        str = "Hộp";
+                        str += "Hộp";
                     else
                         str += " - Hộp";
-                if (entityParent.getViTri().equals(""))
+                if (!entityParent.getViTri().equals(""))
                     if (str.equals(""))
-                        str = entityParent.getViTri();
+                        str += entityParent.getViTri();
                     else
                         str += " - " + entityParent.getViTri();
                 txtViTri.setText(str);
