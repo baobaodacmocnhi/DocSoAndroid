@@ -335,6 +335,10 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
                         return;
                     }
+                    if (CLocal.listDocSoView.get(CLocal.STT).isChuBao()) {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Chủ Báo - Không cập nhật");
+                        return;
+                    }
                     CCode selectedCode = (CCode) spnCode.getSelectedItem();
                     if (imgCapture != null && selectedCode != null
                             && ((selectedCode.getCode().equals("F1")
