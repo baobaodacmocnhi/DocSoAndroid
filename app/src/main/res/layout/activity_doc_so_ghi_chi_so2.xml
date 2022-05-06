@@ -95,7 +95,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:ems="7"
+                android:ems="6"
                 android:textColor="@color/colorMLT"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -120,7 +120,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:autofillHints=""
-                android:ems="7"
+                android:ems="6"
                 android:textColor="@color/colorDanhBo"
                 android:textSize="20sp"
                 android:textStyle="bold"
@@ -140,12 +140,12 @@
 
             <TextView
                 android:id="@+id/txtViTri"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
-                android:ems="10"
+                android:ems="6"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -201,7 +201,7 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtHoTen"
-                app:layout_constraintTop_toBottomOf="@+id/txtHieu"
+                app:layout_constraintTop_toBottomOf="@+id/txtSoThan"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -251,7 +251,7 @@
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
-                app:layout_constraintTop_toBottomOf="@+id/txtDanhBo"
+                app:layout_constraintTop_toBottomOf="@+id/txtViTri"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
@@ -288,11 +288,11 @@
 
             <TextView
                 android:id="@+id/txtSoThan"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginEnd="8dp"
-                android:ems="6"
+                android:ems="5"
                 android:textColor="@color/colorMLT"
                 android:textSize="20sp"
                 android:textStyle="bold"

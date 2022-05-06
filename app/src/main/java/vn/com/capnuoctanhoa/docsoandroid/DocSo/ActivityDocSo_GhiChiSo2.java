@@ -395,7 +395,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
                             //thành công có cảnh báo
                             if (!_alert.equals("")) {
-//                                CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
+                                CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
                                 if (_alert.contains("= 0"))
                                     CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", "THÀNH CÔNG\r\n" + _alert, "Đọc Tiếp", (dialog, which) -> {
                                         dialog.dismiss();
@@ -569,12 +569,12 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                     if (str.equals(""))
                         str += "Hộp";
                     else
-                        str += " - Hộp";
+                        str += "-Hộp";
                 if (!entityParent.getViTri().equals(""))
                     if (str.equals(""))
                         str += entityParent.getViTri();
                     else
-                        str += " - " + entityParent.getViTri();
+                        str += "-" + entityParent.getViTri();
                 txtViTri.setText(str);
                 txtHieu.setText(entityParent.getHieu());
                 txtCo.setText(entityParent.getCo());
@@ -621,17 +621,17 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 txtDiaChiDHN.setText(entityParent.getSoNha() + " " + entityParent.getTenDuong());
                 String str = "";
                 if (entityParent.isViTriNgoai())
-                    str = "Ngoài";
+                    str += "Ngoài";
                 if (entityParent.isViTriHop())
                     if (str.equals(""))
-                        str = "Hộp";
+                        str += "Hộp";
                     else
-                        str += " - Hộp";
-                if (entityParent.getViTri().equals(""))
+                        str += "-Hộp";
+                if (!entityParent.getViTri().equals(""))
                     if (str.equals(""))
-                        str = entityParent.getViTri();
+                        str += entityParent.getViTri();
                     else
-                        str += " - " + entityParent.getViTri();
+                        str += "-" + entityParent.getViTri();
                 txtViTri.setText(str);
                 txtDienThoai.setText(entityParent.getDienThoai());
             }
