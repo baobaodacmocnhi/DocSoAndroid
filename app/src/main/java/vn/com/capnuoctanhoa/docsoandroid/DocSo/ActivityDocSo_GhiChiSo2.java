@@ -370,9 +370,10 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
                             return;
                         }
-                        if (CLocal.lstTT0.contains(selectedCode.getCode())
+                        if (CLocal.getDaysDifference(CLocal.convertStringToDate(CLocal.listDocSoView.get(CLocal.STT).getDenNgay()), new Date()) < 2
+                                && (CLocal.lstTT0.contains(selectedCode.getCode())
                                 || CLocal.lstTBTT.contains(selectedCode.getCode())
-                                || CLocal.lstBinhThuong.contains(selectedCode.getCode())) {
+                                || CLocal.lstBinhThuong.contains(selectedCode.getCode()))) {
                             CLocal.listDocSoView.get(CLocal.STT).setSync(false);
                             if (edtChiSo.getText().toString().equals(""))
                                 tinhTieuThu();
