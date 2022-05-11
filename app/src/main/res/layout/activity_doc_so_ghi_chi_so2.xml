@@ -43,6 +43,7 @@
                 android:focusable="false"
 
                 android:inputType="textPersonName"
+                android:textColor="@color/colorDanhBo"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:visibility="visible"
