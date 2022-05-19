@@ -1011,10 +1011,10 @@ public class CLocal {
                                 + ((TieuThu - DinhMucHN) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100));
                     } else {
                         TongTien = (DinhMucHN * lstGiaNuoc.get(6))
-                                + ((int) Math.round((double) DinhMuc / 2) * lstGiaNuoc.get(1))
+                                + ((int) Math.round((double) DinhMucHN / 2) * lstGiaNuoc.get(1))
                                 + ((TieuThu - DinhMucHN - (int) Math.round((double) DinhMucHN / 2)) * lstGiaNuoc.get(2));
                         TongTienPhiBVMT = (DinhMucHN * (int) Math.round((double) lstGiaNuoc.get(6) * lstGiaNuoc.get(7) / 100))
-                                + ((int) Math.round((double) DinhMuc / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
+                                + ((int) Math.round((double) DinhMucHN / 2) * (int) Math.round((double) lstGiaNuoc.get(1) * lstGiaNuoc.get(7) / 100))
                                 + ((TieuThu - DinhMucHN - (int) Math.round((double) DinhMucHN / 2)) * (int) Math.round((double) lstGiaNuoc.get(2) * lstGiaNuoc.get(7) / 100));
                     }
                     break;
