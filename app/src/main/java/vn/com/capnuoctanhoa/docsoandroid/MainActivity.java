@@ -11,29 +11,20 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
-import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo;
-import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChu;
 import vn.com.capnuoctanhoa.docsoandroid.QuanLy.ActivityQuanLy;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceAppKilled;
 import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceFirebaseMessaging;
-import vn.com.capnuoctanhoa.docsoandroid.Service.ServiceThermalPrinter;
 
 import android.app.ProgressDialog;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.IBinder;
 import android.provider.Settings;
 import android.view.Gravity;
 import android.view.Menu;
@@ -52,7 +43,6 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;

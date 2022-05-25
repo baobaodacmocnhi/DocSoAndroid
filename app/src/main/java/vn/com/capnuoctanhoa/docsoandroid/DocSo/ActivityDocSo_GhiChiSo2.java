@@ -60,7 +60,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     private ImageView ivSau;
     private ImageView ivIn;
     private ImageView imgThumb;
-    private LinearLayout layout2, layout1, layout0, layoutMoi;
+    private LinearLayout layoutLS,layout2, layout1, layout0, layoutMoi;
     //    private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
@@ -105,6 +105,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         txtChiSoMoi = (TextView) findViewById(R.id.txtChiSo);
         txtCodeMoi = (TextView) findViewById(R.id.txtCode);
         txtTieuThuMoi = (TextView) findViewById(R.id.txtTieuThu);
+        layoutLS = (LinearLayout) findViewById(R.id.layoutLS);
         layout2 = (LinearLayout) findViewById(R.id.layout2);
         layout1 = (LinearLayout) findViewById(R.id.layout1);
         layout0 = (LinearLayout) findViewById(R.id.layout0);
@@ -151,6 +152,12 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 public void onNothingSelected(AdapterView<?> parent) {
 
                 }
+            });
+
+            layoutLS.setOnLongClickListener(v -> {
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_LichSu.class);
+                startActivity(intent);
+                return false;
             });
 
             layout2.setOnClickListener(v -> {

@@ -187,6 +187,9 @@ public class FragmentTheoDoi extends Fragment {
                 JSONArray finalJsonArray = jsonArray;
                 handler.post(() -> {
                     //UI Thread work here
+                    if (progressDialog != null) {
+                        progressDialog.dismiss();
+                    }
                     try {
                         if (!finalError.equals(""))
                             CLocal.showPopupMessage(getActivity(), finalError, "center");
@@ -211,14 +214,8 @@ public class FragmentTheoDoi extends Fragment {
                                     data);
                             lstView.setAdapter(adapter);
                             txtTongHD.setText(Tong + " | " + DaDoc + " | " + ChuaDoc + " | " + CodeF);
-                            if (progressDialog != null) {
-                                progressDialog.dismiss();
-                            }
                         }
                     } catch (Exception ex) {
-                        if (progressDialog != null) {
-                            progressDialog.dismiss();
-                        }
                         CLocal.showPopupMessage(getActivity(), ex.getMessage(), "center");
                     }
                 });

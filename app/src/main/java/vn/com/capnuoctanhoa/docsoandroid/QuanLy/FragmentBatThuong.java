@@ -181,7 +181,6 @@ public class FragmentBatThuong extends Fragment {
         btnXem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 if (!CLocal.checkNetworkAvailable(getActivity())) {
                     Toast.makeText(getActivity(), "Không có Internet", Toast.LENGTH_LONG).show();
                     return;
@@ -292,19 +291,16 @@ public class FragmentBatThuong extends Fragment {
                     String finalError = error;
                     handler.post(() -> {
                         //UI Thread work here
+                        if (progressDialog != null) {
+                            progressDialog.dismiss();
+                        }
                         try {
                             if (!finalError.equals(""))
                                 CLocal.showPopupMessage(getActivity(), finalError, "center");
                             else {
                                 loadListView();
-                                if (progressDialog != null) {
-                                    progressDialog.dismiss();
-                                }
                             }
                         } catch (Exception ex) {
-                            if (progressDialog != null) {
-                                progressDialog.dismiss();
-                            }
                             CLocal.showPopupMessage(getActivity(), ex.getMessage(), "center");
                         }
                     });

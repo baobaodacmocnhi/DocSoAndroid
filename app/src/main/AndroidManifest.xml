@@ -41,6 +41,11 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".DocSo.ActivityDocSo_LichSu"
+            android:exported="false"
+            android:label="Lịch Sử"
+            android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
+        <activity
             android:name=".DocSo.ActivityDocSo_View"
             android:exported="false"
             android:label="Thông Tin"
@@ -55,11 +60,6 @@
             android:exported="false"
             android:label="Ghi Chú"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
-        <activity
-            android:name=".DocSo.ActivityDocSo_GhiChiSo"
-            android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="false"
-            android:label="Ghi Chỉ Số Nước" />
         <activity
             android:name=".DocSo.ActivityDocSo_GhiChiSo2"
             android:configChanges="orientation|screenSize|keyboardHidden"
