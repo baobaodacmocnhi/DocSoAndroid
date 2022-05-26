@@ -35,7 +35,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
-import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo2;
+import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_GhiChiSo;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class FragmentBatThuong extends Fragment {
@@ -169,7 +169,7 @@ public class FragmentBatThuong extends Fragment {
             int i = Integer.parseInt(STT.getText().toString()) - 1;
             CLocal.indexPosition = i;
             Intent intent;
-            intent = new Intent(getActivity(), ActivityDocSo_GhiChiSo2.class);
+            intent = new Intent(getActivity(), ActivityDocSo_GhiChiSo.class);
             CLocal.STT = i;
             intent.putExtra("QuanLy", "true");
             startActivity(intent);
@@ -281,6 +281,7 @@ public class FragmentBatThuong extends Fragment {
                                 enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
                                 enParent.setPhanMay(jsonObject.getString("PhanMay").replace("null", ""));
                                 enParent.setChuBao(Boolean.parseBoolean(jsonObject.getString("ChuBao").replace("null", "")));
+                                enParent.setTinhTrang(jsonObject.getString("TinhTrang").replace("null", ""));
                                 lstEParent.add(enParent);
                             }
                         }

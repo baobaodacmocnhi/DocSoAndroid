@@ -202,6 +202,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setViTriNgoai(chkViTriNgoai.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setViTriHop(chkViTriHop.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setGhiChu(edtGhiChu.getText().toString());
                                 break;
                             case "CapNhatDT":
 

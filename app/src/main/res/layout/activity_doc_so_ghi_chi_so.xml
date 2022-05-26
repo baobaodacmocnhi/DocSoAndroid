@@ -27,7 +27,6 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="5dp"
                 android:text="Ghi Chú"
-                android:visibility="visible"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/txtGhiChu" />
 
@@ -41,12 +40,9 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:focusable="false"
-
                 android:inputType="textPersonName"
-                android:textColor="@color/colorDanhBo"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                android:visibility="visible"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
                 app:layout_constraintTop_toBottomOf="@+id/txtHoTen"
@@ -72,13 +68,12 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:focusable="false"
-
                 android:inputType="textPersonName"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
-                app:layout_constraintTop_toBottomOf="@+id/txtGhiChu"
+                app:layout_constraintTop_toBottomOf="@+id/txtTinhTrang"
                 tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <TextView
@@ -765,6 +760,33 @@
                 android:text="Lọc Đã Đọc"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/textView45"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:text="Tình Trạng"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/txtTinhTrang" />
+
+            <TextView
+                android:id="@+id/txtTinhTrang"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:autofillHints=""
+                android:ems="10"
+                android:focusable="false"
+                android:inputType="textPersonName"
+                android:textColor="@color/colorDanhBo"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/textView45"
+                app:layout_constraintTop_toBottomOf="@+id/txtGhiChu" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

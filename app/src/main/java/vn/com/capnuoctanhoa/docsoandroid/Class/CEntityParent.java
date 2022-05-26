@@ -61,6 +61,7 @@ public class CEntityParent {
     private int HCSN;
     private String PhanMay;
     private boolean ChuBao;
+    private String TinhTrang;
 
 
     public CEntityParent() {
@@ -121,6 +122,7 @@ public class CEntityParent {
         this.HCSN = 0;
         this.PhanMay = "";
         this.ChuBao = false;
+        this.TinhTrang = "";
     }
 
     public String getID() {
@@ -587,6 +589,14 @@ public class CEntityParent {
         ChuBao = chuBao;
     }
 
+    public String getTinhTrang() {
+        return TinhTrang;
+    }
+
+    public void setTinhTrang(String tinhTrang) {
+        TinhTrang = tinhTrang;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -647,6 +657,7 @@ public class CEntityParent {
             this.HCSN = entityParent.getHCSN();
             this.PhanMay = entityParent.getPhanMay();
             this.ChuBao = entityParent.isChuBao();
+            this.TinhTrang = entityParent.getTinhTrang();
         } catch (Exception ex) {
             throw ex;
         }

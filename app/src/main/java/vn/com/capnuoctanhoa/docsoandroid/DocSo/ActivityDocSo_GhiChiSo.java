@@ -51,9 +51,11 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
-public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
+public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private CheckBox chkLocDaDoc;
-    private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT, txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
+    private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan
+            ,txtGhiChu,txtTinhTrang, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT
+            , txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
@@ -74,7 +76,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_doc_so_ghi_chi_so2);
+        setContentView(R.layout.activity_doc_so_ghi_chi_so);
 
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
@@ -88,6 +90,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         txtHieu = (TextView) findViewById(R.id.txtHieu);
         txtCo = (TextView) findViewById(R.id.txtCo);
         txtSoThan = (TextView) findViewById(R.id.txtSoThan);
+        txtGhiChu = (TextView) findViewById(R.id.txtGhiChu);
+        txtTinhTrang = (TextView) findViewById(R.id.txtTinhTrang);
         txtGiaBieu = (TextView) findViewById(R.id.txtGiaBieu);
         txtDinhMuc = (TextView) findViewById(R.id.txtDinhMuc);
         txtDinhMucHN = (TextView) findViewById(R.id.txtDinhMucHN);
@@ -155,13 +159,13 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             });
 
             layoutLS.setOnLongClickListener(v -> {
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_LichSu.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_LichSu.class);
                 startActivity(intent);
                 return false;
             });
 
             layout2.setOnClickListener(v -> {
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_View.class);
                 intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                 int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
                 int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
@@ -188,7 +192,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             });
 
             layout1.setOnClickListener(v -> {
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_View.class);
                 intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                 int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
                 int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
@@ -215,7 +219,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             });
 
             layout0.setOnClickListener(v -> {
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_View.class);
                 intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                 int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
                 int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
@@ -242,7 +246,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             });
 
             layoutMoi.setOnClickListener(v -> {
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_View.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_View.class);
                 intent.putExtra("DanhBo", CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
                 intent.putExtra("Nam", CLocal.listDocSoView.get(CLocal.STT).getNam());
                 intent.putExtra("Ky", CLocal.listDocSoView.get(CLocal.STT).getKy());
@@ -260,7 +264,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                     initial();
                     fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                 } else
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Đầu Danh Sách");
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Đầu Danh Sách");
             });
 
             ivSau.setOnClickListener(v -> {
@@ -272,7 +276,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                     initial();
                     fillLayout(CLocal.listDocSoView.get(CLocal.STT));
                 } else
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Cuối Danh Sách");
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Cuối Danh Sách");
             });
 
             ibtnChupHinh.setOnClickListener(view -> {
@@ -286,7 +290,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 imgCapture = null;
                 Uri imgUri = createImageUri();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                if (intent.resolveActivity(ActivityDocSo_GhiChiSo2.this.getPackageManager()) != null) {
+                if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
                     intent.putExtra(MediaStore.EXTRA_OUTPUT, imgUri); // put uri file khi mà mình muốn lưu ảnh sau khi chụp như thế nào  ?
                     intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
                     activityResultLauncher_ChupHinh.launch(intent);
@@ -317,7 +321,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 }
             });
 
-            imgThumb.setOnClickListener(v -> CLocal.showImgThumb(ActivityDocSo_GhiChiSo2.this, imgCapture));
+            imgThumb.setOnClickListener(v -> CLocal.showImgThumb(ActivityDocSo_GhiChiSo.this, imgCapture));
 
             edtChiSo.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -338,12 +342,12 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
 
             ivLuu.setOnClickListener(view -> {
                 try {
-                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this)) {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
+                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this)) {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
                         return;
                     }
                     if (CLocal.listDocSoView.get(CLocal.STT).isChuBao()) {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Chủ Báo - Không cập nhật");
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chủ Báo - Không cập nhật");
                         return;
                     }
                     CCode selectedCode = (CCode) spnCode.getSelectedItem();
@@ -374,7 +378,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5N"))
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '4' && (selectedCode.getCode().equals("5F") || selectedCode.getCode().equals("5K") || selectedCode.getCode().equals("5N")))
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0() == "M0" && selectedCode.getCode().charAt(0) == '4')) {
-                            CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Vào Code Sai");
+                            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Vào Code Sai");
                             return;
                         }
                         if (CLocal.getDaysDifference(CLocal.convertStringToDate(CLocal.listDocSoView.get(CLocal.STT).getDenNgay()), new Date()) < 2
@@ -402,9 +406,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
                             //thành công có cảnh báo
                             if (!_alert.equals("")) {
-                                CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
+                                CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
                                 if (_alert.contains("= 0"))
-                                    CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", "THÀNH CÔNG\r\n" + _alert, "Đọc Tiếp", (dialog, which) -> {
+                                    CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", "THÀNH CÔNG\r\n" + _alert, "Đọc Tiếp", (dialog, which) -> {
                                         dialog.dismiss();
                                         ivSau.performClick();
                                     }, "In", (dialog, which) -> {
@@ -414,7 +418,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                         handler.postDelayed(() -> ivSau.performClick(), 1000);
                                     }, false);
                                 else
-                                    CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", "THÀNH CÔNG\r\n\r\n" + _alert, "Xem Lại", (dialog, which) -> dialog.dismiss(), "In", (dialog, which) -> {
+                                    CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", "THÀNH CÔNG\r\n\r\n" + _alert, "Xem Lại", (dialog, which) -> dialog.dismiss(), "In", (dialog, which) -> {
                                         dialog.dismiss();
                                         ivIn.performClick();
                                         final Handler handler = new Handler();
@@ -430,14 +434,14 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
                             myAsyncTaskTrucTiep.execute();
                         }
-                        CLocal.hideKeyboard(ActivityDocSo_GhiChiSo2.this);
+                        CLocal.hideKeyboard(ActivityDocSo_GhiChiSo.this);
                     } else {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
                     }
                 } catch (Exception e) {
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, "THẤT BẠI\r\n\r\n" + e.getMessage(), "center");
-                    CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, e.getMessage(), "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THẤT BẠI\r\n\r\n" + e.getMessage(), "center");
+                    CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
                 }
             });
 
@@ -451,28 +455,28 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             CLocal.serviceThermalPrinter.printGhiChiSo(CLocal.listDocSoView.get(CLocal.STT));
                         }
                     } else {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Chưa có dữ liệu In");
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chưa có dữ liệu In");
                     }
                 } catch (Exception ex) {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
                 }
             });
 
             ivGhiChu.setOnClickListener(view -> {
-                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this)) {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
+                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this)) {
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
                     return;
                 }
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_GhiChu.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_GhiChu.class);
                 startActivity(intent);
             });
 
             ivPhieuChuyen.setOnClickListener(view -> {
-                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo2.this)) {
-                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, "Không có Internet");
+                if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this)) {
+                    CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
                     return;
                 }
-                Intent intent = new Intent(ActivityDocSo_GhiChiSo2.this, ActivityDocSo_PhieuChuyen.class);
+                Intent intent = new Intent(ActivityDocSo_GhiChiSo.this, ActivityDocSo_PhieuChuyen.class);
                 startActivity(intent);
             });
 
@@ -487,7 +491,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             }
 
         } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
 
 //        try {
@@ -586,6 +590,8 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 txtHieu.setText(entityParent.getHieu());
                 txtCo.setText(entityParent.getCo());
                 txtSoThan.setText(entityParent.getSoThan());
+                txtGhiChu.setText(entityParent.getGhiChu());
+                txtTinhTrang.setText(entityParent.getTinhTrang());
                 txtDienThoai.setText(entityParent.getDienThoai());
                 txtGiaBieu.setText(entityParent.getGiaBieu());
                 txtDinhMuc.setText(entityParent.getDinhMuc());
@@ -618,7 +624,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             }
         } catch (
                 Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
 
@@ -641,10 +647,11 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                         str += "-" + entityParent.getViTri();
                 txtViTri.setText(str);
                 txtDienThoai.setText(entityParent.getDienThoai());
+                txtGhiChu.setText(entityParent.getGhiChu());
             }
         } catch (
                 Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
 
@@ -735,7 +742,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             }
                         }
                     } catch (Exception ex) {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
                     }
                 }
             });
@@ -748,7 +755,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                     try {
                         if (result.getResultCode() == Activity.RESULT_OK && result.getData() != null && result.getData().getData() != null) {
                             Uri uri = result.getData().getData();
-                            String strPath = CLocal.getPathFromUri(ActivityDocSo_GhiChiSo2.this, uri);
+                            String strPath = CLocal.getPathFromUri(ActivityDocSo_GhiChiSo.this, uri);
                             Bitmap bitmap = BitmapFactory.decodeFile(strPath);
                             bitmap = CBitmap.imageOreintationValidator(bitmap, strPath);
                             imgCapture = CBitmap.scale(bitmap, 1024);
@@ -757,7 +764,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                     , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
                         }
                     } catch (Exception ex) {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
                     }
                 }
             });
@@ -770,7 +777,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 fillLayoutReLoad(CLocal.listDocSoView.get(CLocal.STT));
             }
         } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
 
@@ -793,7 +800,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                 CLocal.ghiListToFileDocSo();
             }
         } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, ex.getMessage());
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
 //        if (thermalPrinter != null)
 //            thermalPrinter.disconnectBluetoothDevice();
@@ -838,7 +845,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressDialog = new ProgressDialog(ActivityDocSo_GhiChiSo2.this);
+            progressDialog = new ProgressDialog(ActivityDocSo_GhiChiSo.this);
             progressDialog.setTitle("Thông Báo");
             progressDialog.setMessage("Đang xử lý...");
             progressDialog.setCanceledOnTouchOutside(false);
@@ -900,9 +907,9 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                         }
                         //thành công có cảnh báo
                         if (!alert.equals("")) {
-                            CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
+                            CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
                             if (alert.contains("= 0"))
-                                CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", s + alert, "Đọc Tiếp", (dialog, which) -> {
+                                CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", s + alert, "Đọc Tiếp", (dialog, which) -> {
                                     dialog.dismiss();
                                     ivSau.performClick();
                                 }, "In", (dialog, which) -> {
@@ -912,7 +919,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                                     handler.postDelayed(() -> ivSau.performClick(), 1000);
                                 }, false);
                             else
-                                CLocal.showDialog(ActivityDocSo_GhiChiSo2.this, "Thông Báo", s + alert, "Xem Lại", (dialog, which) -> {
+                                CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", s + alert, "Xem Lại", (dialog, which) -> {
                                     dialog.dismiss();
 //                                    ivSau.performClick();
                                 }, "In", (dialog, which) -> {
@@ -928,13 +935,13 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
                             handler.postDelayed(() -> ivSau.performClick(), 1000);
                         }
                     } else {//thất bại
-                        CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, s + error, "center");
-                        CLocal.vibrate(ActivityDocSo_GhiChiSo2.this);
+                        CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + error, "center");
+                        CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
                     }
                 } else
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, s, "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
             } catch (Exception e) {
-                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo2.this, e.getMessage(), "center");
+                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
             }
         }
     }
@@ -964,7 +971,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
             if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
@@ -998,7 +1005,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
             if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
@@ -1041,7 +1048,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
             if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
@@ -1085,7 +1092,7 @@ public class ActivityDocSo_GhiChiSo2 extends AppCompatActivity {
             super.onPostExecute(s);
             CLocal.updateArrayListToJson();
             if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo2.this, s);
+                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
     }
 
