@@ -94,11 +94,25 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         }
 
         btnCapNhat.setOnClickListener(v -> {
-            if (!edtGhiChu.getText().toString().equals("") && imgCapture != null) {
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute();
-            } else
-                CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
+            try {
+                boolean flag = false;
+                if (CLocal.jsonPhieuChuyen != null && CLocal.jsonPhieuChuyen.length() > 0) {
+                    spnName_PhieuChuyen = new ArrayList<>();
+                    for (int i = 0; i < CLocal.jsonPhieuChuyen.length(); i++) {
+                        JSONObject jsonObject = CLocal.jsonPhieuChuyen.getJSONObject(i);
+                        if (jsonObject.getString("Name").replace("null", "").equals(spnPhieuChuyen.getSelectedItem().toString())
+                                && Boolean.parseBoolean(jsonObject.getString("KhongLapDon").replace("null", "")))
+                            flag = true;
+                    }
+                }
+                if (imgCapture != null && (!edtGhiChu.getText().toString().equals("") || flag)) {
+                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+                    myAsyncTask.execute();
+                } else
+                    CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         });
 
         ibtnChupHinh.setOnClickListener(view -> {

@@ -28,8 +28,8 @@ import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
-    private Spinner spnViTri, spnViTri2;
-    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkSoChinh;
+    private Spinner spnViTri;
+    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkSoChinh;
     private ArrayList<String> spnName_ViTriDHN;
     private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
@@ -46,6 +46,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         chkViTriHop = (CheckBox) findViewById(R.id.chkViTriHop);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
+        chkAmSau = (CheckBox) findViewById(R.id.chkAmSau);
+        chkXayDung = (CheckBox) findViewById(R.id.chkXayDung);
         Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
@@ -64,7 +66,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_ViTriDHN);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnViTri.setAdapter(adapter);
-            spnViTri2.setAdapter(adapter);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -101,6 +102,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkViTriHop.setChecked(entityParent.isViTriHop());
                         chkGieng.setChecked(entityParent.isGieng());
                         chkKhoaTu.setChecked(entityParent.isKhoaTu());
+                        chkAmSau.setChecked(entityParent.isAmSau());
+                        chkXayDung.setChecked(entityParent.isXayDung());
                     }
                 }
                 MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
@@ -183,7 +186,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 switch (strings[0]) {
                     case "CapNhat":
                         result = ws.update_GhiChu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
-                                , spnViTri.getSelectedItem().toString(), String.valueOf(chkViTriNgoai.isChecked()), String.valueOf(chkViTriHop.isChecked()), String.valueOf(chkGieng.isChecked()), String.valueOf(chkKhoaTu.isChecked()), edtGhiChu.getText().toString(), CLocal.MaNV);
+                                , spnViTri.getSelectedItem().toString(), String.valueOf(chkViTriNgoai.isChecked()), String.valueOf(chkViTriHop.isChecked())
+                                , String.valueOf(chkGieng.isChecked()), String.valueOf(chkKhoaTu.isChecked()), String.valueOf(chkAmSau.isChecked()), String.valueOf(chkXayDung.isChecked()), edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
                         result = ws.update_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
@@ -202,6 +206,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setViTriNgoai(chkViTriNgoai.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setViTriHop(chkViTriHop.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setAmSau(chkAmSau.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setXayDung(chkXayDung.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setGhiChu(edtGhiChu.getText().toString());
                                 break;
                             case "CapNhatDT":

@@ -24,6 +24,8 @@ public class CEntityParent {
     private boolean ViTriHop;
     private boolean Gieng;
     private boolean KhoaTu;
+    private boolean AmSau;
+    private boolean XayDung;
     private String DienThoai;
     private String ChiSoMoi;
     private String CodeMoi;
@@ -86,6 +88,8 @@ public class CEntityParent {
         this.ViTriHop = false;
         this.Gieng = false;
         this.KhoaTu = false;
+        this.AmSau=false;
+        this.XayDung=false;
         this.DienThoai = "";
         this.ChiSoMoi = "";
         this.CodeMoi = "";
@@ -291,6 +295,22 @@ public class CEntityParent {
 
     public void setKhoaTu(boolean khoaTu) {
         KhoaTu = khoaTu;
+    }
+
+    public boolean isAmSau() {
+        return AmSau;
+    }
+
+    public void setAmSau(boolean amSau) {
+        AmSau = amSau;
+    }
+
+    public boolean isXayDung() {
+        return XayDung;
+    }
+
+    public void setXayDung(boolean xayDung) {
+        XayDung = xayDung;
     }
 
     public String getDienThoai() {
@@ -620,6 +640,8 @@ public class CEntityParent {
             this.ViTriHop = entityParent.isViTriHop();
             this.Gieng = entityParent.isGieng();
             this.KhoaTu = entityParent.isKhoaTu();
+            this.AmSau = entityParent.isAmSau();
+            this.XayDung = entityParent.isXayDung();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();
             this.CodeMoi = entityParent.getCodeMoi();

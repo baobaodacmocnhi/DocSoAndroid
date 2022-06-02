@@ -331,7 +331,7 @@ public class FragmentBatThuong extends Fragment {
                 case "Bất Thường":
                     if (lstEParent != null && lstEParent.size() > 0) {
                         for (int i = 0; i < lstEParent.size(); i++) {
-                            if ((Integer.parseInt(lstEParent.get(i).getTieuThuMoi()) <= Integer.parseInt(lstEParent.get(i).getTBTT()) - Integer.parseInt(lstEParent.get(i).getTBTT()) * 0.4
+                            if (!lstEParent.get(i).getTieuThuMoi().equals("0") && (Integer.parseInt(lstEParent.get(i).getTieuThuMoi()) <= Integer.parseInt(lstEParent.get(i).getTBTT()) - Integer.parseInt(lstEParent.get(i).getTBTT()) * 0.4
                                     || Integer.parseInt(lstEParent.get(i).getTieuThuMoi()) >= Integer.parseInt(lstEParent.get(i).getTBTT()) * 1.4)) {
                                 CLocal.listDocSoView.add(lstEParent.get(i));
                                 addViewParent(lstEParent.get(i));

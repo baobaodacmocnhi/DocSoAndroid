@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
-                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
                 android:text="Ngoài"
                 app:layout_constraintStart_toEndOf="@+id/textView28"
                 app:layout_constraintTop_toTopOf="@+id/spnViTri" />
@@ -58,9 +58,32 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
+                android:minHeight="48dp"
                 android:text="Hộp"
                 app:layout_constraintStart_toEndOf="@+id/chkViTriNgoai"
                 app:layout_constraintTop_toTopOf="@+id/chkViTriNgoai" />
+
+            <CheckBox
+                android:id="@+id/chkAmSau"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="Âm Sâu"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chkViTriNgoai" />
+
+            <CheckBox
+                android:id="@+id/chkXayDung"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="Xây Dựng"
+                app:layout_constraintStart_toEndOf="@+id/chkAmSau"
+                app:layout_constraintTop_toBottomOf="@+id/chkViTriNgoai" />
 
             <TextView
                 android:id="@+id/textView27"
@@ -128,7 +151,7 @@
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnCapNhat"
                 app:layout_constraintStart_toEndOf="@+id/textView39"
-                app:layout_constraintTop_toBottomOf="@+id/spnViTri"
+                app:layout_constraintTop_toBottomOf="@+id/chkXayDung"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
