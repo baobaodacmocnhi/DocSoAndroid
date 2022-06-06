@@ -55,7 +55,7 @@ public class ActivityDocSo_LichSu extends AppCompatActivity {
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null)
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
-                        jsonArray= new JSONArray(jsonObject.getString("message").replace("null", ""));
+                        jsonArray = new JSONArray(jsonObject.getString("message").replace("null", ""));
                     } else
                         error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
                 if (jsonArray != null) {
@@ -64,7 +64,16 @@ public class ActivityDocSo_LichSu extends AppCompatActivity {
                         data.add(jsonObjectC.getString("Ky").replace("null", "")
                                 + ": Code: " + jsonObjectC.getString("CodeMoi").replace("null", "")
                                 + "  | CS: " + jsonObjectC.getString("CSMoi").replace("null", "")
-                                + "  | TT: " + jsonObjectC.getString("TieuThuMoi").replace("null", ""));
+                                + "  | TT: " + jsonObjectC.getString("TieuThuMoi").replace("null", "")
+                                + "\n     Từ ngày "+jsonObjectC.getString("TuNgay").replace("null", "")
+                                + "\n     Đến ngày "+jsonObjectC.getString("DenNgay").replace("null", "")
+                                + "\n     Giá Biểu: "+jsonObjectC.getString("GiaBieu").replace("null", "")+" | Định Mức: "+jsonObjectC.getString("DinhMuc").replace("null", "")
+                                + "\n     Tiền Nước: "+ CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("TienNuoc").replace("null", "")))
+                                + "\n     Thuế GTGT: "+CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("ThueGTGT").replace("null", "")))
+                                + "\n     TDVTN: "+CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("PhiBVMT").replace("null", "")))
+                                + "\n     Thuế TDVTN: "+CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("PhiBVMT_Thue").replace("null", "")))
+                                + "\n     Tổng Cộng: "+CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("TongCong").replace("null", "")))
+                                + "\n");
                     }
                 }
             } catch (Exception ex) {

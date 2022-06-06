@@ -759,6 +759,10 @@ public class CLocal {
 
     //endregion
 
+    public static String numberVN(double number) {
+        return NumberFormat.getNumberInstance(Locale.GERMANY).format(number);
+    }
+
     public static String getTime() {
         Date dateCapNhat = new Date();
         return CLocal.DateFormat.format(dateCapNhat);
