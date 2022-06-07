@@ -26,6 +26,9 @@ public class CEntityParent {
     private boolean KhoaTu;
     private boolean AmSau;
     private boolean XayDung;
+    private boolean DutChi_Goc;
+    private boolean DutChi_Than;
+    private String MauSacChiGoc;
     private String DienThoai;
     private String ChiSoMoi;
     private String CodeMoi;
@@ -88,8 +91,11 @@ public class CEntityParent {
         this.ViTriHop = false;
         this.Gieng = false;
         this.KhoaTu = false;
-        this.AmSau=false;
-        this.XayDung=false;
+        this.AmSau = false;
+        this.XayDung = false;
+        this.DutChi_Goc = false;
+        this.DutChi_Than = false;
+        this.MauSacChiGoc = "";
         this.DienThoai = "";
         this.ChiSoMoi = "";
         this.CodeMoi = "";
@@ -311,6 +317,30 @@ public class CEntityParent {
 
     public void setXayDung(boolean xayDung) {
         XayDung = xayDung;
+    }
+
+    public boolean isDutChi_Goc() {
+        return DutChi_Goc;
+    }
+
+    public void setDutChi_Goc(boolean dutChi_Goc) {
+        DutChi_Goc = dutChi_Goc;
+    }
+
+    public boolean isDutChi_Than() {
+        return DutChi_Than;
+    }
+
+    public void setDutChi_Than(boolean dutChi_Than) {
+        DutChi_Than = dutChi_Than;
+    }
+
+    public String getMauSacChiGoc() {
+        return MauSacChiGoc;
+    }
+
+    public void setMauSacChiGoc(String mauSacChiGoc) {
+        MauSacChiGoc = mauSacChiGoc;
     }
 
     public String getDienThoai() {
@@ -642,6 +672,9 @@ public class CEntityParent {
             this.KhoaTu = entityParent.isKhoaTu();
             this.AmSau = entityParent.isAmSau();
             this.XayDung = entityParent.isXayDung();
+            this.DutChi_Goc = entityParent.isDutChi_Goc();
+            this.DutChi_Than = entityParent.isDutChi_Than();
+            this.MauSacChiGoc = entityParent.getMauSacChiGoc();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();
             this.CodeMoi = entityParent.getCodeMoi();

@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
@@ -28,8 +29,8 @@ import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
-    private Spinner spnViTri;
-    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkSoChinh;
+    private Spinner spnViTri, spnMauSacChiGoc;
+    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkDutChiGoc, chkDutChiThan, chkSoChinh;
     private ArrayList<String> spnName_ViTriDHN;
     private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
@@ -42,12 +43,15 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         edtTenDuong = (EditText) findViewById(R.id.edtTenDuong);
         edtGhiChu = (EditText) findViewById(R.id.edtGhiChu);
         spnViTri = (Spinner) findViewById(R.id.spnViTri);
+        spnMauSacChiGoc = (Spinner) findViewById(R.id.spnMauSacChiGoc);
         chkViTriNgoai = (CheckBox) findViewById(R.id.chkViTriNgoai);
         chkViTriHop = (CheckBox) findViewById(R.id.chkViTriHop);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
         chkAmSau = (CheckBox) findViewById(R.id.chkAmSau);
         chkXayDung = (CheckBox) findViewById(R.id.chkXayDung);
+        chkDutChiGoc = (CheckBox) findViewById(R.id.chkDutChiGoc);
+        chkDutChiThan = (CheckBox) findViewById(R.id.chkDutChiThan);
         Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
@@ -104,6 +108,9 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkKhoaTu.setChecked(entityParent.isKhoaTu());
                         chkAmSau.setChecked(entityParent.isAmSau());
                         chkXayDung.setChecked(entityParent.isXayDung());
+                        chkDutChiGoc.setChecked(entityParent.isDutChi_Goc());
+                        chkDutChiThan.setChecked(entityParent.isDutChi_Than());
+                        spinnerSelectValue(spnMauSacChiGoc, entityParent.getMauSacChiGoc());
                     }
                 }
                 MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
@@ -113,6 +120,15 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
         }
 
+    }
+
+    private void spinnerSelectValue(Spinner spinner, Object value) {
+        for (int i = 0; i < spinner.getCount(); i++) {
+            if (spinner.getItemAtPosition(i).equals(value)) {
+                spinner.setSelection(i);
+                break;
+            }
+        }
     }
 
     public void fillDSDienThoai() {
@@ -187,7 +203,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     case "CapNhat":
                         result = ws.update_GhiChu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
                                 , spnViTri.getSelectedItem().toString(), String.valueOf(chkViTriNgoai.isChecked()), String.valueOf(chkViTriHop.isChecked())
-                                , String.valueOf(chkGieng.isChecked()), String.valueOf(chkKhoaTu.isChecked()), String.valueOf(chkAmSau.isChecked()), String.valueOf(chkXayDung.isChecked()), edtGhiChu.getText().toString(), CLocal.MaNV);
+                                , String.valueOf(chkGieng.isChecked()), String.valueOf(chkKhoaTu.isChecked()), String.valueOf(chkAmSau.isChecked()), String.valueOf(chkXayDung.isChecked())
+                                , String.valueOf(chkDutChiGoc.isChecked()), String.valueOf(chkDutChiThan.isChecked()), spnMauSacChiGoc.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
                         result = ws.update_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
@@ -208,6 +225,9 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setAmSau(chkAmSau.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setXayDung(chkXayDung.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setDutChi_Goc(chkDutChiGoc.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setDutChi_Than(chkDutChiThan.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setMauSacChiGoc(spnMauSacChiGoc.getSelectedItem().toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setGhiChu(edtGhiChu.getText().toString());
                                 break;
                             case "CapNhatDT":

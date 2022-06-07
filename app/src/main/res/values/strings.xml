@@ -54,4 +54,10 @@
         <item>Thời Gian Tăng</item>
         <item>Thời Gian Giảm</item>
     </string-array>
+    <string-array name="mausacchigoc_array">
+        <item></item>
+        <item>Vàng</item>
+        <item>Xanh</item>
+        <item>Đỏ</item>
+    </string-array>
 </resources>

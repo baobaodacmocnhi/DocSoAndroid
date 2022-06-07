@@ -85,6 +85,48 @@
                 app:layout_constraintStart_toEndOf="@+id/chkAmSau"
                 app:layout_constraintTop_toBottomOf="@+id/chkViTriNgoai" />
 
+            <CheckBox
+                android:id="@+id/chkDutChiGoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:minHeight="48dp"
+                android:text="Đứt Chì Góc"
+                app:layout_constraintStart_toEndOf="@+id/chkXayDung"
+                app:layout_constraintTop_toTopOf="@+id/chkXayDung" />
+
+            <CheckBox
+                android:id="@+id/chkDutChiThan"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:minHeight="48dp"
+                android:text="Đứt Chì Thân"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chkAmSau" />
+
+            <TextView
+                android:id="@+id/textView47"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Màu Sắc Chì Góc"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnMauSacChiGoc" />
+
+            <Spinner
+                android:id="@+id/spnMauSacChiGoc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:entries="@array/mausacchigoc_array"
+                android:minHeight="48dp"
+                app:layout_constraintStart_toEndOf="@+id/textView47"
+                app:layout_constraintTop_toBottomOf="@+id/chkDutChiThan" />
+
             <TextView
                 android:id="@+id/textView27"
                 android:layout_width="wrap_content"
@@ -151,7 +193,7 @@
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnCapNhat"
                 app:layout_constraintStart_toEndOf="@+id/textView39"
-                app:layout_constraintTop_toBottomOf="@+id/chkXayDung"
+                app:layout_constraintTop_toBottomOf="@+id/spnMauSacChiGoc"
                 tools:ignore="SpeakableTextPresentCheck" />
 
             <TextView
