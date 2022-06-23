@@ -43,7 +43,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterListView;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_DanhSach extends AppCompatActivity {
-    private Spinner spnFilter,spnSort;
+    private Spinner spnFilter, spnSort;
     private ListView lstView;
     private CustomAdapterListView customAdapterListView;
     private TextView txtTongHD, txtNotSync;
@@ -266,12 +266,20 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         }
                     }
                     break;
-                case "Bất Thường":
+                case "Bất Thường Tăng":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("")
-                                    && (Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) <= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) - Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 0.4
-                                    || Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) >= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 1.4)) {
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("") && Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) >= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * 1.3) {
+                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "Bất Thường Giảm":
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("") && Integer.parseInt(CLocal.listDocSo.get(i).getTieuThuMoi()) <= Integer.parseInt(CLocal.listDocSo.get(i).getTBTT()) * (1 - 0.3)) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }

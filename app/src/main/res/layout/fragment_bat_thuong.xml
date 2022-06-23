@@ -120,6 +120,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/spnNam" />
 
+    <TextView
+        android:id="@+id/textView50"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
+        android:text="Tiêu Thụ"
+        app:layout_constraintStart_toEndOf="@+id/spnFilter"
+        app:layout_constraintTop_toTopOf="@+id/edtTieuThu" />
+
+    <EditText
+        android:id="@+id/edtTieuThu"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:ems="3"
+        android:inputType="numberSigned"
+        android:minHeight="48dp"
+        android:text="20"
+        app:layout_constraintStart_toEndOf="@+id/textView50"
+        app:layout_constraintTop_toTopOf="@+id/spnFilter"
+        tools:ignore="SpeakableTextPresentCheck" />
+
     <FrameLayout
         android:id="@+id/frameLayout"
         android:layout_width="match_parent"

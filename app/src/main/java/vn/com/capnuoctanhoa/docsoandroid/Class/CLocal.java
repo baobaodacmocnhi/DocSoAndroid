@@ -1711,12 +1711,17 @@ public class CLocal {
                 ThueGTGT = (int) Math.round((double) (TienNuocNamCu + TienNuocNamMoi) * 5 / 100);
                 TDVTN = PhiBVMTNamCu + PhiBVMTNamMoi;
                 //Từ 2022 Phí BVMT -> Tiền Dịch Vụ Thoát Nước
+                double ThueTDVTN_VAT = 0.0;
+                if (CLocal.jsonGiaNuoc.getJSONObject(index).getString("VAT2_Ky").contains((Ky < 10 ? "0" : "") + Ky + "/" + Nam))
+                    ThueTDVTN_VAT = Double.parseDouble(CLocal.jsonGiaNuoc.getJSONObject(index).getString("VAT2")) / 100;
+                else
+                    ThueTDVTN_VAT =Double.parseDouble(CLocal.jsonGiaNuoc.getJSONObject(index).getString("VAT")) / 100;
                 if ((calTuNgay.get(Calendar.YEAR) < 2021) || (calTuNgay.get(Calendar.YEAR) == 2021 && calDenNgay.get(Calendar.YEAR) == 2021)) {
                     ThueTDVTN = 0;
                 } else if (calTuNgay.get(Calendar.YEAR) == 2021 && dateDenNgay.getYear() == 2022) {
-                    ThueTDVTN = (int) Math.round((double) (PhiBVMTNamMoi) * 10 / 100);
+                    ThueTDVTN = (int) Math.round((double) (PhiBVMTNamMoi) * ThueTDVTN_VAT);
                 } else if (calTuNgay.get(Calendar.YEAR) >= 2022) {
-                    ThueTDVTN = (int) Math.round((double) (PhiBVMTNamCu + PhiBVMTNamMoi) * 10 / 100);
+                    ThueTDVTN = (int) Math.round((double) (PhiBVMTNamCu + PhiBVMTNamMoi) * ThueTDVTN_VAT);
                 }
                 result.add(TienNuoc);
                 result.add(ThueGTGT);

@@ -53,16 +53,14 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private CheckBox chkLocDaDoc;
-    private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan
-            ,txtGhiChu,txtTinhTrang, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT
-            , txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
+    private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan, txtGhiChu, txtTinhTrang, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT, txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
     private ImageView ivSau;
     private ImageView ivIn;
     private ImageView imgThumb;
-    private LinearLayout layoutLS,layout2, layout1, layout0, layoutMoi;
+    private LinearLayout layoutMoi;
     //    private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
@@ -109,10 +107,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         txtChiSoMoi = (TextView) findViewById(R.id.txtChiSo);
         txtCodeMoi = (TextView) findViewById(R.id.txtCode);
         txtTieuThuMoi = (TextView) findViewById(R.id.txtTieuThu);
-        layoutLS = (LinearLayout) findViewById(R.id.layoutLS);
-        layout2 = (LinearLayout) findViewById(R.id.layout2);
-        layout1 = (LinearLayout) findViewById(R.id.layout1);
-        layout0 = (LinearLayout) findViewById(R.id.layout0);
+        LinearLayout layoutLS = (LinearLayout) findViewById(R.id.layoutLS);
+        LinearLayout layout2 = (LinearLayout) findViewById(R.id.layout2);
+        LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
+        LinearLayout layout0 = (LinearLayout) findViewById(R.id.layout0);
         layoutMoi = (LinearLayout) findViewById(R.id.layoutMoi);
         edtChiSo = (EditText) findViewById(R.id.edtChiSo);
         spnCode = (Spinner) findViewById(R.id.spnCode);
@@ -701,8 +699,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             } else if (Integer.parseInt(txtTieuThuMoi.getText().toString()) == 0) {
                 _alert = "Tiêu Thụ = " + txtTieuThuMoi.getText().toString();
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-            } else if (Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 0.4
-                    || Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.4) {
+            } else if (Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.3)
+                    || Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.3) {
                 _alert = "Tiêu Thụ bất thường = " + txtTieuThuMoi.getText().toString();
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
             } else {

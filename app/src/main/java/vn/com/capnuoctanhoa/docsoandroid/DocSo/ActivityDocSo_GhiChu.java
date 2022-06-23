@@ -162,8 +162,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    protected void onDestroy() {
+        super.onDestroy();
         StringBuilder sdt = new StringBuilder();
         for (int x = recyclerView.getChildCount(), i = 0; i < x; i++) {
             RecyclerView.ViewHolder holder = recyclerView.getChildViewHolder(recyclerView.getChildAt(i));
