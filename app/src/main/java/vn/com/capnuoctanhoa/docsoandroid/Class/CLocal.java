@@ -69,6 +69,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Comparator;
 import java.util.Currency;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -945,6 +946,14 @@ public class CLocal {
         try {
             File directory = new File(path);
             File[] files = directory.listFiles();
+            if (files != null && files.length > 1) {
+                Arrays.sort(files, new Comparator<File>() {
+                    @Override
+                    public int compare(File object1, File object2) {
+                        return object2.getName().toLowerCase(Locale.getDefault()).compareTo(object1.getName().toLowerCase(Locale.getDefault()));
+                    }
+                });
+            }
             return files;
         } catch (Exception ex) {
             throw ex;
