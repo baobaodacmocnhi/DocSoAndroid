@@ -80,7 +80,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                         MyAsyncTask myAsyncTask = new MyAsyncTask();
                                         myAsyncTask.execute("Xoa", entityParent.getDanhBo(), entityParent.getDienThoai());
                                     } else {
-                                        try {//downfile
+                                        try {//xóa downfile
                                             String Nam = "", Ky = "", Dot = "";
                                             if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                                                 Nam = CLocal.listDocSo.get(0).getNam();
@@ -106,7 +106,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
             });
             holder.itemView.setOnClickListener(v -> {
                 try {
-                    if (entityParent.getDanhBo().length() != 11)//downfile
+                    if (entityParent.getDanhBo().length() != 11)//load downfile
                     {
                         String Nam = "", Ky = "", Dot = "";
                         if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
@@ -122,7 +122,6 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                         }.getType());
                         if (CLocal.listDocSo.size() > 2000)
                             CLocal.listDocSo = null;
-
                         CLocal.showToastMessage(activity, "Đã load dữ liệu " + entityParent.getDienThoai());
                         Intent returnIntent = new Intent();
                         activity.setResult(Activity.RESULT_OK, returnIntent);

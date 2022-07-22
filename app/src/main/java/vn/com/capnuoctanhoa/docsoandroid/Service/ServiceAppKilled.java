@@ -29,7 +29,7 @@ public class ServiceAppKilled extends Service {
     public void onTaskRemoved(Intent rootIntent) {
         super.onTaskRemoved(rootIntent);
         try {
-            CLocal.ghiListToFileDocSo();
+//            CLocal.ghiListToFileDocSo();
 //            if (CLocal.jsonMessage != null)
 //                editor.putString("jsonMessage", CLocal.jsonMessage.toString());
 //            editor.commit();

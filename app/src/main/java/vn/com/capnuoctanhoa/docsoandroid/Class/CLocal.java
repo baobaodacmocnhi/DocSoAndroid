@@ -496,7 +496,7 @@ public class CLocal {
                 lst.get(i).setCEntityParent(entityParentUpdate);
             }
         //goi update lại json hệ thống
-//        updateArrayListToJson();
+        updateArrayListToJson();
     }
 
     public File createFile(Activity activity) {

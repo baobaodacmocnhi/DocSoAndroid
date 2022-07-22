@@ -183,6 +183,16 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     }
 
     @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        try {
+            CLocal.ghiListToFileDocSo();
+        } catch (Exception ex) {
+            CLocal.showToastMessage(ActivityDocSo_DanhSach.this, ex.getMessage());
+        }
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
 //        return super.onCreateOptionsMenu(menu);
         MenuInflater inflater = getMenuInflater();

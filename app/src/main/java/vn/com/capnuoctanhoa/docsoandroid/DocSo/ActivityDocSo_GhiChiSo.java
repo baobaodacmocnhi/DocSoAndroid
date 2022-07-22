@@ -886,7 +886,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            CLocal.updateArrayListToJson();
             if (progressDialog != null) {
                 progressDialog.dismiss();
             }
@@ -967,7 +966,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            CLocal.updateArrayListToJson();
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
@@ -1001,7 +999,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            CLocal.updateArrayListToJson();
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
@@ -1044,7 +1041,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            CLocal.updateArrayListToJson();
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
@@ -1088,7 +1084,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            CLocal.updateArrayListToJson();
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
