@@ -34,6 +34,7 @@ public class CEntityParent {
     private String CodeMoi;
     private String TieuThuMoi;
     private String ChiSo0;
+    private String ChiSo0In;
     private String Code0;
     private String TieuThu0;
     private String ChiSo1;
@@ -101,6 +102,7 @@ public class CEntityParent {
         this.CodeMoi = "";
         this.TieuThuMoi = "";
         this.ChiSo0 = "";
+        this.ChiSo0In="";
         this.Code0 = "";
         this.TieuThu0 = "";
         this.ChiSo1 = "";
@@ -373,6 +375,14 @@ public class CEntityParent {
 
     public void setChiSo0(String chiSo0) {
         ChiSo0 = chiSo0;
+    }
+
+    public String getChiSo0In() {
+        return ChiSo0In;
+    }
+
+    public void setChiSo0In(String chiSo0In) {
+        ChiSo0In = chiSo0In;
     }
 
     public String getCode0() {
@@ -680,6 +690,7 @@ public class CEntityParent {
             this.CodeMoi = entityParent.getCodeMoi();
             this.TieuThuMoi = entityParent.getTieuThuMoi();
             this.ChiSo0 = entityParent.getChiSo0();
+            this.ChiSo0In = entityParent.getChiSo0In();
             this.Code0 = entityParent.getCode0();
             this.TieuThu0 = entityParent.getTieuThu0();
             this.ChiSo1 = entityParent.getChiSo1();

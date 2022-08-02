@@ -416,7 +416,7 @@ public class ServiceThermalPrinter extends Service {
                             .append("Địa chỉ :").append(breakLine(entityParent.getDiaChi(), charWidth)).append('\n')
                             .append("Giá biểu: ").append(entityParent.getGiaBieu()).append("      ")
                             .append("Định mức: ").append(entityParent.getDinhMuc()).append('\n')
-                            .append(pad("Cs cũ:", entityParent.getChiSo0(), padChar, charWidth)).append('\n')
+                            .append(pad("Cs cũ:", entityParent.getChiSo0In(), padChar, charWidth)).append('\n')
                             .append(pad("Cs mới:", entityParent.getChiSoMoi(), padChar, charWidth)).append('\n')
                             .append(pad("Tiêu thụ:", entityParent.getTieuThuMoi(), padChar, charWidth)).append('\n')
                             .append(pad("Tiền nước:", numberVN(Double.parseDouble(entityParent.getTienNuoc())), padChar, charWidth)).append('\n')
@@ -784,7 +784,7 @@ public class ServiceThermalPrinter extends Service {
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Cs cũ:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 0, 1, 1,
-                            padLeft(entityParent.getChiSo0(), 31)));
+                            padLeft(entityParent.getChiSo0In(), 31)));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Cs mới:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 0, 1, 1,

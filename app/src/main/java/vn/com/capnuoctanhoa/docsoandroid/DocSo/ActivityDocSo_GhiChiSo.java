@@ -867,7 +867,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(CLocal.STT).setChiSoMoi(edtChiSo.getText().toString());
                     JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
                     if (!jsonObjectC.getString("CSC").replace("null", "").equals(""))
-                        CLocal.listDocSoView.get(CLocal.STT).setChiSo0(jsonObjectC.getString("CSC").replace("null", ""));
+                        CLocal.listDocSoView.get(CLocal.STT).setChiSo0In(jsonObjectC.getString("CSC").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTieuThuMoi(jsonObjectC.getString("TieuThu").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTienNuoc(jsonObjectC.getString("TienNuoc").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setThueGTGT(jsonObjectC.getString("ThueGTGT").replace("null", ""));
