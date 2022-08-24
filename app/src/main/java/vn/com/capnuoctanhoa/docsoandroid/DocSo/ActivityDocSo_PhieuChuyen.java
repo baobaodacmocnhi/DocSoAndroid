@@ -39,6 +39,7 @@ import java.util.Date;
 
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityPhieuChuyen;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
@@ -106,8 +107,16 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     }
                 }
                 if (imgCapture != null && (!edtGhiChu.getText().toString().equals("") || flag)) {
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute();
+//                    MyAsyncTask myAsyncTask = new MyAsyncTask();
+//                    myAsyncTask.execute();
+                    CEntityPhieuChuyen en = new CEntityPhieuChuyen();
+                    en.setDanhBo(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""));
+                    en.setNoiDung(spnPhieuChuyen.getSelectedItem().toString());
+                    en.setGhiChu(edtGhiChu.getText().toString());
+                    String imgString = CBitmap.convertBitmapToString(imgCapture);
+                    en.setImgString(imgString);
+                    en.setMaNV(CLocal.MaNV);
+                    CLocal.listPhieuChuyenSync.add(en);
                 } else
                     CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
             } catch (Exception e) {

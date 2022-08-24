@@ -110,10 +110,11 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT, jsonPhieuChuyenSync;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep, LocDaDoc = false;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
+    public static ArrayList<CEntityPhieuChuyen> listPhieuChuyenSync;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
     public static int STT = 0;
@@ -150,8 +151,9 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = jsonPhieuChuyenSync = null;
         listDocSo = listDocSoView = null;
+        listPhieuChuyenSync = null;
     }
 
     public static String creatPathFile(Activity activity, String path, String filename, String filetype) {

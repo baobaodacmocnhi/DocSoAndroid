@@ -402,6 +402,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                             MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
                             myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
+                            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+                                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+                                myAsyncTaskPhieuChuyen.execute();
+                            }
                             //thành công có cảnh báo
                             if (!_alert.equals("")) {
                                 CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
@@ -787,6 +791,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             myAsyncTaskGhiHinhAll.execute();
             MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
             myAsyncTaskGhiDocSo_gianTiepALL.execute();
+            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+                myAsyncTaskPhieuChuyen.execute();
+            }
         }
     }
 
@@ -1087,6 +1095,31 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
         }
+    }
+
+    public class MyAsyncTaskPhieuChuyen extends AsyncTask<String, String, String> {
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String error = "";
+            try {
+                CWebservice ws = new CWebservice();
+                JSONObject jsonObject = null;
+                while (CLocal.listPhieuChuyenSync.size() > 0) {
+                    String result = ws.ghi_DonTu(CLocal.listPhieuChuyenSync.get(0).getDanhBo().replace(" ", ""), CLocal.listPhieuChuyenSync.get(0).getNoiDung(), CLocal.listPhieuChuyenSync.get(0).getGhiChu(), CLocal.listPhieuChuyenSync.get(0).getImgString(), CLocal.listPhieuChuyenSync.get(0).getMaNV());
+                    if (!result.equals(""))
+                        jsonObject = new JSONObject(result);
+                    if (jsonObject != null)
+                        if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                            CLocal.listPhieuChuyenSync.remove(0);
+                        }
+                }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return error;
+        }
+
     }
 
 //    public class MyAsyncTask_ConnectPrinter extends AsyncTask<String, String, String> {
