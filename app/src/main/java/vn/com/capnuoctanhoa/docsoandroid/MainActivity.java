@@ -186,15 +186,22 @@ public class MainActivity extends AppCompatActivity {
                     if (!CLocal.sharedPreferencesre.getString("May", "").replace("null", "").equals(""))
                         CLocal.May = (Integer.parseInt(CLocal.sharedPreferencesre.getString("May", "")) < 10 ? "0" : "") + Integer.parseInt(CLocal.sharedPreferencesre.getString("May", ""));
                     else
-                        CLocal.May=" ";
+                        CLocal.May = " ";
                     CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
-                    CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
-                    CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
-                    CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
-                    CLocal.jsonPhieuChuyen = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", ""));
-                    CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
-                    CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
-                    CLocal.jsonPhieuChuyenSync = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonNam", "").equals("") == false)
+                        CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonCode", "").equals("") == false)
+                        CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonViTriDHN", "").equals("") == false)
+                        CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", "").equals("") == false)
+                        CLocal.jsonPhieuChuyen = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonGiaNuoc", "").equals("") == false)
+                        CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", "").equals("") == false)
+                        CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false)
+                        CLocal.jsonPhieuChuyenSync = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""));
                     txtUser.setText("Xin chào\n" + CLocal.HoTen);
                     txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                     imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);

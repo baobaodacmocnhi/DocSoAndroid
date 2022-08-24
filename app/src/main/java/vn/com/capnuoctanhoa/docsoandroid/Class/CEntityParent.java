@@ -28,6 +28,11 @@ public class CEntityParent {
     private boolean XayDung;
     private boolean DutChi_Goc;
     private boolean DutChi_Than;
+    private boolean NgapNuoc;
+    private boolean KetTuong;
+    private boolean LapKhoaGoc;
+    private boolean BeHBV;
+    private boolean BeNapMatNapHBV;
     private String MauSacChiGoc;
     private String DienThoai;
     private String ChiSoMoi;
@@ -96,13 +101,18 @@ public class CEntityParent {
         this.XayDung = false;
         this.DutChi_Goc = false;
         this.DutChi_Than = false;
+        this.NgapNuoc = false;
+        this.KetTuong = false;
+        this.LapKhoaGoc = false;
+        this.BeHBV = false;
+        this.BeNapMatNapHBV = false;
         this.MauSacChiGoc = "";
         this.DienThoai = "";
         this.ChiSoMoi = "";
         this.CodeMoi = "";
         this.TieuThuMoi = "";
         this.ChiSo0 = "";
-        this.ChiSo0In="";
+        this.ChiSo0In = "";
         this.Code0 = "";
         this.TieuThu0 = "";
         this.ChiSo1 = "";
@@ -335,6 +345,46 @@ public class CEntityParent {
 
     public void setDutChi_Than(boolean dutChi_Than) {
         DutChi_Than = dutChi_Than;
+    }
+
+    public boolean isNgapNuoc() {
+        return NgapNuoc;
+    }
+
+    public void setNgapNuoc(boolean ngapNuoc) {
+        NgapNuoc = ngapNuoc;
+    }
+
+    public boolean isKetTuong() {
+        return KetTuong;
+    }
+
+    public void setKetTuong(boolean ketTuong) {
+        KetTuong = ketTuong;
+    }
+
+    public boolean isLapKhoaGoc() {
+        return LapKhoaGoc;
+    }
+
+    public void setLapKhoaGoc(boolean lapKhoaGoc) {
+        LapKhoaGoc = lapKhoaGoc;
+    }
+
+    public boolean isBeHBV() {
+        return BeHBV;
+    }
+
+    public void setBeHBV(boolean beHBV) {
+        BeHBV = beHBV;
+    }
+
+    public boolean isBeNapMatNapHBV() {
+        return BeNapMatNapHBV;
+    }
+
+    public void setBeNapMatNapHBV(boolean beNapMatNapHBV) {
+        BeNapMatNapHBV = beNapMatNapHBV;
     }
 
     public String getMauSacChiGoc() {
@@ -684,6 +734,11 @@ public class CEntityParent {
             this.XayDung = entityParent.isXayDung();
             this.DutChi_Goc = entityParent.isDutChi_Goc();
             this.DutChi_Than = entityParent.isDutChi_Than();
+            this.NgapNuoc = entityParent.isNgapNuoc();
+            this.KetTuong = entityParent.isKetTuong();
+            this.LapKhoaGoc = entityParent.isLapKhoaGoc();
+            this.BeHBV = entityParent.isBeHBV();
+            this.BeNapMatNapHBV = entityParent.isBeNapMatNapHBV();
             this.MauSacChiGoc = entityParent.getMauSacChiGoc();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();

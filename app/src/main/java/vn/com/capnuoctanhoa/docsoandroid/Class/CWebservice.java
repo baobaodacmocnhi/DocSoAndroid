@@ -201,7 +201,10 @@ public class CWebservice {
     }
 
     //ghi chú
-    public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri, String ViTriNgoai, String ViTriHop, String Gieng, String KhoaTu, String AmSau, String XayDung,String DutChiGoc,String DutChiThan,String MauSacChiGoc, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
+    public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri, String ViTriNgoai, String ViTriHop, String Gieng, String KhoaTu
+            , String AmSau, String XayDung, String DutChiGoc, String DutChiThan
+            , String NgapNuoc, String KetTuong, String LapKhoaGoc, String BeHBV, String BeNapMatNapHBV
+            , String MauSacChiGoc, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/update_GhiChu";
         String OPERATION_NAME = "update_GhiChu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -275,6 +278,36 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("DutChiThan");
         pi.setValue(DutChiThan);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("NgapNuoc");
+        pi.setValue(NgapNuoc);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("KetTuong");
+        pi.setValue(KetTuong);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("LapKhoaGoc");
+        pi.setValue(LapKhoaGoc);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("BeHBV");
+        pi.setValue(BeHBV);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("BeNapMatNapHBV");
+        pi.setValue(BeNapMatNapHBV);
         pi.setType(String.class);
         request.addProperty(pi);
 
