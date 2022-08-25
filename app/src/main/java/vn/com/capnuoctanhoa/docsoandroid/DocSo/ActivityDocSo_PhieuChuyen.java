@@ -295,8 +295,8 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 //            if (progressDialog != null) {
 //                progressDialog.dismiss();
 //            }
-//            if (!s.equals(""))
-//                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
+            if (!s.equals(""))
+                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
 //            else
 //                finish();
         }
