@@ -117,8 +117,6 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     if (CLocal.listPhieuChuyenSync == null)
                         CLocal.listPhieuChuyenSync = new ArrayList<>();
                     CLocal.listPhieuChuyenSync.add(en);
-                    MyAsyncTask myAsyncTask = new MyAsyncTask();
-                    myAsyncTask.execute();
                     finish();
                 } else
                     CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
@@ -164,6 +162,15 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         });
 
         imgThumb.setOnClickListener(v -> CLocal.showImgThumb(ActivityDocSo_PhieuChuyen.this, imgCapture));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+            MyAsyncTask myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute();
+        }
     }
 
     private void fillDSDonTu() {
@@ -289,17 +296,17 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             return error;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-//            if (progressDialog != null) {
-//                progressDialog.dismiss();
-//            }
-            if (!s.equals(""))
-                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
-//            else
-//                finish();
-        }
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+////            if (progressDialog != null) {
+////                progressDialog.dismiss();
+////            }
+//            if (!s.equals(""))
+//                CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
+////            else
+////                finish();
+//        }
     }
 
     public class MyAsyncTaskDisapper extends AsyncTask<String, String, String> {
