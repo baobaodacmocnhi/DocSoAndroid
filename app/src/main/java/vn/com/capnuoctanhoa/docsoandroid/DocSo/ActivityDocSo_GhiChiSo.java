@@ -126,6 +126,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
+
         chkLocDaDoc.setChecked(CLocal.LocDaDoc);
         try {
             if (getIntent().hasExtra("QuanLy"))
@@ -435,6 +436,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         } else {
                             MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
                             myAsyncTaskTrucTiep.execute();
+                            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+                                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+                                myAsyncTaskPhieuChuyen.execute();
+                            }
                         }
                         CLocal.hideKeyboard(ActivityDocSo_GhiChiSo.this);
                     } else {

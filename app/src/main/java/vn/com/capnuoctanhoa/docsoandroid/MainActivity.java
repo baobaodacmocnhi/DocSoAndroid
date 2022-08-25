@@ -7,6 +7,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityPhieuChuyen;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
@@ -200,8 +201,14 @@ public class MainActivity extends AppCompatActivity {
                         CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
                     if (CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", "").equals("") == false)
                         CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false)
-                        CLocal.jsonPhieuChuyenSync = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false) {
+                        CLocal.listPhieuChuyenSync = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""), new TypeToken<ArrayList<CEntityPhieuChuyen>>() {
+                        }.getType());
+                        if (CLocal.listPhieuChuyenSync.size() > 2000)
+                            CLocal.listPhieuChuyenSync = null;
+                    }
+                    else
+                        CLocal.listPhieuChuyenSync = new ArrayList<>();
                     txtUser.setText("Xin chào\n" + CLocal.HoTen);
                     txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                     imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
