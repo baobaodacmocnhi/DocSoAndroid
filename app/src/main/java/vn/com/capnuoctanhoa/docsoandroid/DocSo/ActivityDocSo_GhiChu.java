@@ -54,7 +54,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         chkDutChiThan = (CheckBox) findViewById(R.id.chkDutChiThan);
         chkNgapNuoc = (CheckBox) findViewById(R.id.chkNgapNuoc);
         chkKetTuong = (CheckBox) findViewById(R.id.chkKetTuong);
-        chkLapKhoaGoc = (CheckBox) findViewById(R.id.chkAmSau);
+        chkLapKhoaGoc = (CheckBox) findViewById(R.id.chkLapKhoaGoc);
         chkBeHBV = (CheckBox) findViewById(R.id.chkBeHBV);
         chkBeNapMatNapHBV = (CheckBox) findViewById(R.id.chkBeNapMatNapHBV);
         Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);

@@ -808,7 +808,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         super.onDestroy();
         try {
             if (!flagQuanLy) {
-                CLocal.ghiListToFileDocSo();
+                CLocal.updateArrayListToJson();
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());

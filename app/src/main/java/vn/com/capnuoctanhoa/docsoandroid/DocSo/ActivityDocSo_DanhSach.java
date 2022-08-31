@@ -186,7 +186,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         try {
-            CLocal.ghiListToFileDocSo();
+            CLocal.updateArrayListToJson();
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_DanhSach.this, ex.getMessage());
         }
