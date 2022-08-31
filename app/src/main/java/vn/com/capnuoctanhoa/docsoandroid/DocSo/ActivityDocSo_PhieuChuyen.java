@@ -117,6 +117,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     if (CLocal.listPhieuChuyenSync == null)
                         CLocal.listPhieuChuyenSync = new ArrayList<>();
                     CLocal.listPhieuChuyenSync.add(en);
+                    CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, "Thành Công", "center");
                     finish();
                 } else
                     CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");
@@ -310,17 +311,17 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
     }
 
     public class MyAsyncTaskDisapper extends AsyncTask<String, String, String> {
-        ProgressDialog progressDialog;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            progressDialog = new ProgressDialog(ActivityDocSo_PhieuChuyen.this);
-            progressDialog.setTitle("Thông Báo");
-            progressDialog.setMessage("Đang xử lý...");
-            progressDialog.setCanceledOnTouchOutside(false);
-            progressDialog.show();
-        }
+//        ProgressDialog progressDialog;
+//
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            progressDialog = new ProgressDialog(ActivityDocSo_PhieuChuyen.this);
+//            progressDialog.setTitle("Thông Báo");
+//            progressDialog.setMessage("Đang xử lý...");
+//            progressDialog.setCanceledOnTouchOutside(false);
+//            progressDialog.show();
+//        }
 
         @Override
         protected String doInBackground(String... strings) {
@@ -358,9 +359,9 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (progressDialog != null) {
-                progressDialog.dismiss();
-            }
+//            if (progressDialog != null) {
+//                progressDialog.dismiss();
+//            }
             if (!s.equals(""))
                 CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, s, "center");
         }
