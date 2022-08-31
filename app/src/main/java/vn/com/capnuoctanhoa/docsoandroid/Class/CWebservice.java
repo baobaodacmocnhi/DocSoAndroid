@@ -22,7 +22,7 @@ public class CWebservice {
     @Nullable
     private String excute(SoapObject request, String SOAP_ACTION) throws XmlPullParserException, IOException {
         try {
-            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER11);
+            SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER12);
             envelope.dotNet = true;
             envelope.setOutputSoapObject(request);
             HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 1);
