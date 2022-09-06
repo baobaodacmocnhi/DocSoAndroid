@@ -806,15 +806,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+//        if (thermalPrinter != null)
+//            thermalPrinter.disconnectBluetoothDevice();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
         try {
             if (!flagQuanLy) {
-                CLocal.updateArrayListToJson();
+                CLocal.ghiListToFileDocSo();
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
-//        if (thermalPrinter != null)
-//            thermalPrinter.disconnectBluetoothDevice();
     }
 
     public Uri createImageUri() {

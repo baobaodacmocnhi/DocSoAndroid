@@ -144,12 +144,14 @@ public class ActivityDangNhap extends AppCompatActivity {
                             editor.putBoolean("ToTruong", Boolean.parseBoolean(jsonObject.getString("ToTruong")));
                             editor.putBoolean("Doi", Boolean.parseBoolean(jsonObject.getString("Doi")));
                             editor.putString("jsonDocSo", "");
-                            editor.putString("jsonNam", ws.getDS_Nam());
-                            editor.putString("jsonCode",ws.getDS_Code());
-                            editor.putString("jsonViTriDHN",ws.getDS_ViTriDHN());
-                            editor.putString("jsonPhieuChuyen",ws.getDS_PhieuChuyen());
-                            editor.putString("jsonGiaNuoc",ws.getDS_GiaNuoc());
-                            editor.putString("jsonKhongTinhPBVMT",ws.getDS_KhongTinhPBVMT());
+                            String str = ws.getDS_Nam();
+                            editor.putString("jsonNam", str);
+                            str = ws.getDS_Code();
+                            editor.putString("jsonCode", str);
+                            editor.putString("jsonViTriDHN", ws.getDS_ViTriDHN());
+                            editor.putString("jsonPhieuChuyen", ws.getDS_PhieuChuyen());
+                            editor.putString("jsonGiaNuoc", ws.getDS_GiaNuoc());
+                            editor.putString("jsonKhongTinhPBVMT", ws.getDS_KhongTinhPBVMT());
                             if (Boolean.parseBoolean(jsonObject.getString("Doi"))) {
                                 editor.putString("jsonTo", ws.getDSTo());
                                 editor.putString("jsonNhanVien", ws.getDS_NhanVien());

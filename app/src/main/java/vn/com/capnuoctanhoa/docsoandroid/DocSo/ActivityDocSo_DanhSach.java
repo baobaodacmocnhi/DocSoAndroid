@@ -185,11 +185,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        try {
-            CLocal.updateArrayListToJson();
-        } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_DanhSach.this, ex.getMessage());
-        }
+
     }
 
     @Override

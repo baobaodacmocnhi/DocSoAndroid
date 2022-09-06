@@ -746,8 +746,8 @@ public class ServiceThermalPrinter extends Service {
                     y = handlingYMoreThan450(y, 50);
                     stringBuilder.append(printLine("VÀ TIỀN NƯỚC DỰ KIẾN", 4, y, 40, 2, 1));
                     y = handlingYMoreThan450(y, 75);
-                    stringBuilder.append(String.format(Locale.US, "@%d,0:PD417,YDIM 6,XDIM 2,COLUMNS 2,SECURITY 3|%s|\n", y, entityParent.getDanhBo()));
-                    y = handlingYMoreThan450(y, 75);
+//                    stringBuilder.append(String.format(Locale.US, "@%d,0:PD417,YDIM 6,XDIM 2,COLUMNS 2,SECURITY 3|%s|\n", y, entityParent.getDanhBo()));
+//                    y = handlingYMoreThan450(y, 75);
                     stringBuilder.append(printLine("NV:%s", 1, y, 0, 1, 1, CLocal.HoTen));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("SĐT:%s", 1, y, 0, 1, 1, CLocal.DienThoai));
