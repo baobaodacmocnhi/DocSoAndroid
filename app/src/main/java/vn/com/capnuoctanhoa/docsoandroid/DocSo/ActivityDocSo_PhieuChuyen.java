@@ -278,19 +278,29 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             try {
                 CWebservice ws = new CWebservice();
                 JSONObject jsonObject = null;
-                String imgString = CBitmap.convertBitmapToString(imgCapture);
-                String result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), imgString, CLocal.MaNV);
-                if (!result.equals(""))
-                    jsonObject = new JSONObject(result);
-                if (jsonObject != null)
-                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
-                        for (int i = 0; i < CLocal.listPhieuChuyenSync.size(); i++)
-                            if (CLocal.listPhieuChuyenSync.get(i).getDanhBo().equals(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""))) {
-                                CLocal.listPhieuChuyenSync.remove(i);
-                                break;
-                            }
-                    } else
-                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
+//                String imgString = CBitmap.convertBitmapToString(imgCapture);
+//                String result = ws.ghi_DonTu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), spnPhieuChuyen.getSelectedItem().toString(), edtGhiChu.getText().toString(), imgString, CLocal.MaNV);
+//                if (!result.equals(""))
+//                    jsonObject = new JSONObject(result);
+//                if (jsonObject != null)
+//                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+//                        for (int i = 0; i < CLocal.listPhieuChuyenSync.size(); i++)
+//                            if (CLocal.listPhieuChuyenSync.get(i).getDanhBo().equals(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""))) {
+//                                CLocal.listPhieuChuyenSync.remove(i);
+//                                break;
+//                            }
+//                    } else
+//                        error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
+                while (CLocal.listPhieuChuyenSync.size() > 0) {
+                    String result = ws.ghi_DonTu(CLocal.listPhieuChuyenSync.get(0).getDanhBo(), CLocal.listPhieuChuyenSync.get(0).getNoiDung(), CLocal.listPhieuChuyenSync.get(0).getGhiChu(), CLocal.listPhieuChuyenSync.get(0).getImgString(), CLocal.listPhieuChuyenSync.get(0).getMaNV());
+                    if (!result.equals(""))
+                        jsonObject = new JSONObject(result);
+                    if (jsonObject != null)
+                        if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                            CLocal.listPhieuChuyenSync.remove(0);
+                        } else
+                            error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
+                }
             } catch (Exception e) {
                 error = e.getMessage();
             }

@@ -180,6 +180,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         loadListView();
+
     }
 
     @Override
@@ -314,8 +315,10 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             customAdapterListView = new CustomAdapterListView(this, lstParent);
             lstView.setAdapter(customAdapterListView);
             txtTongHD.setText("ĐC:" + CLocal.formatMoney(String.valueOf(TongDC), ""));
-            txtNotSync.setText(String.valueOf(TongNotSync));
+//            txtNotSync.setText(String.valueOf(TongNotSync));
             lstView.setSelection(CLocal.indexPosition);
+            MyAsyncTaskTonCongty myAsyncTaskTonCongty = new MyAsyncTaskTonCongty();
+            myAsyncTaskTonCongty.execute();
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_DanhSach.this, ex.getMessage());
         }
@@ -505,4 +508,41 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
     }
 
+    public class MyAsyncTaskTonCongty extends AsyncTask<String, String, String> {
+        CWebservice ws = new CWebservice();
+
+        @Override
+        protected String doInBackground(String... strings) {
+            String error = "";
+            JSONObject jsonObject = null;
+            try {
+                String result = ws.getTonCongTy(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), "02");
+                if (!result.equals(""))
+                    jsonObject = new JSONObject(result);
+                if (jsonObject != null) {
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        JSONArray jsonObjectM = new JSONArray(jsonObject.getString("message").replace("null", ""));
+                        publishProgress(new String[]{jsonObjectM.getJSONObject(0).getString("ChuaDoc").replace("null", ""), jsonObjectM.getJSONObject(0).getString("F").replace("null", "")});
+                    }
+                }
+            } catch (Exception e) {
+                error = e.getMessage();
+            }
+            return error;
+        }
+
+        @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            txtNotSync.setText("Công Ty\n" + "Tồn: " + values[0] + ", F: " + values[1]);
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (!s.equals(""))
+                CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
+        }
+
+    }
 }
