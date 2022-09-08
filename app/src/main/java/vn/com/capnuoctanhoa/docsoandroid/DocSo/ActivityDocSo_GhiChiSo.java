@@ -356,20 +356,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             || selectedCode.getCode().equals("F3")
                             || selectedCode.getCode().equals("F4")
                             || selectedCode.getCode().equals("61")
+                            || selectedCode.getCode().equals("62")
                             || selectedCode.getCode().equals("63")
                             || selectedCode.getCode().equals("64")
                             || selectedCode.getCode().equals("66")
-                            || selectedCode.getCode().equals("68")
                             || selectedCode.getCode().equals("K"))
                             || (!selectedCode.getCode().equals("F1")
                             && !selectedCode.getCode().equals("F2")
                             && !selectedCode.getCode().equals("F3")
                             && !selectedCode.getCode().equals("F4")
                             && !selectedCode.getCode().equals("61")
+                            && !selectedCode.getCode().equals("62")
                             && !selectedCode.getCode().equals("63")
                             && !selectedCode.getCode().equals("64")
                             && !selectedCode.getCode().equals("66")
-                            && !selectedCode.getCode().equals("68")
                             && !selectedCode.getCode().equals("K")
                             && !edtChiSo.getText().toString().equals("")))) {
                         if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5K"))
@@ -688,7 +688,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N'
                     || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '6' && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68"))))
                 txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
-            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61"))
+            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66"))
                 txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
             else if (txtCodeMoi.getText().toString().charAt(0) == 'K')
                 txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
