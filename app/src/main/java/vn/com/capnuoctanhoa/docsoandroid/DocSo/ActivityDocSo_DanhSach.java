@@ -516,7 +516,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             String error = "";
             JSONObject jsonObject = null;
             try {
-                String result = ws.getTonCongTy(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), "02");
+                String result = ws.getTonCongTy(CLocal.listDocSoView.get(0).getNam(), CLocal.listDocSoView.get(0).getKy(), CLocal.listDocSoView.get(0).getDot(), CLocal.listDocSoView.get(0).getPhanMay());
                 if (!result.equals(""))
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null) {
