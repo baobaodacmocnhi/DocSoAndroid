@@ -360,6 +360,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             || selectedCode.getCode().equals("63")
                             || selectedCode.getCode().equals("64")
                             || selectedCode.getCode().equals("66")
+                            || selectedCode.getCode().equals("68")
                             || selectedCode.getCode().equals("K"))
                             || (!selectedCode.getCode().equals("F1")
                             && !selectedCode.getCode().equals("F2")
@@ -370,6 +371,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             && !selectedCode.getCode().equals("63")
                             && !selectedCode.getCode().equals("64")
                             && !selectedCode.getCode().equals("66")
+                            && !selectedCode.getCode().equals("68")
                             && !selectedCode.getCode().equals("K")
                             && !edtChiSo.getText().toString().equals("")))) {
                         if ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5K"))
