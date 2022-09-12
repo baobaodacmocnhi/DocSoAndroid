@@ -117,7 +117,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     if (CLocal.listPhieuChuyenSync == null)
                         CLocal.listPhieuChuyenSync = new ArrayList<>();
                     CLocal.listPhieuChuyenSync.add(en);
-                    CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, "Thành Công", "center");
+                    CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thành Công");
                     finish();
                 } else
                     CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, "Thiếu dữ liệu Ghi chú-Hình ảnh");

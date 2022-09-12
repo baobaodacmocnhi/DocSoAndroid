@@ -44,6 +44,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.io.BufferedInputStream;
 import java.io.File;
@@ -206,8 +207,7 @@ public class MainActivity extends AppCompatActivity {
                         }.getType());
                         if (CLocal.listPhieuChuyenSync.size() > 2000)
                             CLocal.listPhieuChuyenSync = null;
-                    }
-                    else
+                    } else
                         CLocal.listPhieuChuyenSync = new ArrayList<>();
                     txtUser.setText("Xin chào\n" + CLocal.HoTen);
                     txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
@@ -304,7 +304,14 @@ public class MainActivity extends AppCompatActivity {
             try {
                 switch (strings[0]) {
                     case "Version":
-                        return ws.getVersion();
+                        JSONObject jsonObject = null;
+                        String result = ws.getVersion();
+                        if (!result.equals(""))
+                            jsonObject = new JSONObject(result);
+                        if (jsonObject != null)
+                            if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                                return jsonObject.getString("message").replace("null", "");
+                            }
                 }
                 return null;
             } catch (Exception ex) {
@@ -315,9 +322,7 @@ public class MainActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (!s.contains("Connection refused")) {
                 updateApp(s);
-            }
         }
     }
 
