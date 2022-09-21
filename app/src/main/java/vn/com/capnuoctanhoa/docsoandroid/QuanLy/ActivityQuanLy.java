@@ -80,6 +80,9 @@ public class ActivityQuanLy extends AppCompatActivity {
                 case 1:
                     FragmentBatThuong tab1 = new FragmentBatThuong();
                     return tab1;
+                case 2:
+                    FragmentSoLieu tab2 = new FragmentSoLieu();
+                    return tab2;
                 default:
                     return null;
             }
@@ -88,7 +91,7 @@ public class ActivityQuanLy extends AppCompatActivity {
         @Override
         public int getCount() {
             // Show 3 total pages.
-            return 2;
+            return 3;
         }
 
         @Override
@@ -98,6 +101,8 @@ public class ActivityQuanLy extends AppCompatActivity {
                     return "Theo Dõi";
                 case 1:
                     return "Bất Thường";
+                case 2:
+                    return "Số Liệu";
                 default:
                     return null;
             }

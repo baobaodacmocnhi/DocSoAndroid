@@ -178,11 +178,11 @@ public class MainActivity extends AppCompatActivity {
                     calendar.add(Calendar.DATE, 2);
                     Date dateLogin7 = calendar.getTime();
                     Date currentDate = new Date();
-                    if (currentDate.compareTo(dateLogin7) > 0) {
-                        CLocal.ghiListToFileDocSo();
-                        MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
-                        myAsyncTask_dangXuat.execute("DangXuat");
-                    }
+//                    if (currentDate.compareTo(dateLogin7) > 0) {
+//                        CLocal.ghiListToFileDocSo();
+//                        MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
+//                        myAsyncTask_dangXuat.execute("DangXuat");
+//                    }
                     CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
                     CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
                     if (!CLocal.sharedPreferencesre.getString("May", "").replace("null", "").equals(""))
