@@ -362,7 +362,9 @@ public class MainActivity extends AppCompatActivity {
 
                 // Output stream
                 //extension must change (mp3,mp4,zip,apk etc.)
-                pathdownloaded = CLocal.creatPathFile(MainActivity.this, CLocal.pathRoot, fileName[0], fileName[1]);
+//                pathdownloaded = CLocal.creatPathFile(MainActivity.this, CLocal.pathRoot, fileName[0], fileName[1]);
+                pathdownloaded = CLocal.pathApp + "/" + fileName[0] + "." + fileName[1];
+                new File(CLocal.pathApp, fileName[0] + "." + fileName[1]);
 
                 OutputStream output = new FileOutputStream(pathdownloaded);
 
@@ -490,7 +492,6 @@ public class MainActivity extends AppCompatActivity {
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             }
             startActivity(intent);
-            file.delete();
 //            finish();
         } catch (Exception e) {
             Toast.makeText(MainActivity.this, e.getMessage(), Toast.LENGTH_LONG).show();

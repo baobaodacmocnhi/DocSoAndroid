@@ -94,8 +94,7 @@ public class CLocal {
     //Android 8.0 - 8.1 	Oreo 	21/8/2017 (phát hành lần đầu)
 
     public static SharedPreferences sharedPreferencesre;
-        public static String pathApp = "/data/data/vn.com.capnuoctanhoa.docsoandroid/files/";
-//    public static String pathApp = "/sdcard/TanHoa";
+    public static String pathApp = "/data/data/vn.com.capnuoctanhoa.docsoandroid/files/";
     public static String pathAppDownload = pathApp + "/Download";
     public static String pathAppPicture = pathApp + "/Picture";
     public static String pathRoot = Environment.getExternalStorageDirectory() + "/TanHoa/";
