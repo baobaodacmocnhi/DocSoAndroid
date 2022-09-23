@@ -10,7 +10,6 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -55,6 +54,7 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
     private JSONArray jsonDSDonTu;
     private String imgPath;
     private Bitmap imgCapture;
+    private File photoFile;
     private CMarshMallowPermission cMarshMallowPermission;
 
     @Override
@@ -201,13 +201,18 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
-                    if (result.getResultCode() == Activity.RESULT_OK) {
-                        if (imgPath != null && !imgPath.equals("")) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
-                            bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
-                            imgCapture = CBitmap.scale(bitmap, 1024);
-                            imgThumb.setImageBitmap(imgCapture);
+                    try {
+                        if (result.getResultCode() == Activity.RESULT_OK) {
+                            if (imgPath != null && !imgPath.equals("")) {
+                                Bitmap bitmap = BitmapFactory.decodeFile(imgPath);
+                                bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
+                                imgCapture = CBitmap.scale(bitmap, 1024);
+                                imgThumb.setImageBitmap(imgCapture);
+                                CLocal.deleteFile(CLocal.pathAppPicture, photoFile.getName());
+                            }
                         }
+                    } catch (Exception ex) {
+                        CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, ex.getMessage());
                     }
                 }
             });
@@ -230,8 +235,9 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 
     public Uri createImageUri() {
         try {
-            File filesDir = this.getExternalFilesDir(CLocal.pathPicture);
-            File photoFile = null;
+            File filesDir = new File(CLocal.pathAppPicture);
+            imgPath = "";
+            photoFile = null;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 photoFile = File.createTempFile(timeStamp, ".jpg", filesDir);

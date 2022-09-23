@@ -83,7 +83,6 @@ public class CMarshMallowPermission {
                 ActivityCompat.requestPermissions(activity, lstPermissionsNeed.toArray(new String[lstPermissionsNeed.size()]), APP_PERMISSIONS_REQUEST_CODE);
                 return false;
             }
-
             return true;
         } else return false;
     }

@@ -2,6 +2,7 @@
 <resources>
     <paths xmlns:android="http://schemas.android.com/apk/res/android">
 <!--        <external-path name="my_images" path="Android/data/vn.com.capnuoctanhoa.thutienandroid/files/Pictures" />-->
+        <root-path name="root" path="." />
         <external-path name="my_files" path="." />
     </paths>
 </resources>

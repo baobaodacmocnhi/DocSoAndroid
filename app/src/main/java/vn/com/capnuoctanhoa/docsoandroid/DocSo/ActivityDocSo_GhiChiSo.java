@@ -64,6 +64,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     //    private CCode selectedCode = null;
     private String imgPath;
     private Bitmap imgCapture;
+    private File photoFile;
     private CMarshMallowPermission cMarshMallowPermission;
     private CWebservice ws;
     private String _alert;
@@ -286,7 +287,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     if (!cMarshMallowPermission.checkPermissionForExternalStorage())
                         return;
                 }
-                imgCapture = null;
                 Uri imgUri = createImageUri();
                 Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                 if (intent.resolveActivity(ActivityDocSo_GhiChiSo.this.getPackageManager()) != null) {
@@ -623,9 +623,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     selectValue(entityParent.getCodeMoi());
                     edtChiSo.setText(entityParent.getChiSoMoi());
                 }
-                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
+                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
                 if (bitmap != null) {
-                    bitmap = CBitmap.imageOreintationValidator(bitmap, CLocal.pathPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
+                    bitmap = CBitmap.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
                     imgCapture = bitmap;
                     imgThumb.setImageBitmap(imgCapture);
                 }
@@ -746,8 +746,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 bitmap = CBitmap.imageOreintationValidator(bitmap, imgPath);
                                 imgCapture = CBitmap.scale(bitmap, 1024);
                                 imgThumb.setImageBitmap(imgCapture);
-                                CLocal.writeFile(CLocal.pathPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+                                CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
                                         , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
+                                CLocal.deleteFile(CLocal.pathAppPicture, photoFile.getName());
                             }
                         }
                     } catch (Exception ex) {
@@ -769,7 +770,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             bitmap = CBitmap.imageOreintationValidator(bitmap, strPath);
                             imgCapture = CBitmap.scale(bitmap, 1024);
                             imgThumb.setImageBitmap(imgCapture);
-                            CLocal.writeFile(CLocal.pathPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
+                            CLocal.writeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(CLocal.STT).getNam() + "_" + CLocal.listDocSoView.get(CLocal.STT).getKy() + "_" + CLocal.listDocSoView.get(CLocal.STT).getDot()
                                     , CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", "") + ".jpg", imgCapture);
                         }
                     } catch (Exception ex) {
@@ -826,8 +827,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
     public Uri createImageUri() {
         try {
-            File filesDir = this.getExternalFilesDir(CLocal.pathPicture);
-            File photoFile = null;
+            File filesDir = new File(CLocal.pathAppPicture);
+            imgPath = "";
+            photoFile = null;
             try {
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
                 photoFile = File.createTempFile(timeStamp, ".jpg", filesDir);
@@ -1001,7 +1003,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     if (!CLocal.listDocSoView.get(i).getCodeMoi().equals("")
                             && CLocal.listDocSoView.get(i).isSync()
                             && !CLocal.listDocSoView.get(i).isGhiHinh()) {
-                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
                         if (bitmap != null) {
                             String result = ws.ghi_Hinh(CLocal.listDocSoView.get(i).getID(), CBitmap.convertBitmapToString(bitmap));
                             if (Boolean.parseBoolean(result)) {
@@ -1042,7 +1044,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         jsonObject = new JSONObject(result);
                     if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                         CLocal.listDocSoView.get(index).setSync(true);
-                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSoView.get(index).getNam() + "_" + CLocal.listDocSoView.get(index).getKy() + "_" + CLocal.listDocSoView.get(index).getDot() + "/" + CLocal.listDocSoView.get(index).getDanhBo().replace(" ", "") + ".jpg");
+                        Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(index).getNam() + "_" + CLocal.listDocSoView.get(index).getKy() + "_" + CLocal.listDocSoView.get(index).getDot() + "/" + CLocal.listDocSoView.get(index).getDanhBo().replace(" ", "") + ".jpg");
                         if (bitmap != null) {
                             String result2 = ws.ghi_Hinh(CLocal.listDocSoView.get(index).getID(), CBitmap.convertBitmapToString(bitmap));
                             if (Boolean.parseBoolean(result2)) {
@@ -1085,7 +1087,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 jsonObject = new JSONObject(result);
                             if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                                 CLocal.listDocSoView.get(i).setSync(true);
-                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSoView.get(i).getNam() + "_" + CLocal.listDocSoView.get(i).getKy() + "_" + CLocal.listDocSoView.get(i).getDot() + "/" + CLocal.listDocSoView.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     String result2 = ws.ghi_Hinh(CLocal.listDocSoView.get(i).getID(), CBitmap.convertBitmapToString(bitmap));
                                     if (Boolean.parseBoolean(result2)) {

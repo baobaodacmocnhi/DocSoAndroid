@@ -503,10 +503,11 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
                     editor.commit();
                     //ghi file
+                    CLocal.writeFile(CLocal.pathApp,"","");
+                    CLocal.writeFile(CLocal.pathAppDownload,"","");
+                    CLocal.writeFile(CLocal.pathAppPicture, "", "");
                     CLocal.writeFile(CLocal.pathAppDownload, spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString() + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
-                    CLocal.writeFile(CLocal.pathRoot, "", "");
-                    CLocal.writeFile(CLocal.pathPicture, "", "");
-                    CLocal.writeFile(CLocal.pathPicture + "/" + spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString(), "", "");
+                    CLocal.writeFile(CLocal.pathAppPicture + "/" + spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString(), "", "");
                 }
                 return new String[]{"true", ""};
             } catch (Exception ex) {

@@ -10,7 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -94,7 +93,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                                 editor.apply();
                                             }
                                             CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
-                                            CLocal.deleteFile(CLocal.pathPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
+                                            CLocal.deleteFile(CLocal.pathAppPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }

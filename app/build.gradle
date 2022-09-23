@@ -21,9 +21,10 @@ android {
     defaultConfig {
         applicationId "vn.com.capnuoctanhoa.docsoandroid"
         minSdkVersion 24
+        //noinspection ExpiringTargetSdkVersion
         targetSdkVersion 30
         versionCode 1
-        versionName "3.48"
+        versionName "3.49"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
     }
