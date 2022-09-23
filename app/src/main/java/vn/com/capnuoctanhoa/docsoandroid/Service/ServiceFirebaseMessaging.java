@@ -417,7 +417,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
                             if (CLocal.listDocSo.get(i).getID().equals(ID) && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
                                 String HinhDHN = "";
-                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                 }
@@ -439,7 +439,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         for (int i = 0; i < listDocSo.size(); i++) {
                             if (listDocSo.get(i).getID().equals(ID) && !listDocSo.get(i).getCodeMoi().equals("")) {
                                 String HinhDHN = "";
-                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                 }
@@ -486,7 +486,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                             if (CLocal.listDocSo.get(i).getID().equals(ID)
                                     && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
                                 String HinhDHN;
-                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                     String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);
@@ -501,7 +501,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                         for (int i = 0; i < listDocSo.size(); i++) {
                             if (listDocSo.get(i).getID().equals(ID)
                                     && !listDocSo.get(i).getCodeMoi().equals("")) {
-                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + listDocSo.get(i).getNam() + "_" + listDocSo.get(i).getKy() + "_" + listDocSo.get(i).getDot() + "/" + listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                                 if (bitmap != null) {
                                     String HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                     String result = ws.ghi_Hinh(listDocSo.get(i).getID(), HinhDHN);

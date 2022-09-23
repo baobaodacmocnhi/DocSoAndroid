@@ -398,7 +398,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                                 || Integer.parseInt(CLocal.listDocSo.get(i).getChiSoMoi()) != Integer.parseInt(jsonObjectDocSoTon.getString("CSMoi").replace("null", ""))
                                 || !CLocal.listDocSo.get(i).isGhiHinh())) {
                             String HinhDHN = "";
-                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
                                 HinhDHN = CBitmap.convertBitmapToString(bitmap);
                             }
@@ -472,7 +472,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         JSONObject jsonObjectDocSoTon = jsonDocSoTon.getJSONObject(i);
                         if (CLocal.listDocSo.get(i).getID().equals(jsonObjectDocSoTon.getString("DocSoID").replace("null", ""))
                                 && !CLocal.listDocSo.get(i).getCodeMoi().equals("")) {
-                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
+                            Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathPicture + "/" + CLocal.listDocSo.get(i).getNam() + "_" + CLocal.listDocSo.get(i).getKy() + "_" + CLocal.listDocSo.get(i).getDot() + "/" + CLocal.listDocSo.get(i).getDanhBo().replace(" ", "") + ".jpg");
                             if (bitmap != null) {
                                 String HinhDHN = CBitmap.convertBitmapToString(bitmap);
                                 String result = ws.ghi_Hinh(CLocal.listDocSo.get(i).getID(), HinhDHN);

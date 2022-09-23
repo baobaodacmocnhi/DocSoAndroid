@@ -94,7 +94,7 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
                                                 editor.apply();
                                             }
                                             CLocal.deleteFile(CLocal.pathAppDownload, entityParent.getDienThoai());
-                                            CLocal.deleteFile(CLocal.pathAppPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
+                                            CLocal.deleteFile(CLocal.pathPicture + "/" + entityParent.getDienThoai().replace(".txt", ""), "");
                                         } catch (IOException e) {
                                             e.printStackTrace();
                                         }
