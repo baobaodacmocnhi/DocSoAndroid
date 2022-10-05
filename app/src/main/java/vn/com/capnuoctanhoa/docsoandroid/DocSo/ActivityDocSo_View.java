@@ -31,15 +31,27 @@ public class ActivityDocSo_View extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_doc_so_view);
 
-        TextView txtKy,txtTuNgay,txtDenNgay, txtCode, txtChiSo, txtTieuThu;
+        TextView txtKy, txtTuNgay, txtDenNgay, txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtGiaBieu, txtDinhMuc, txtCode, txtChiSoCu, txtChiSo, txtTieuThu, txtTienNuoc, txtThueGTGT, txtPhiBVMT, txtPhiBVMT_Thue, txtTongCong;
         ImageView imgThumb;
 
         txtKy = (TextView) findViewById(R.id.txtKy);
         txtTuNgay = (TextView) findViewById(R.id.txtTuNgay);
         txtDenNgay = (TextView) findViewById(R.id.txtDenNgay);
+        txtMLT = (TextView) findViewById(R.id.txtMLT);
+        txtDanhBo = (TextView) findViewById(R.id.txtDanhBo);
+        txtHoTen = (TextView) findViewById(R.id.txtHoTen);
+        txtDiaChi = (TextView) findViewById(R.id.txtDiaChi);
+        txtGiaBieu = (TextView) findViewById(R.id.txtGiaBieu);
+        txtDinhMuc = (TextView) findViewById(R.id.txtDinhMuc);
         txtCode = (TextView) findViewById(R.id.txtCode);
+        txtChiSoCu = (TextView) findViewById(R.id.txtChiSoCu);
         txtChiSo = (TextView) findViewById(R.id.txtChiSo);
         txtTieuThu = (TextView) findViewById(R.id.txtTieuThu);
+        txtTienNuoc = (TextView) findViewById(R.id.txtTienNuoc);
+        txtThueGTGT = (TextView) findViewById(R.id.txtThueGTGT);
+        txtPhiBVMT = (TextView) findViewById(R.id.txtPhiBVMT);
+        txtPhiBVMT_Thue = (TextView) findViewById(R.id.txtPhiBVMT_Thue);
+        txtTongCong = (TextView) findViewById(R.id.txtTongCong);
         imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
         if (!CLocal.checkNetworkAvailable(ActivityDocSo_View.this)) {
@@ -78,12 +90,24 @@ public class ActivityDocSo_View extends AppCompatActivity {
                     else {
                         if (Boolean.parseBoolean(finalJsonObject.getString("success").replace("null", ""))) {
                             JSONObject jsonObjectC = new JSONObject(finalJsonObject.getString("message").replace("null", ""));
-                            txtKy.setText(getIntent().getStringExtra("Ky")+"/"+getIntent().getStringExtra("Nam"));
+                            txtKy.setText(getIntent().getStringExtra("Ky") + "/" + getIntent().getStringExtra("Nam"));
                             txtTuNgay.setText(jsonObjectC.getString("TuNgay").replace("null", ""));
                             txtDenNgay.setText(jsonObjectC.getString("DenNgay").replace("null", ""));
+                            txtMLT.setText(jsonObjectC.getString("MLT").replace("null", ""));
+                            txtDanhBo.setText(jsonObjectC.getString("DanhBo").replace("null", ""));
+                            txtHoTen.setText(jsonObjectC.getString("HoTen").replace("null", ""));
+                            txtDiaChi.setText(jsonObjectC.getString("DiaChi").replace("null", ""));
+                            txtGiaBieu.setText(jsonObjectC.getString("GiaBieu").replace("null", ""));
+                            txtDinhMuc.setText(jsonObjectC.getString("DinhMuc").replace("null", ""));
                             txtCode.setText(jsonObjectC.getString("CodeMoi").replace("null", ""));
+                            txtChiSoCu.setText(jsonObjectC.getString("CSC").replace("null", ""));
                             txtChiSo.setText(jsonObjectC.getString("ChiSoMoi").replace("null", ""));
                             txtTieuThu.setText(jsonObjectC.getString("TieuThuMoi").replace("null", ""));
+                            txtTienNuoc.setText(CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("TienNuoc").replace("null", ""))));
+                            txtThueGTGT.setText(CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("ThueGTGT").replace("null", ""))));
+                            txtPhiBVMT.setText(CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("PhiBVMT").replace("null", ""))));
+                            txtPhiBVMT_Thue.setText(CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""))));
+                            txtTongCong.setText(CLocal.numberVN(Double.parseDouble(jsonObjectC.getString("TongCong").replace("null", ""))));
                             if (!finalJsonObject.getString("alert").replace("null", "").equals(""))
                                 imgThumb.setImageBitmap(CBitmap.base64ToImage(CLocal.convertStandardJSONString(finalJsonObject.getString("alert").replace("null", ""))));
                             if (progressDialog != null) {

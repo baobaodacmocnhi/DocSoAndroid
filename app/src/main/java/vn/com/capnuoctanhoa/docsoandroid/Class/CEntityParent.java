@@ -33,6 +33,7 @@ public class CEntityParent {
     private boolean LapKhoaGoc;
     private boolean BeHBV;
     private boolean BeNapMatNapHBV;
+    private boolean GayTayVan;
     private String MauSacChiGoc;
     private String DienThoai;
     private String ChiSoMoi;
@@ -106,6 +107,7 @@ public class CEntityParent {
         this.LapKhoaGoc = false;
         this.BeHBV = false;
         this.BeNapMatNapHBV = false;
+        this.GayTayVan=false;
         this.MauSacChiGoc = "";
         this.DienThoai = "";
         this.ChiSoMoi = "";
@@ -385,6 +387,14 @@ public class CEntityParent {
 
     public void setBeNapMatNapHBV(boolean beNapMatNapHBV) {
         BeNapMatNapHBV = beNapMatNapHBV;
+    }
+
+    public boolean isGayTayVan() {
+        return GayTayVan;
+    }
+
+    public void setGayTayVan(boolean gayTayVan) {
+        GayTayVan = gayTayVan;
     }
 
     public String getMauSacChiGoc() {
@@ -739,6 +749,7 @@ public class CEntityParent {
             this.LapKhoaGoc = entityParent.isLapKhoaGoc();
             this.BeHBV = entityParent.isBeHBV();
             this.BeNapMatNapHBV = entityParent.isBeNapMatNapHBV();
+            this.GayTayVan=entityParent.isGayTayVan();
             this.MauSacChiGoc = entityParent.getMauSacChiGoc();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();
