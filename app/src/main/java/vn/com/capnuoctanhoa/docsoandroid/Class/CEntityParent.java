@@ -34,6 +34,8 @@ public class CEntityParent {
     private boolean BeHBV;
     private boolean BeNapMatNapHBV;
     private boolean GayTayVan;
+    private boolean TroNgaiThay;
+    private boolean DauChungMayBom;
     private String MauSacChiGoc;
     private String DienThoai;
     private String ChiSoMoi;
@@ -108,6 +110,8 @@ public class CEntityParent {
         this.BeHBV = false;
         this.BeNapMatNapHBV = false;
         this.GayTayVan=false;
+        this.TroNgaiThay=false;
+        this.DauChungMayBom=false;
         this.MauSacChiGoc = "";
         this.DienThoai = "";
         this.ChiSoMoi = "";
@@ -395,6 +399,22 @@ public class CEntityParent {
 
     public void setGayTayVan(boolean gayTayVan) {
         GayTayVan = gayTayVan;
+    }
+
+    public boolean isTroNgaiThay() {
+        return TroNgaiThay;
+    }
+
+    public void setTroNgaiThay(boolean troNgaiThay) {
+        TroNgaiThay = troNgaiThay;
+    }
+
+    public boolean isDauChungMayBom() {
+        return DauChungMayBom;
+    }
+
+    public void setDauChungMayBom(boolean dauChungMayBom) {
+        DauChungMayBom = dauChungMayBom;
     }
 
     public String getMauSacChiGoc() {
@@ -750,6 +770,8 @@ public class CEntityParent {
             this.BeHBV = entityParent.isBeHBV();
             this.BeNapMatNapHBV = entityParent.isBeNapMatNapHBV();
             this.GayTayVan=entityParent.isGayTayVan();
+            this.TroNgaiThay=entityParent.isTroNgaiThay();
+            this.DauChungMayBom=entityParent.isDauChungMayBom();
             this.MauSacChiGoc = entityParent.getMauSacChiGoc();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();

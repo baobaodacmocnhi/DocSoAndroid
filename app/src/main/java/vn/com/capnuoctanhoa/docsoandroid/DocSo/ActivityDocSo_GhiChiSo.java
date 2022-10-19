@@ -14,6 +14,7 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -450,7 +451,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 } catch (Exception e) {
                     CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THẤT BẠI\r\n\r\n" + e.getMessage(), "center");
                     CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
                 }
             });
 
@@ -787,6 +787,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 fillLayoutReLoad(CLocal.listDocSoView.get(CLocal.STT));
             }
         } catch (Exception ex) {
+            Log.e("ActivityDocSo_GhiChiSo onResume",ex.getMessage());
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
@@ -821,6 +822,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 CLocal.ghiListToFileDocSo();
             }
         } catch (Exception ex) {
+            Log.e("ActivityDocSo_GhiChiSo onPause",ex.getMessage());
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
@@ -1106,8 +1108,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         @Override
         protected void onPostExecute(String s) {
             super.onPostExecute(s);
-            if (!s.equals(""))
+            if (!s.equals("")) {
                 CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
+            }
         }
     }
 

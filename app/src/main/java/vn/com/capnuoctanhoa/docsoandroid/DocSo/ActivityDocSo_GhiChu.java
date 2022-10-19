@@ -31,7 +31,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
     private Spinner spnViTri, spnMauSacChiGoc;
     private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkDutChiGoc, chkDutChiThan
-            , chkNgapNuoc, chkKetTuong, chkLapKhoaGoc, chkBeHBV, chkBeNapMatNapHBV,chkGayTayVan, chkSoChinh;
+            , chkNgapNuoc, chkKetTuong, chkLapKhoaGoc, chkBeHBV, chkBeNapMatNapHBV,chkGayTayVan,chkTroNgaiThay,chkDauChungMayBom, chkSoChinh;
     private ArrayList<String> spnName_ViTriDHN;
     private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
@@ -59,6 +59,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         chkBeHBV = (CheckBox) findViewById(R.id.chkBeHBV);
         chkBeNapMatNapHBV = (CheckBox) findViewById(R.id.chkBeNapMatNapHBV);
         chkGayTayVan = (CheckBox) findViewById(R.id.chkGayTayVan);
+        chkTroNgaiThay = (CheckBox) findViewById(R.id.chkTroNgaiThay);
+        chkDauChungMayBom = (CheckBox) findViewById(R.id.chkDauChungMayBom);
         Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
@@ -123,6 +125,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkBeHBV.setChecked(entityParent.isBeHBV());
                         chkBeNapMatNapHBV.setChecked(entityParent.isBeNapMatNapHBV());
                         chkGayTayVan.setChecked(entityParent.isGayTayVan());
+                        chkTroNgaiThay.setChecked(entityParent.isTroNgaiThay());
+                        chkDauChungMayBom.setChecked(entityParent.isDauChungMayBom());
                         spinnerSelectValue(spnMauSacChiGoc, entityParent.getMauSacChiGoc());
                     }
                 }
@@ -218,7 +222,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 , spnViTri.getSelectedItem().toString(), String.valueOf(chkViTriNgoai.isChecked()), String.valueOf(chkViTriHop.isChecked()), String.valueOf(chkGieng.isChecked())
                                 , String.valueOf(chkKhoaTu.isChecked()), String.valueOf(chkAmSau.isChecked()), String.valueOf(chkXayDung.isChecked()), String.valueOf(chkDutChiGoc.isChecked()), String.valueOf(chkDutChiThan.isChecked())
                                 , String.valueOf(chkNgapNuoc.isChecked()), String.valueOf(chkKetTuong.isChecked()), String.valueOf(chkLapKhoaGoc.isChecked()), String.valueOf(chkBeHBV.isChecked()), String.valueOf(chkBeNapMatNapHBV.isChecked())
-                                , String.valueOf(chkGayTayVan.isChecked())
+                                , String.valueOf(chkGayTayVan.isChecked()), String.valueOf(chkTroNgaiThay.isChecked()), String.valueOf(chkDauChungMayBom.isChecked())
                                 , spnMauSacChiGoc.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
@@ -248,6 +252,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setBeHBV(chkBeHBV.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setBeNapMatNapHBV(chkBeNapMatNapHBV.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setGayTayVan(chkGayTayVan.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setTroNgaiThay(chkTroNgaiThay.isChecked());
+                                CLocal.listDocSoView.get(CLocal.STT).setDauChungMayBom(chkDauChungMayBom.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setMauSacChiGoc(spnMauSacChiGoc.getSelectedItem().toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setGhiChu(edtGhiChu.getText().toString());
                                 break;
