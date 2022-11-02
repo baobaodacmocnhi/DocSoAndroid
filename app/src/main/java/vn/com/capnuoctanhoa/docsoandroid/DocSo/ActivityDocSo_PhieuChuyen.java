@@ -87,8 +87,11 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
 
         try {
             if (CLocal.STT > -1) {
-                MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
-                myAsyncTaskDisapper.execute("getDSDonTu");
+                if (CLocal.checkNetworkGood(ActivityDocSo_PhieuChuyen.this)) {
+                    MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
+                    myAsyncTaskDisapper.execute("getDSDonTu");
+                } else
+                    CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, "Tốc độ mạng yếu", "center");
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_PhieuChuyen.this, ex.getMessage());
@@ -168,10 +171,13 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
-            MyAsyncTask myAsyncTask = new MyAsyncTask();
-            myAsyncTask.execute();
-        }
+        if (CLocal.checkNetworkGood(ActivityDocSo_PhieuChuyen.this)) {
+            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute();
+            }
+        } else
+            CLocal.showPopupMessage(ActivityDocSo_PhieuChuyen.this, "Tốc độ mạng yếu", "center");
     }
 
     private void fillDSDonTu() {

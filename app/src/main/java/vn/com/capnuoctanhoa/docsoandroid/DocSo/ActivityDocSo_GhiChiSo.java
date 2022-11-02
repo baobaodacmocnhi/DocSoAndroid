@@ -404,8 +404,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
                             CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
                             CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
-                            MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
-                            myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
+                            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChiSo.this)) {
+                                MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+                                myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
+                            }
                             if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
                                 MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
                                 myAsyncTaskPhieuChuyen.execute();
@@ -437,12 +439,15 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 handler.postDelayed(() -> ivSau.performClick(), 1000);
                             }
                         } else {
-                            MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
-                            myAsyncTaskTrucTiep.execute();
-                            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
-                                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
-                                myAsyncTaskPhieuChuyen.execute();
-                            }
+                            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChiSo.this)) {
+                                MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
+                                myAsyncTaskTrucTiep.execute();
+                                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+                                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+                                    myAsyncTaskPhieuChuyen.execute();
+                                }
+                            } else
+                                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "Tốc độ mạng yếu", "center");
                         }
                         CLocal.hideKeyboard(ActivityDocSo_GhiChiSo.this);
                     } else {
@@ -787,7 +792,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 fillLayoutReLoad(CLocal.listDocSoView.get(CLocal.STT));
             }
         } catch (Exception ex) {
-            Log.e("ActivityDocSo_GhiChiSo onResume",ex.getMessage());
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
@@ -796,13 +800,15 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     public void onBackPressed() {
         super.onBackPressed();
         if (!flagQuanLy) {
-            MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
-            myAsyncTaskGhiHinhAll.execute();
-            MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
-            myAsyncTaskGhiDocSo_gianTiepALL.execute();
-            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
-                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
-                myAsyncTaskPhieuChuyen.execute();
+            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChiSo.this)) {
+                MyAsyncTaskGhiHinhAll myAsyncTaskGhiHinhAll = new MyAsyncTaskGhiHinhAll();
+                myAsyncTaskGhiHinhAll.execute();
+                MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
+                myAsyncTaskGhiDocSo_gianTiepALL.execute();
+                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+                    myAsyncTaskPhieuChuyen.execute();
+                }
             }
         }
     }
@@ -822,7 +828,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 CLocal.ghiListToFileDocSo();
             }
         } catch (Exception ex) {
-            Log.e("ActivityDocSo_GhiChiSo onPause",ex.getMessage());
+            Log.e("ActivityDocSo_GhiChiSo onPause", ex.getMessage());
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }

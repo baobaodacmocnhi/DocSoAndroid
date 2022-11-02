@@ -204,7 +204,7 @@ public class CWebservice {
     public String update_GhiChu(String DanhBo, String SoNha, String TenDuong, String ViTri, String ViTriNgoai, String ViTriHop, String Gieng, String KhoaTu
             , String AmSau, String XayDung, String DutChiGoc, String DutChiThan
             , String NgapNuoc, String KetTuong, String LapKhoaGoc, String BeHBV, String BeNapMatNapHBV, String GayTayVan, String TroNgaiThay, String DauChungMayBom
-            , String MauSacChiGoc, String GhiChu, String MaNV) throws XmlPullParserException, IOException {
+            , String MauSacChiGoc, String GhiChu,String KinhDoanh, String MaNV) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/update_GhiChu";
         String OPERATION_NAME = "update_GhiChu";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
@@ -338,6 +338,12 @@ public class CWebservice {
         pi = new PropertyInfo();
         pi.setName("GhiChu");
         pi.setValue(GhiChu);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("KinhDoanh");
+        pi.setValue(KinhDoanh);
         pi.setType(String.class);
         request.addProperty(pi);
 

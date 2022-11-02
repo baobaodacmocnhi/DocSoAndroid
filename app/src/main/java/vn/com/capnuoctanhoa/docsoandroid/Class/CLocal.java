@@ -21,6 +21,8 @@ import android.location.LocationManager;
 import android.media.Ringtone;
 import android.media.RingtoneManager;
 import android.net.ConnectivityManager;
+import android.net.Network;
+import android.net.NetworkCapabilities;
 import android.net.NetworkInfo;
 import android.net.Uri;
 import android.net.wifi.WifiManager;
@@ -103,7 +105,7 @@ public class CLocal {
     public static String fileName_SharedPreferences = "my_configuration";
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
-    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT, jsonPhieuChuyenSync;
+    public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonKinhDoanh, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT, jsonPhieuChuyenSync;
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep, LocDaDoc = false;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
@@ -145,7 +147,7 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = jsonPhieuChuyenSync = null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonKinhDoanh = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = jsonPhieuChuyenSync = null;
         listDocSo = listDocSoView = null;
         listPhieuChuyenSync = null;
     }
@@ -177,6 +179,44 @@ public class CLocal {
             return true;
         else
             return false;
+    }
+
+    public static boolean checkNetworkGood(Activity activity) {
+        if (checkWifi(activity))
+            return true;
+        else if (checkMobile(activity)) {
+            ConnectivityManager cm = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkCapabilities nc = cm.getNetworkCapabilities(cm.getActiveNetwork());
+            int downSpeed = nc.getLinkDownstreamBandwidthKbps();
+            int upSpeed = nc.getLinkUpstreamBandwidthKbps();
+            if (downSpeed >= 1000 || upSpeed >= 1000) {
+                return true;
+            }
+        } else
+            return false;
+        return false;
+    }
+
+    public static boolean checkWifi(Activity activity) {
+        ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        for (Network network : connMgr.getAllNetworks()) {
+            NetworkInfo networkInfo = connMgr.getNetworkInfo(network);
+            if (networkInfo.getType() == ConnectivityManager.TYPE_WIFI) {
+                return networkInfo.isConnected();
+            }
+        }
+        return false;
+    }
+
+    public static boolean checkMobile(Activity activity) {
+        ConnectivityManager connMgr = (ConnectivityManager) activity.getSystemService(Context.CONNECTIVITY_SERVICE);
+        for (Network network : connMgr.getAllNetworks()) {
+            NetworkInfo networkInfo = connMgr.getNetworkInfo(network);
+            if (networkInfo.getType() == ConnectivityManager.TYPE_MOBILE) {
+                return networkInfo.isConnected();
+            }
+        }
+        return false;
     }
 
     public static boolean checkBluetoothAvaible() {

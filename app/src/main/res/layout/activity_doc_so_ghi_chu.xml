@@ -280,6 +280,7 @@
                 android:inputType="textPersonName"
                 android:minHeight="48dp"
                 app:layout_constraintEnd_toStartOf="@+id/btnCapNhat"
+                app:layout_constraintHorizontal_bias="1.0"
                 app:layout_constraintStart_toEndOf="@+id/textView39"
                 app:layout_constraintTop_toBottomOf="@+id/spnMauSacChiGoc"
                 tools:ignore="SpeakableTextPresentCheck" />
@@ -294,13 +295,34 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="@+id/edtGhiChu" />
 
+            <TextView
+                android:id="@+id/textView42"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="16dp"
+                android:text="Kinh Doanh"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/spnKinhDoanh" />
+
+            <Spinner
+                android:id="@+id/spnKinhDoanh"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginEnd="8dp"
+                android:minHeight="48dp"
+                app:layout_constraintEnd_toStartOf="@+id/btnCapNhat"
+                app:layout_constraintStart_toEndOf="@+id/textView42"
+                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu" />
+
             <Button
                 android:id="@+id/btnCapNhat"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cập Nhật"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/edtGhiChu" />
+                app:layout_constraintTop_toTopOf="@+id/spnKinhDoanh" />
 
             <TextView
                 android:id="@+id/textView40"
@@ -310,7 +332,7 @@
                 android:text="-------------------------------------------------------------"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/edtGhiChu" />
+                app:layout_constraintTop_toBottomOf="@+id/spnKinhDoanh" />
 
             <TextView
                 android:id="@+id/textView20"

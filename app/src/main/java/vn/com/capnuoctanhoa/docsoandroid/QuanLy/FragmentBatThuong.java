@@ -289,6 +289,7 @@ public class FragmentBatThuong extends Fragment {
                             enParent.setTuNgay(jsonObject.getString("TuNgay").replace("null", ""));
                             enParent.setDenNgay(jsonObject.getString("DenNgay").replace("null", ""));
                             enParent.setGhiChu(jsonObject.getString("GhiChu").replace("null", ""));
+                            enParent.setKinhDoanh(jsonObject.getString("KinhDoanh").replace("null", ""));
                             enParent.setPhanMay(jsonObject.getString("PhanMay").replace("null", ""));
                             enParent.setChuBao(Boolean.parseBoolean(jsonObject.getString("ChuBao").replace("null", "")));
                             enParent.setTinhTrang(jsonObject.getString("TinhTrang").replace("null", ""));

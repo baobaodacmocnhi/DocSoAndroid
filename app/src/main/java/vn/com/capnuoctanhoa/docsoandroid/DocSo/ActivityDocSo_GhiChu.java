@@ -29,10 +29,9 @@ import java.util.ArrayList;
 
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
-    private Spinner spnViTri, spnMauSacChiGoc;
-    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkDutChiGoc, chkDutChiThan
-            , chkNgapNuoc, chkKetTuong, chkLapKhoaGoc, chkBeHBV, chkBeNapMatNapHBV,chkGayTayVan,chkTroNgaiThay,chkDauChungMayBom, chkSoChinh;
-    private ArrayList<String> spnName_ViTriDHN;
+    private Spinner spnViTri, spnMauSacChiGoc, spnKinhDoanh;
+    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkDutChiGoc, chkDutChiThan, chkNgapNuoc, chkKetTuong, chkLapKhoaGoc, chkBeHBV, chkBeNapMatNapHBV, chkGayTayVan, chkTroNgaiThay, chkDauChungMayBom, chkSoChinh;
+    private ArrayList<String> spnName_ViTriDHN, spnName_KinhDoanh;
     private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
 
@@ -45,6 +44,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         edtGhiChu = (EditText) findViewById(R.id.edtGhiChu);
         spnViTri = (Spinner) findViewById(R.id.spnViTri);
         spnMauSacChiGoc = (Spinner) findViewById(R.id.spnMauSacChiGoc);
+        spnKinhDoanh = (Spinner) findViewById(R.id.spnKinhDoanh);
         chkViTriNgoai = (CheckBox) findViewById(R.id.chkViTriNgoai);
         chkViTriHop = (CheckBox) findViewById(R.id.chkViTriHop);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
@@ -80,7 +80,21 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnViTri.setAdapter(adapter);
         } catch (Exception e) {
-            e.printStackTrace();
+//            e.printStackTrace();
+        }
+        try {
+            if (CLocal.jsonKinhDoanh != null && CLocal.jsonKinhDoanh.length() > 0) {
+                spnName_KinhDoanh = new ArrayList<>();
+                for (int i = 0; i < CLocal.jsonKinhDoanh.length(); i++) {
+                    JSONObject jsonObject = CLocal.jsonKinhDoanh.getJSONObject(i);
+                    spnName_KinhDoanh.add(jsonObject.getString("Name").replace("null", ""));
+                }
+            }
+            ArrayAdapter<String> adapter = new ArrayAdapter<>(getApplicationContext(), android.R.layout.simple_spinner_item, spnName_KinhDoanh);
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            spnKinhDoanh.setAdapter(adapter);
+        } catch (Exception e) {
+//            e.printStackTrace();
         }
 
         btnCapNhat.setOnClickListener(view -> {
@@ -88,8 +102,11 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
                 return;
             }
-            MyAsyncTask myAsyncTask = new MyAsyncTask();
-            myAsyncTask.execute("CapNhat");
+            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChu.this)) {
+                MyAsyncTask myAsyncTask = new MyAsyncTask();
+                myAsyncTask.execute("CapNhat");
+            } else
+                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, "Tốc độ mạng yếu", "center");
         });
 
         btnCapNhatDT.setOnClickListener(view -> {
@@ -128,10 +145,14 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkTroNgaiThay.setChecked(entityParent.isTroNgaiThay());
                         chkDauChungMayBom.setChecked(entityParent.isDauChungMayBom());
                         spinnerSelectValue(spnMauSacChiGoc, entityParent.getMauSacChiGoc());
+                        spinnerSelectValue(spnKinhDoanh, entityParent.getKinhDoanh());
                     }
                 }
-                MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
-                myAsyncTaskDisapper.execute();
+                if (CLocal.checkNetworkGood(ActivityDocSo_GhiChu.this)) {
+                    MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
+                    myAsyncTaskDisapper.execute();
+                } else
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, "Tốc độ mạng yếu", "center");
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
@@ -223,7 +244,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 , String.valueOf(chkKhoaTu.isChecked()), String.valueOf(chkAmSau.isChecked()), String.valueOf(chkXayDung.isChecked()), String.valueOf(chkDutChiGoc.isChecked()), String.valueOf(chkDutChiThan.isChecked())
                                 , String.valueOf(chkNgapNuoc.isChecked()), String.valueOf(chkKetTuong.isChecked()), String.valueOf(chkLapKhoaGoc.isChecked()), String.valueOf(chkBeHBV.isChecked()), String.valueOf(chkBeNapMatNapHBV.isChecked())
                                 , String.valueOf(chkGayTayVan.isChecked()), String.valueOf(chkTroNgaiThay.isChecked()), String.valueOf(chkDauChungMayBom.isChecked())
-                                , spnMauSacChiGoc.getSelectedItem().toString(), edtGhiChu.getText().toString(), CLocal.MaNV);
+                                , spnMauSacChiGoc.getSelectedItem().toString(), edtGhiChu.getText().toString(), spnKinhDoanh.getSelectedItem().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
                         result = ws.update_DienThoai(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtDienThoai.getText().toString(), edtHoTen.getText().toString()
@@ -256,6 +277,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setDauChungMayBom(chkDauChungMayBom.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setMauSacChiGoc(spnMauSacChiGoc.getSelectedItem().toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setGhiChu(edtGhiChu.getText().toString());
+                                CLocal.listDocSoView.get(CLocal.STT).setKinhDoanh(spnKinhDoanh.getSelectedItem().toString());
                                 break;
                             case "CapNhatDT":
 

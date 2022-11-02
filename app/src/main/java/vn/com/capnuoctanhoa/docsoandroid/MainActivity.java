@@ -197,6 +197,8 @@ public class MainActivity extends AppCompatActivity {
                         CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
                     if (CLocal.sharedPreferencesre.getString("jsonViTriDHN", "").equals("") == false)
                         CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
+                    if (CLocal.sharedPreferencesre.getString("jsonKinhDoanh", "").equals("") == false)
+                        CLocal.jsonKinhDoanh = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKinhDoanh", ""));
                     if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", "").equals("") == false)
                         CLocal.jsonPhieuChuyen = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", ""));
                     if (CLocal.sharedPreferencesre.getString("jsonGiaNuoc", "").equals("") == false)

@@ -64,7 +64,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
         spnFilter = (Spinner) findViewById(R.id.spnFilter);
         spnSort = (Spinner) findViewById(R.id.spnSort);
-        Spinner spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
+//        Spinner spnNhanVien = (Spinner) findViewById(R.id.spnNhanVien);
         lstView = (ListView) findViewById(R.id.lstView);
         txtTongHD = (TextView) findViewById(R.id.txtTongHD);
         txtNotSync = (TextView) findViewById(R.id.txtNotSync);
@@ -74,24 +74,23 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
 
         ivSync.setOnClickListener(v -> {
             try {
-                if (!CLocal.checkNetworkAvailable(ActivityDocSo_DanhSach.this)) {
-                    CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Không có Internet");
-                    return;
-                }
-                CLocal.showDialog(ActivityDocSo_DanhSach.this, "Đồng hộ Lệch so với server", ""
-                        , "Sync Code", (dialog, which) -> {
-                            dialog.dismiss();
-                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                                MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
-                                myAsyncTaskSyncCodeTon.execute();
-                            }
-                        }, "Sync Hình", (dialog, which) -> {
-                            dialog.dismiss();
-                            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
-                                MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
-                                myAsyncTaskSyncHinhTon.execute();
-                            }
-                        }, true);
+                if (CLocal.checkNetworkGood(ActivityDocSo_DanhSach.this)) {
+                    CLocal.showDialog(ActivityDocSo_DanhSach.this, "Đồng hộ Lệch so với server", ""
+                            , "Sync Code", (dialog, which) -> {
+                                dialog.dismiss();
+                                if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                    MyAsyncTaskSyncCodeTon myAsyncTaskSyncCodeTon = new MyAsyncTaskSyncCodeTon();
+                                    myAsyncTaskSyncCodeTon.execute();
+                                }
+                            }, "Sync Hình", (dialog, which) -> {
+                                dialog.dismiss();
+                                if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                                    MyAsyncTaskSyncHinhTon myAsyncTaskSyncHinhTon = new MyAsyncTaskSyncHinhTon();
+                                    myAsyncTaskSyncHinhTon.execute();
+                                }
+                            }, true);
+                } else
+                    CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, "Tốc độ mạng yếu", "center");
             } catch (Exception ex) {
                 CLocal.showPopupMessage(ActivityDocSo_DanhSach.this, ex.getMessage(), "left");
             }

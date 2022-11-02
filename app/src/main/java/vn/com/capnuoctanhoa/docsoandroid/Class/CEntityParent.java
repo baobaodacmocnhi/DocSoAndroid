@@ -20,6 +20,7 @@ public class CEntityParent {
     private String DinhMuc;
     private String DinhMucHN;
     private String ViTri;
+    private String KinhDoanh;
     private boolean ViTriNgoai;
     private boolean ViTriHop;
     private boolean Gieng;
@@ -96,6 +97,7 @@ public class CEntityParent {
         this.DinhMuc = "";
         this.DinhMucHN = "";
         this.ViTri = "";
+        this.KinhDoanh="";
         this.ViTriNgoai = false;
         this.ViTriHop = false;
         this.Gieng = false;
@@ -287,6 +289,14 @@ public class CEntityParent {
 
     public void setViTri(String viTri) {
         ViTri = viTri;
+    }
+
+    public String getKinhDoanh() {
+        return KinhDoanh;
+    }
+
+    public void setKinhDoanh(String kinhDoanh) {
+        KinhDoanh = kinhDoanh;
     }
 
     public boolean isViTriNgoai() {
@@ -756,6 +766,7 @@ public class CEntityParent {
             this.DinhMuc = entityParent.getDinhMuc();
             this.DinhMucHN = entityParent.getDinhMucHN();
             this.ViTri = entityParent.getViTri();
+            this.KinhDoanh=entityParent.getKinhDoanh();
             this.ViTriNgoai = entityParent.isViTriNgoai();
             this.ViTriHop = entityParent.isViTriHop();
             this.Gieng = entityParent.isGieng();
