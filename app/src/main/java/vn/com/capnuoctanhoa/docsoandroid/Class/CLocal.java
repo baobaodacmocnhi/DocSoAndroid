@@ -132,6 +132,7 @@ public class CLocal {
         editor.putString("jsonDocSo", "");
         editor.putString("jsonCode", "");
         editor.putString("jsonViTriDHN", "");
+        editor.putString("jsonKinhDoanh", "");
         editor.putString("jsonPhieuChuyen", "");
         editor.putString("jsonGiaNuoc", "");
         editor.putString("jsonKhongTinhPBVMT", "");

@@ -532,6 +532,14 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String getDS_NoiDung_KinhDoanh() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_NoiDung_KinhDoanh";
+        String OPERATION_NAME = "getDS_NoiDung_KinhDoanh";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        return excute(request, SOAP_ACTION);
+    }
+
     public String getDS_GiaNuoc() throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/getDS_GiaNuoc";
         String OPERATION_NAME = "getDS_GiaNuoc";

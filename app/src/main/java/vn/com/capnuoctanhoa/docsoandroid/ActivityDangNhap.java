@@ -149,6 +149,7 @@ public class ActivityDangNhap extends AppCompatActivity {
                             str = ws.getDS_Code();
                             editor.putString("jsonCode", str);
                             editor.putString("jsonViTriDHN", ws.getDS_ViTriDHN());
+                            editor.putString("jsonKinhDoanh", ws.getDS_NoiDung_KinhDoanh());
                             editor.putString("jsonPhieuChuyen", ws.getDS_PhieuChuyen());
                             editor.putString("jsonGiaNuoc", ws.getDS_GiaNuoc());
                             editor.putString("jsonKhongTinhPBVMT", ws.getDS_KhongTinhPBVMT());
