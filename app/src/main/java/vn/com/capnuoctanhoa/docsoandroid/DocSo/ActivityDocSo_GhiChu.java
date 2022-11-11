@@ -280,7 +280,13 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setKinhDoanh(spnKinhDoanh.getSelectedItem().toString());
                                 break;
                             case "CapNhatDT":
-
+                                StringBuilder sdt = new StringBuilder();
+                                if (chkSoChinh.isChecked())
+                                    if (sdt.toString().equals(""))
+                                        sdt = new StringBuilder(edtDienThoai.getText().toString() + " " + edtHoTen.getText().toString());
+                                    else
+                                        sdt.append(" | ").append(edtDienThoai.getText().toString()).append(" ").append(edtHoTen.getText().toString());
+                                CLocal.listDocSoView.get(CLocal.STT).setDienThoai(sdt.toString());
                                 break;
                         }
                         CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
@@ -291,6 +297,13 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             }
             return error;
         }
+
+      /*  @Override
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
+            myAsyncTaskDisapper.execute();
+        }*/
 
         @Override
         protected void onPostExecute(String s) {
