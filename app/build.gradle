@@ -16,15 +16,15 @@ android {
             keyPassword 'TanHoa@2022'
         }
     }
-    compileSdkVersion 31
+    compileSdkVersion 30
 
     defaultConfig {
         applicationId "vn.com.capnuoctanhoa.docsoandroid"
         minSdkVersion 24
         //noinspection ExpiringTargetSdkVersion
-        targetSdkVersion 31
+        targetSdkVersion 30
         versionCode 1
-        versionName "3.54"
+        versionName "3.56"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
     }

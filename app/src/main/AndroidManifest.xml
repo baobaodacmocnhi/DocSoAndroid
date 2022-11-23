@@ -42,28 +42,28 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".DocSo.ActivityDocSo_LichSu"
-            android:exported="true"
+            android:exported="false"
             android:label="Lịch Sử"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_View"
-            android:exported="true"
+            android:exported="false"
             android:label="Thông Tin"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_PhieuChuyen"
-            android:exported="true"
+            android:exported="false"
             android:label="Phiếu Chuyển"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_GhiChu"
-            android:exported="true"
+            android:exported="false"
             android:label="Ghi Chú"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".DocSo.ActivityDocSo_GhiChiSo"
             android:configChanges="orientation|screenSize|keyboardHidden"
-            android:exported="true"
+            android:exported="false"
             android:label="Ghi Chỉ Số Nước" />
 
         <service
@@ -73,7 +73,7 @@
         <service
             android:name=".Service.ServiceFirebaseMessaging"
             android:directBootAware="true"
-            android:exported="true">
+            android:exported="false">
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
@@ -81,7 +81,7 @@
         <service
             android:name=".Service.ServiceAppKilled"
             android:enabled="true"
-            android:exported="true"
+            android:exported="false"
             android:stopWithTask="false" />
 
         <activity
@@ -96,7 +96,7 @@
         <provider
             android:name="androidx.core.content.FileProvider"
             android:authorities="docso_file_provider"
-            android:exported="true"
+            android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
                 android:name="android.support.FILE_PROVIDER_PATHS"
@@ -105,20 +105,16 @@
 
         <activity
             android:name=".ActivityDangNhap"
-            android:exported="true"
             android:label="Đăng Nhập" />
         <activity
             android:name=".ActivityAdmin"
-            android:exported="true"
             android:label="Admin" />
         <activity
             android:name=".ActivitySettings"
-            android:exported="true"
             android:label="Cài Đặt"
             android:windowSoftInputMode="stateHidden" />
         <activity
             android:name=".DocSo.ActivityDocSo_DanhSach"
-            android:exported="true"
             android:label="Danh Sách"
             android:launchMode="singleTop"
             android:windowSoftInputMode="stateHidden|adjustResize">
@@ -136,12 +132,10 @@
         </activity>
         <activity
             android:name=".DocSo.ActivityDownDataDocSo"
-            android:exported="true"
             android:label="Tải Dữ Liệu Đọc Số"
             android:theme="@style/Theme.AppCompat.Light.Dialog.Alert" />
         <activity
             android:name=".QuanLy.ActivityQuanLy"
-            android:exported="true"
             android:label="Quản Lý"
             android:theme="@style/AppTheme.NoActionBar" />
     </application>
