@@ -468,7 +468,7 @@ public class ServiceThermalPrinter extends Service {
                         .append("TRÂN TRỌNG\n")
                         .append(line)
                         .append("Được in vào: ").append(CLocal.getTime()).append("\n")
-                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ")
+                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ").append('\n')
                         .append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
@@ -881,9 +881,11 @@ public class ServiceThermalPrinter extends Service {
                 y = handlingYMoreThan450(y, 15);
                 stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
                 y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ", 1, y, 0, 1, 1));
+                stringBuilder.append(printLine("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("tại nhà", 1, y, 0, 1, 1));
+                stringBuilder.append(printLine("NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 100);
                 stringBuilder.append(printLine(".", 1, y, 0, 1, 1));
                 stringBuilder.append("}\n");
