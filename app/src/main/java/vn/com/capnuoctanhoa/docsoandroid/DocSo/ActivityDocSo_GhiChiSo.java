@@ -825,7 +825,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         super.onPause();
         try {
             if (!flagQuanLy) {
-                CLocal.ghiListToFileDocSo();
+                CLocal.writeListToJson();
             }
         } catch (Exception ex) {
             Log.e("ActivityDocSo_GhiChiSo onPause", ex.getMessage());

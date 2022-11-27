@@ -997,16 +997,25 @@ public class CLocal {
         }
     }
 
-    public static void ghiListToFileDocSo() throws IOException {
+    public static void writeListToFileDocSo() throws IOException {
         try {
-            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-            String Nam = "", Ky = "", Dot = "";
             if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                String Nam = "", Ky = "", Dot = "";
                 Nam = CLocal.listDocSo.get(0).getNam();
                 Ky = CLocal.listDocSo.get(0).getKy();
                 Dot = CLocal.listDocSo.get(0).getDot();
-                editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
                 writeFile(CLocal.pathAppDownload, Nam + "_" + Ky + "_" + Dot + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public static void writeListToJson() throws IOException {
+        try {
+            if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+                editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
             }
         } catch (Exception ex) {
             throw ex;

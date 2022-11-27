@@ -256,6 +256,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
+            CLocal.runServiceThermalPrinter(MainActivity.this);
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu, this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menubar_main, menu);
