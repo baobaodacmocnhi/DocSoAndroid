@@ -825,10 +825,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         super.onPause();
         try {
             if (!flagQuanLy) {
-                CLocal.writeListToJson();
+//                CLocal.writeListToJson();
             }
         } catch (Exception ex) {
-            Log.e("ActivityDocSo_GhiChiSo onPause", ex.getMessage());
+//            Log.e("ActivityDocSo_GhiChiSo onPause", ex.getMessage());
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
