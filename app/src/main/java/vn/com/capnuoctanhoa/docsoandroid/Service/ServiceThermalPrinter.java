@@ -327,7 +327,7 @@ public class ServiceThermalPrinter extends Service {
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void printGhiChiSo(CEntityParent entityParent) throws IOException {
         try {
-            if (CLocal.serviceThermalPrinter != null)
+            if (CLocal.serviceThermalPrinter != null && !entityParent.getTienNuoc().contains("-"))
                 switch (CLocal.MethodPrinter) {
                     case "Honeywell45":
                         printGhiChiSo_escpPrint(entityParent, 45);

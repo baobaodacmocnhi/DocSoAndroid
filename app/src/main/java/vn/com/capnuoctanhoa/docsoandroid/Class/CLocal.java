@@ -129,14 +129,14 @@ public class CLocal {
         editor.putString("MaTo", "");
         editor.putString("DienThoai", "");
         editor.putString("jsonNam", "");
-        editor.putString("jsonDocSo", "");
+//        editor.putString("jsonDocSo", "");
         editor.putString("jsonCode", "");
         editor.putString("jsonViTriDHN", "");
         editor.putString("jsonKinhDoanh", "");
         editor.putString("jsonPhieuChuyen", "");
         editor.putString("jsonGiaNuoc", "");
         editor.putString("jsonKhongTinhPBVMT", "");
-        editor.putString("jsonPhieuChuyenSync", "");
+//        editor.putString("jsonPhieuChuyenSync", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
         editor.putBoolean("Admin", false);

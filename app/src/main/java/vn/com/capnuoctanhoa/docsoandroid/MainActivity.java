@@ -179,65 +179,64 @@ public class MainActivity extends AppCompatActivity {
                     calendar.add(Calendar.DATE, 2);
                     Date dateLogin7 = calendar.getTime();
                     Date currentDate = new Date();
-//                    if (currentDate.compareTo(dateLogin7) > 0) {
-//                        CLocal.ghiListToFileDocSo();
-//                        MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
-//                        myAsyncTask_dangXuat.execute("DangXuat");
-//                    }
-                    CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
-                    CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
-                    if (!CLocal.sharedPreferencesre.getString("May", "").replace("null", "").equals(""))
-                        CLocal.May = (Integer.parseInt(CLocal.sharedPreferencesre.getString("May", "")) < 10 ? "0" : "") + Integer.parseInt(CLocal.sharedPreferencesre.getString("May", ""));
-                    else
-                        CLocal.May = " ";
-                    CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
-                    if (CLocal.sharedPreferencesre.getString("jsonNam", "").equals("") == false)
-                        CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonCode", "").equals("") == false)
-                        CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonViTriDHN", "").equals("") == false)
-                        CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonKinhDoanh", "").equals("") == false)
-                        CLocal.jsonKinhDoanh = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKinhDoanh", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", "").equals("") == false)
-                        CLocal.jsonPhieuChuyen = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonGiaNuoc", "").equals("") == false)
-                        CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", "").equals("") == false)
-                        CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
-                    if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false) {
-                        CLocal.listPhieuChuyenSync = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""), new TypeToken<ArrayList<CEntityPhieuChuyen>>() {
-                        }.getType());
-                        if (CLocal.listPhieuChuyenSync.size() > 2000)
-                            CLocal.listPhieuChuyenSync = null;
-                    } else
-                        CLocal.listPhieuChuyenSync = new ArrayList<>();
-                    txtUser.setText("Xin chào\n" + CLocal.HoTen);
-                    txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
-                    imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
-                    if (CLocal.sharedPreferencesre.getBoolean("Admin", false)) {
-                        CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
-                        btnAdmin.setVisibility(View.VISIBLE);
-                    }
-                    if (CLocal.sharedPreferencesre.getBoolean("Doi", false) && !CLocal.sharedPreferencesre.getString("jsonTo", "").equals("")) {
-                        CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
-                        CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
-                        CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                        imgbtnQuanLy.setVisibility(View.VISIBLE);
-                        txtQuanLy.setVisibility(View.VISIBLE);
-                    } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) && !CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("")) {
-                        CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
-                        CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                        CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
-                        imgbtnQuanLy.setVisibility(View.VISIBLE);
-                        txtQuanLy.setVisibility(View.VISIBLE);
+                    if (currentDate.compareTo(dateLogin7) > 0) {
+                        MyAsyncTask_DangXuat myAsyncTask_dangXuat = new MyAsyncTask_DangXuat();
+                        myAsyncTask_dangXuat.execute("DangXuat");
+                    } else {
+                        CLocal.MaNV = CLocal.sharedPreferencesre.getString("MaNV", "");
+                        CLocal.HoTen = CLocal.sharedPreferencesre.getString("HoTen", "");
+                        if (!CLocal.sharedPreferencesre.getString("May", "").replace("null", "").equals(""))
+                            CLocal.May = (Integer.parseInt(CLocal.sharedPreferencesre.getString("May", "")) < 10 ? "0" : "") + Integer.parseInt(CLocal.sharedPreferencesre.getString("May", ""));
+                        else
+                            CLocal.May = " ";
+                        CLocal.DienThoai = CLocal.sharedPreferencesre.getString("DienThoai", "");
+                        if (CLocal.sharedPreferencesre.getString("jsonNam", "").equals("") == false)
+                            CLocal.jsonNam = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNam", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonCode", "").equals("") == false)
+                            CLocal.jsonCode = new JSONArray(CLocal.sharedPreferencesre.getString("jsonCode", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonViTriDHN", "").equals("") == false)
+                            CLocal.jsonViTriDHN = new JSONArray(CLocal.sharedPreferencesre.getString("jsonViTriDHN", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonKinhDoanh", "").equals("") == false)
+                            CLocal.jsonKinhDoanh = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKinhDoanh", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", "").equals("") == false)
+                            CLocal.jsonPhieuChuyen = new JSONArray(CLocal.sharedPreferencesre.getString("jsonPhieuChuyen", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonGiaNuoc", "").equals("") == false)
+                            CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", "").equals("") == false)
+                            CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
+                        if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false) {
+                            CLocal.listPhieuChuyenSync = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""), new TypeToken<ArrayList<CEntityPhieuChuyen>>() {
+                            }.getType());
+                            if (CLocal.listPhieuChuyenSync.size() > 2000)
+                                CLocal.listPhieuChuyenSync = null;
+                        } else
+                            CLocal.listPhieuChuyenSync = new ArrayList<>();
+                        txtUser.setText("Xin chào\n" + CLocal.HoTen);
+                        txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
+                        imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
+                        if (CLocal.sharedPreferencesre.getBoolean("Admin", false)) {
+                            CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
+                            btnAdmin.setVisibility(View.VISIBLE);
+                        }
+                        if (CLocal.sharedPreferencesre.getBoolean("Doi", false) && !CLocal.sharedPreferencesre.getString("jsonTo", "").equals("")) {
+                            CLocal.Doi = CLocal.sharedPreferencesre.getBoolean("Doi", false);
+                            CLocal.jsonTo = new JSONArray(CLocal.sharedPreferencesre.getString("jsonTo", ""));
+                            CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                            imgbtnQuanLy.setVisibility(View.VISIBLE);
+                            txtQuanLy.setVisibility(View.VISIBLE);
+                        } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) && !CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("")) {
+                            CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
+                            CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
+                            CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
+                            imgbtnQuanLy.setVisibility(View.VISIBLE);
+                            txtQuanLy.setVisibility(View.VISIBLE);
+                        }
                     }
                 } else {
                     txtUser.setText("Xin hãy đăng nhập");
                     txtUser.setTextColor(getResources().getColor(R.color.colorLogout));
                     imgbtnDangNhap.setImageResource(R.mipmap.ic_logout_foreground);
                 }
-
 //                if (CLocal.ThermalPrinter != null && CLocal.ThermalPrinter != "")
 //                    if (CLocal.checkBluetoothAvaible() == false) {
 //                        CLocal.openBluetoothSettings(MainActivity.this);
