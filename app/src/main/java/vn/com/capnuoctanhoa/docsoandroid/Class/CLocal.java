@@ -118,6 +118,7 @@ public class CLocal {
     public static ArrayList<String> lstTT0 = new ArrayList<String>(Arrays.asList("K", "N", "N1", "N2", "N3", "68", "Q"));
     public static ArrayList<String> lstTBTT = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "66", "80", "F1", "F2", "F3", "F4"));
     public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5Q", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
+    public static HashMap<Integer, Integer> map;
 
     public static void initialCLocal() {
         SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();

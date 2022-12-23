@@ -693,7 +693,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     && (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F'
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K'
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N'
-                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '6' && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68"))))
+                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '6'
+//                    && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68")
+            )))
                 txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
             if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66"))
                 txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));

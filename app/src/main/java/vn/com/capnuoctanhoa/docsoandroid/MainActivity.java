@@ -75,7 +75,26 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        CLocal.map.put(1, 44);
+        CLocal.map.put(2, 44);
+        CLocal.map.put(3, 44);
+        CLocal.map.put(4, 44);
+        CLocal.map.put(5, 44);
+        CLocal.map.put(6, 44);
+        CLocal.map.put(7, 42);
+        CLocal.map.put(8, 42);
+        CLocal.map.put(9, 42);
+        CLocal.map.put(10, 42);
+        CLocal.map.put(11, 39);
+        CLocal.map.put(12, 38);
+        CLocal.map.put(13, 38);
+        CLocal.map.put(14, 38);
+        CLocal.map.put(15, 36);
+        CLocal.map.put(16, 35);
+        CLocal.map.put(17, 35);
+        CLocal.map.put(18, 34);
+        CLocal.map.put(19, 34);
+        CLocal.map.put(30, 31);
         if (cMarshMallowPermission.checkAllPermissionForAPP()) {
 
         }
