@@ -75,6 +75,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        CLocal.map=new HashMap<>();
         CLocal.map.put(1, 44);
         CLocal.map.put(2, 44);
         CLocal.map.put(3, 44);

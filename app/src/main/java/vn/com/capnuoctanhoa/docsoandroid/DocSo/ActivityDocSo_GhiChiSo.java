@@ -680,9 +680,13 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             txtChiSoMoi.setText(strChiSo);
             if (CLocal.lstTT0.contains(txtCodeMoi.getText().toString()))
                 txtTieuThuMoi.setText("0");
-            else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString()))
-                txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
-            else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()))
+            else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString())) {
+                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
+                    double motngay = Double.parseDouble(String.format("{0:0.00}", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
+                    txtTieuThuMoi.setText(String.format("{0:0}", motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot()))));
+                } else
+                    txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
+            } else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()))
                 if (txtCodeMoi.getText().toString().equals("X41"))
                     txtTieuThuMoi.setText(String.valueOf(10000 + Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
                 else if (txtCodeMoi.getText().toString().equals("X51"))
