@@ -682,8 +682,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 txtTieuThuMoi.setText("0");
             else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString())) {
                 if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
-                    double motngay = Double.parseDouble(String.format("{0:0.00}", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
-                    txtTieuThuMoi.setText(String.format("{0:0}", motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot()))));
+                    double motngay = Double.parseDouble(String.format("%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
+                    txtTieuThuMoi.setText(String.valueOf((int)Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
                 } else
                     txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
             } else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()))
