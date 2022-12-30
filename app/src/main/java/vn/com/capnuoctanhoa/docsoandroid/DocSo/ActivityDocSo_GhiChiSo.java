@@ -42,6 +42,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Locale;
 
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
@@ -408,10 +409,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
                                 myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
                             }
-                            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
-                                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
-                                myAsyncTaskPhieuChuyen.execute();
-                            }
+//                            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+//                                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+//                                myAsyncTaskPhieuChuyen.execute();
+//                            }
                             //thành công có cảnh báo
                             if (!_alert.equals("")) {
                                 CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
@@ -442,10 +443,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             if (CLocal.checkNetworkGood(ActivityDocSo_GhiChiSo.this)) {
                                 MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
                                 myAsyncTaskTrucTiep.execute();
-                                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
-                                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
-                                    myAsyncTaskPhieuChuyen.execute();
-                                }
+//                                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+//                                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+//                                    myAsyncTaskPhieuChuyen.execute();
+//                                }
                             } else
                                 CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "Tốc độ mạng yếu", "center");
                         }
@@ -682,7 +683,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 txtTieuThuMoi.setText("0");
             else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString())) {
                 if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
-                    double motngay = Double.parseDouble(String.format("%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
+                    double motngay = Double.parseDouble(String.format(Locale.US,"%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
                     txtTieuThuMoi.setText(String.valueOf((int)Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
                 } else
                     txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
@@ -701,8 +702,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                    && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68")
             )))
                 txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
-            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66"))
-                txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
+            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66")) {
+                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
+                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(txtTieuThuMoi.getText().toString()))));
+                } else
+                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
+            }
             else if (txtCodeMoi.getText().toString().charAt(0) == 'K')
                 txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
             else if (txtCodeMoi.getText().toString().equals("63"))
@@ -811,10 +816,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 myAsyncTaskGhiHinhAll.execute();
                 MyAsyncTaskGhiDocSo_GianTiepALL myAsyncTaskGhiDocSo_gianTiepALL = new MyAsyncTaskGhiDocSo_GianTiepALL();
                 myAsyncTaskGhiDocSo_gianTiepALL.execute();
-                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
-                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
-                    myAsyncTaskPhieuChuyen.execute();
-                }
+//                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+//                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+//                    myAsyncTaskPhieuChuyen.execute();
+//                }
             }
         }
     }
@@ -1134,15 +1139,15 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             try {
                 CWebservice ws = new CWebservice();
                 JSONObject jsonObject = null;
-                while (CLocal.listPhieuChuyenSync.size() > 0) {
-                    String result = ws.ghi_DonTu(CLocal.listPhieuChuyenSync.get(0).getDanhBo().replace(" ", ""), CLocal.listPhieuChuyenSync.get(0).getNoiDung(), CLocal.listPhieuChuyenSync.get(0).getGhiChu(), CLocal.listPhieuChuyenSync.get(0).getImgString(), CLocal.listPhieuChuyenSync.get(0).getMaNV());
-                    if (!result.equals(""))
-                        jsonObject = new JSONObject(result);
-                    if (jsonObject != null)
-                        if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
-                            CLocal.listPhieuChuyenSync.remove(0);
-                        }
-                }
+//                while (CLocal.listPhieuChuyenSync.size() > 0) {
+//                    String result = ws.ghi_DonTu(CLocal.listPhieuChuyenSync.get(0).getDanhBo().replace(" ", ""), CLocal.listPhieuChuyenSync.get(0).getNoiDung(), CLocal.listPhieuChuyenSync.get(0).getGhiChu(), CLocal.listPhieuChuyenSync.get(0).getImgString(), CLocal.listPhieuChuyenSync.get(0).getMaNV());
+//                    if (!result.equals(""))
+//                        jsonObject = new JSONObject(result);
+//                    if (jsonObject != null)
+//                        if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+//                            CLocal.listPhieuChuyenSync.remove(0);
+//                        }
+//                }
             } catch (Exception e) {
                 error = e.getMessage();
             }

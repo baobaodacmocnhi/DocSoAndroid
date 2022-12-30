@@ -34,10 +34,10 @@ public class ServiceAppKilled extends Service {
 //                editor.putString("jsonMessage", CLocal.jsonMessage.toString());
 //            editor.commit();
             CLocal.writeListToJson();
-            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0)
-                editor.putString("jsonPhieuChuyenSync", new Gson().toJsonTree(CLocal.listPhieuChuyenSync).getAsJsonArray().toString());
-            editor.commit();
+//            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
+//            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0)
+//                editor.putString("jsonPhieuChuyenSync", new Gson().toJsonTree(CLocal.listPhieuChuyenSync).getAsJsonArray().toString());
+//            editor.commit();
         } catch (Exception ex) {
             ex.printStackTrace();
         }

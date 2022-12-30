@@ -224,13 +224,13 @@ public class MainActivity extends AppCompatActivity {
                             CLocal.jsonGiaNuoc = new JSONArray(CLocal.sharedPreferencesre.getString("jsonGiaNuoc", ""));
                         if (CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", "").equals("") == false)
                             CLocal.jsonKhongTinhPBVMT = new JSONArray(CLocal.sharedPreferencesre.getString("jsonKhongTinhPBVMT", ""));
-                        if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false) {
-                            CLocal.listPhieuChuyenSync = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""), new TypeToken<ArrayList<CEntityPhieuChuyen>>() {
-                            }.getType());
-                            if (CLocal.listPhieuChuyenSync.size() > 2000)
-                                CLocal.listPhieuChuyenSync = null;
-                        } else
-                            CLocal.listPhieuChuyenSync = new ArrayList<>();
+//                        if (CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", "").equals("") == false) {
+//                            CLocal.listPhieuChuyenSync = new Gson().fromJson(CLocal.sharedPreferencesre.getString("jsonPhieuChuyenSync", ""), new TypeToken<ArrayList<CEntityPhieuChuyen>>() {
+//                            }.getType());
+//                            if (CLocal.listPhieuChuyenSync.size() > 2000)
+//                                CLocal.listPhieuChuyenSync = null;
+//                        } else
+//                            CLocal.listPhieuChuyenSync = new ArrayList<>();
                         txtUser.setText("Xin chào\n" + CLocal.HoTen);
                         txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                         imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
