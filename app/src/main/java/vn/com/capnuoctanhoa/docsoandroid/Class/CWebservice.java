@@ -25,7 +25,7 @@ public class CWebservice {
             SoapSerializationEnvelope envelope = new SoapSerializationEnvelope(SoapEnvelope.VER12);
             envelope.dotNet = true;
             envelope.setOutputSoapObject(request);
-            HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS, 1000 * 60 * 1);
+            HttpTransportSE httpTransport = new HttpTransportSE(SOAP_ADDRESS);//1000 * 60 * 1
             httpTransport.call(SOAP_ACTION, envelope);
             return envelope.getResponse().toString();
         } catch (Exception ex) {

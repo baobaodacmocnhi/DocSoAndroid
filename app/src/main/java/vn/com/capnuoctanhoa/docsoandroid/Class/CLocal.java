@@ -137,7 +137,7 @@ public class CLocal {
         editor.putString("jsonPhieuChuyen", "");
         editor.putString("jsonGiaNuoc", "");
         editor.putString("jsonKhongTinhPBVMT", "");
-//        editor.putString("jsonPhieuChuyenSync", "");
+        editor.putString("jsonPhieuChuyenSync", "");
         editor.putString("jsonTo", "");
         editor.putString("jsonNhanVien", "");
         editor.putBoolean("Admin", false);
