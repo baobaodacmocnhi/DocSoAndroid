@@ -109,7 +109,7 @@ public class CLocal {
     public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep, LocDaDoc = false;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
-//    public static ArrayList<CEntityPhieuChuyen> listPhieuChuyenSync;
+    //    public static ArrayList<CEntityPhieuChuyen> listPhieuChuyenSync;
     public static ServiceThermalPrinter serviceThermalPrinter;
     public static int indexPosition = 0;
     public static int STT = 0;
@@ -149,7 +149,7 @@ public class CLocal {
         MaNV = HoTen = May = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
-        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonKinhDoanh = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT =  null;
+        jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonKinhDoanh = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = null;
         listDocSo = listDocSoView = null;
 //        listPhieuChuyenSync = null;
     }
@@ -1703,7 +1703,9 @@ public class CLocal {
                     PhiBVMTNamCu = TienNuocNamCus.get(1);
                 } else if (dateTuNgay.compareTo(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia"))) < 0 && convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")).compareTo(dateDenNgay) < 0) {
                     int TongSoNgay = (int) (getDaysDifference(dateTuNgay, dateDenNgay));
-                    int SoNgayCu = (int) (getDaysDifference(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")), dateTuNgay));
+                    int SoNgayCu = (int) (getDaysDifference(convertStringToDate(CLocal.jsonGiaNuoc.getJSONObject(index).getString("NgayTangGia")), dateTuNgay)) * -1;
+                    if (SoNgayCu < -1)
+                        SoNgayCu = SoNgayCu * -1;
                     int TieuThuCu = (int) Math.round((double) TieuThu * SoNgayCu / TongSoNgay);
                     int TieuThuMoi = TieuThu - TieuThuCu;
                     int TongDinhMucCu = (int) Math.round((double) TongDinhMuc * SoNgayCu / TongSoNgay);
