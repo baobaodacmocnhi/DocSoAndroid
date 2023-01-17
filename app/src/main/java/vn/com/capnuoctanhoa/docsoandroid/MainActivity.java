@@ -95,7 +95,7 @@ public class MainActivity extends AppCompatActivity {
         CLocal.map.put(17, 35);
         CLocal.map.put(18, 34);
         CLocal.map.put(19, 34);
-        CLocal.map.put(30, 31);
+        CLocal.map.put(20, 31);
         if (cMarshMallowPermission.checkAllPermissionForAPP()) {
 
         }

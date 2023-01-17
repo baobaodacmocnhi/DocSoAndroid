@@ -686,6 +686,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
                     {
                         double motngay = Double.parseDouble(String.format(Locale.US, "%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
+//                        int test1 = CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot()));
+//                        int test2 = (int) Math.round(motngay * test1);
                         txtTieuThuMoi.setText(String.valueOf((int) Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
                     }
                 } else
@@ -835,7 +837,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             CLocal.writeListToJson();
             CLocal.writeListToFileDocSo();
         } catch (Exception ex) {
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this,ex.getMessage());
+            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
     }
 
