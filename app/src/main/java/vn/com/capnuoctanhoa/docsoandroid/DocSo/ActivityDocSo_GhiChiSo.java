@@ -208,7 +208,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         Ky = 12;
                         break;
                     case 3:
-                        Nam--;
                         Ky = 1;
                         break;
                     default:
@@ -231,11 +230,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         Ky = 12;
                         break;
                     case 2:
-                        Nam--;
                         Ky = 1;
                         break;
                     case 3:
-                        Nam--;
                         Ky = 2;
                         break;
                     default:
@@ -926,6 +923,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
+                    CLocal.writeListToJson();
+                    CLocal.writeListToFileDocSo();
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";
