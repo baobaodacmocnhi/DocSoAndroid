@@ -125,6 +125,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         ImageView ivPhieuChuyen = (ImageView) findViewById(R.id.ivPhieuChuyen);
         ImageButton ibtnChupHinh = (ImageButton) findViewById(R.id.ibtnChupHinh);
         Button btnChonHinh = (Button) findViewById(R.id.btnChonHinh);
+        Button btnDangKyQR = (Button) findViewById(R.id.btnDangKyQR);
         imgThumb = (ImageView) findViewById(R.id.imgThumb);
 
         cMarshMallowPermission = new CMarshMallowPermission(this);

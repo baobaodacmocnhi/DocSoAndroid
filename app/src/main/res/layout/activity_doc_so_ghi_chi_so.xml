@@ -752,6 +752,16 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:ignore="TextContrastCheck" />
 
+            <Button
+                android:id="@+id/btnDangKyQR"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Đăng ký QR"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/imgThumb"
+                tools:ignore="TextContrastCheck" />
+
             <CheckBox
                 android:id="@+id/chkLocDaDoc"
                 android:layout_width="wrap_content"
