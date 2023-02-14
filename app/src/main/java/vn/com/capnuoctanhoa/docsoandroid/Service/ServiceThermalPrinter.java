@@ -443,10 +443,16 @@ public class ServiceThermalPrinter extends Service {
                         docTienLines = breakLine("BẰNG CHỮ: " + docTien, charWidth);
                     stringBuilder.append(docTienLines).append('\n')
                             .append(line);
-                    stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY " +
-                                    escpStyle(entityParent.getNgayThuTien(), 0b11000) +
-                                    ".\n",
-                            charWidth));
+                    if (entityParent.getLstHoaDon().size() == 0)
+                        stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY " +
+                                        escpStyle(entityParent.getNgayThuTien(), 0b11000) +
+                                        ".\n",
+                                charWidth));
+                    else
+                        stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC KỂ TỪ NGÀY " +
+                                        escpStyle(entityParent.getDenNgay(), 0b11000) +
+                                        ".\n",
+                                charWidth));
                 }
                 stringBuilder.append(breakLine("Để biết thêm thông tin chi tiết tiền nước quý khách hàng vui lòng liên hệ tổng đài " +
                                 escpStyle("19006489", 0b11000) +
@@ -850,13 +856,23 @@ public class ServiceThermalPrinter extends Service {
                     }
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
-                    y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TRONG 7 NGÀY", 1, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("KỂ TỪ NGÀY %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
-
+                    if (entityParent.getLstHoaDon().size() == 0) {
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("TOÁN TIỀN NƯỚC KỂ TỪ NGÀY", 1, y, 0, 1, 1));
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine(" %s.", 3, y, 0, 1, 1, entityParent.getDenNgay()));
+                    }
+                    else
+                    {
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TRONG 7 NGÀY", 1, y, 0, 1, 1));
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("KỂ TỪ NGÀY %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
+                    }
                     //endregion
                 }
                 y = handlingYMoreThan450(y, 25);

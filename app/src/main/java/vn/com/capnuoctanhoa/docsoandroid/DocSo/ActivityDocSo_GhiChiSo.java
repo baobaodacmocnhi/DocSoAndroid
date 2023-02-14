@@ -842,14 +842,14 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     @Override
     protected void onPause() {
         super.onPause();
-        try {
-            if (!flagQuanLy) {
+//        try {
+//            if (!flagQuanLy) {
 //                CLocal.writeListToJson();
-            }
-        } catch (Exception ex) {
+//            }
+//        } catch (Exception ex) {
 //            Log.e("ActivityDocSo_GhiChiSo onPause", ex.getMessage());
-            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
-        }
+//            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
+//        }
     }
 
     public Uri createImageUri() {
@@ -1014,12 +1014,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             return error;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
-        }
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            if (!s.equals(""))
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
+//        }
     }
 
     public class MyAsyncTaskGhiHinhAll extends AsyncTask<String, Void, String> {
@@ -1047,12 +1047,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             return error;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
-        }
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            if (!s.equals(""))
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
+//        }
     }
 
     public class MyAsyncTaskGhiDocSo_GianTiep extends AsyncTask<String, Void, String> {
@@ -1089,12 +1089,12 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             return error;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (!s.equals(""))
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
-        }
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            if (!s.equals(""))
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
+//        }
     }
 
     public class MyAsyncTaskGhiDocSo_GianTiepALL extends AsyncTask<String, Void, String> {
@@ -1132,13 +1132,13 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             return error;
         }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-            if (!s.equals("")) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
-            }
-        }
+//        @Override
+//        protected void onPostExecute(String s) {
+//            super.onPostExecute(s);
+//            if (!s.equals("")) {
+//                CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, s);
+//            }
+//        }
     }
 
     public class MyAsyncTaskPhieuChuyen extends AsyncTask<String, String, String> {
@@ -1147,8 +1147,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         protected String doInBackground(String... strings) {
             String error = "";
             try {
-                CWebservice ws = new CWebservice();
-                JSONObject jsonObject = null;
+//                CWebservice ws = new CWebservice();
+//                JSONObject jsonObject = null;
 //                while (CLocal.listPhieuChuyenSync.size() > 0) {
 //                    String result = ws.ghi_DonTu(CLocal.listPhieuChuyenSync.get(0).getDanhBo().replace(" ", ""), CLocal.listPhieuChuyenSync.get(0).getNoiDung(), CLocal.listPhieuChuyenSync.get(0).getGhiChu(), CLocal.listPhieuChuyenSync.get(0).getImgString(), CLocal.listPhieuChuyenSync.get(0).getMaNV());
 //                    if (!result.equals(""))
