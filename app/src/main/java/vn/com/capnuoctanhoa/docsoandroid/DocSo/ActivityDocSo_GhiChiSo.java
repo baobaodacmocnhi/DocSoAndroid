@@ -27,6 +27,9 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.journeyapps.barcodescanner.ScanContract;
+import com.journeyapps.barcodescanner.ScanOptions;
+
 import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
@@ -50,6 +53,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CaptureAct;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
@@ -321,6 +325,19 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             });
 
             imgThumb.setOnClickListener(v -> CLocal.showImgThumb(ActivityDocSo_GhiChiSo.this, imgCapture));
+
+            btnDangKyQR.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+//                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "Tính năng đang xây dựng", "center");
+                    ScanOptions options = new ScanOptions();
+                    options.setPrompt("");
+                    options.setBeepEnabled(true);
+                    options.setOrientationLocked(true);
+                    options.setCaptureActivity(CaptureAct.class);
+                    activityResultLauncher_QRCode.launch(options);
+                }
+            });
 
             edtChiSo.addTextChangedListener(new TextWatcher() {
                 @Override
@@ -752,8 +769,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    ActivityResultLauncher<Intent> activityResultLauncher_ChupHinh = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
+    ActivityResultLauncher<Intent> activityResultLauncher_ChupHinh = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
@@ -775,8 +791,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 }
             });
 
-    ActivityResultLauncher<Intent> activityResultLauncher_ChonHinh = registerForActivityResult(
-            new ActivityResultContracts.StartActivityForResult(),
+    ActivityResultLauncher<Intent> activityResultLauncher_ChonHinh = registerForActivityResult(new ActivityResultContracts.StartActivityForResult(),
             new ActivityResultCallback<ActivityResult>() {
                 @Override
                 public void onActivityResult(ActivityResult result) {
@@ -796,6 +811,19 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     }
                 }
             });
+
+    ActivityResultLauncher<ScanOptions> activityResultLauncher_QRCode = registerForActivityResult(new ScanContract(), result ->
+    {
+        if (result.getContents() != null) {
+            String[] strs = result.getContents().toUpperCase().split("DANHBO=");
+//            CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, strs[1].substring(3, strs[1].length()), "center");
+            if (strs[1].toUpperCase().contains("THW")) {
+                MyAsyncTask_DangKyQRCode myAsyncTask_dangKyQRCode = new MyAsyncTask_DangKyQRCode();
+                myAsyncTask_dangKyQRCode.execute(new String[]{CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), strs[1].substring(3, strs[1].length())});
+            } else
+                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "QR Code không đúng định dạng", "center");
+        }
+    });
 
     @Override
     protected void onResume() {
@@ -1164,6 +1192,61 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             return error;
         }
 
+    }
+
+    public class MyAsyncTask_DangKyQRCode extends AsyncTask<String, String, String> {
+        ProgressDialog progressDialog;
+        JSONObject jsonObject = null;
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+            progressDialog = new ProgressDialog(ActivityDocSo_GhiChiSo.this);
+            progressDialog.setTitle("Thông Báo");
+            progressDialog.setMessage("Đang xử lý...");
+            progressDialog.setCanceledOnTouchOutside(false);
+            progressDialog.show();
+        }
+
+        @Override
+        protected String doInBackground(String... strings) {
+            try {
+                String result = ws.dangKyQRCode(strings[0], strings[1]);
+                if (!result.equals(""))
+                    jsonObject = new JSONObject(result);
+                if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                    return "THÀNH CÔNG";
+                } else
+                    return "THẤT BẠI";
+            } catch (Exception e) {
+                return e.getMessage();
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+            super.onPostExecute(s);
+            if (progressDialog != null) {
+                progressDialog.dismiss();
+            }
+            try {
+                if (jsonObject != null) {
+                    String error = "";
+                    if (!jsonObject.getString("error").replace("null", "").equals(""))
+                        error = "\r\n" + jsonObject.getString("error").replace("null", "");
+                    //báo thành công
+                    if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
+                    } else {//thất bại
+                        CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s + error, "center");
+                        CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                    }
+                } else
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, s, "center");
+            } catch (Exception e) {
+                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, e.getMessage(), "center");
+            }
+        }
     }
 
 //    public class MyAsyncTask_ConnectPrinter extends AsyncTask<String, String, String> {

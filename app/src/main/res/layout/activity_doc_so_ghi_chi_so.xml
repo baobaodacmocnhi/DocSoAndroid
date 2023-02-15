@@ -728,6 +728,7 @@
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:src="@android:drawable/ic_menu_gallery"
+                app:layout_constraintBottom_toTopOf="@+id/btnDangKyQR"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/edtChiSo"
                 tools:ignore="ImageContrastCheck" />
@@ -756,10 +757,9 @@
                 android:id="@+id/btnDangKyQR"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
                 android:text="Đăng ký QR"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/imgThumb"
                 tools:ignore="TextContrastCheck" />
 
             <CheckBox
