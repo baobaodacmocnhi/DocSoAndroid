@@ -400,6 +400,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             return;
                         }
                         if (CLocal.getDaysDifference(CLocal.convertStringToDate(CLocal.listDocSoView.get(CLocal.STT).getDenNgay()), new Date()) < 2
+                                && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("")
                                 && (CLocal.lstTT0.contains(selectedCode.getCode())
                                 || CLocal.lstTBTT.contains(selectedCode.getCode())
                                 || CLocal.lstBinhThuong.contains(selectedCode.getCode()))) {
