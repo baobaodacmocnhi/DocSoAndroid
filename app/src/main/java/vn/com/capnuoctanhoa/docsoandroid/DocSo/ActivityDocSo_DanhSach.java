@@ -36,6 +36,7 @@ import org.json.JSONObject;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CLocation;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CSort;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CViewParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
@@ -50,6 +51,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
     private long TongDC, TongNotSync;
     private ArrayList<CViewParent> lstParent;
     private FloatingActionButton floatingActionButton;
+    private CLocation cLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -71,7 +73,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         floatingActionButton = (FloatingActionButton) findViewById(R.id.floatingActionButton);
 
         ImageView ivSync = (ImageView) findViewById(R.id.ivSync);
-
+        cLocation = new CLocation(ActivityDocSo_DanhSach.this);
         ivSync.setOnClickListener(v -> {
             try {
                 if (CLocal.checkNetworkGood(ActivityDocSo_DanhSach.this)) {
@@ -403,7 +405,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                             }
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                     , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
+                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate(),cLocation.getCurrentLocation());
                             JSONObject jsonObject = null;
                             if (!result.equals(""))
                                 jsonObject = new JSONObject(result);

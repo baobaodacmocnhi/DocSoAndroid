@@ -1,6 +1,7 @@
 package vn.com.capnuoctanhoa.docsoandroid.Service;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Notification;
 import android.app.NotificationChannel;
 import android.app.NotificationManager;
@@ -35,6 +36,7 @@ import androidx.core.app.NotificationCompat;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CLocation;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.DocSo.ActivityDocSo_DanhSach;
 import vn.com.capnuoctanhoa.docsoandroid.R;
@@ -399,10 +401,12 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
 
     public class MyAsyncTaskSyncCodeTon extends AsyncTask<String, String, String> {
         CWebservice ws;
+        CLocation cLocation;
 
         @Override
         protected String doInBackground(String... strings) {
             ws = new CWebservice();
+            cLocation = new CLocation((Activity) getApplicationContext());
             String error = "";
             try {
                 String ID = strings[0];
@@ -423,7 +427,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                                 }
                                 String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                         , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                        HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate());
+                                        HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate(), cLocation.getCurrentLocation());
                                 JSONObject jsonObject = null;
                                 if (!result.equals(""))
                                     jsonObject = new JSONObject(result);
@@ -445,7 +449,7 @@ public class ServiceFirebaseMessaging extends FirebaseMessagingService {
                                 }
                                 String result = ws.ghiChiSo_GianTiep(listDocSo.get(i).getID(), listDocSo.get(i).getCodeMoi(), listDocSo.get(i).getChiSoMoi(), listDocSo.get(i).getTieuThuMoi()
                                         , listDocSo.get(i).getTienNuoc(), listDocSo.get(i).getThueGTGT(), listDocSo.get(i).getPhiBVMT(), listDocSo.get(i).getPhiBVMT_Thue(), listDocSo.get(i).getTongCong(),
-                                        HinhDHN, listDocSo.get(i).getDot(), CLocal.May, listDocSo.get(i).getModifyDate());
+                                        HinhDHN, listDocSo.get(i).getDot(), CLocal.May, listDocSo.get(i).getModifyDate(), cLocation.getCurrentLocation());
                                 JSONObject jsonObject = null;
                                 if (!result.equals(""))
                                     jsonObject = new JSONObject(result);

@@ -29,7 +29,6 @@ public class CustomAdapterRecyclerViewDienThoai extends RecyclerView.Adapter<Cus
     private final Activity activity;
     private final ArrayList<CEntityParent> mDisplayedValues;
     private entityParentListener entityParentListener;
-
     public interface entityParentListener {
         void onClick(CEntityParent entityParent);
     }

@@ -51,6 +51,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CBitmap;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CCode;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
+import vn.com.capnuoctanhoa.docsoandroid.Class.CLocation;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CMarshMallowPermission;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CWebservice;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CaptureAct;
@@ -77,6 +78,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     //    private ThermalPrinter thermalPrinter;
     private boolean playTinhTieuThu = false;
     private boolean flagQuanLy = false;
+    private CLocation cLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,7 +136,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
         cMarshMallowPermission = new CMarshMallowPermission(this);
         ws = new CWebservice();
-
+        cLocation = new CLocation(ActivityDocSo_GhiChiSo.this);
         chkLocDaDoc.setChecked(CLocal.LocDaDoc);
         try {
             if (getIntent().hasExtra("QuanLy"))
@@ -936,7 +938,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 }
                 CCode selectedCode = (CCode) spnCode.getSelectedItem();
                 CLocal.listDocSoView.get(CLocal.STT).setModifyDate(CLocal.DateFormat.format(new Date()));
-                String result = ws.ghiChiSo(CLocal.listDocSoView.get(CLocal.STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May, CLocal.listDocSoView.get(CLocal.STT).getTBTT());
+                String result = ws.ghiChiSo(CLocal.listDocSoView.get(CLocal.STT).getID(), selectedCode.getCode(), edtChiSo.getText().toString(), "", CLocal.listDocSoView.get(CLocal.STT).getDot(), CLocal.May, CLocal.listDocSoView.get(CLocal.STT).getTBTT(), cLocation.getCurrentLocation());
                 if (!result.equals(""))
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
@@ -1097,7 +1099,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         && !CLocal.listDocSoView.get(index).isSync()) {
                     String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(index).getID(), CLocal.listDocSoView.get(index).getCodeMoi(), CLocal.listDocSoView.get(index).getChiSoMoi(), CLocal.listDocSoView.get(index).getTieuThuMoi()
                             , CLocal.listDocSoView.get(index).getTienNuoc(), CLocal.listDocSoView.get(index).getThueGTGT(), CLocal.listDocSoView.get(index).getPhiBVMT(), CLocal.listDocSoView.get(index).getPhiBVMT_Thue(), CLocal.listDocSoView.get(index).getTongCong(),
-                            "", CLocal.listDocSoView.get(index).getDot(), CLocal.May, CLocal.listDocSoView.get(index).getModifyDate());
+                            "", CLocal.listDocSoView.get(index).getDot(), CLocal.May, CLocal.listDocSoView.get(index).getModifyDate(), cLocation.getCurrentLocation());
                     if (!result.equals(""))
                         jsonObject = new JSONObject(result);
                     if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
@@ -1140,7 +1142,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             index = i;
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSoView.get(i).getID(), CLocal.listDocSoView.get(i).getCodeMoi(), CLocal.listDocSoView.get(i).getChiSoMoi(), CLocal.listDocSoView.get(i).getTieuThuMoi()
                                     , CLocal.listDocSoView.get(i).getTienNuoc(), CLocal.listDocSoView.get(i).getThueGTGT(), CLocal.listDocSoView.get(i).getPhiBVMT(), CLocal.listDocSoView.get(i).getPhiBVMT_Thue(), CLocal.listDocSoView.get(i).getTongCong(),
-                                    "", CLocal.listDocSoView.get(i).getDot(), CLocal.May, CLocal.listDocSoView.get(i).getModifyDate());
+                                    "", CLocal.listDocSoView.get(i).getDot(), CLocal.May, CLocal.listDocSoView.get(i).getModifyDate(), cLocation.getCurrentLocation());
                             if (!result.equals(""))
                                 jsonObject = new JSONObject(result);
                             if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
