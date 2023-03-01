@@ -98,20 +98,17 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         }
 
         btnCapNhat.setOnClickListener(view -> {
-            if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
+            if (!CLocal.checkNetworkGood(ActivityDocSo_GhiChu.this)) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Internet yếu");
                 return;
             }
-            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChu.this)) {
-                MyAsyncTask myAsyncTask = new MyAsyncTask();
-                myAsyncTask.execute("CapNhat");
-            } else
-                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, "Tốc độ mạng yếu", "center");
+            MyAsyncTask myAsyncTask = new MyAsyncTask();
+            myAsyncTask.execute("CapNhat");
         });
 
         btnCapNhatDT.setOnClickListener(view -> {
-            if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChu.this)) {
-                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Không có Internet");
+            if (!CLocal.checkNetworkGood(ActivityDocSo_GhiChu.this)) {
+                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Internet yếu");
                 return;
             }
             MyAsyncTask myAsyncTask = new MyAsyncTask();
@@ -152,7 +149,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     MyAsyncTaskDisapper myAsyncTaskDisapper = new MyAsyncTaskDisapper();
                     myAsyncTaskDisapper.execute();
                 } else
-                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, "Tốc độ mạng yếu", "center");
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, "Internet yếu", "center");
             }
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChu.this, ex.getMessage());
