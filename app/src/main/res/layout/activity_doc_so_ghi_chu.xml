@@ -71,6 +71,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Âm Sâu"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chkViTriNgoai" />
 
@@ -82,6 +83,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Xây Dựng"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkAmSau"
                 app:layout_constraintTop_toBottomOf="@+id/chkViTriNgoai" />
 
@@ -92,6 +94,7 @@
                 android:layout_marginStart="8dp"
                 android:minHeight="48dp"
                 android:text="Đứt Chì Góc"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkXayDung"
                 app:layout_constraintTop_toTopOf="@+id/chkXayDung" />
 
@@ -103,6 +106,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Đứt Chì Thân"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chkAmSau" />
 
@@ -114,6 +118,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Ngập Nước"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkDutChiThan"
                 app:layout_constraintTop_toBottomOf="@+id/chkAmSau" />
 
@@ -125,6 +130,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Kẹt Tường"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkNgapNuoc"
                 app:layout_constraintTop_toBottomOf="@+id/chkAmSau" />
 
@@ -136,6 +142,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Lấp Khóa Góc"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chkDutChiThan" />
 
@@ -147,6 +154,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Bể HBV"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkLapKhoaGoc"
                 app:layout_constraintTop_toBottomOf="@+id/chkDutChiThan" />
 
@@ -158,6 +166,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Bể Nấp, Mất Nấp HBV"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chkLapKhoaGoc" />
 
@@ -169,6 +178,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Gãy Tay Van"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkBeHBV"
                 app:layout_constraintTop_toBottomOf="@+id/chkDutChiThan" />
 
@@ -180,6 +190,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Trở Ngại Thay"
+                android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/chkBeNapMatNapHBV" />
 
@@ -191,6 +202,7 @@
                 android:layout_marginTop="8dp"
                 android:minHeight="48dp"
                 android:text="Đấu Chung Máy Bơm"
+                android:visibility="gone"
                 app:layout_constraintStart_toEndOf="@+id/chkBeNapMatNapHBV"
                 app:layout_constraintTop_toBottomOf="@+id/chkLapKhoaGoc" />
 

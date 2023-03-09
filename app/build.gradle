@@ -24,7 +24,7 @@ android {
         //noinspection ExpiringTargetSdkVersion
         targetSdkVersion 30
         versionCode 1
-        versionName "3.71"
+        versionName "3.73"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
     }
