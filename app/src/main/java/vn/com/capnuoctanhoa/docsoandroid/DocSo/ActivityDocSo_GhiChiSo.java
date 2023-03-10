@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -59,7 +60,7 @@ import vn.com.capnuoctanhoa.docsoandroid.Class.CustomAdapterSpinner;
 import vn.com.capnuoctanhoa.docsoandroid.R;
 
 public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
-    private CheckBox chkLocDaDoc;
+    private CheckBox chkLocDaDoc, chkChuaGuiThongBao;
     private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan, txtGhiChu, txtTinhTrang, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT, txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
     private EditText edtChiSo;
     private Spinner spnCode;
@@ -88,6 +89,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         chkLocDaDoc = (CheckBox) findViewById(R.id.chkLocDaDoc);
+        chkChuaGuiThongBao = (CheckBox) findViewById(R.id.chkChuaGuiThongBao);
         txtMLT = (TextView) findViewById(R.id.txtMLT);
         txtDanhBo = (TextView) findViewById(R.id.txtDanhBo);
         txtHoTen = (TextView) findViewById(R.id.txtHoTen);
@@ -523,6 +525,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 imgThumb.setImageBitmap(imgCapture);
             }
 
+            chkChuaGuiThongBao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    CLocal.listDocSoView.get(CLocal.STT).setChuaGuiThongBao(isChecked);
+                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
+                    try {
+                        CLocal.writeListToJson();
+                        CLocal.writeListToFileDocSo();
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+
+                }
+            });
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }

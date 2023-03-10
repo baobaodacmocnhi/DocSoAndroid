@@ -80,6 +80,9 @@ public class CEntityParent {
     private String Latitude;
     private String Longitude;
 
+    private boolean ChuaGuiThongBao;
+
+
 
     public CEntityParent() {
         this.ID = "";
@@ -157,6 +160,7 @@ public class CEntityParent {
         this.TinhTrang = "";
         this.Latitude = "";
         this.Longitude = "";
+        this.ChuaGuiThongBao=false;
     }
 
     public String getID() {
@@ -767,6 +771,14 @@ public class CEntityParent {
         Longitude = longitude;
     }
 
+    public boolean isChuaGuiThongBao() {
+        return ChuaGuiThongBao;
+    }
+
+    public void setChuaGuiThongBao(boolean chuaGuiThongBao) {
+        ChuaGuiThongBao = chuaGuiThongBao;
+    }
+
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -845,6 +857,7 @@ public class CEntityParent {
             this.TinhTrang = entityParent.getTinhTrang();
             this.Latitude = entityParent.getLatitude();
             this.Longitude = entityParent.getLongitude();
+            this.ChuaGuiThongBao=entityParent.isChuaGuiThongBao();
         } catch (Exception ex) {
             throw ex;
         }

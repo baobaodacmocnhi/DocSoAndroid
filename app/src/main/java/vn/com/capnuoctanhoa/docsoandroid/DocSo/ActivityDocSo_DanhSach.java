@@ -304,6 +304,16 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                         }
                     }
                     break;
+                case "Chưa Gửi Thông Báo":
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).isChuaGuiThongBao()) {
+                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
+                    break;
                 default:
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
@@ -405,7 +415,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                             }
                             String result = ws.ghiChiSo_GianTiep(CLocal.listDocSo.get(i).getID(), CLocal.listDocSo.get(i).getCodeMoi(), CLocal.listDocSo.get(i).getChiSoMoi(), CLocal.listDocSo.get(i).getTieuThuMoi()
                                     , CLocal.listDocSo.get(i).getTienNuoc(), CLocal.listDocSo.get(i).getThueGTGT(), CLocal.listDocSo.get(i).getPhiBVMT(), CLocal.listDocSo.get(i).getPhiBVMT_Thue(), CLocal.listDocSo.get(i).getTongCong(),
-                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate(),cLocation.getCurrentLocation());
+                                    HinhDHN, CLocal.listDocSo.get(i).getDot(), CLocal.May, CLocal.listDocSo.get(i).getModifyDate(), cLocation.getCurrentLocation());
                             JSONObject jsonObject = null;
                             if (!result.equals(""))
                                 jsonObject = new JSONObject(result);

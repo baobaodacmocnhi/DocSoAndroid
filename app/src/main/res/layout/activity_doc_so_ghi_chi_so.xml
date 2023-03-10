@@ -20,6 +20,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
+            <CheckBox
+                android:id="@+id/chkChuaGuiThongBao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginTop="8dp"
+                android:text="Chưa Gửi Thông Báo"
+                app:layout_constraintStart_toEndOf="@+id/btnDangKyQR"
+                app:layout_constraintTop_toTopOf="@+id/btnDangKyQR" />
+
             <TextView
                 android:id="@+id/textView12"
                 android:layout_width="wrap_content"

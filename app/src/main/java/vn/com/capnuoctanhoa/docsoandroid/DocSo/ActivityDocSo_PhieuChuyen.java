@@ -301,7 +301,9 @@ public class ActivityDocSo_PhieuChuyen extends AppCompatActivity {
                     jsonObject = new JSONObject(result);
                 if (jsonObject != null)
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
-
+                        JSONObject jsonObjectC = new JSONObject(jsonObject.getString("message").replace("null", ""));
+                        if (!jsonObjectC.getString("TieuThu").replace("null", "").equals("") && Integer.parseInt(jsonObjectC.getString("TieuThu").replace("null", "")) == 1)
+                            CLocal.listDocSoView.get(CLocal.STT).setChuaGuiThongBao(true);
                     } else
                         error = "THẤT BẠI\r\n" + jsonObject.getString("error").replace("null", "");
 //                while (CLocal.listPhieuChuyenSync.size() > 0) {
