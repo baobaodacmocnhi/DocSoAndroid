@@ -23,6 +23,7 @@ import android.widget.TextView;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import androidx.activity.result.ActivityResultLauncher;
@@ -446,8 +447,15 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             }
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
-            else
+            else {
+                try {
+                    CLocal.writeListToJson();
+                    CLocal.writeJsonToFileDocSo();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Đã Xử Lý");
+            }
         }
 
     }
@@ -513,8 +521,15 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             }
             if (!s.equals(""))
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, s);
-            else
+            else {
+                try {
+                    CLocal.writeListToJson();
+                    CLocal.writeJsonToFileDocSo();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 CLocal.showToastMessage(ActivityDocSo_DanhSach.this, "Đã Xử Lý");
+            }
         }
 
     }

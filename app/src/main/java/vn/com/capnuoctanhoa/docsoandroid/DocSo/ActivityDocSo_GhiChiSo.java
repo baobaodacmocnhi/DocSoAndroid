@@ -14,7 +14,6 @@ import android.os.Handler;
 import android.provider.MediaStore;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
@@ -528,11 +527,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             chkChuaGuiThongBao.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    CLocal.listDocSoView.get(CLocal.STT).setChuaGuiThongBao(isChecked);
-                    CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                     try {
-                        CLocal.writeListToJson();
-                        CLocal.writeListToFileDocSo();
+                        CLocal.listDocSoView.get(CLocal.STT).setChuaGuiThongBao(isChecked);
+                        CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -880,7 +877,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //            thermalPrinter.disconnectBluetoothDevice();
         try {
             CLocal.writeListToJson();
-            CLocal.writeListToFileDocSo();
+            CLocal.writeJsonToFileDocSo();
         } catch (Exception ex) {
             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, ex.getMessage());
         }
@@ -971,8 +968,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(jsonObjectC.getString("PhiBVMT_Thue").replace("null", ""));
                     CLocal.listDocSoView.get(CLocal.STT).setTongCong(jsonObjectC.getString("TongCong").replace("null", ""));
                     CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
-                    CLocal.writeListToJson();
-                    CLocal.writeListToFileDocSo();
+                    CLocal.writeJsonToFileDocSo();
                     return "THÀNH CÔNG";
                 } else
                     return "THẤT BẠI";

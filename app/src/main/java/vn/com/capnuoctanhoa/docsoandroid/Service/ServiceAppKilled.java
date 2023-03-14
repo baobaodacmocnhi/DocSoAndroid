@@ -2,10 +2,7 @@ package vn.com.capnuoctanhoa.docsoandroid.Service;
 
 import android.app.Service;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.IBinder;
-
-import com.google.gson.Gson;
 
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 
@@ -34,7 +31,7 @@ public class ServiceAppKilled extends Service {
 //                editor.putString("jsonMessage", CLocal.jsonMessage.toString());
 //            editor.commit();
             CLocal.writeListToJson();
-            CLocal.writeListToFileDocSo();
+            CLocal.writeJsonToFileDocSo();
 //            SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
 //            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0)
 //                editor.putString("jsonPhieuChuyenSync", new Gson().toJsonTree(CLocal.listPhieuChuyenSync).getAsJsonArray().toString());

@@ -486,14 +486,6 @@ public class CLocal {
         return null;
     }
 
-    //update list to Json
-    public static void updateArrayListToJson() {
-        SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
-        if (CLocal.listDocSo != null)
-            editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
-        editor.commit();
-    }
-
     public static void updateJSON(JSONArray jsonArray, String ID, String Key, String Value) {
         try {
             for (int i = 0; i < jsonArray.length(); i++) {
@@ -528,13 +520,17 @@ public class CLocal {
         }
     }
 
-    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, CEntityParent entityParentUpdate) {
-        for (int i = 0; i < lst.size(); i++)
-            if (lst.get(i).getID().equals(entityParentUpdate.getID())) {
-                lst.get(i).setCEntityParent(entityParentUpdate);
-            }
-        //goi update lại json hệ thống
-//        updateArrayListToJson();
+    public static void updateTinhTrangParent(ArrayList<CEntityParent> lst, CEntityParent entityParentUpdate) throws IOException {
+        try {
+            for (int i = 0; i < lst.size(); i++)
+                if (lst.get(i).getID().equals(entityParentUpdate.getID())) {
+                    lst.get(i).setCEntityParent(entityParentUpdate);
+                }
+            //goi update lại json hệ thống
+            writeListToJson();
+        } catch (Exception e) {
+            throw e;
+        }
     }
 
     public File createFile(Activity activity) {
@@ -998,7 +994,7 @@ public class CLocal {
         }
     }
 
-    public static void writeListToFileDocSo() throws IOException {
+    public static void writeJsonToFileDocSo() throws IOException {
         try {
             if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                 String Nam = "", Ky = "", Dot = "";
@@ -1017,6 +1013,7 @@ public class CLocal {
             if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                 SharedPreferences.Editor editor = CLocal.sharedPreferencesre.edit();
                 editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
+                editor.commit();
             }
         } catch (Exception ex) {
             throw ex;
