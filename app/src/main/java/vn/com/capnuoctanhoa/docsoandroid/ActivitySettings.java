@@ -26,7 +26,7 @@ public class ActivitySettings extends AppCompatActivity {
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
-    private RadioButton radTrucTiep, radGianTiep, radIntermec, radHoneywell3l, radHoneywell45;
+    private RadioButton radTrucTiep, radGianTiep, radIntermec, radHoneywell3l, radHoneywell45,radER58;
     private RadioGroup radGroupSync, radGroupMethodPrinter;
 
     @Override
@@ -47,6 +47,7 @@ public class ActivitySettings extends AppCompatActivity {
         radIntermec = (RadioButton) findViewById(R.id.radIntermec);
         radHoneywell3l = (RadioButton) findViewById(R.id.radHoneywell31);
         radHoneywell45 = (RadioButton) findViewById(R.id.radHoneywell45);
+        radER58 = (RadioButton) findViewById(R.id.radER58);
         radGroupMethodPrinter = (RadioGroup) findViewById(R.id.radGroupMethodPrinter);
         edtMayInDaChon.setText(CLocal.ThermalPrinter);
 
@@ -104,6 +105,9 @@ public class ActivitySettings extends AppCompatActivity {
             case "Honeywell45":
                 radHoneywell45.setChecked(true);
                 break;
+            case "ER58":
+                radER58.setChecked(true);
+                break;
         }
 
         radGroupSync.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
@@ -145,7 +149,10 @@ public class ActivitySettings extends AppCompatActivity {
                         CLocal.MethodPrinter = "Intermec";
                         editor.putString("MethodPrinter", CLocal.MethodPrinter);
                         break;
-
+                    case 3: // thirdbutton
+                        CLocal.MethodPrinter = "ER58";
+                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
+                        break;
                 }
                 editor.commit();
             }

@@ -329,14 +329,17 @@ public class ServiceThermalPrinter extends Service {
         try {
             if (CLocal.serviceThermalPrinter != null && !entityParent.getTienNuoc().contains("-"))
                 switch (CLocal.MethodPrinter) {
+                    case "Honeywell31":
+                        printGhiChiSo_escpPrint(entityParent, 31);
+                        break;
                     case "Honeywell45":
                         printGhiChiSo_escpPrint(entityParent, 45);
                         break;
                     case "Intermec":
                         printGhiChiSo_escpEasyPrint(entityParent);
                         break;
-                    case "Honeywell31":
-                        printGhiChiSo_escpPrint(entityParent, 31);
+                    case "ER58":
+                        printGhiChiSo_escpPrint_ER58(entityParent);
                         break;
                 }
         } catch (Exception ex) {
@@ -442,7 +445,7 @@ public class ServiceThermalPrinter extends Service {
                         docTienLines = breakLine("BẰNG CHỮ: " + docTien, charWidth);
                     stringBuilder.append(docTienLines).append('\n')
                             .append(line);
-                        stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
+                    stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
                 }
                 stringBuilder.append(breakLine("Website: " + escpStyle("https://www.cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
@@ -452,6 +455,130 @@ public class ServiceThermalPrinter extends Service {
                     qrData = woosimQrPrint(link, 5);
                 else
                     qrData = mdp31dQrPrint(link, 5);
+                stringBuilder.append(CMD_ALIGN_CENTER)
+                        .append(qrData)
+                        .append(CMD_ALIGN_LEFT);
+                stringBuilder.append(CMD_ALIGN_CENTER)
+                        .append("XIN CẢM ƠN\n")
+                        .append(line)
+                        .append("Được in vào: ").append(CLocal.getTime()).append("\n")
+//                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ").append('\n')
+                        .append("\n\n");
+                if (charWidth == 31)
+                    stringBuilder.append("\n\n");
+                outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
+                outputStream.flush();
+            }
+        } catch (Exception ex) {
+            throw ex;
+        }
+    }
+
+    public void printGhiChiSo_escpPrint_ER58(CEntityParent entityParent) throws IOException {
+        try {
+            if (entityParent != null) {
+                int charWidth = 31;
+                char ESC = 0x1B,
+                        RESET = '@',
+                        STYLE = '!',
+                        padChar = ' ';
+                String CMD_RESET = "" + ESC + RESET,
+                        CMD_RESET_STYLE = "" + ESC + STYLE + (char) 0,
+                        CMD_ALIGN_LEFT = "" + ESC + "a0",
+                        CMD_ALIGN_CENTER = "" + ESC + "a1",
+                        CMD_ALIGN_RIGHT = "" + ESC + "a2";
+                String line;
+                {
+                    char[] lineChar = new char[charWidth];
+                    Arrays.fill(lineChar, '-');
+                    line = (new String(lineChar)).concat("\n");
+                }
+//                cal.setTime(formatter_old.parse(mHoaDon.getDenNgay()));
+                String codeMoi = entityParent.getCodeMoi() == null ? "" : entityParent.getCodeMoi().trim();
+                String lyDo = codeMoi.equals("F1") ? "Nhà đóng cửa" : codeMoi.equals("F2") ? "Kẹt khóa" : codeMoi.equals("F3") ? "Chất đồ" : "";
+
+//                int mNam = Integer.parseInt(mHoaDon.getDocSoID().substring(0,4));
+//                int mKy = Integer.parseInt(mHoaDon.getDocSoID().substring(4,6));
+//                boolean namKy = mNam * 12 + mKy - 1 >= 2020 * 12 + 11;
+//                boolean namKy2 = mNam * 12 + mKy - 1 >= 2021 * 12;
+//                boolean namKy3 = mNam * 12 + mKy - 1 <= 2021 * 12 + 2;
+
+                stringBuilder = new StringBuilder();
+                stringBuilder.append(CMD_RESET)
+                        .append(CMD_RESET_STYLE)
+                        .append(CMD_ALIGN_CENTER)
+                        .append(escpStyle("CTY CP CẤP NƯỚC TÂN HÒA\n", 0b01000))
+                        .append("95 PHẠM HỮU CHÍ, P12, Q5\n")
+                        .append(escpStyle("TỔNG ĐÀI: 19006489\n", 0b11000));
+                if (codeMoi.startsWith("F")) {
+                    stringBuilder.append(escpStyle("PHIẾU BÁO TRỞ NGẠI ĐỌC SỐ\n", 0b11000))
+                            .append(CMD_ALIGN_LEFT)
+                            .append("THÁNG: ")
+                            .append(CMD_ALIGN_RIGHT)
+                            .append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
+                            .append(CMD_ALIGN_LEFT)
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append('\n')
+                            .append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
+                            .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
+                            .append("MLT: ").append(entityParent.getMLT()).append('\n')
+                            .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
+                            .append("Địa chỉ :").append(breakLine(entityParent.getDiaChi(), charWidth)).append('\n')
+                            .append("Giá biểu: ").append(entityParent.getGiaBieu()).append("      ")
+                            .append("Định mức: ").append(entityParent.getDinhMuc()).append('\n')
+                            .append("Lý do trở ngại: ").append(lyDo).append('\n')
+                            .append(line)
+                            .append(breakLine("Quý khách vui lòng báo chỉ số nước cho nhân viên đọc số: " + CLocal.HoTen, charWidth)).append('\n')
+                            .append(escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo, chụp hình). ", 0b11000))
+                            .append("Hoặc tổng đài 19006489.\n")
+                            .append(breakLine("Trong vòng 2 ngày kể từ ngày nhận phiếu báo, nếu quý khách hàng không thông báo công ty sẽ tạm tính tiêu thụ bình quân 3 tháng gần nhất .", charWidth)).append('\n');
+                } else {
+                    String lb = charWidth == 31 ? "\n" : " ";
+                    stringBuilder.append(escpStyle("PHIẾU BÁO CHỈ SỐ" + lb + "VÀ TIỀN NƯỚC DỰ KIẾN\n", 0b11000))
+                            .append(CMD_ALIGN_LEFT)
+                            .append("NV: ").append(CLocal.HoTen).append('\n')
+                            .append("SĐT: ").append(CLocal.DienThoai).append(" (Zalo, chụp hình)").append('\n')
+                            .append("THÁNG: ").append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
+                            .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
+                            .append("MLT: ").append(entityParent.getMLT()).append('\n')
+                            .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
+                            .append("Địa chỉ :").append(breakLine(entityParent.getDiaChi(), charWidth)).append('\n')
+                            .append("Giá biểu: ").append(entityParent.getGiaBieu()).append("      ")
+                            .append("Định mức: ").append(entityParent.getDinhMuc()).append('\n')
+                            .append(pad("Chỉ số cũ:", entityParent.getChiSo0In(), padChar, charWidth)).append('\n')
+                            .append(pad("Chỉ số mới:", entityParent.getChiSoMoi(), padChar, charWidth)).append('\n')
+                            .append(pad("Tiêu thụ:", entityParent.getTieuThuMoi(), padChar, charWidth)).append('\n')
+                            .append(pad("Tiền nước:", numberVN(Double.parseDouble(entityParent.getTienNuoc())), padChar, charWidth)).append('\n')
+                            .append(pad("Thuế VAT:", numberVN(Double.parseDouble(entityParent.getThueGTGT())), padChar, charWidth)).append('\n');
+                    if (Double.parseDouble(entityParent.getPhiBVMT()) > 0)
+                        stringBuilder.append(pad("Tiền DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT())), padChar, charWidth)).append('\n');
+                    if (Double.parseDouble(entityParent.getPhiBVMT_Thue()) > 0)
+                        stringBuilder.append(pad("VAT DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue())), padChar, charWidth)).append('\n');
+                    stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth) + "\n", 0b10000));
+                    int TongCong = Integer.parseInt(entityParent.getTongCong());
+//                    if (entityParent.getLstHoaDon().size() > 0) {
+//                        stringBuilder.append("Nợ cũ:").append('\n');
+//                        stringBuilder.append("Vui lòng bỏ qua nếu đã thanh toán").append('\n');
+//                        for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+//                            TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
+//                            stringBuilder.append("   Tháng " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong()))).append('\n');
+//                        }
+//                    }
+//                    stringBuilder.append(escpStyle(pad("Số tiền cần thanh toán:", numberVN(Double.parseDouble(String.valueOf(TongCong))), padChar, charWidth) + "\n", 0b10000));
+                    //doc tien
+                    String docTien = ReadMoney(String.valueOf(TongCong));
+                    String docTienLines = "";
+                    if (!docTien.trim().isEmpty())
+                        docTienLines = breakLine("BẰNG CHỮ: " + docTien, charWidth);
+                    stringBuilder.append(docTienLines).append('\n')
+                            .append(line);
+                    stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
+                }
+                stringBuilder.append(breakLine("Website: " + escpStyle("https://www.cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
+                stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
+                String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", "");
+                String qrData;
+                qrData = mdp31dQrPrint(link, 5);
                 stringBuilder.append(CMD_ALIGN_CENTER)
                         .append(qrData)
                         .append(CMD_ALIGN_LEFT);
