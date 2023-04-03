@@ -124,8 +124,8 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
                         spnID_NhanVien = new ArrayList<>();
                         spnName_NhanVien = new ArrayList<>();
-                        spnID_NhanVien.add("0");
-                        spnName_NhanVien.add("Tất Cả");
+//                        spnID_NhanVien.add("0");
+//                        spnName_NhanVien.add("Tất Cả");
                         for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
                             if (jsonObject.getString("May").equals("null") == false) {
@@ -269,8 +269,8 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     if (CLocal.jsonNhanVien != null && CLocal.jsonNhanVien.length() > 0) {
                         spnID_NhanVien = new ArrayList<>();
                         spnName_NhanVien = new ArrayList<>();
-                        spnID_NhanVien.add("0");
-                        spnName_NhanVien.add("Tất Cả");
+//                        spnID_NhanVien.add("0");
+//                        spnName_NhanVien.add("Tất Cả");
                         for (int i = 0; i < CLocal.jsonNhanVien.length(); i++) {
                             JSONObject jsonObject = CLocal.jsonNhanVien.getJSONObject(i);
                             if (jsonObject.getString("MaTo") == spnID_To.get(position) && jsonObject.getString("May").equals("null") == false) {

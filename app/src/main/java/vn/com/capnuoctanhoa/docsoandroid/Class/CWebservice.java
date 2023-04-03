@@ -170,9 +170,9 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDSNhanVienTo(String MaTo) throws XmlPullParserException, IOException {
-        String SOAP_ACTION = "http://tempuri.org/GetDSNhanVienTo";
-        String OPERATION_NAME = "GetDSNhanVienTo";
+    public String getDS_May_To(String MaTo) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/GetDS_May_To";
+        String OPERATION_NAME = "GetDS_May_To";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         PropertyInfo pi = new PropertyInfo();
@@ -184,9 +184,9 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
-    public String getDS_NhanVien() throws XmlPullParserException, IOException {
-        String SOAP_ACTION = "http://tempuri.org/getDS_NhanVien";
-        String OPERATION_NAME = "getDS_NhanVien";
+    public String getDS_May() throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_May";
+        String OPERATION_NAME = "getDS_May";
         SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
 
         return excute(request, SOAP_ACTION);
