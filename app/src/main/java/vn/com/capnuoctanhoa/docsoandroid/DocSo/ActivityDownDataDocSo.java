@@ -90,7 +90,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
         //cast to an ArrayAdapter
         ArrayAdapter spnKyAdapter = (ArrayAdapter) spnKy.getAdapter();
         int Ky = Calendar.getInstance().get(Calendar.MONTH) + 1;
-        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 15)
+        if (Calendar.getInstance().get(Calendar.DAY_OF_MONTH) > 25)
             Ky++;
         int spnKyPosition = spnKyAdapter.getPosition((Ky < 10 ? "0" : "") + Ky);
         //set the default according to value

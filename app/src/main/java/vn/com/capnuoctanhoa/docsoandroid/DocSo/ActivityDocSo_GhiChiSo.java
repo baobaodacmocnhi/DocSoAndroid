@@ -361,10 +361,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 
             ivLuu.setOnClickListener(view -> {
                 try {
-                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this)) {
-                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
-                        return;
-                    }
+//                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this)) {
+//                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
+//                        return;
+//                    }
                     if (CLocal.listDocSoView.get(CLocal.STT).isChuBao()) {
                         CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chủ Báo - Không cập nhật");
                         return;
