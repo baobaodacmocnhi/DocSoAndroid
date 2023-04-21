@@ -116,11 +116,11 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (lstParent != null && lstParent.size() > 0)
                     switch (spnSort.getSelectedItem().toString()) {
-                        case "Thời Gian Tăng":
-                            lstParent.sort(new CSort("ModifyDate", -1));
+                        case "MLT Tăng":
+                            lstParent.sort(new CSort("", -1));
                             break;
-                        case "Thời Gian Giảm":
-                            lstParent.sort(new CSort("ModifyDate", 1));
+                        case "MLT Giảm":
+                            lstParent.sort(new CSort("", 1));
                             break;
                         default:
                             lstParent.sort(new CSort("", -1));

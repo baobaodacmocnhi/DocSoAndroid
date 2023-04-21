@@ -53,9 +53,8 @@
         <item>Bất Thường Giảm</item>
     </string-array>
     <string-array name="sort_array">
-        <item>MLT</item>
-        <item>Thời Gian Tăng</item>
-        <item>Thời Gian Giảm</item>
+        <item>MLT Tăng</item>
+        <item>MLT Giảm</item>
     </string-array>
     <string-array name="mausacchigoc_array">
         <item></item>
