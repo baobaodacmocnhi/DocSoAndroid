@@ -45,6 +45,7 @@
         <item>Bất Thường Giảm</item>
         <item>Chủ Báo</item>
         <item>Chưa Gửi Thông Báo</item>
+        <item>MLT Giảm</item>
     </string-array>
     <string-array name="filter_theodoidocso_array">
         <item>Tất Cả</item>
@@ -53,8 +54,9 @@
         <item>Bất Thường Giảm</item>
     </string-array>
     <string-array name="sort_array">
-        <item>MLT Tăng</item>
-        <item>MLT Giảm</item>
+        <item>MLT</item>
+        <item>Thời Gian Tăng</item>
+        <item>Thời Gian Giảm</item>
     </string-array>
     <string-array name="mausacchigoc_array">
         <item></item>

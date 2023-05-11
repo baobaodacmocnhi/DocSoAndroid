@@ -114,18 +114,19 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
         spnSort.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                if (lstParent != null && lstParent.size() > 0)
+                if (lstParent != null && lstParent.size() > 0) {
                     switch (spnSort.getSelectedItem().toString()) {
-                        case "MLT Tăng":
-                            lstParent.sort(new CSort("", -1));
+                        case "Thời Gian Tăng":
+                            lstParent.sort(new CSort("ModifyDate", -1));
                             break;
-                        case "MLT Giảm":
-                            lstParent.sort(new CSort("", 1));
+                        case "Thời Gian Giảm":
+                            lstParent.sort(new CSort("ModifyDate", 1));
                             break;
                         default:
                             lstParent.sort(new CSort("", -1));
                             break;
                     }
+                }
                 if (customAdapterListView != null)
                     customAdapterListView.notifyDataSetChanged();
             }
@@ -308,6 +309,16 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "Chưa Gửi Thông Báo":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
+                            if (CLocal.listDocSo.get(i).isChuaGuiThongBao()) {
+                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                                addViewParent(CLocal.listDocSo.get(i));
+                            }
+                        }
+                    }
+                    break;
+                case "MLT Giảm":
+                    if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
+                        for (int i = CLocal.listDocSo.size() - 1; i >= 0; i--) {
                             if (CLocal.listDocSo.get(i).isChuaGuiThongBao()) {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
