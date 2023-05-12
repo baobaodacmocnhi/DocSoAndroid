@@ -597,6 +597,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         txtCodeMoi.setText("");
         txtTieuThuMoi.setText("");
         _alert = "";
+        chkChuaGuiThongBao.setChecked(false);
     }
 
     private void selectValue(String value) {
@@ -667,6 +668,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     imgThumb.setImageBitmap(imgCapture);
                 }
                 playTinhTieuThu = true;
+                chkChuaGuiThongBao.setChecked(entityParent.isChuaGuiThongBao());
             }
         } catch (
                 Exception ex) {
