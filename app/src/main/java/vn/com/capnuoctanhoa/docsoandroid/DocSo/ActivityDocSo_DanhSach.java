@@ -319,10 +319,8 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "MLT Giảm":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = CLocal.listDocSo.size() - 1; i >= 0; i--) {
-                            if (CLocal.listDocSo.get(i).isChuaGuiThongBao()) {
-                                CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
-                                addViewParent(CLocal.listDocSo.get(i));
-                            }
+                            CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
+                            addViewParent(CLocal.listDocSo.get(i));
                         }
                     }
                     break;
