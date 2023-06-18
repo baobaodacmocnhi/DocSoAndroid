@@ -390,8 +390,7 @@ public class ServiceThermalPrinter extends Service {
                             .append(CMD_ALIGN_RIGHT)
                             .append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
                             .append(CMD_ALIGN_LEFT)
-                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append('\n')
-                            .append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" - ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
                             .append("MLT: ").append(entityParent.getMLT()).append('\n')
                             .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
@@ -401,7 +400,7 @@ public class ServiceThermalPrinter extends Service {
                             .append("Lý do trở ngại: ").append(lyDo).append('\n')
                             .append(line)
                             .append(breakLine("Quý khách vui lòng báo chỉ số nước cho nhân viên đọc số: " + CLocal.HoTen, charWidth)).append('\n')
-                            .append(escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo, chụp hình). ", 0b11000))
+                            .append(escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo). ", 0b11000))
                             .append("Hoặc tổng đài 19006489.\n")
                             .append(breakLine("Trong vòng 2 ngày kể từ ngày nhận phiếu báo, nếu quý khách hàng không thông báo công ty sẽ tạm tính tiêu thụ bình quân 3 tháng gần nhất .", charWidth)).append('\n');
                 } else {
@@ -409,9 +408,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(escpStyle("PHIẾU BÁO CHỈ SỐ" + lb + "VÀ TIỀN NƯỚC DỰ KIẾN\n", 0b11000))
                             .append(CMD_ALIGN_LEFT)
                             .append("NV: ").append(CLocal.HoTen).append('\n')
-                            .append("SĐT: ").append(CLocal.DienThoai).append(" (Zalo, chụp hình)").append('\n')
+                            .append("SĐT: ").append(CLocal.DienThoai).append(" (Zalo)").append('\n')
                             .append("THÁNG: ").append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
-                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" - ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
                             .append("MLT: ").append(entityParent.getMLT()).append('\n')
                             .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
@@ -445,7 +444,7 @@ public class ServiceThermalPrinter extends Service {
                         docTienLines = breakLine("BẰNG CHỮ: " + docTien, charWidth);
                     stringBuilder.append(docTienLines).append('\n')
                             .append(line);
-                    stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
+                    stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
                 }
                 stringBuilder.append(breakLine("Website: " + escpStyle("https://www.cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
@@ -517,8 +516,7 @@ public class ServiceThermalPrinter extends Service {
                             .append(CMD_ALIGN_RIGHT)
                             .append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
                             .append(CMD_ALIGN_LEFT)
-                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append('\n')
-                            .append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" - ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
                             .append("MLT: ").append(entityParent.getMLT()).append('\n')
                             .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
@@ -528,7 +526,7 @@ public class ServiceThermalPrinter extends Service {
                             .append("Lý do trở ngại: ").append(lyDo).append('\n')
                             .append(line)
                             .append(breakLine("Quý khách vui lòng báo chỉ số nước cho nhân viên đọc số: " + CLocal.HoTen, charWidth)).append('\n')
-                            .append(escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo, chụp hình). ", 0b11000))
+                            .append(escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo). ", 0b11000))
                             .append("Hoặc tổng đài 19006489.\n")
                             .append(breakLine("Trong vòng 2 ngày kể từ ngày nhận phiếu báo, nếu quý khách hàng không thông báo công ty sẽ tạm tính tiêu thụ bình quân 3 tháng gần nhất .", charWidth)).append('\n');
                 } else {
@@ -538,7 +536,7 @@ public class ServiceThermalPrinter extends Service {
                             .append("NV: ").append(CLocal.HoTen).append('\n')
                             .append("SĐT: ").append(CLocal.DienThoai).append(" (Zalo, chụp hình)").append('\n')
                             .append("THÁNG: ").append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
-                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" Đến ngày: ").append(entityParent.getDenNgay()).append('\n')
+                            .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" - ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
                             .append("MLT: ").append(entityParent.getMLT()).append('\n')
                             .append("Khách hàng: ").append(breakLine(entityParent.getHoTen(), charWidth)).append('\n')
@@ -572,7 +570,7 @@ public class ServiceThermalPrinter extends Service {
                         docTienLines = breakLine("BẰNG CHỮ: " + docTien, charWidth);
                     stringBuilder.append(docTienLines).append('\n')
                             .append(line);
-                    stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
+                    stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
                 }
                 stringBuilder.append(breakLine("Website: " + escpStyle("https://www.cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
@@ -617,6 +615,8 @@ public class ServiceThermalPrinter extends Service {
             left = "";
         if (right == null)
             right = "";
+        else
+            right += "  ";
         int leftLength = escpLength(left),
                 rightLength = escpLength(right);
         int padLength = space - leftLength - rightLength;
@@ -781,7 +781,7 @@ public class ServiceThermalPrinter extends Service {
                 String[] diaChiLines = null;
                 String diaChi = entityParent.getDiaChi();
                 if (diaChi != null && !diaChi.trim().isEmpty()) {
-                    diaChiLines = breakLine("Đ/Chỉ:" + diaChi, 33).split("\n");
+                    diaChiLines = breakLine("Địa chỉ:" + diaChi, 33).split("\n");
                 }
 
                 outputStream.write(mmChuoi);
@@ -803,9 +803,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("THÁNG:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 100, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay(), 1, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() + " - " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
+//                    y = handlingYMoreThan450(y, 25);
+//                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bộ (Mã KH):", 1, y, 0, 1, 1)).append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));
                     y = handlingYMoreThan450(y, 25);
@@ -829,16 +829,16 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Lý do trở ngại:", 1, y, 0, 1, 1)).append(printLine("%s", 3, y, 180, 1, 1, lyDo));
                     y = handlingYMoreThan450(y, 50);
                     stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
-                    y = handlingYMoreThan450(y, 25);
+                    y = handlingYMoreThan450(y, 10);
                     stringBuilder.append(printLine("Quý khách vui lòng báo chỉ số nước", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("cho nhân viên đọc số:", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("%s", 1, y, 0, 1, 1, CLocal.HoTen));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("SĐT: %s (Zalo, chụp hình)", 3, y, 0, 2, 1, CLocal.DienThoai));
-                    y = handlingYMoreThan450(y, 50);
-                    stringBuilder.append(printLine("Hoặc tổng đài 19006489", 3, y, 0, 1, 1));
+                    stringBuilder.append(printLine("SĐT: %s (Zalo)", 3, y, 0, 2, 1, CLocal.DienThoai));
+//                    y = handlingYMoreThan450(y, 50);
+//                    stringBuilder.append(printLine("Hoặc tổng đài 19006489", 3, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Trong vòng 2 ngày kể từ ngày nhận", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
@@ -849,7 +849,6 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("tính tiêu thụ bình quân", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("3 tháng gần nhất.\n", 1, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
                     //endregion
                 } else {
                     //region in binh thuong
@@ -861,14 +860,14 @@ public class ServiceThermalPrinter extends Service {
 //                    y = handlingYMoreThan450(y, 75);
                     stringBuilder.append(printLine("NV:%s", 1, y, 0, 1, 1, CLocal.HoTen));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("SĐT:%s (Zalo, chụp hình)", 1, y, 0, 1, 1, CLocal.DienThoai));
+                    stringBuilder.append(printLine("SĐT:%s (Zalo)", 1, y, 0, 1, 1, CLocal.DienThoai));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("THÁNG:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 100, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay(), 1, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay()+" - " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
+//                    y = handlingYMoreThan450(y, 25);
+//                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Danh bạ (Mã KH):", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 4, y, 210, 1, 1, entityParent.getDanhBo()));
@@ -956,14 +955,14 @@ public class ServiceThermalPrinter extends Service {
                             stringBuilder.append(printLine(line, 1, y, 0, 1, 1));
                         }
                     }
-                    y = handlingYMoreThan450(y, 50);
+                    y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
                     y = handlingYMoreThan450(y, 15);
                     stringBuilder.append(printLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TRONG 7 NGÀY", 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TỪ NGÀY", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("KỂ TỪ NGÀY %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
+                    stringBuilder.append(printLine(" %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
                     //endregion
                 }
                 y = handlingYMoreThan450(y, 25);
@@ -978,9 +977,9 @@ public class ServiceThermalPrinter extends Service {
                 stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", ""), y, 40));
                 y = handlingYMoreThan450(y, 225);
                 stringBuilder.append(printLine("XIN CẢM ƠN", 3, y, 130, 1, 1));
-                y = handlingYMoreThan450(y, 50);
+                y = handlingYMoreThan450(y, 40);
                 stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
-                y = handlingYMoreThan450(y, 15);
+                y = handlingYMoreThan450(y, 10);
                 stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
 //                y = handlingYMoreThan450(y, 25);
 //                stringBuilder.append(printLine("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH", 1, y, 0, 1, 1));

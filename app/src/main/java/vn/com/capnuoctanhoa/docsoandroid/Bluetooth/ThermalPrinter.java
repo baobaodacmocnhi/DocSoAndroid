@@ -338,7 +338,7 @@ public class ThermalPrinter {
                         docTienLines = breakLine("BẰNG CHỮ: " + docTien, charWidth);
                     stringBuilder.append(docTienLines).append('\n')
                             .append(line);
-                    stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TRONG 7 NGÀY KỂ TỪ NGÀY " +
+                    stringBuilder.append(breakLine("KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY " +
                                     escpStyle(entityParent.getNgayThuTien(), 0b11000) +
                                     ".\n",
                             charWidth));
@@ -748,9 +748,9 @@ public class ThermalPrinter {
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TRONG 7 NGÀY", 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("TOÁN TIỀN NƯỚC TỪ NGÀY", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("KỂ TỪ NGÀY %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
+                    stringBuilder.append(printLine(" %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
 
                     //endregion
                 }
