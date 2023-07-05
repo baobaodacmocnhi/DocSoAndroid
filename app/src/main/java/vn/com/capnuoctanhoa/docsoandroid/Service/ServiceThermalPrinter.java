@@ -446,7 +446,7 @@ public class ServiceThermalPrinter extends Service {
                             .append(line);
                     stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
                 }
-                stringBuilder.append(breakLine("Website: " + escpStyle("https://www.cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
+                stringBuilder.append(breakLine("Website: " + escpStyle("https://cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
                 String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", "");
                 String qrData;
@@ -572,7 +572,7 @@ public class ServiceThermalPrinter extends Service {
                             .append(line);
                     stringBuilder.append(breakLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
                 }
-                stringBuilder.append(breakLine("Website: " + escpStyle("https://www.cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
+                stringBuilder.append(breakLine("Website: " + escpStyle("https://cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
                 String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", "");
                 String qrData;
@@ -968,7 +968,7 @@ public class ServiceThermalPrinter extends Service {
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("Website:", 2, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("https://www.cskhtanhoa.com.vn", 2, y, 0, 1, 1));
+                stringBuilder.append(printLine("https://cskhtanhoa.com.vn", 2, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("Quét QR để xem chi tiết lịch sử sử", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
