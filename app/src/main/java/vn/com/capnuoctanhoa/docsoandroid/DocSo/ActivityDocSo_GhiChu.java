@@ -30,7 +30,7 @@ import java.util.ArrayList;
 public class ActivityDocSo_GhiChu extends AppCompatActivity {
     private EditText edtSoNha, edtTenDuong, edtDienThoai, edtHoTen, edtGhiChu;
     private Spinner spnViTri, spnMauSacChiGoc, spnKinhDoanh;
-    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkAmSau, chkXayDung, chkDutChiGoc, chkDutChiThan, chkNgapNuoc, chkKetTuong, chkLapKhoaGoc, chkBeHBV, chkBeNapMatNapHBV, chkGayTayVan, chkTroNgaiThay, chkDauChungMayBom, chkSoChinh;
+    private CheckBox chkViTriNgoai, chkViTriHop, chkGieng, chkKhoaTu, chkSoChinh;
     private ArrayList<String> spnName_ViTriDHN, spnName_KinhDoanh;
     private JSONArray jsonDSDienThoai;
     private RecyclerView recyclerView;
@@ -49,18 +49,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
         chkViTriHop = (CheckBox) findViewById(R.id.chkViTriHop);
         chkGieng = (CheckBox) findViewById(R.id.chkGieng);
         chkKhoaTu = (CheckBox) findViewById(R.id.chkKhoaTu);
-        chkAmSau = (CheckBox) findViewById(R.id.chkAmSau);
-        chkXayDung = (CheckBox) findViewById(R.id.chkXayDung);
-        chkDutChiGoc = (CheckBox) findViewById(R.id.chkDutChiGoc);
-        chkDutChiThan = (CheckBox) findViewById(R.id.chkDutChiThan);
-        chkNgapNuoc = (CheckBox) findViewById(R.id.chkNgapNuoc);
-        chkKetTuong = (CheckBox) findViewById(R.id.chkKetTuong);
-        chkLapKhoaGoc = (CheckBox) findViewById(R.id.chkLapKhoaGoc);
-        chkBeHBV = (CheckBox) findViewById(R.id.chkBeHBV);
-        chkBeNapMatNapHBV = (CheckBox) findViewById(R.id.chkBeNapMatNapHBV);
-        chkGayTayVan = (CheckBox) findViewById(R.id.chkGayTayVan);
-        chkTroNgaiThay = (CheckBox) findViewById(R.id.chkTroNgaiThay);
-        chkDauChungMayBom = (CheckBox) findViewById(R.id.chkDauChungMayBom);
         Button btnCapNhat = (Button) findViewById(R.id.btnCapNhat);
         edtDienThoai = (EditText) findViewById(R.id.edtDienThoai);
         edtHoTen = (EditText) findViewById(R.id.edtHoTen);
@@ -129,18 +117,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                         chkViTriHop.setChecked(entityParent.isViTriHop());
                         chkGieng.setChecked(entityParent.isGieng());
                         chkKhoaTu.setChecked(entityParent.isKhoaTu());
-                        chkAmSau.setChecked(entityParent.isAmSau());
-                        chkXayDung.setChecked(entityParent.isXayDung());
-                        chkDutChiGoc.setChecked(entityParent.isDutChi_Goc());
-                        chkDutChiThan.setChecked(entityParent.isDutChi_Than());
-                        chkNgapNuoc.setChecked(entityParent.isNgapNuoc());
-                        chkKetTuong.setChecked(entityParent.isKetTuong());
-                        chkLapKhoaGoc.setChecked(entityParent.isLapKhoaGoc());
-                        chkBeHBV.setChecked(entityParent.isBeHBV());
-                        chkBeNapMatNapHBV.setChecked(entityParent.isBeNapMatNapHBV());
-                        chkGayTayVan.setChecked(entityParent.isGayTayVan());
-                        chkTroNgaiThay.setChecked(entityParent.isTroNgaiThay());
-                        chkDauChungMayBom.setChecked(entityParent.isDauChungMayBom());
                         spinnerSelectValue(spnMauSacChiGoc, entityParent.getMauSacChiGoc());
                         spinnerSelectValue(spnKinhDoanh, entityParent.getKinhDoanh());
                     }
@@ -238,9 +214,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                     case "CapNhat":
                         result = ws.update_GhiChu(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), edtSoNha.getText().toString(), edtTenDuong.getText().toString()
                                 , spnViTri.getSelectedItem().toString(), String.valueOf(chkViTriNgoai.isChecked()), String.valueOf(chkViTriHop.isChecked()), String.valueOf(chkGieng.isChecked())
-                                , String.valueOf(chkKhoaTu.isChecked()), String.valueOf(chkAmSau.isChecked()), String.valueOf(chkXayDung.isChecked()), String.valueOf(chkDutChiGoc.isChecked()), String.valueOf(chkDutChiThan.isChecked())
-                                , String.valueOf(chkNgapNuoc.isChecked()), String.valueOf(chkKetTuong.isChecked()), String.valueOf(chkLapKhoaGoc.isChecked()), String.valueOf(chkBeHBV.isChecked()), String.valueOf(chkBeNapMatNapHBV.isChecked())
-                                , String.valueOf(chkGayTayVan.isChecked()), String.valueOf(chkTroNgaiThay.isChecked()), String.valueOf(chkDauChungMayBom.isChecked())
+                                , String.valueOf(chkKhoaTu.isChecked())
                                 , spnMauSacChiGoc.getSelectedItem().toString(), edtGhiChu.getText().toString(), spnKinhDoanh.getSelectedItem().toString(), CLocal.MaNV);
                         break;
                     case "CapNhatDT":
@@ -250,6 +224,8 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                 }
                 if (!result.equals(""))
                     jsonObject = new JSONObject(result);
+                else
+                    error = "lỗi api";
                 if (jsonObject != null)
                     if (Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
                         switch (strings[0]) {
@@ -260,18 +236,6 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
                                 CLocal.listDocSoView.get(CLocal.STT).setViTriNgoai(chkViTriNgoai.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setViTriHop(chkViTriHop.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setGieng(chkGieng.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setAmSau(chkAmSau.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setXayDung(chkXayDung.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setDutChi_Goc(chkDutChiGoc.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setDutChi_Than(chkDutChiThan.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setNgapNuoc(chkNgapNuoc.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setKetTuong(chkKetTuong.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setLapKhoaGoc(chkLapKhoaGoc.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setBeHBV(chkBeHBV.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setBeNapMatNapHBV(chkBeNapMatNapHBV.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setGayTayVan(chkGayTayVan.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setTroNgaiThay(chkTroNgaiThay.isChecked());
-                                CLocal.listDocSoView.get(CLocal.STT).setDauChungMayBom(chkDauChungMayBom.isChecked());
                                 CLocal.listDocSoView.get(CLocal.STT).setMauSacChiGoc(spnMauSacChiGoc.getSelectedItem().toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setGhiChu(edtGhiChu.getText().toString());
                                 CLocal.listDocSoView.get(CLocal.STT).setKinhDoanh(spnKinhDoanh.getSelectedItem().toString());
@@ -311,7 +275,7 @@ public class ActivityDocSo_GhiChu extends AppCompatActivity {
             if (!s.equals(""))
                 CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, s, "center");
             else {
-                CLocal.showPopupMessage(ActivityDocSo_GhiChu.this, "Thành Công", "center");
+                CLocal.showToastMessage(ActivityDocSo_GhiChu.this, "Thành Công");
                 finish();
             }
         }

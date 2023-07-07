@@ -115,9 +115,13 @@ public class CLocal {
     public static int STT = 0;
     public static Bitmap imgCapture;
     public static final int _GiamTienNuoc = 10;
-    public static ArrayList<String> lstTT0 = new ArrayList<String>(Arrays.asList("K", "N", "N1", "N2", "N3", "68", "Q"));
-    public static ArrayList<String> lstTBTT = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "66", "80", "F1", "F2", "F3", "F4"));
-    public static ArrayList<String> lstBinhThuong = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5Q", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
+    public static ArrayList<String> lstTT01 = new ArrayList<String>(Arrays.asList("K", "N", "68", "Q"));
+    public static ArrayList<String> lstTBTT1 = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "66", "80", "F1", "F2", "F3", "F4"));
+    public static ArrayList<String> lstBinhThuong1 = new ArrayList<String>(Arrays.asList("40", "41", "42", "54", "55", "56", "58", "5Q", "5", "M0", "M1", "M2", "M3", "X41", "X51"));
+
+    public static ArrayList<String> lstTT02023 = new ArrayList<String>(Arrays.asList("K3", "F5", "N", "Q"));
+    public static ArrayList<String> lstTBTT2023 = new ArrayList<String>(Arrays.asList("60", "61", "62", "63", "64", "65", "66", "80", "F1", "F2", "F3", "F4"));
+    public static ArrayList<String> lstBinhThuong2023 = new ArrayList<String>(Arrays.asList("40", "41", "42", "43", "44", "45", "46", "54", "55", "56", "58", "5Q", "M0", "M1", "M2", "M3", "M4", "Mn", "K", "K1", "K2", "K4", "X41", "X51"));
     public static HashMap<Integer, Integer> map;
 
     public static void initialCLocal() {

@@ -479,6 +479,124 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 }
             });
 
+            ivLuu.setOnClickListener(view -> {
+                try {
+//                    if (!CLocal.checkNetworkAvailable(ActivityDocSo_GhiChiSo.this)) {
+//                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Không có Internet");
+//                        return;
+//                    }
+                    if (CLocal.listDocSoView.get(CLocal.STT).isChuBao()) {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Chủ Báo - Không cập nhật");
+                        return;
+                    }
+                    CCode selectedCode = (CCode) spnCode.getSelectedItem();
+                    if (imgCapture != null && selectedCode != null
+                            && ((selectedCode.getCode().equals("F1")
+                            || selectedCode.getCode().equals("F2")
+                            || selectedCode.getCode().equals("F3")
+                            || selectedCode.getCode().equals("F4")
+                            || selectedCode.getCode().equals("61")
+                            || selectedCode.getCode().equals("62")
+                            || selectedCode.getCode().equals("63")
+                            || selectedCode.getCode().equals("64")
+                            || selectedCode.getCode().equals("66")
+                            || selectedCode.getCode().equals("K"))
+                            || (!selectedCode.getCode().equals("F1")
+                            && !selectedCode.getCode().equals("F2")
+                            && !selectedCode.getCode().equals("F3")
+                            && !selectedCode.getCode().equals("F4")
+                            && !selectedCode.getCode().equals("61")
+                            && !selectedCode.getCode().equals("62")
+                            && !selectedCode.getCode().equals("63")
+                            && !selectedCode.getCode().equals("64")
+                            && !selectedCode.getCode().equals("66")
+                            && !selectedCode.getCode().equals("K")
+                            && !edtChiSo.getText().toString().equals("")))) {
+                        if (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("") && ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5K"))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5F"))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5N"))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '4' && (selectedCode.getCode().equals("5F") || selectedCode.getCode().equals("5K") || selectedCode.getCode().equals("5N")))
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0() == "M0" && selectedCode.getCode().charAt(0) == '4'))) {
+                            CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Vào Code Sai");
+                            return;
+                        }
+                        if (CLocal.getDaysDifference(CLocal.convertStringToDate(CLocal.listDocSoView.get(CLocal.STT).getDenNgay()), new Date()) < 2
+                                && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("")
+                                && (CLocal.lstTT02023.contains(selectedCode.getCode())
+                                || CLocal.lstTBTT2023.contains(selectedCode.getCode())
+                                || CLocal.lstBinhThuong2023.contains(selectedCode.getCode()))) {
+                            CLocal.listDocSoView.get(CLocal.STT).setSync(false);
+                            if (edtChiSo.getText().toString().equals(""))
+                                tinhTieuThu();
+                            CLocal.listDocSoView.get(CLocal.STT).setModifyDate(CLocal.DateFormat.format(new Date()));
+                            CLocal.listDocSoView.get(CLocal.STT).setCodeMoi(txtCodeMoi.getText().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setChiSoMoi(txtChiSoMoi.getText().toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setTieuThuMoi(txtTieuThuMoi.getText().toString());
+                            ArrayList<Integer> lstTienNuoc = CLocal.TinhTienNuoc(CLocal.listDocSoView.get(CLocal.STT).getDanhBo().replace(" ", ""), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy())
+                                    , Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam()), CLocal.listDocSoView.get(CLocal.STT).getTuNgay(), CLocal.listDocSoView.get(CLocal.STT).getDenNgay(), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getGiaBieu())
+                                    , CLocal.listDocSoView.get(CLocal.STT).getSH(), CLocal.listDocSoView.get(CLocal.STT).getSX(), CLocal.listDocSoView.get(CLocal.STT).getDV(), CLocal.listDocSoView.get(CLocal.STT).getHCSN()
+                                    , Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDinhMuc()), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDinhMucHN()), Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTieuThuMoi()));
+                            CLocal.listDocSoView.get(CLocal.STT).setTienNuoc(lstTienNuoc.get(0).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setThueGTGT(lstTienNuoc.get(1).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT(lstTienNuoc.get(2).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setPhiBVMT_Thue(lstTienNuoc.get(3).toString());
+                            CLocal.listDocSoView.get(CLocal.STT).setTongCong(lstTienNuoc.get(4).toString());
+                            CLocal.updateTinhTrangParent(CLocal.listDocSo, CLocal.listDocSoView.get(CLocal.STT));
+                            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChiSo.this)) {
+                                MyAsyncTaskGhiDocSo_GianTiep myAsyncTaskGhiDocSo_gianTiep = new MyAsyncTaskGhiDocSo_GianTiep();
+                                myAsyncTaskGhiDocSo_gianTiep.execute(String.valueOf(CLocal.STT));
+                            }
+//                            if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+//                                MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+//                                myAsyncTaskPhieuChuyen.execute();
+//                            }
+                            //thành công có cảnh báo
+                            if (!_alert.equals("")) {
+                                CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                                if (_alert.contains("= 0"))
+                                    CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", "THÀNH CÔNG\r\n" + _alert, "Đọc Tiếp", (dialog, which) -> {
+                                        dialog.dismiss();
+                                        ivSau.performClick();
+                                    }, "In", (dialog, which) -> {
+                                        dialog.dismiss();
+                                        ivIn.performClick();
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(() -> ivSau.performClick(), 1000);
+                                    }, false);
+                                else
+                                    CLocal.showDialog(ActivityDocSo_GhiChiSo.this, "Thông Báo", "THÀNH CÔNG\r\n\r\n" + _alert, "Xem Lại", (dialog, which) -> dialog.dismiss(), "In", (dialog, which) -> {
+                                        dialog.dismiss();
+                                        ivIn.performClick();
+                                        final Handler handler = new Handler();
+                                        handler.postDelayed(() -> ivSau.performClick(), 1000);
+                                    }, false);
+                            } else {//thành công không có cảnh báo
+//                                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THÀNH CÔNG\r\n\r\n", "center");
+                                ivIn.performClick();
+                                final Handler handler = new Handler();
+                                handler.postDelayed(() -> ivSau.performClick(), 1000);
+                            }
+                        } else {
+                            if (CLocal.checkNetworkGood(ActivityDocSo_GhiChiSo.this)) {
+                                MyAsyncTask_TrucTiep myAsyncTaskTrucTiep = new MyAsyncTask_TrucTiep();
+                                myAsyncTaskTrucTiep.execute();
+//                                if (CLocal.listPhieuChuyenSync != null && CLocal.listPhieuChuyenSync.size() > 0) {
+//                                    MyAsyncTaskPhieuChuyen myAsyncTaskPhieuChuyen = new MyAsyncTaskPhieuChuyen();
+//                                    myAsyncTaskPhieuChuyen.execute();
+//                                }
+                            } else
+                                CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "Tốc độ mạng yếu", "center");
+                        }
+                        CLocal.hideKeyboard(ActivityDocSo_GhiChiSo.this);
+                    } else {
+                        CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Thiếu dữ liệu Code-CSM-Hình ảnh");
+                    }
+                } catch (Exception e) {
+                    CLocal.showPopupMessage(ActivityDocSo_GhiChiSo.this, "THẤT BẠI\r\n\r\n" + e.getMessage(), "center");
+                    CLocal.vibrate(ActivityDocSo_GhiChiSo.this);
+                }
+            });
+
             ivIn.setOnClickListener(view -> {
                 try {
                     if (!CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("")) {
@@ -715,15 +833,15 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             if (CLocal.lstTT0.contains(txtCodeMoi.getText().toString()))
                 txtTieuThuMoi.setText("0");
             else if (CLocal.lstTBTT.contains(txtCodeMoi.getText().toString())) {
-                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")
-                        && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
-                    {
-                        double motngay = Double.parseDouble(String.format(Locale.US, "%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
-//                        int test1 = CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot()));
-//                        int test2 = (int) Math.round(motngay * test1);
-                        txtTieuThuMoi.setText(String.valueOf((int) Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
-                    }
-                } else
+//                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")
+//                        && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
+//                    {
+//                        double motngay = Double.parseDouble(String.format(Locale.US, "%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
+////                        int test1 = CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot()));
+////                        int test2 = (int) Math.round(motngay * test1);
+//                        txtTieuThuMoi.setText(String.valueOf((int) Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
+//                    }
+//                } else
                     txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
             } else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()))
                 if (txtCodeMoi.getText().toString().equals("X41"))
@@ -741,10 +859,62 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             ))))
                 txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
             if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66")) {
-                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
-                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(txtTieuThuMoi.getText().toString()))));
-                } else
+//                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
+//                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(txtTieuThuMoi.getText().toString()))));
+//                } else
                     txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
+            } else if (txtCodeMoi.getText().toString().charAt(0) == 'K')
+                txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
+            else if (txtCodeMoi.getText().toString().equals("63"))
+                txtChiSoMoi.setText("0");
+            if (txtCode0.getText().equals("M0"))
+                txtCodeMoi.setText("M1");
+            tinhTieuThu_CanhBaoMau();
+        }
+    }
+
+    public void tinhTieuThu2023() {
+        if (playTinhTieuThu) {
+            String strChiSo = "";
+            if (edtChiSo.getText().toString().equals(""))
+                strChiSo = "0";
+            else
+                strChiSo = edtChiSo.getText().toString();
+            txtCodeMoi.setText(((CCode) spnCode.getSelectedItem()).getCode());
+            txtChiSoMoi.setText(strChiSo);
+            if (CLocal.lstTT02023.contains(txtCodeMoi.getText().toString()))
+                txtTieuThuMoi.setText("0");
+            else if (CLocal.lstTBTT2023.contains(txtCodeMoi.getText().toString())) {
+//                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")
+//                        && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
+//                    {
+//                        double motngay = Double.parseDouble(String.format(Locale.US, "%.2f", Double.parseDouble(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) / 30));
+////                        int test1 = CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot()));
+////                        int test2 = (int) Math.round(motngay * test1);
+//                        txtTieuThuMoi.setText(String.valueOf((int) Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
+//                    }
+//                } else
+                txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
+            } else if (CLocal.lstBinhThuong2023.contains(txtCodeMoi.getText().toString()))
+                if (txtCodeMoi.getText().toString().equals("X41"))
+                    txtTieuThuMoi.setText(String.valueOf(10000 + Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
+                else if (txtCodeMoi.getText().toString().equals("X51"))
+                    txtTieuThuMoi.setText(String.valueOf(100000 + Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
+                else
+                    txtTieuThuMoi.setText(String.valueOf(Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
+            if (txtCodeMoi.getText().toString().charAt(0) == '4' == true
+                    && (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("") && (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F'
+                    || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K'
+                    || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N'
+                    || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '6'
+//                    && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68")
+            ))))
+                txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
+            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66")) {
+//                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
+//                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(txtTieuThuMoi.getText().toString()))));
+//                } else
+                txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
             } else if (txtCodeMoi.getText().toString().charAt(0) == 'K')
                 txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
             else if (txtCodeMoi.getText().toString().equals("63"))
