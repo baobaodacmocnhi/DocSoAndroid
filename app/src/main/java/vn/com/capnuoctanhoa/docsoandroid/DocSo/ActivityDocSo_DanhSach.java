@@ -269,7 +269,7 @@ public class ActivityDocSo_DanhSach extends AppCompatActivity {
                 case "F":
                     if (CLocal.listDocSo != null && CLocal.listDocSo.size() > 0) {
                         for (int i = 0; i < CLocal.listDocSo.size(); i++) {
-                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("") && CLocal.listDocSo.get(i).getCodeMoi().charAt(0) == 'F') {
+                            if (!CLocal.listDocSo.get(i).getCodeMoi().equals("") && !CLocal.listDocSo.get(i).getCodeMoi().equals("F5") && CLocal.listDocSo.get(i).getCodeMoi().charAt(0) == 'F') {
                                 CLocal.listDocSoView.add(CLocal.listDocSo.get(i));
                                 addViewParent(CLocal.listDocSo.get(i));
                             }

@@ -160,7 +160,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                    selectedCode = (CCode) parent.getItemAtPosition(position);
                     if (!txtChiSoMoi.getText().toString().equals(""))
 //                        tinhTieuThu();
-                    tinhTieuThu2023();
+                        tinhTieuThu2023();
                 }
 
                 @Override
@@ -504,7 +504,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             || selectedCode.getCode().equals("62")
                             || selectedCode.getCode().equals("63")
                             || selectedCode.getCode().equals("64")
-                            || selectedCode.getCode().equals("66"))
+                            || selectedCode.getCode().equals("66")
+                            || selectedCode.getCode().equals("K3"))
                             || (!selectedCode.getCode().equals("F1")
                             && !selectedCode.getCode().equals("F2")
                             && !selectedCode.getCode().equals("F3")
@@ -515,6 +516,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             && !selectedCode.getCode().equals("63")
                             && !selectedCode.getCode().equals("64")
                             && !selectedCode.getCode().equals("66")
+                            && !selectedCode.getCode().equals("K3")
                             && !edtChiSo.getText().toString().equals("")))) {
                         if (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("") && ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5K"))
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '5' && !selectedCode.getCode().equals("5F"))
@@ -847,7 +849,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                        txtTieuThuMoi.setText(String.valueOf((int) Math.round(motngay * CLocal.map.get(Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getDot())))));
 //                    }
 //                } else
-                    txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
+                txtTieuThuMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getTBTT());
             } else if (CLocal.lstBinhThuong.contains(txtCodeMoi.getText().toString()))
                 if (txtCodeMoi.getText().toString().equals("X41"))
                     txtTieuThuMoi.setText(String.valueOf(10000 + Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
@@ -867,7 +869,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
 //                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
 //                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(txtTieuThuMoi.getText().toString()))));
 //                } else
-                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
+                txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
             } else if (txtCodeMoi.getText().toString().charAt(0) == 'K')
                 txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
             else if (txtCodeMoi.getText().toString().equals("63"))
@@ -887,8 +889,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 strChiSo = edtChiSo.getText().toString();
             txtCodeMoi.setText(((CCode) spnCode.getSelectedItem()).getCode());
             txtChiSoMoi.setText(strChiSo);
-            if (CLocal.lstTT02023.contains(txtCodeMoi.getText().toString()))
+            if (CLocal.lstTT02023.contains(txtCodeMoi.getText().toString())) {
                 txtTieuThuMoi.setText("0");
+                txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
+            }
             else if (CLocal.lstTBTT2023.contains(txtCodeMoi.getText().toString())) {
 //                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")
 //                        && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
@@ -908,21 +912,20 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 else
                     txtTieuThuMoi.setText(String.valueOf(Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
             if (txtCodeMoi.getText().toString().charAt(0) == '4' == true
-                    && (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("") && (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F'
+                    && (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("") && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("F5")
+                    && (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F'
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K'
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N'
                     || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '6'
 //                    && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("68")
             ))))
                 txtCodeMoi.setText("5" + CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0));
-            if (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66")) {
+            if (!txtCodeMoi.getText().toString().equals("F5") && (txtCodeMoi.getText().toString().charAt(0) == 'F' || txtCodeMoi.getText().toString().equals("61") || txtCodeMoi.getText().toString().equals("66"))) {
 //                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")) {
 //                    txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(txtTieuThuMoi.getText().toString()))));
 //                } else
                 txtChiSoMoi.setText(String.valueOf((Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0()) + Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()))));
-            } else if (txtCodeMoi.getText().toString().equals("F5"))
-                txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
-            else if (txtCodeMoi.getText().toString().equals("63"))
+            } else  if (txtCodeMoi.getText().toString().equals("63"))
                 txtChiSoMoi.setText("0");
             if (txtCode0.getText().equals("M0"))
                 txtCodeMoi.setText("M1");
