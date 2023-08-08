@@ -267,7 +267,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (CLocal.STT > 0) {
                     CLocal.STT--;
                     if (chkLocDaDoc.isChecked())
-                        while (CLocal.STT > 0 && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("F5")&& CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().charAt(0) != 'F')
+                        while (CLocal.STT > 0 && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("") && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("F5")&& CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().charAt(0) != 'F')
                             CLocal.STT--;
                     initial();
                     fillLayout(CLocal.listDocSoView.get(CLocal.STT));
@@ -279,7 +279,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 if (CLocal.STT < CLocal.listDocSoView.size() - 1) {
                     CLocal.STT++;
                     if (chkLocDaDoc.isChecked())
-                        while (CLocal.STT < CLocal.listDocSoView.size() - 1 && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("")&& !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("F5") && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().charAt(0) != 'F')
+                        while (CLocal.STT < CLocal.listDocSoView.size() - 1 && !CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("")&& CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().equals("F5") && CLocal.listDocSoView.get(CLocal.STT).getCodeMoi().charAt(0) != 'F')
                             CLocal.STT++;
                     initial();
                     fillLayout(CLocal.listDocSoView.get(CLocal.STT));
