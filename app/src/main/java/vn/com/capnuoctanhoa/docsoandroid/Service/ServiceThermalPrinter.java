@@ -10,6 +10,7 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.Looper;
+import android.text.format.DateFormat;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
@@ -459,10 +460,14 @@ public class ServiceThermalPrinter extends Service {
                         .append(CMD_ALIGN_LEFT);
                 stringBuilder.append(CMD_ALIGN_CENTER)
                         .append("XIN CẢM ƠN\n")
-                        .append(line)
-                        .append("Được in vào: ").append(CLocal.getTime()).append("\n")
+                        .append(line);
+                Date date = new Date();
+                if (Integer.parseInt((String) DateFormat.format("yyyy", date)) < Integer.parseInt(entityParent.getNam())
+                        || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
+                    stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
+                }
 //                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ").append('\n')
-                        .append("\n\n");
+                stringBuilder.append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
                 outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
@@ -582,10 +587,14 @@ public class ServiceThermalPrinter extends Service {
                         .append(CMD_ALIGN_LEFT);
                 stringBuilder.append(CMD_ALIGN_CENTER)
                         .append("XIN CẢM ƠN\n")
-                        .append(line)
-                        .append("Được in vào: ").append(CLocal.getTime()).append("\n")
+                        .append(line);
+                Date date = new Date();
+                if (Integer.parseInt((String) DateFormat.format("yyyy", date)) < Integer.parseInt(entityParent.getNam())
+                        || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
+                    stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
+                }
 //                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ").append('\n')
-                        .append("\n\n");
+                stringBuilder.append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
                 outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
@@ -865,7 +874,7 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("THÁNG:", 1, y, 0, 1, 1));
                     stringBuilder.append(printLine("%s", 3, y, 100, 1, 1, entityParent.getKy() + "/" + entityParent.getNam()));
                     y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay()+" - " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
+                    stringBuilder.append(printLine("Từ ngày: " + entityParent.getTuNgay() + " - " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
 //                    y = handlingYMoreThan450(y, 25);
 //                    stringBuilder.append(printLine("Đến ngày: " + entityParent.getDenNgay(), 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
@@ -979,8 +988,12 @@ public class ServiceThermalPrinter extends Service {
                 stringBuilder.append(printLine("XIN CẢM ƠN", 3, y, 130, 1, 1));
                 y = handlingYMoreThan450(y, 40);
                 stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
-                y = handlingYMoreThan450(y, 10);
-                stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
+                Date date = new Date();
+                if (Integer.parseInt((String) DateFormat.format("yyyy", date)) < Integer.parseInt(entityParent.getNam())
+                        || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
+                    y = handlingYMoreThan450(y, 10);
+                    stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
+                }
 //                y = handlingYMoreThan450(y, 25);
 //                stringBuilder.append(printLine("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH", 1, y, 0, 1, 1));
 //                y = handlingYMoreThan450(y, 25);
