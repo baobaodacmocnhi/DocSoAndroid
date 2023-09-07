@@ -911,7 +911,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 else
                     txtTieuThuMoi.setText(String.valueOf(Integer.parseInt(txtChiSoMoi.getText().toString()) - Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getChiSo0())));
             if (txtCodeMoi.getText().toString().charAt(0) == '4' == true
-                    && (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("") && !CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("F5")
+                    && (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("")
                     && (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F'
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K'
                     || CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N'
