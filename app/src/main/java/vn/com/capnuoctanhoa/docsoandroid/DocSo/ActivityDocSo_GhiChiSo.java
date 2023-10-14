@@ -1,5 +1,6 @@
 package vn.com.capnuoctanhoa.docsoandroid.DocSo;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -741,6 +742,10 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             if (entityParent != null) {
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_0_1));
                 txtMLT.setText(entityParent.getMLT());
+                if (entityParent.isThayDK())
+                    txtDanhBo.setTextColor(getResources().getColor(R.color.colorDanhBo));
+                else
+                    txtDanhBo.setTextColor(getResources().getColor(R.color.colorMLT));
                 txtDanhBo.setText(entityParent.getDanhBo());
                 txtHoTen.setText(entityParent.getHoTen());
                 txtDiaChi.setText(entityParent.getDiaChi());

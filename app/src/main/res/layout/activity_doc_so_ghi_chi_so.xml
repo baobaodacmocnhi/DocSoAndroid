@@ -124,7 +124,7 @@
                 android:layout_marginTop="8dp"
                 android:autofillHints=""
                 android:ems="6"
-                android:textColor="@color/colorDanhBo"
+                android:textColor="@color/colorMLT"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView"
