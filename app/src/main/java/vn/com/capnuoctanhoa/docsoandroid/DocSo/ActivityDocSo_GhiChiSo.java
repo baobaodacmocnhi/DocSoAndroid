@@ -891,7 +891,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             txtChiSoMoi.setText(strChiSo);
             if (CLocal.lstTT02023.contains(txtCodeMoi.getText().toString())) {
                 txtTieuThuMoi.setText("0");
-                txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
+//                txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
             } else if (CLocal.lstTBTT2023.contains(txtCodeMoi.getText().toString())) {
 //                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")
 //                        && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
