@@ -108,4 +108,11 @@ public class CEntityChild {
         TongCong = tongCong;
     }
 
+    public boolean isGiaiTrach() {
+        return GiaiTrach;
+    }
+
+    public void setGiaiTrach(boolean giaiTrach) {
+        GiaiTrach = giaiTrach;
+    }
 }
