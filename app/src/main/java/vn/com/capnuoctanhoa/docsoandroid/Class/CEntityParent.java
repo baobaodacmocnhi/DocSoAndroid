@@ -79,10 +79,17 @@ public class CEntityParent {
     private String TinhTrang;
     private String Latitude;
     private String Longitude;
-
     private boolean ChuaGuiThongBao;
 
+    private boolean ThayDK;
 
+    public boolean isThayDK() {
+        return ThayDK;
+    }
+
+    public void setThayDK(boolean thayDK) {
+        ThayDK = thayDK;
+    }
 
     public CEntityParent() {
         this.ID = "";
@@ -102,7 +109,7 @@ public class CEntityParent {
         this.DinhMuc = "";
         this.DinhMucHN = "";
         this.ViTri = "";
-        this.KinhDoanh="";
+        this.KinhDoanh = "";
         this.ViTriNgoai = false;
         this.ViTriHop = false;
         this.Gieng = false;
@@ -116,9 +123,9 @@ public class CEntityParent {
         this.LapKhoaGoc = false;
         this.BeHBV = false;
         this.BeNapMatNapHBV = false;
-        this.GayTayVan=false;
-        this.TroNgaiThay=false;
-        this.DauChungMayBom=false;
+        this.GayTayVan = false;
+        this.TroNgaiThay = false;
+        this.DauChungMayBom = false;
         this.MauSacChiGoc = "";
         this.DienThoai = "";
         this.ChiSoMoi = "";
@@ -160,7 +167,8 @@ public class CEntityParent {
         this.TinhTrang = "";
         this.Latitude = "";
         this.Longitude = "";
-        this.ChuaGuiThongBao=false;
+        this.ChuaGuiThongBao = false;
+        this.ThayDK = false;
     }
 
     public String getID() {
@@ -798,7 +806,7 @@ public class CEntityParent {
             this.DinhMuc = entityParent.getDinhMuc();
             this.DinhMucHN = entityParent.getDinhMucHN();
             this.ViTri = entityParent.getViTri();
-            this.KinhDoanh=entityParent.getKinhDoanh();
+            this.KinhDoanh = entityParent.getKinhDoanh();
             this.ViTriNgoai = entityParent.isViTriNgoai();
             this.ViTriHop = entityParent.isViTriHop();
             this.Gieng = entityParent.isGieng();
@@ -812,9 +820,9 @@ public class CEntityParent {
             this.LapKhoaGoc = entityParent.isLapKhoaGoc();
             this.BeHBV = entityParent.isBeHBV();
             this.BeNapMatNapHBV = entityParent.isBeNapMatNapHBV();
-            this.GayTayVan=entityParent.isGayTayVan();
-            this.TroNgaiThay=entityParent.isTroNgaiThay();
-            this.DauChungMayBom=entityParent.isDauChungMayBom();
+            this.GayTayVan = entityParent.isGayTayVan();
+            this.TroNgaiThay = entityParent.isTroNgaiThay();
+            this.DauChungMayBom = entityParent.isDauChungMayBom();
             this.MauSacChiGoc = entityParent.getMauSacChiGoc();
             this.DienThoai = entityParent.getDienThoai();
             this.ChiSoMoi = entityParent.getChiSoMoi();
@@ -857,7 +865,8 @@ public class CEntityParent {
             this.TinhTrang = entityParent.getTinhTrang();
             this.Latitude = entityParent.getLatitude();
             this.Longitude = entityParent.getLongitude();
-            this.ChuaGuiThongBao=entityParent.isChuaGuiThongBao();
+            this.ChuaGuiThongBao = entityParent.isChuaGuiThongBao();
+            this.ThayDK = entityParent.isThayDK();
         } catch (Exception ex) {
             throw ex;
         }
