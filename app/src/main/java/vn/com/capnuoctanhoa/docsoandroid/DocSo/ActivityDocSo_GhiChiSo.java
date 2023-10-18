@@ -847,11 +847,14 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     selectValue(entityParent.getCodeMoi());
                     edtChiSo.setText(entityParent.getChiSoMoi());
                 }
-                Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
-                if (bitmap != null) {
-                    bitmap = CBitmap.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
-                    imgCapture = bitmap;
-                    imgThumb.setImageBitmap(imgCapture);
+                File file = new File(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
+                if (file.exists()) {
+                    Bitmap bitmap = BitmapFactory.decodeFile(CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
+                    if (bitmap != null) {
+                        bitmap = CBitmap.imageOreintationValidator(bitmap, CLocal.pathAppPicture + "/" + entityParent.getNam() + "_" + entityParent.getKy() + "_" + entityParent.getDot() + "/" + entityParent.getDanhBo().replace(" ", "") + ".jpg");
+                        imgCapture = bitmap;
+                        imgThumb.setImageBitmap(imgCapture);
+                    }
                 }
                 playTinhTieuThu = true;
                 chkChuaGuiThongBao.setChecked(entityParent.isChuaGuiThongBao());
