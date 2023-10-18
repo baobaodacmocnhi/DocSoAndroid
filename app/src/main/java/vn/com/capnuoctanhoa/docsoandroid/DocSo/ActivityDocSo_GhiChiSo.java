@@ -62,6 +62,7 @@ import vn.com.capnuoctanhoa.docsoandroid.R;
 public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
     private CheckBox chkLocDaDoc, chkChuaGuiThongBao;
     private TextView txtMLT, txtDanhBo, txtHoTen, txtDiaChi, txtDiaChiDHN, txtViTri, txtHieu, txtCo, txtSoThan, txtGhiChu, txtTinhTrang, txtGiaBieu, txtDinhMuc, txtDinhMucHN, txtDienThoai, txtTBTT, txtChiSo2, txtCode2, txtTieuThu2, txtChiSo1, txtCode1, txtTieuThu1, txtChiSo0, txtCode0, txtTieuThu0, txtChiSoMoi, txtCodeMoi, txtTieuThuMoi;
+    private LinearLayout layout2, layout1, layout0;
     private EditText edtChiSo;
     private Spinner spnCode;
     private ArrayList<CCode> spnName_Code;
@@ -119,9 +120,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         txtCodeMoi = (TextView) findViewById(R.id.txtCode);
         txtTieuThuMoi = (TextView) findViewById(R.id.txtTieuThu);
         LinearLayout layoutLS = (LinearLayout) findViewById(R.id.layoutLS);
-        LinearLayout layout2 = (LinearLayout) findViewById(R.id.layout2);
-        LinearLayout layout1 = (LinearLayout) findViewById(R.id.layout1);
-        LinearLayout layout0 = (LinearLayout) findViewById(R.id.layout0);
+        layout2 = (LinearLayout) findViewById(R.id.layout2);
+        layout1 = (LinearLayout) findViewById(R.id.layout1);
+        layout0 = (LinearLayout) findViewById(R.id.layout0);
         layoutMoi = (LinearLayout) findViewById(R.id.layoutMoi);
         edtChiSo = (EditText) findViewById(R.id.edtChiSo);
         spnCode = (Spinner) findViewById(R.id.spnCode);
@@ -786,6 +787,51 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                 txtChiSoMoi.setText(entityParent.getChiSoMoi());
                 txtCodeMoi.setText(entityParent.getCodeMoi());
                 txtTieuThuMoi.setText(entityParent.getTieuThuMoi());
+                int Nam = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getNam());
+                int Ky = Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getKy());
+                int Nam2, Nam1, Nam0, Ky2, Ky1, Ky0;
+                switch (Ky) {
+                    case 1:
+                        Nam2 = Nam1 = Nam0 = Nam--;
+                        Ky0 = 12;
+                        Ky1 = 11;
+                        Ky2 = 10;
+                        break;
+                    case 2:
+                        Nam0 = Nam;
+                        Nam2 = Nam1 = Nam--;
+                        Ky0 = 1;
+                        Ky1 = 12;
+                        Ky2 = 11;
+                        break;
+                    case 3:
+                        Nam1 = Nam0 = Nam;
+                        Nam2 = Nam--;
+                        Ky0 = 2;
+                        Ky1 = 1;
+                        Ky2 = 12;
+                        break;
+                    default:
+                        Nam2 = Nam1 = Nam0 = Nam;
+                        Ky0 = Ky - 1;
+                        Ky1 = Ky = 2;
+                        Ky2 = Ky - 3;
+                        break;
+                }
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky0 < 10 ? "0" : "") + Ky0 + "/" + Nam0) && !entityParent.getLstHoaDon().get(i).isGiaiTrach())
+                        layout0.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
+                    else
+                        layout0.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_1_1));
+                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky1 < 10 ? "0" : "") + Ky1 + "/" + Nam1) && !entityParent.getLstHoaDon().get(i).isGiaiTrach())
+                        layout1.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
+                    else
+                        layout1.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_2_1));
+                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky2 < 10 ? "0" : "") + Ky2 + "/" + Nam2) && !entityParent.getLstHoaDon().get(i).isGiaiTrach())
+                        layout2.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
+                    else
+                        layout2.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_3_1));
+                }
                 tinhTieuThu_CanhBaoMau();
                 if (!entityParent.getCodeMoi().equals("") && !entityParent.getChiSoMoi().equals("")) {
                     selectValue(entityParent.getCodeMoi());
