@@ -814,22 +814,32 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                     default:
                         Nam2 = Nam1 = Nam0 = Nam;
                         Ky0 = Ky - 1;
-                        Ky1 = Ky = 2;
+                        Ky1 = Ky - 2;
                         Ky2 = Ky - 3;
                         break;
                 }
+                layout0.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_1_1));
+                layout1.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_2_1));
+                layout2.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_3_1));
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
-                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky0 < 10 ? "0" : "") + Ky0 + "/" + Nam0) && !entityParent.getLstHoaDon().get(i).isGiaiTrach())
+                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky0 < 10 ? "0" : "") + Ky0 + "/" + Nam0) && !entityParent.getLstHoaDon().get(i).isGiaiTrach()) {
                         layout0.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-                    else
+                        break;
+                    } else
                         layout0.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_1_1));
-                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky1 < 10 ? "0" : "") + Ky1 + "/" + Nam1) && !entityParent.getLstHoaDon().get(i).isGiaiTrach())
+                }
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky1 < 10 ? "0" : "") + Ky1 + "/" + Nam1) && !entityParent.getLstHoaDon().get(i).isGiaiTrach()) {
                         layout1.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-                    else
+                        break;
+                    } else
                         layout1.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_2_1));
-                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky2 < 10 ? "0" : "") + Ky2 + "/" + Nam2) && !entityParent.getLstHoaDon().get(i).isGiaiTrach())
+                }
+                for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
+                    if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky2 < 10 ? "0" : "") + Ky2 + "/" + Nam2) && !entityParent.getLstHoaDon().get(i).isGiaiTrach()) {
                         layout2.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-                    else
+                        break;
+                    } else
                         layout2.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_3_1));
                 }
                 tinhTieuThu_CanhBaoMau();
