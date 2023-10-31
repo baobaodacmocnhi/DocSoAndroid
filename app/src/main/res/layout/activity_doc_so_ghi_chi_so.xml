@@ -49,7 +49,7 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView12"
@@ -76,7 +76,7 @@
                 android:ems="10"
                 android:focusable="false"
                 android:inputType="textPersonName"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/chkChuaGuiThongBao"
                 app:layout_constraintStart_toEndOf="@+id/textView16"
@@ -100,7 +100,7 @@
                 android:layout_marginStart="8dp"
                 android:ems="6"
                 android:textColor="@color/colorMLT"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toTopOf="parent"
@@ -125,7 +125,7 @@
                 android:autofillHints=""
                 android:ems="6"
                 android:textColor="@color/colorMLT"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView"
                 app:layout_constraintTop_toBottomOf="@+id/txtMLT"
@@ -149,7 +149,7 @@
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="6"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView11"
@@ -174,7 +174,7 @@
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
@@ -200,7 +200,7 @@
                 android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/txtHoTen"
@@ -227,7 +227,7 @@
                 android:autofillHints=""
                 android:ems="10"
                 android:textColor="@color/colorMLT"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView6"
@@ -251,7 +251,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ems="4"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView7"
                 app:layout_constraintTop_toBottomOf="@+id/txtViTri"
@@ -273,7 +273,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:ems="1"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toEndOf="@+id/textView8"
                 app:layout_constraintTop_toTopOf="@+id/txtHieu"
@@ -297,7 +297,7 @@
                 android:layout_marginEnd="8dp"
                 android:ems="5"
                 android:textColor="@color/colorMLT"
-                android:textSize="20sp"
+                android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView9"
@@ -424,21 +424,21 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="Code"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="Chỉ số"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_vertical"
                         android:text="Tiêu thụ"
-                        android:textSize="20sp" />
+                        android:textSize="18sp" />
 
                 </LinearLayout>
 
@@ -466,7 +466,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -482,7 +482,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -498,7 +498,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                     <!--ky hien tai - 2-->
@@ -518,7 +518,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -534,7 +534,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -550,7 +550,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                     <!--ky hien tai - 1-->
@@ -570,7 +570,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -586,7 +586,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -602,7 +602,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
 
@@ -623,7 +623,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -639,7 +639,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
 
                         <View
@@ -655,7 +655,7 @@
                             android:layout_weight="1"
                             android:gravity="center_horizontal|center_vertical"
                             android:textAppearance="?android:attr/textAppearanceMedium"
-                            android:textSize="20sp"
+                            android:textSize="18sp"
                             android:textStyle="bold" />
                     </LinearLayout>
                 </LinearLayout>
@@ -730,8 +730,8 @@
             <!--                app:layout_constraintTop_toBottomOf="@+id/edtChiSo" />-->
             <ImageView
                 android:id="@+id/imgThumb"
-                android:layout_width="200dp"
-                android:layout_height="200dp"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
                 android:layout_marginTop="8dp"
                 android:layout_marginEnd="8dp"
                 android:src="@android:drawable/ic_menu_gallery"
@@ -794,6 +794,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:autofillHints=""
                 android:ems="10"
                 android:focusable="false"
@@ -803,7 +804,8 @@
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/textView45"
-                app:layout_constraintTop_toBottomOf="@+id/txtGhiChu" />
+                app:layout_constraintTop_toBottomOf="@+id/txtGhiChu"
+                tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </ScrollView>

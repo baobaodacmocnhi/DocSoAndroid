@@ -742,6 +742,9 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         try {
             if (entityParent != null) {
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_0_1));
+                layout0.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_1_1));
+                layout1.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_2_1));
+                layout2.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_3_1));
                 txtMLT.setText(entityParent.getMLT());
                 if (entityParent.isThayDK())
                     txtDanhBo.setTextColor(getResources().getColor(R.color.colorDanhBo));
@@ -818,30 +821,30 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                         Ky2 = Ky - 3;
                         break;
                 }
-                layout0.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_1_1));
-                layout1.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_2_1));
-                layout2.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_3_1));
+                boolean flag = false;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                     if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky0 < 10 ? "0" : "") + Ky0 + "/" + Nam0) && !entityParent.getLstHoaDon().get(i).isGiaiTrach()) {
-                        layout0.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-                        break;
-                    } else
-                        layout0.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_1_1));
+                        flag = true;
+                    }
                 }
+                if (flag)
+                    layout0.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
+                flag = false;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                     if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky1 < 10 ? "0" : "") + Ky1 + "/" + Nam1) && !entityParent.getLstHoaDon().get(i).isGiaiTrach()) {
-                        layout1.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-                        break;
-                    } else
-                        layout1.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_2_1));
+                        flag = true;
+                    }
                 }
+                if (flag)
+                    layout1.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
+                flag = false;
                 for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                     if (entityParent.getLstHoaDon().get(i).getKy().equals((Ky2 < 10 ? "0" : "") + Ky2 + "/" + Nam2) && !entityParent.getLstHoaDon().get(i).isGiaiTrach()) {
-                        layout2.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
-                        break;
-                    } else
-                        layout2.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_3_1));
+                        flag = true;
+                    }
                 }
+                if (flag)
+                    layout2.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
                 tinhTieuThu_CanhBaoMau();
                 if (!entityParent.getCodeMoi().equals("") && !entityParent.getChiSoMoi().equals("")) {
                     selectValue(entityParent.getCodeMoi());
@@ -1000,14 +1003,14 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
         if (!txtTieuThuMoi.getText().toString().equals("")) {
             if (Integer.parseInt(txtTieuThuMoi.getText().toString()) < 0) {
                 _alert = "Tiêu Thụ âm = " + txtTieuThuMoi.getText().toString();
-                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
+                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
             } else if (Integer.parseInt(txtTieuThuMoi.getText().toString()) == 0) {
                 _alert = "Tiêu Thụ = " + txtTieuThuMoi.getText().toString();
-                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
+                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
             } else if (Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.3)
                     || Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.3) {
                 _alert = "Tiêu Thụ bất thường = " + txtTieuThuMoi.getText().toString();
-                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorDanhBo));
+                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
             } else {
                 _alert = "";
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_0_1));
