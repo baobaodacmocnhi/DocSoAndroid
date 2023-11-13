@@ -466,7 +466,7 @@ public class ServiceThermalPrinter extends Service {
                         || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
                     stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
                 }
-//                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ").append('\n')
+                        stringBuilder.append("Khách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!").append('\n');
                 stringBuilder.append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
@@ -593,7 +593,7 @@ public class ServiceThermalPrinter extends Service {
                         || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
                     stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
                 }
-//                        .append("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ").append('\n')
+                stringBuilder.append("Khách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!").append('\n');
                 stringBuilder.append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
@@ -994,12 +994,19 @@ public class ServiceThermalPrinter extends Service {
                     y = handlingYMoreThan450(y, 10);
                     stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
                 }
-//                y = handlingYMoreThan450(y, 25);
-//                stringBuilder.append(printLine("TỪ THÁNG 01/2023 SẼ ĐIỀU CHỈNH", 1, y, 0, 1, 1));
-//                y = handlingYMoreThan450(y, 25);
-//                stringBuilder.append(printLine("NGÀY ĐỌC SỐ TRÊN ĐỊA BÀN", 1, y, 0, 1, 1));
-//                y = handlingYMoreThan450(y, 25);
-//                stringBuilder.append(printLine("QUẬN TÂN BÌNH VÀ QUẬN TÂN PHÚ", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("Khách hàng vui lòng liên hệ", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("Công ty đăng ký mã định danh để", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("được cấp định mức nước. Trường", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("hợp không liên hệ Công ty sẽ", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("điều chỉnh định mức = 0 vào", 1, y, 0, 1, 1));
+                y = handlingYMoreThan450(y, 25);
+                stringBuilder.append(printLine("kỳ hóa đơn gần nhất. Trân trọng!", 1, y, 0, 1, 1));
+
                 y = handlingYMoreThan450(y, 100);
                 stringBuilder.append(printLine(".", 1, y, 0, 1, 1));
                 stringBuilder.append("}\n");
