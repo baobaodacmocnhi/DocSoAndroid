@@ -466,7 +466,7 @@ public class ServiceThermalPrinter extends Service {
                         || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
                     stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
                 }
-                        stringBuilder.append("Khách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!").append('\n');
+                stringBuilder.append(breakLine("\nKhách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!", charWidth)).append('\n');
                 stringBuilder.append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
@@ -593,7 +593,7 @@ public class ServiceThermalPrinter extends Service {
                         || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
                     stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
                 }
-                stringBuilder.append("Khách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!").append('\n');
+                stringBuilder.append(breakLine("\nKhách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!", charWidth)).append('\n');
                 stringBuilder.append("\n\n");
                 if (charWidth == 31)
                     stringBuilder.append("\n\n");
@@ -994,7 +994,7 @@ public class ServiceThermalPrinter extends Service {
                     y = handlingYMoreThan450(y, 10);
                     stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
                 }
-                y = handlingYMoreThan450(y, 25);
+                y = handlingYMoreThan450(y, 30);
                 stringBuilder.append(printLine("Khách hàng vui lòng liên hệ", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("Công ty đăng ký mã định danh để", 1, y, 0, 1, 1));
