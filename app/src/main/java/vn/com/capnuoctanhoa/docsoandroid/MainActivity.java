@@ -153,7 +153,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        if (CLocal.checkNetworkAvailable(MainActivity.this) == true) {
+        if (CLocal.checkNetworkGood(MainActivity.this) == true) {
             try {
                 Intent intent = new Intent(this, ServiceAppKilled.class);
                 startService(intent);
