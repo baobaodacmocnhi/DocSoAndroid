@@ -75,27 +75,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        CLocal.map=new HashMap<>();
-        CLocal.map.put(1, 44);
-        CLocal.map.put(2, 44);
-        CLocal.map.put(3, 44);
-        CLocal.map.put(4, 44);
-        CLocal.map.put(5, 44);
-        CLocal.map.put(6, 44);
-        CLocal.map.put(7, 42);
-        CLocal.map.put(8, 42);
-        CLocal.map.put(9, 42);
-        CLocal.map.put(10, 42);
-        CLocal.map.put(11, 39);
-        CLocal.map.put(12, 38);
-        CLocal.map.put(13, 38);
-        CLocal.map.put(14, 38);
-        CLocal.map.put(15, 36);
-        CLocal.map.put(16, 35);
-        CLocal.map.put(17, 35);
-        CLocal.map.put(18, 34);
-        CLocal.map.put(19, 34);
-        CLocal.map.put(20, 31);
+//        CLocal.map=new HashMap<>();
+//        CLocal.map.put(1, 44);
+//        CLocal.map.put(2, 44);
+//        CLocal.map.put(3, 44);
+//        CLocal.map.put(4, 44);
+//        CLocal.map.put(5, 44);
+//        CLocal.map.put(6, 44);
+//        CLocal.map.put(7, 42);
+//        CLocal.map.put(8, 42);
+//        CLocal.map.put(9, 42);
+//        CLocal.map.put(10, 42);
+//        CLocal.map.put(11, 39);
+//        CLocal.map.put(12, 38);
+//        CLocal.map.put(13, 38);
+//        CLocal.map.put(14, 38);
+//        CLocal.map.put(15, 36);
+//        CLocal.map.put(16, 35);
+//        CLocal.map.put(17, 35);
+//        CLocal.map.put(18, 34);
+//        CLocal.map.put(19, 34);
+//        CLocal.map.put(20, 31);
         if (cMarshMallowPermission.checkAllPermissionForAPP()) {
 
         }
@@ -309,7 +309,9 @@ public class MainActivity extends AppCompatActivity {
     private void updateApp(String versionServer) {
         try {
             String versionDevice = packageInfo.versionName;
-            if (!versionServer.equals("") && !versionServer.equals("False") && !versionServer.equals("java.net.ConnectException: Connection refused") && !versionDevice.equals(versionServer)) {
+            if (!versionServer.equals("") && !versionServer.equals("False")
+                    && !versionServer.equals("java.net.ConnectException: Connection refused") && !versionServer.contains("Failed to connect to service.capnuoctanhoa.com.vn")
+                    && !versionDevice.equals(versionServer)) {
                 if (cMarshMallowPermission.checkPermissionForExternalStorage() == true) {
                     MyAsyncTaskDownload myAsyncTask = new MyAsyncTaskDownload();
                     myAsyncTask.execute("http://113.161.88.180:81/app/docso.apk");
