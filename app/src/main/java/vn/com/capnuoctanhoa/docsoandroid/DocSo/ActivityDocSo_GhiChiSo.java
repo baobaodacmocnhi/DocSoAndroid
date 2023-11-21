@@ -526,8 +526,7 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && (selectedCode.getCode().charAt(0) == '4' || (selectedCode.getCode().charAt(0) == '5' && !selectedCode.getCode().equals("5F"))))
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'N' && (selectedCode.getCode().charAt(0) == '4' || (selectedCode.getCode().charAt(0) == '5' && !selectedCode.getCode().equals("5N"))))
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == '4' && (selectedCode.getCode().equals("5F") || selectedCode.getCode().equals("5K") || selectedCode.getCode().equals("5N")))
-                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0() == "M0" && selectedCode.getCode().charAt(0) == '4')))
-                        {
+                                || (CLocal.listDocSoView.get(CLocal.STT).getCode0() == "M0" && selectedCode.getCode().charAt(0) == '4'))) {
                             CLocal.showToastMessage(ActivityDocSo_GhiChiSo.this, "Vào Code Sai");
                             return;
                         }
@@ -961,7 +960,8 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             txtChiSoMoi.setText(strChiSo);
             if (CLocal.lstTT02023.contains(txtCodeMoi.getText().toString())) {
                 txtTieuThuMoi.setText("0");
-                txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
+                if (strChiSo.equals("0"))
+                    txtChiSoMoi.setText(CLocal.listDocSoView.get(CLocal.STT).getChiSo0());
             } else if (CLocal.lstTBTT2023.contains(txtCodeMoi.getText().toString())) {
 //                if (CLocal.listDocSoView.get(CLocal.STT).getNam().equals("2023") && CLocal.listDocSoView.get(CLocal.STT).getKy().equals("01")
 //                        && !CLocal.listDocSoView.get(CLocal.STT).getTBTT().equals("0")) {
