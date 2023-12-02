@@ -520,7 +520,6 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
                             && !selectedCode.getCode().equals("66")
                             && !selectedCode.getCode().equals("K3")
                             && !edtChiSo.getText().toString().equals("")))) {
-                        char a = CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0);
                         if (!CLocal.listDocSoView.get(CLocal.STT).getCode0().equals("")
                                 && ((CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'K' && (selectedCode.getCode().charAt(0) == '4' || (selectedCode.getCode().charAt(0) == '5' && !selectedCode.getCode().equals("5K"))))
                                 || (CLocal.listDocSoView.get(CLocal.STT).getCode0().charAt(0) == 'F' && (selectedCode.getCode().charAt(0) == '4' || (selectedCode.getCode().charAt(0) == '5' && !selectedCode.getCode().equals("5F"))))

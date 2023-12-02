@@ -9,7 +9,6 @@ android {
     }
     signingConfigs {
         release {
-
             storeFile file('D:\\Projects\\DocSoAndroid\\docsoandroidkey.jks')
             storePassword 'TanHoa@2022'
             keyAlias 'release'
@@ -24,7 +23,7 @@ android {
         //noinspection ExpiringTargetSdkVersion
         targetSdkVersion 30
         versionCode 1
-        versionName "4.24"
+        versionName "4.25"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         signingConfig signingConfigs.release
     }
