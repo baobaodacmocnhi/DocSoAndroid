@@ -340,7 +340,8 @@ public class ServiceThermalPrinter extends Service {
                         printGhiChiSo_escpEasyPrint(entityParent);
                         break;
                     case "ER58":
-                        printGhiChiSo_escpPrint_ER58(entityParent);
+//                        printGhiChiSo_escpPrint_ER58(entityParent);
+                        printGhiChiSo_escpPrint(entityParent, 31);
                         break;
                 }
         } catch (Exception ex) {
