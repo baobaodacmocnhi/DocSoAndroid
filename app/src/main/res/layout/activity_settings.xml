@@ -166,7 +166,7 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:checked="true"
-            android:text="Honeywell 31" />
+            android:text="Honeywell 31 (ESC)" />
 
         <RadioButton
             android:id="@+id/radHoneywell45"
@@ -174,21 +174,21 @@
             android:layout_height="48dp"
             android:layout_weight="1"
             android:checked="false"
-            android:text="Honeywell 45" />
-
-        <RadioButton
-            android:id="@+id/radIntermec"
-            android:layout_width="wrap_content"
-            android:layout_height="48dp"
-            android:layout_weight="1"
-            android:text="Intermec" />
+            android:text="Honeywell 45 (ESC)" />
 
         <RadioButton
             android:id="@+id/radER58"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_weight="1"
-            android:text="ER-58" />
+            android:text="ER-58 (ESC)" />
+
+        <RadioButton
+            android:id="@+id/radIntermec"
+            android:layout_width="wrap_content"
+            android:layout_height="48dp"
+            android:layout_weight="1"
+            android:text="Intermec (EZ)" />
 
     </RadioGroup>
 

@@ -26,7 +26,7 @@ public class ActivitySettings extends AppCompatActivity {
     private ArrayAdapter<String> arrayBluetoothAdapter;
     private ListView lstView;
     private ThermalPrinter thermalPrinter;
-    private RadioButton radTrucTiep, radGianTiep, radIntermec, radHoneywell3l, radHoneywell45,radER58;
+    private RadioButton radTrucTiep, radGianTiep, radIntermec, radHoneywell3l, radHoneywell45, radER58;
     private RadioGroup radGroupSync, radGroupMethodPrinter;
 
     @Override
@@ -139,21 +139,18 @@ public class ActivitySettings extends AppCompatActivity {
                 switch (index) {
                     case 0: // first button
                         CLocal.MethodPrinter = "Honeywell31";
-                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
                         break;
                     case 1: // secondbutton
                         CLocal.MethodPrinter = "Honeywell45";
-                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
                         break;
                     case 2: // thirdbutton
-                        CLocal.MethodPrinter = "Intermec";
-                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
+                        CLocal.MethodPrinter = "ER58";
                         break;
                     case 3: // thirdbutton
-                        CLocal.MethodPrinter = "ER58";
-                        editor.putString("MethodPrinter", CLocal.MethodPrinter);
+                        CLocal.MethodPrinter = "Intermec";
                         break;
                 }
+                editor.putString("MethodPrinter", CLocal.MethodPrinter);
                 editor.commit();
             }
         });
