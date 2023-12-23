@@ -128,9 +128,9 @@ public class FragmentSoLieu extends Fragment {
                 JSONArray jsonArray = new JSONArray();
                 try {
                     if (radSanLuong.isChecked())
-                        jsonArray = new JSONArray(ws.getDS_SoLieu_SanLuong(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString()));
+                        jsonArray = new JSONArray(ws.getDS_SoLieu_SanLuong(CLocal.MaTo,spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString()));
                     else if (radHD0.isChecked())
-                        jsonArray = new JSONArray(ws.getDS_SoLieu_HD0(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString()));
+                        jsonArray = new JSONArray(ws.getDS_SoLieu_HD0(CLocal.MaTo,spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString()));
                 } catch (Exception ex) {
                     error = ex.getMessage();
                 }

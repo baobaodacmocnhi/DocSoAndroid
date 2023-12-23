@@ -234,6 +234,7 @@ public class MainActivity extends AppCompatActivity {
                         txtUser.setText("Xin chào\n" + CLocal.HoTen);
                         txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                         imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
+                        CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
                         if (CLocal.sharedPreferencesre.getBoolean("Admin", false)) {
                             CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
                             btnAdmin.setVisibility(View.VISIBLE);
@@ -247,7 +248,6 @@ public class MainActivity extends AppCompatActivity {
                         } else if (CLocal.sharedPreferencesre.getBoolean("ToTruong", false) && !CLocal.sharedPreferencesre.getString("jsonNhanVien", "").equals("")) {
                             CLocal.ToTruong = CLocal.sharedPreferencesre.getBoolean("ToTruong", false);
                             CLocal.jsonNhanVien = new JSONArray(CLocal.sharedPreferencesre.getString("jsonNhanVien", ""));
-                            CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
                             imgbtnQuanLy.setVisibility(View.VISIBLE);
                             txtQuanLy.setVisibility(View.VISIBLE);
                         }

@@ -154,8 +154,8 @@ public class ActivityDangNhap extends AppCompatActivity {
                             editor.putString("jsonGiaNuoc", ws.getDS_GiaNuoc());
                             editor.putString("jsonKhongTinhPBVMT", ws.getDS_KhongTinhPBVMT());
                             if (Boolean.parseBoolean(jsonObject.getString("Doi"))) {
-                                editor.putString("jsonTo", ws.getDSTo());
-                                editor.putString("jsonNhanVien", ws.getDS_May());
+                                editor.putString("jsonTo", ws.getDSTo(jsonObject.getString("MaTo")));
+                                editor.putString("jsonNhanVien", ws.getDS_May(jsonObject.getString("MaTo")));
                             } else if (Boolean.parseBoolean(jsonObject.getString("ToTruong"))) {
                                 editor.putString("jsonNhanVien", ws.getDS_May_To(jsonObject.getString("MaTo")));
                             }
