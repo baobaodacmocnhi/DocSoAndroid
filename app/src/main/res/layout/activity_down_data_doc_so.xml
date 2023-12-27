@@ -159,11 +159,10 @@
         android:id="@+id/textView3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
         android:layout_marginTop="16dp"
         android:text="Đợt"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/spnKy"
+        app:layout_constraintStart_toStartOf="@+id/textView23"
         app:layout_constraintTop_toTopOf="@+id/spnDot" />
 
     <Spinner
@@ -183,11 +182,11 @@
         android:layout_width="wrap_content"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:entries="@array/dot_array"
+        android:layout_marginTop="8dp"
         android:gravity="center"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView3"
-        app:layout_constraintTop_toTopOf="@+id/spnKy" />
+        app:layout_constraintTop_toBottomOf="@+id/spnKy" />
 
     <Button
         android:id="@+id/btnDownload"
@@ -195,10 +194,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="8dp"
         android:text="Tải Về"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/spnNam" />
+        app:layout_constraintTop_toBottomOf="@+id/spnDot" />
 
     <Button
         android:id="@+id/btnShowMess"

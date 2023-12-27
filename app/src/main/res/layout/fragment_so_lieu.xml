@@ -55,7 +55,6 @@
         android:layout_width="100dp"
         android:layout_height="48dp"
         android:layout_marginStart="8dp"
-        android:entries="@array/dot_array"
         android:gravity="center"
         android:textAlignment="center"
         app:layout_constraintStart_toEndOf="@+id/textView30"

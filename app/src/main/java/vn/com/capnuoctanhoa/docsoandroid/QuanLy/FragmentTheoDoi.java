@@ -73,6 +73,18 @@ public class FragmentTheoDoi extends Fragment {
             ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), android.R.layout.simple_spinner_item, spnName_Nam);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnNam.setAdapter(adapter);
+            //loaddata đợt
+            if (CLocal.MaTo.equals("1") || CLocal.MaTo.equals("2")) {
+                //tân bình
+                ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(getActivity(), R.array.dotTB_array, android.R.layout.simple_spinner_item);
+                adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnDot.setAdapter(adapterDot);
+            } else if (CLocal.MaTo.equals("3") || CLocal.MaTo.equals("4")) {
+                //tân phú
+                ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(getActivity(), R.array.dotTP_array, android.R.layout.simple_spinner_item);
+                adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                spnDot.setAdapter(adapterDot);
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
