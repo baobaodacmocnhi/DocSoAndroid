@@ -79,12 +79,12 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnNam.setAdapter(adapter);
             //loaddata đợt
-            if (CLocal.MaTo.equals("1") || CLocal.MaTo.equals("2")) {
+            if (CLocal.IDPhong.equals("1")) {
                 //tân bình
                 ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(this, R.array.dotTB_array, android.R.layout.simple_spinner_item);
                 adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnDot.setAdapter(adapterDot);
-            } else if (CLocal.MaTo.equals("3") || CLocal.MaTo.equals("4")) {
+            } else if (CLocal.IDPhong.equals("2")) {
                 //tân phú
                 ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(this, R.array.dotTP_array, android.R.layout.simple_spinner_item);
                 adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
@@ -428,11 +428,11 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 //                            enParent.setModifyDate(jsonObject.getString("ModifyDate"));
                         enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
 
-                        if(!jsonObject.getString("MLT").replace("null", "").equals("")) {
+                        if (!jsonObject.getString("MLT").replace("null", "").equals("")) {
                             String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
                             enParent.setMLT(strMLT);
                         }
-                        if(!jsonObject.getString("DanhBo").replace("null", "").equals("")) {
+                        if (!jsonObject.getString("DanhBo").replace("null", "").equals("")) {
                             String strDanhBo = new StringBuffer(jsonObject.getString("DanhBo").replace("null", "")).insert(7, " ").insert(4, " ").toString();
                             enParent.setDanhBo(strDanhBo);
                         }
@@ -518,8 +518,8 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                     editor.putString("jsonDocSo", new Gson().toJsonTree(CLocal.listDocSo).getAsJsonArray().toString());
                     editor.commit();
                     //ghi file
-                    CLocal.writeFile(CLocal.pathApp,"","");
-                    CLocal.writeFile(CLocal.pathAppDownload,"","");
+                    CLocal.writeFile(CLocal.pathApp, "", "");
+                    CLocal.writeFile(CLocal.pathAppDownload, "", "");
                     CLocal.writeFile(CLocal.pathAppPicture, "", "");
                     CLocal.writeFile(CLocal.pathAppDownload, spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString() + ".txt", CLocal.sharedPreferencesre.getString("jsonDocSo", ""));
                     CLocal.writeFile(CLocal.pathAppPicture + "/" + spnNam.getSelectedItem().toString() + "_" + spnKy.getSelectedItem().toString() + "_" + spnDot.getSelectedItem().toString(), "", "");

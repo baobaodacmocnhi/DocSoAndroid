@@ -234,8 +234,8 @@ public class MainActivity extends AppCompatActivity {
                         txtUser.setText("Xin chào\n" + CLocal.HoTen);
                         txtUser.setTextColor(getResources().getColor(R.color.colorLogin));
                         imgbtnDangNhap.setImageResource(R.mipmap.ic_login_foreground);
+                        CLocal.IDPhong = CLocal.sharedPreferencesre.getString("IDPhong", "");
                         CLocal.MaTo = CLocal.sharedPreferencesre.getString("MaTo", "");
-
                         if (CLocal.sharedPreferencesre.getBoolean("Admin", false)) {
                             CLocal.Admin = CLocal.sharedPreferencesre.getBoolean("Admin", false);
                             btnAdmin.setVisibility(View.VISIBLE);

@@ -106,7 +106,7 @@ public class CLocal {
     public static SimpleDateFormat DateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
     public static SimpleDateFormat DateFormatShort = new SimpleDateFormat("dd/MM/yyyy");
     public static JSONArray jsonDocSo, jsonMessage, jsonTo, jsonNhanVien, jsonNam, jsonCode, jsonViTriDHN, jsonKinhDoanh, jsonHoaDonTon, jsonPhieuChuyen, jsonGiaNuoc, jsonKhongTinhPBVMT;
-    public static String MaNV, HoTen, May, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
+    public static String MaNV, HoTen, May, IDPhong, MaTo, DienThoai, ThermalPrinter, MethodPrinter, IDMobile;
     public static boolean Admin, Doi, ToTruong, SyncTrucTiep, LocDaDoc = false;
     public static ArrayList<CEntityParent> listDocSo, listDocSoView;
     //    public static ArrayList<CEntityPhieuChuyen> listPhieuChuyenSync;
@@ -131,6 +131,7 @@ public class CLocal {
         editor.putString("MaNV", "");
         editor.putString("HoTen", "");
         editor.putString("May", "");
+        editor.putString("IDPhong", "");
         editor.putString("MaTo", "");
         editor.putString("DienThoai", "");
         editor.putString("jsonNam", "");
@@ -150,7 +151,7 @@ public class CLocal {
         editor.putBoolean("Login", false);
         editor.putLong("LoginDate", 0L);
         editor.commit();
-        MaNV = HoTen = May = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
+        MaNV = HoTen = May = IDPhong = MaTo = DienThoai = IDMobile = ThermalPrinter = MethodPrinter = "";
         Admin = Doi = ToTruong = false;
         SyncTrucTiep = true;
         jsonDocSo = jsonMessage = jsonTo = jsonNhanVien = jsonNam = jsonCode = jsonViTriDHN = jsonKinhDoanh = jsonHoaDonTon = jsonPhieuChuyen = jsonGiaNuoc = jsonKhongTinhPBVMT = null;

@@ -74,12 +74,12 @@ public class FragmentSoLieu extends Fragment {
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spnNam.setAdapter(adapter);
             //loaddata đợt
-            if (CLocal.MaTo.equals("1") || CLocal.MaTo.equals("2")) {
+            if (CLocal.IDPhong.equals("1")) {
                 //tân bình
                 ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(getActivity(), R.array.dotTB_array, android.R.layout.simple_spinner_item);
                 adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                 spnDot.setAdapter(adapterDot);
-            } else if (CLocal.MaTo.equals("3") || CLocal.MaTo.equals("4")) {
+            } else if (CLocal.IDPhong.equals("2")) {
                 //tân phú
                 ArrayAdapter<CharSequence> adapterDot = ArrayAdapter.createFromResource(getActivity(), R.array.dotTP_array, android.R.layout.simple_spinner_item);
                 adapterDot.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
