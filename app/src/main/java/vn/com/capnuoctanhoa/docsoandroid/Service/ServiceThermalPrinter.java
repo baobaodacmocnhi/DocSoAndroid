@@ -453,7 +453,10 @@ public class ServiceThermalPrinter extends Service {
                 String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", "");
                 String qrData;
                 if (charWidth == 31)
-                    qrData = woosimQrPrint(link, 5);
+                    if (CLocal.MethodPrinter.equals("ER58"))
+                        qrData = mdp31dQrPrint(link, 5);
+                    else
+                        qrData = woosimQrPrint(link, 5);
                 else
                     qrData = mdp31dQrPrint(link, 5);
                 stringBuilder.append(CMD_ALIGN_CENTER)
