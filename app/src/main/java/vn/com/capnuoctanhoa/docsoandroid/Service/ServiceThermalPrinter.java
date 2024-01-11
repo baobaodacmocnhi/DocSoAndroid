@@ -796,13 +796,11 @@ public class ServiceThermalPrinter extends Service {
                 if (diaChi != null && !diaChi.trim().isEmpty()) {
                     diaChiLines = breakLine("Địa chỉ:" + diaChi, 33).split("\n");
                 }
-
                 outputStream.write(mmChuoi);
                 int y = 5;
                 stringBuilder = new StringBuilder();
                 stringBuilder.append("EZ\n");
                 stringBuilder.append("{PRINT:\n");
-
                 stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, y, 25, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, y, 40, 1, 1));
@@ -852,7 +850,7 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("SĐT: %s (Zalo)", 3, y, 0, 2, 1, CLocal.DienThoai));
 //                    y = handlingYMoreThan450(y, 50);
 //                    stringBuilder.append(printLine("Hoặc tổng đài 19006489", 3, y, 0, 1, 1));
-                    y = handlingYMoreThan450(y, 25);
+                    y = handlingYMoreThan450(y, 50);
                     stringBuilder.append(printLine("Trong vòng 2 ngày kể từ ngày nhận", 1, y, 0, 1, 1));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("phiếu báo, nếu quý khách hàng", 1, y, 0, 1, 1));
@@ -986,7 +984,7 @@ public class ServiceThermalPrinter extends Service {
                 stringBuilder.append(printLine("Quét QR để xem chi tiết lịch sử sử", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("dụng nước:", 1, y, 0, 1, 1));
-                y = handlingYMoreThan450(y, 50);
+                y = handlingYMoreThan450(y, 40);
                 stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", ""), y, 40));
                 y = handlingYMoreThan450(y, 225);
                 stringBuilder.append(printLine("XIN CẢM ƠN", 3, y, 130, 1, 1));
@@ -1010,7 +1008,6 @@ public class ServiceThermalPrinter extends Service {
                 stringBuilder.append(printLine("điều chỉnh định mức = 0 vào", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("kỳ hóa đơn gần nhất. Trân trọng!", 1, y, 0, 1, 1));
-
                 y = handlingYMoreThan450(y, 100);
                 stringBuilder.append(printLine(".", 1, y, 0, 1, 1));
                 stringBuilder.append("}\n");
@@ -1061,7 +1058,7 @@ public class ServiceThermalPrinter extends Service {
     private String easyPrintQr(String data, int y, int x) {
         //@620,120:QRCOD,ARG16,ARG22|HONEYWELL|
         //@620,120:QRCOD,HIGH6,WIDE6,ARG22|HONEYWELL|
-        return String.format(Locale.US, "@%d,%d:QRCOD,HIGH6,WIDE6,ARG22|%s|\n", y, x, data);
+        return String.format(Locale.US, "@%d,%d:QRCOD,HIGH5,WIDE5,ARG22|%s|\n", y, x, data);
     }
 
 
