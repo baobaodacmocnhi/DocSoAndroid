@@ -472,8 +472,8 @@ public class ServiceThermalPrinter extends Service {
                 }
                 stringBuilder.append(breakLine("\nKhách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!", charWidth)).append('\n');
                 stringBuilder.append("\n\n");
-                if (charWidth == 31)
-                    stringBuilder.append("\n\n");
+//                if (charWidth == 31)
+//                    stringBuilder.append("\n\n");
                 outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
             }
