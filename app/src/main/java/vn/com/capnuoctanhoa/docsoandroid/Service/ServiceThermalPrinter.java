@@ -42,30 +42,23 @@ public class ServiceThermalPrinter extends Service {
     }
 
     private BluetoothAdapter mBluetoothAdapter;
-    //    public static String B_DEVICE = "MY_DEVICE";
     public static final String B_UUID = "00001101-0000-1000-8000-00805f9b34fb";
-
     public static final int STATE_NONE = 0;
-    public static final int STATE_LISTEN = 1;
+    //    public static final int STATE_LISTEN = 1;
     public static final int STATE_CONNECTING = 2;
     public static final int STATE_CONNECTED = 3;
-
     private ConnectBtThread mConnectThread;
     private ConnectedBtThread mConnectedThread;
-
     private static Handler mHandler = null;
     public static int mState = STATE_NONE;
-    public static String deviceName;
     public static BluetoothSocket mSocket = null;
     public static BluetoothDevice mDevice = null;
-    public Vector<Byte> packData = new Vector<>(2048);
+    //    public Vector<Byte> packData = new Vector<>(2048);
     private final IBinder mBinder = new LocalBinder();
     public InputStream inS;
     public static OutputStream outputStream;
 
-
-//IBinder mIBinder = new LocalBinder();
-
+    //IBinder mIBinder = new LocalBinder();
     @Nullable
     @Override
     public IBinder onBind(Intent intent) {
@@ -319,7 +312,6 @@ public class ServiceThermalPrinter extends Service {
     }
 
     /////////////////////////////////////////////////////////////
-
     private final byte[] mmChuoi = {0x1b};
     private static final byte[] ESC = {0x1B};
     private static int toadoY = 0;
@@ -371,13 +363,11 @@ public class ServiceThermalPrinter extends Service {
 //                cal.setTime(formatter_old.parse(mHoaDon.getDenNgay()));
                 String codeMoi = entityParent.getCodeMoi() == null ? "" : entityParent.getCodeMoi().trim();
                 String lyDo = codeMoi.equals("F1") ? "Nhà đóng cửa" : codeMoi.equals("F2") ? "Kẹt khóa" : codeMoi.equals("F3") ? "Chất đồ" : "";
-
 //                int mNam = Integer.parseInt(mHoaDon.getDocSoID().substring(0,4));
 //                int mKy = Integer.parseInt(mHoaDon.getDocSoID().substring(4,6));
 //                boolean namKy = mNam * 12 + mKy - 1 >= 2020 * 12 + 11;
 //                boolean namKy2 = mNam * 12 + mKy - 1 >= 2021 * 12;
 //                boolean namKy3 = mNam * 12 + mKy - 1 <= 2021 * 12 + 2;
-
                 stringBuilder = new StringBuilder();
                 stringBuilder.append(CMD_RESET)
                         .append(CMD_RESET_STYLE)
@@ -387,10 +377,8 @@ public class ServiceThermalPrinter extends Service {
                         .append(escpStyle("TỔNG ĐÀI: 19006489\n", 0b11000));
                 if (codeMoi.startsWith("F")) {
                     stringBuilder.append(escpStyle("PHIẾU BÁO TRỞ NGẠI ĐỌC SỐ\n", 0b11000))
-                            .append(CMD_ALIGN_LEFT)
-                            .append("THÁNG: ")
-                            .append(CMD_ALIGN_RIGHT)
-                            .append(entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
+                            .append(CMD_ALIGN_CENTER)
+                            .append("THÁNG: " + entityParent.getKy() + "/" + entityParent.getNam()).append('\n')
                             .append(CMD_ALIGN_LEFT)
                             .append("Từ ngày: ").append(entityParent.getTuNgay()).append(" - ").append(entityParent.getDenNgay()).append('\n')
                             .append("Danh bộ (Mã KH): ").append(escpStyle(entityParent.getDanhBo(), 0b11000)).append('\n')
@@ -401,10 +389,8 @@ public class ServiceThermalPrinter extends Service {
                             .append("Định mức: ").append(entityParent.getDinhMuc()).append('\n')
                             .append("Lý do trở ngại: ").append(lyDo).append('\n')
                             .append(line)
-                            .append(breakLine("Quý khách vui lòng báo chỉ số nước cho nhân viên đọc số: " + CLocal.HoTen, charWidth)).append('\n')
-                            .append(escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo). ", 0b11000))
-                            .append("Hoặc tổng đài 19006489.\n")
-                            .append(breakLine("Trong vòng 2 ngày kể từ ngày nhận phiếu báo, nếu quý khách hàng không thông báo công ty sẽ tạm tính tiêu thụ bình quân 3 tháng gần nhất .", charWidth)).append('\n');
+                            .append(breakLine("Quý khách vui lòng báo chỉ số nước cho nhân viên đọc số: " + CLocal.HoTen + " " + escpStyle("SĐT: " + CLocal.DienThoai + " (Zalo)", 0b11000) + ". Hoặc tổng đài 19006489.", charWidth)).append('\n')
+                            .append(breakLine("Trong vòng 2 ngày kể từ ngày nhận phiếu báo, nếu quý khách hàng không thông báo công ty sẽ tạm tính tiêu thụ bình quân 3 tháng gần nhất.", charWidth)).append('\n');
                 } else {
                     String lb = charWidth == 31 ? "\n" : " ";
                     stringBuilder.append(escpStyle("PHIẾU BÁO CHỈ SỐ" + lb + "VÀ TIỀN NƯỚC DỰ KIẾN\n", 0b11000))
@@ -470,7 +456,7 @@ public class ServiceThermalPrinter extends Service {
                         || (Integer.parseInt((String) DateFormat.format("yyyy", date)) == Integer.parseInt(entityParent.getNam()) && Integer.parseInt((String) DateFormat.format("MM", date)) <= Integer.parseInt(entityParent.getKy()))) {
                     stringBuilder.append("Được in vào: ").append(CLocal.getTime()).append("\n");
                 }
-                stringBuilder.append(breakLine("\nKhách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!", charWidth)).append('\n');
+//                stringBuilder.append(breakLine("Khách hàng vui lòng liên hệ Công ty đăng ký mã định danh để được cấp định mức nước. Trường hợp không liên hệ Công ty sẽ điều chỉnh định mức = 0 vào kỳ hóa đơn gần nhất. Trân trọng!", charWidth)).append('\n');
                 stringBuilder.append("\n\n");
 //                if (charWidth == 31)
 //                    stringBuilder.append("\n\n");
@@ -771,7 +757,6 @@ public class ServiceThermalPrinter extends Service {
     }
 
     ///////////////////////////////////
-
     @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public void printGhiChiSo_escpEasyPrint(CEntityParent entityParent) throws IOException {
         try {
@@ -902,40 +887,32 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine("Định mức:", 1, y, 150, 1, 1)).append(printLine("%s", 3, y, 260, 1, 1, entityParent.getDinhMuc()));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Chỉ số cũ:", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s", 3, y, 0, 1, 1,
-                            padLeft(entityParent.getChiSo0In(), 31)));
+                    stringBuilder.append(printLine("%s", 3, y, 0, 1, 1, padLeft(entityParent.getChiSo0In(), 31)));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Chỉ số mới:", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s", 3, y, 0, 1, 1,
-                            padLeft(entityParent.getChiSoMoi(), 31)));
+                    stringBuilder.append(printLine("%s", 3, y, 0, 1, 1, padLeft(entityParent.getChiSoMoi(), 31)));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Tiêu thụ:", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s m3", 3, y, 0, 1, 1,
-                            padLeft(entityParent.getTieuThuMoi(), 28)));
+                    stringBuilder.append(printLine("%s m3", 3, y, 0, 1, 1, padLeft(entityParent.getTieuThuMoi(), 28)));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Tiền nước:", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1,
-                            padLeft(numberVN(Double.parseDouble(entityParent.getTienNuoc())), 30)));
+                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getTienNuoc())), 30)));
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("Thuế VAT:", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1,
-                            padLeft(numberVN(Double.parseDouble(entityParent.getThueGTGT())), 30)));
+                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getThueGTGT())), 30)));
                     y = handlingYMoreThan450(y, 25);
                     if (Double.parseDouble(entityParent.getPhiBVMT()) > 0) {
                         stringBuilder.append(printLine("Tiền DV thoát nước:", 1, y, 0, 1, 1));
-                        stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1,
-                                padLeft(numberVN(Double.parseDouble(entityParent.getPhiBVMT())), 30)));
+                        stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getPhiBVMT())), 30)));
                     }
                     y = handlingYMoreThan450(y, 25);
                     if (Double.parseDouble(entityParent.getPhiBVMT_Thue()) > 0) {
                         stringBuilder.append(printLine("VAT DV thoát nước:", 1, y, 0, 1, 1));
-                        stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1,
-                                padLeft(numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue())), 30)));
+                        stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue())), 30)));
                     }
                     y = handlingYMoreThan450(y, 25);
                     stringBuilder.append(printLine("TỔNG CỘNG:", 3, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1,
-                            padLeft(numberVN(Double.parseDouble(entityParent.getTongCong())), 30)));
+                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getTongCong())), 30)));
                     int TongCong = Integer.parseInt(entityParent.getTongCong());
 //                    if (entityParent.getLstHoaDon().size() > 0) {
 //                        stringBuilder.append(printLine("Nợ cũ:", 1, y, 0, 1, 1));
@@ -996,20 +973,20 @@ public class ServiceThermalPrinter extends Service {
                     y = handlingYMoreThan450(y, 10);
                     stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
                 }
-                y = handlingYMoreThan450(y, 30);
-                stringBuilder.append(printLine("Khách hàng vui lòng liên hệ", 1, y, 0, 1, 1));
-                y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("Công ty đăng ký mã định danh để", 1, y, 0, 1, 1));
-                y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("được cấp định mức nước. Trường", 1, y, 0, 1, 1));
-                y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("hợp không liên hệ Công ty sẽ", 1, y, 0, 1, 1));
-                y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("điều chỉnh định mức = 0 vào", 1, y, 0, 1, 1));
-                y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("kỳ hóa đơn gần nhất. Trân trọng!", 1, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 30);
+//                stringBuilder.append(printLine("Khách hàng vui lòng liên hệ", 1, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 25);
+//                stringBuilder.append(printLine("Công ty đăng ký mã định danh để", 1, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 25);
+//                stringBuilder.append(printLine("được cấp định mức nước. Trường", 1, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 25);
+//                stringBuilder.append(printLine("hợp không liên hệ Công ty sẽ", 1, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 25);
+//                stringBuilder.append(printLine("điều chỉnh định mức = 0 vào", 1, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 25);
+//                stringBuilder.append(printLine("kỳ hóa đơn gần nhất. Trân trọng!", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 100);
-                stringBuilder.append(printLine(".", 1, y, 0, 1, 1));
+                stringBuilder.append(printLine(" ", 1, y, 0, 1, 1));
                 stringBuilder.append("}\n");
                 outputStream.write(stringBuilder.toString().getBytes(StandardCharsets.UTF_8));
                 outputStream.flush();
