@@ -17,7 +17,8 @@ import java.io.IOException;
 
 public class CWebservice {
     private final String WSDL_TARGET_NAMESPACE = "http://tempuri.org/";
-    private final String SOAP_ADDRESS = "http://service.capnuoctanhoa.com.vn:81/wsDHN.asmx";
+   private final String SOAP_ADDRESS = "http://service.capnuoctanhoa.com.vn:81/wsDHN.asmx";
+//    private final String SOAP_ADDRESS = "http://113.161.88.180:81/wsDHN.asmx";
 
     @Nullable
     private String excute(SoapObject request, String SOAP_ACTION) throws XmlPullParserException, IOException {
