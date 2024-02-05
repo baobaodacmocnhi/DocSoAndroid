@@ -362,6 +362,7 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
             try {
                 CLocal.jsonDocSo = new JSONArray();
                 CLocal.jsonHoaDonTon = new JSONArray();
+                JSONArray jsonCuaHangThuHo = new JSONArray();
                 if (!CLocal.Doi && !CLocal.ToTruong)
                     selectedMaNV = CLocal.May;
                 if (selectedMaNV.equals("0")) {
@@ -384,6 +385,13 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                         return new String[]{"false", "Chưa đến ngày đọc số"};
                     CLocal.jsonDocSo = new JSONArray(ws.getDS_DocSo(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
                     CLocal.jsonHoaDonTon = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
+                    String result = ws.getDS_CuaHangThuHo(spnDot.getSelectedItem().toString(), selectedMaNV);
+                    JSONObject jsonObject = null;
+                    if (!result.equals(""))
+                        jsonObject = new JSONObject(result);
+                    if (jsonObject != null && Boolean.parseBoolean(jsonObject.getString("success").replace("null", ""))) {
+                        jsonCuaHangThuHo = new JSONArray(jsonObject.getString("data").replace("null", ""));
+                    }
                 }
 //                if (selectedMaNV.equals("0")) {
 //                    for (int i = 1; i < spnID_NhanVien.size(); i++) {
@@ -414,7 +422,6 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 //                        }
 //                    CLocal.jsonHoaDonTon = new JSONArray(ws.getDS_HoaDonTon(spnNam.getSelectedItem().toString(), spnKy.getSelectedItem().toString(), spnDot.getSelectedItem().toString(), selectedMaNV));
 //                }
-
                 if (CLocal.jsonDocSo != null) {
                     //khởi tạo ArrayList CEntityParent
                     CLocal.listDocSo = new ArrayList<CEntityParent>();
@@ -427,7 +434,6 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
 //                        else
 //                            enParent.setModifyDate(jsonObject.getString("ModifyDate"));
                         enParent.setID(jsonObject.getString("DocSoID").replace("null", ""));
-
                         if (!jsonObject.getString("MLT").replace("null", "").equals("")) {
                             String strMLT = new StringBuffer(jsonObject.getString("MLT").replace("null", "")).insert(4, " ").insert(2, " ").toString();
                             enParent.setMLT(strMLT);
@@ -511,6 +517,13 @@ public class ActivityDownDataDocSo extends AppCompatActivity {
                                     entityChild.setTongCong(jsonObjectChild.getString("TongCong").replace("null", ""));
                                     enParent.getLstHoaDon().add(entityChild);
                                 }
+                            }
+                        if (jsonCuaHangThuHo != null && jsonCuaHangThuHo.length() > 0)
+                            for (int k = 0; k < jsonCuaHangThuHo.length(); k++) {
+                                JSONObject jsonObjectChild = jsonCuaHangThuHo.getJSONObject(k);
+                                CEntityChild entityChild = new CEntityChild();
+                                entityChild.setMaHD(jsonObjectChild.getString("CuaHangThuHo").replace("null", ""));
+                                enParent.getLstCuaHangThuHo().add(entityChild);
                             }
                         CLocal.listDocSo.add(enParent);
                     }

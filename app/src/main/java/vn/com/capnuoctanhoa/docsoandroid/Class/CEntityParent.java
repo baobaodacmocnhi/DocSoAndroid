@@ -15,6 +15,7 @@ public class CEntityParent {
     private String Co;
     private String SoThan;
     private ArrayList<CEntityChild> lstHoaDon;
+    private ArrayList<CEntityChild> lstCuaHangThuHo;
     private String CreateDate;
     private String GiaBieu;
     private String DinhMuc;
@@ -80,16 +81,7 @@ public class CEntityParent {
     private String Latitude;
     private String Longitude;
     private boolean ChuaGuiThongBao;
-
     private boolean ThayDK;
-
-    public boolean isThayDK() {
-        return ThayDK;
-    }
-
-    public void setThayDK(boolean thayDK) {
-        ThayDK = thayDK;
-    }
 
     public CEntityParent() {
         this.ID = "";
@@ -104,6 +96,7 @@ public class CEntityParent {
         this.Co = "";
         this.SoThan = "";
         this.lstHoaDon = new ArrayList<CEntityChild>();
+        this.lstCuaHangThuHo = new ArrayList<CEntityChild>();
         this.CreateDate = "";
         this.GiaBieu = "";
         this.DinhMuc = "";
@@ -265,6 +258,14 @@ public class CEntityParent {
 
     public void setLstHoaDon(ArrayList<CEntityChild> lstHoaDon) {
         this.lstHoaDon = lstHoaDon;
+    }
+
+    public ArrayList<CEntityChild> getLstCuaHangThuHo() {
+        return lstCuaHangThuHo;
+    }
+
+    public void setLstCuaHangThuHo(ArrayList<CEntityChild> lstCuaHangThuHo) {
+        this.lstCuaHangThuHo = lstCuaHangThuHo;
     }
 
     public String getCreateDate() {
@@ -787,6 +788,13 @@ public class CEntityParent {
         ChuaGuiThongBao = chuaGuiThongBao;
     }
 
+    public boolean isThayDK() {
+        return ThayDK;
+    }
+
+    public void setThayDK(boolean thayDK) {
+        ThayDK = thayDK;
+    }
     public void setCEntityParent(CEntityParent entityParent) {
         try {
             this.ID = entityParent.getID();
@@ -801,6 +809,7 @@ public class CEntityParent {
             this.Co = entityParent.getCo();
             this.SoThan = entityParent.getSoThan();
             this.lstHoaDon = entityParent.getLstHoaDon();
+            this.lstCuaHangThuHo = entityParent.getLstCuaHangThuHo();
             this.CreateDate = entityParent.getCreateDate();
             this.GiaBieu = entityParent.getGiaBieu();
             this.DinhMuc = entityParent.getDinhMuc();
