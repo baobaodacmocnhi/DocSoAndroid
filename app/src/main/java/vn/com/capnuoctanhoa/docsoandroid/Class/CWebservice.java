@@ -655,6 +655,25 @@ public class CWebservice {
         return excute(request, SOAP_ACTION);
     }
 
+    public String getDS_CuaHangThuHo(String Dot, String May) throws XmlPullParserException, IOException {
+        String SOAP_ACTION = "http://tempuri.org/getDS_CuaHangThuHo";
+        String OPERATION_NAME = "getDS_CuaHangThuHo";
+        SoapObject request = new SoapObject(WSDL_TARGET_NAMESPACE, OPERATION_NAME);
+
+        PropertyInfo pi = new PropertyInfo();
+        pi.setName("Dot");
+        pi.setValue(Dot);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        pi = new PropertyInfo();
+        pi.setName("May");
+        pi.setValue(May);
+        pi.setType(String.class);
+        request.addProperty(pi);
+
+        return excute(request, SOAP_ACTION);
+    }
     public String ghiChiSo(String ID, String Code, String ChiSo, String HinhDHN, String Dot, String MaNV, String TBTT,String Location) throws XmlPullParserException, IOException {
         String SOAP_ACTION = "http://tempuri.org/ghiChiSo";
         String OPERATION_NAME = "ghiChiSo";
