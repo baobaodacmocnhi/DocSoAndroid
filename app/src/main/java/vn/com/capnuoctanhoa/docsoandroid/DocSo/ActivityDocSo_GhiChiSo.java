@@ -1009,16 +1009,19 @@ public class ActivityDocSo_GhiChiSo extends AppCompatActivity {
             } else if (Integer.parseInt(txtTieuThuMoi.getText().toString()) == 0) {
                 _alert = "Tiêu Thụ = " + txtTieuThuMoi.getText().toString();
                 layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
-            } else if ((Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 50 && Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.5))
-                    ||(Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 1000 && Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.3))
-                    || (Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 50 && Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.5)
-                    || (Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 1000 && Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.3)) {
-                _alert = "Tiêu Thụ bất thường = " + txtTieuThuMoi.getText().toString();
-                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
-            } else {
-                _alert = "";
-                layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_0_1));
-            }
+            } else
+//                if ((Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 50 && Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.5))
+//                    ||(Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 1000 && Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.3))
+//                    || (Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 50 && Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.5)
+//                    || (Integer.parseInt(txtTieuThuMoi.getText().toString()) >= 1000 && Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.3))
+                if (Integer.parseInt(txtTieuThuMoi.getText().toString()) <= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * (1 - 0.3)
+                        || Integer.parseInt(txtTieuThuMoi.getText().toString()) >= Integer.parseInt(CLocal.listDocSoView.get(CLocal.STT).getTBTT()) * 1.3) {
+                    _alert = "Tiêu Thụ bất thường = " + txtTieuThuMoi.getText().toString();
+                    layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorLenhHuy));
+                } else {
+                    _alert = "";
+                    layoutMoi.setBackgroundColor(getResources().getColor(R.color.colorCSC_SL_0_1));
+                }
         }
     }
 

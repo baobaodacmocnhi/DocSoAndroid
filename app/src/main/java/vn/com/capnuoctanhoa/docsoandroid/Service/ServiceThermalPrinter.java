@@ -414,17 +414,18 @@ public class ServiceThermalPrinter extends Service {
                         stringBuilder.append(pad("Tiền DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT())), padChar, charWidth)).append('\n');
                     if (Double.parseDouble(entityParent.getPhiBVMT_Thue()) > 0)
                         stringBuilder.append(pad("VAT DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue())), padChar, charWidth)).append('\n');
-                    stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth) + "\n", 0b10000));
                     int TongCong = Integer.parseInt(entityParent.getTongCong());
                     if (entityParent.getLstHoaDon().size() > 0) {
-                        stringBuilder.append("Nợ cũ:").append('\n');
-                        stringBuilder.append("Vui lòng bỏ qua nếu đã thanh toán").append('\n');
+                        stringBuilder.append(escpStyle(pad("Tổng cộng:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth), 0b01000)).append('\n').append(line);
+                        stringBuilder.append(breakLine("Nợ cũ: (vui lòng bỏ qua nếu đã thanh toán)", charWidth)).append('\n');
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
                             stringBuilder.append("   Tháng " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong()))).append('\n');
                         }
+                        stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(TongCong), padChar, charWidth) + "\n", 0b10000));
+                    } else {
+                        stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth) + "\n", 0b10000));
                     }
-                    stringBuilder.append(escpStyle(pad("Số tiền cần thanh toán:", numberVN(Double.parseDouble(String.valueOf(TongCong))), padChar, charWidth) + "\n", 0b10000));
                     //doc tien
                     String docTien = ReadMoney(String.valueOf(TongCong));
                     String docTienLines = "";
@@ -789,24 +790,26 @@ public class ServiceThermalPrinter extends Service {
                         stringBuilder.append(printLine("VAT DV thoát nước:", 1, y, 0, 1, 1));
                         stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue())), 30)));
                     }
-                    y = handlingYMoreThan450(y, 25);
-                    stringBuilder.append(printLine("TỔNG CỘNG:", 3, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getTongCong())), 30)));
                     int TongCong = Integer.parseInt(entityParent.getTongCong());
                     if (entityParent.getLstHoaDon().size() > 0) {
-                        stringBuilder.append(printLine("Nợ cũ:", 1, y, 0, 1, 1));
                         y = handlingYMoreThan450(y, 25);
-                        stringBuilder.append(printLine("Vui lòng bỏ qua nếu đã thanh toán", 1, y, 0, 1, 1));
+                        stringBuilder.append(printLine("Tổng cộng:", 2, y, 0, 1, 1));
+                        stringBuilder.append(printLine("%s đ", 2, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getTongCong())), 30)));
                         y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("Nợ cũ: (vui lòng bỏ qua nếu đã thanh toán)", 1, y, 0, 1, 1));
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
-                            stringBuilder.append(printLine("   Tháng " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong())), 1, y, 0, 1, 1));
                             y = handlingYMoreThan450(y, 25);
+                            stringBuilder.append(printLine("   Tháng " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong())), 1, y, 0, 1, 1));
                         }
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("TỔNG CỘNG:", 3, y, 0, 1, 1));
+                        stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(String.valueOf(TongCong))), 30)));
+                    } else {
+                        y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("TỔNG CỘNG:", 3, y, 0, 1, 1));
+                        stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(entityParent.getTongCong())), 30)));
                     }
-                    stringBuilder.append(printLine("Số tiền cần thanh toán:", 1, y, 0, 1, 1));
-                    stringBuilder.append(printLine("%s đ", 3, y, 0, 1, 1, padLeft(numberVN(Double.parseDouble(String.valueOf(TongCong))), 30)));
-                    y = handlingYMoreThan450(y, 25);
                     //doc tien
                     String docTien = ReadMoney(String.valueOf(TongCong));
                     String[] docTienLines = null;
