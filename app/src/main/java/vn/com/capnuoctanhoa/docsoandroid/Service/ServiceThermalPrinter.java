@@ -669,9 +669,9 @@ public class ServiceThermalPrinter extends Service {
                 stringBuilder.append(printLine("CTY CP CẤP NƯỚC TÂN HÒA", 3, y, 25, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("95 PHẠM HỮU CHÍ, P12, Q5", 1, y, 40, 1, 1));
-                y = handlingYMoreThan450(y, 50);
-                stringBuilder.append(printLine("TỔNG ĐÀI: 19006489", 3, y, 40, 2, 1));
-                y = handlingYMoreThan450(y, 75);
+                y = handlingYMoreThan450(y, 35);
+                stringBuilder.append(printLine("TỔNG ĐÀI: 19006489", 3, y, 70, 2, 1));
+                y = handlingYMoreThan450(y, 60);
                 if (codeMoi.startsWith("F")) {
                     //region in code F
                     stringBuilder.append(printLine("PHIẾU BÁO TRỞ NGẠI ĐỌC SỐ", 4, y, 10, 2, 1));
@@ -730,7 +730,7 @@ public class ServiceThermalPrinter extends Service {
                     //region in binh thuong
                     stringBuilder.append(printLine("PHIẾU BÁO CHỈ SỐ", 4, y, 80, 2, 1));
                     y = handlingYMoreThan450(y, 50);
-                    stringBuilder.append(printLine("VÀ TIỀN NƯỚC LẦN 1", 4, y, 40, 2, 1));
+                    stringBuilder.append(printLine("VÀ TIỀN NƯỚC LẦN 1", 4, y, 60, 2, 1));
                     y = handlingYMoreThan450(y, 75);
 //                    stringBuilder.append(String.format(Locale.US, "@%d,0:PD417,YDIM 6,XDIM 2,COLUMNS 2,SECURITY 3|%s|\n", y, entityParent.getDanhBo()));
 //                    y = handlingYMoreThan450(y, 75);
@@ -824,7 +824,7 @@ public class ServiceThermalPrinter extends Service {
                             stringBuilder.append(printLine(line, 1, y, 0, 1, 1));
                         }
                     }
-                    y = handlingYMoreThan450(y, 25);
+                    y = handlingYMoreThan450(y, 40);
                     stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
                     y = handlingYMoreThan450(y, 15);
                     stringBuilder.append(printLine("QUÝ KHÁCH HÀNG VUI LÒNG THANH", 1, y, 0, 1, 1));
@@ -834,11 +834,11 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(printLine(" %s.", 3, y, 0, 1, 1, entityParent.getNgayThuTien()));
                     //endregion
                     if (entityParent.getLstCuaHangThuHo().size() > 0) {
-                        stringBuilder.append(printLine("Dịch vụ Thu Hộ:", 1, y, 0, 1, 1));
                         y = handlingYMoreThan450(y, 25);
+                        stringBuilder.append(printLine("Dịch vụ Thu Hộ:", 1, y, 0, 1, 1));
                         for (int i = 0; i < entityParent.getLstCuaHangThuHo().size(); i++) {
-                            stringBuilder.append(printLine(entityParent.getLstCuaHangThuHo().get(i).getMaHD(), 1, y, 0, 1, 1));
                             y = handlingYMoreThan450(y, 25);
+                            stringBuilder.append(printLine(entityParent.getLstCuaHangThuHo().get(i).getMaHD(), 1, y, 0, 1, 1));
                         }
                     }
                 }
@@ -851,8 +851,8 @@ public class ServiceThermalPrinter extends Service {
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("dụng nước:", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 40);
-                stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", ""), y, 40));
-                y = handlingYMoreThan450(y, 225);
+                stringBuilder.append(easyPrintQr("https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", ""), y, 80));
+                y = handlingYMoreThan450(y, 200);
                 stringBuilder.append(printLine("XIN CẢM ƠN", 3, y, 130, 1, 1));
                 y = handlingYMoreThan450(y, 40);
                 stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
