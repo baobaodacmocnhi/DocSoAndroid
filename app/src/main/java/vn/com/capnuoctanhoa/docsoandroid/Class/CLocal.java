@@ -803,9 +803,14 @@ public class CLocal {
         return NumberFormat.getNumberInstance(Locale.GERMANY).format(number);
     }
 
-    public static String getTime() {
+    public static String getTimeLong() {
         Date dateCapNhat = new Date();
         return CLocal.DateFormat.format(dateCapNhat);
+    }
+
+    public static String getTimeShort() {
+        Date dateCapNhat = new Date();
+        return CLocal.DateFormatShort.format(dateCapNhat);
     }
 
     public static String convertTimestampToDate(long time) {

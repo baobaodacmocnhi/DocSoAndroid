@@ -5,12 +5,10 @@ import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.os.Build;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.RequiresApi;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -18,13 +16,10 @@ import java.nio.charset.StandardCharsets;
 import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Calendar;
 import java.util.Locale;
-import java.util.Objects;
 import java.util.Set;
 import java.util.UUID;
 
-import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityChild;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CEntityParent;
 import vn.com.capnuoctanhoa.docsoandroid.Class.CLocal;
 
@@ -362,7 +357,7 @@ public class ThermalPrinter {
                 stringBuilder.append(CMD_ALIGN_CENTER)
                         .append("TRÂN TRỌNG\n")
                         .append(line)
-                        .append("Được in vào: ").append(CLocal.getTime()).append("\n")
+                        .append("Được in vào: ").append(CLocal.getTimeLong()).append("\n")
                         .append("Từ kỳ 04/2022 không thu tiền nước tại nhà")
                         .append("\n\n");
                 if (charWidth == 31)
@@ -774,7 +769,7 @@ public class ThermalPrinter {
                 y = handlingYMoreThan450(y, 50);
                 stringBuilder.append(String.format(Locale.US, "@%d,80:HLINE,Length200,Thick3|", y));
                 y = handlingYMoreThan450(y, 15);
-                stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTime()));
+                stringBuilder.append(printLine("Được in vào: %s", 1, y, 0, 1, 1, CLocal.getTimeLong()));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("Từ kỳ 04/2022 không thu tiền nước", 1, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
