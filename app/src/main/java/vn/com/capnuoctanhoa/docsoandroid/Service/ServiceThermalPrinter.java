@@ -398,24 +398,24 @@ public class ServiceThermalPrinter extends Service {
                             .append("Định mức: ").append(entityParent.getDinhMuc()).append('\n')
                             .append(pad("Chỉ số cũ:", entityParent.getChiSo0In(), padChar, charWidth)).append('\n')
                             .append(pad("Chỉ số mới:", entityParent.getChiSoMoi(), padChar, charWidth)).append('\n')
-                            .append(pad("Tiêu thụ:", entityParent.getTieuThuMoi(), padChar, charWidth)).append(" m3\n")
-                            .append(pad("Tiền nước:", numberVN(Double.parseDouble(entityParent.getTienNuoc())), padChar, charWidth)).append(" đ\n")
-                            .append(pad("Thuế VAT:", numberVN(Double.parseDouble(entityParent.getThueGTGT())), padChar, charWidth)).append(" đ\n");
+                            .append(pad("Tiêu thụ:", entityParent.getTieuThuMoi()+" m3", padChar, charWidth)).append("\n")
+                            .append(pad("Tiền nước:", numberVN(Double.parseDouble(entityParent.getTienNuoc()))+" đ", padChar, charWidth)).append("\n")
+                            .append(pad("Thuế VAT:", numberVN(Double.parseDouble(entityParent.getThueGTGT()))+" đ", padChar, charWidth)).append("\n");
                     if (Double.parseDouble(entityParent.getPhiBVMT()) > 0)
-                        stringBuilder.append(pad("Tiền DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT())), padChar, charWidth)).append(" đ\n");
+                        stringBuilder.append(pad("Tiền DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT()))+" đ", padChar, charWidth)).append("\n");
                     if (Double.parseDouble(entityParent.getPhiBVMT_Thue()) > 0)
-                        stringBuilder.append(pad("VAT DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue())), padChar, charWidth)).append(" đ\n");
+                        stringBuilder.append(pad("VAT DV thoát nước:", numberVN(Double.parseDouble(entityParent.getPhiBVMT_Thue()))+" đ", padChar, charWidth)).append("\n");
                     int TongCong = Integer.parseInt(entityParent.getTongCong());
                     if (entityParent.getLstHoaDon().size() > 0) {
-                        stringBuilder.append(escpStyle(pad("Tổng cộng:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth), 0b01000)).append(" đ\n").append(line);
+                        stringBuilder.append(escpStyle(pad("Tổng cộng:", numberVN(Double.parseDouble(entityParent.getTongCong()))+" đ", padChar, charWidth), 0b01000)).append("\n").append(line);
                         stringBuilder.append(breakLine("Nợ cũ: (vui lòng bỏ qua nếu đã thanh toán)", charWidth)).append('\n');
                         for (int i = 0; i < entityParent.getLstHoaDon().size(); i++) {
                             TongCong += Integer.parseInt(entityParent.getLstHoaDon().get(i).getTongCong());
-                            stringBuilder.append("   Tháng " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong()))).append(" đ\n");
+                            stringBuilder.append("   Tháng " + entityParent.getLstHoaDon().get(i).getKy() + ": " + numberVN(Double.parseDouble(entityParent.getLstHoaDon().get(i).getTongCong()))+" đ").append("\n");
                         }
-                        stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(TongCong), padChar, charWidth) + " đ\n", 0b10000));
+                        stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(TongCong)+" đ", padChar, charWidth) + "\n", 0b10000));
                     } else {
-                        stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(Double.parseDouble(entityParent.getTongCong())), padChar, charWidth) + " đ\n", 0b10000));
+                        stringBuilder.append(escpStyle(pad("TỔNG CỘNG:", numberVN(Double.parseDouble(entityParent.getTongCong()))+" đ", padChar, charWidth) + "\n", 0b10000));
                     }
                     //doc tien
                     String docTien = ReadMoney(String.valueOf(TongCong));
@@ -425,9 +425,9 @@ public class ServiceThermalPrinter extends Service {
                     stringBuilder.append(docTienLines).append('\n');
                     stringBuilder.append(line);
                     if (entityParent.getLstHoaDon().size() > 0) {
-                        stringBuilder.append(breakLine(escpStyle("ĐỀ NGHỊ QUÝ KHÁCH HÀNG THANH TOÁN TIỀN NƯỚC TRONG VÒNG 2 NGÀY TỪ NGÀY: " + entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
+                        stringBuilder.append(breakLine(escpStyle("ĐỀ NGHỊ QUÝ KHÁCH HÀNG THANH TOÁN TIỀN NƯỚC TRONG VÒNG 2 NGÀY TỪ NGÀY: " + entityParent.getNgayThuTien(), 0b01000) + ".\n", charWidth));
                     } else {
-                        stringBuilder.append(breakLine("ĐỀ NGHỊ QUÝ KHÁCH HÀNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b11000) + ".\n", charWidth));
+                        stringBuilder.append(breakLine("ĐỀ NGHỊ QUÝ KHÁCH HÀNG THANH TOÁN TIỀN NƯỚC TỪ NGÀY: " + escpStyle(entityParent.getNgayThuTien(), 0b01000) + ".\n", charWidth));
                     }
                     if (entityParent.getLstCuaHangThuHo().size() > 0) {
                         stringBuilder.append(breakLine(escpStyle("Dịch vụ Thu Hộ:", 0b01000), charWidth)).append('\n');
