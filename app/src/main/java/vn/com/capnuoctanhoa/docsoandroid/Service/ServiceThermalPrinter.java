@@ -421,7 +421,7 @@ public class ServiceThermalPrinter extends Service {
                     String docTien = ReadMoney(String.valueOf(TongCong));
                     String docTienLines = "";
                     if (!docTien.trim().isEmpty())
-                        docTienLines = breakLine("Bằng chữ: " + docTien, charWidth);
+                        docTienLines = breakLine(escpStyle("Bằng chữ: " + docTien, 0b01000), charWidth);
                     stringBuilder.append(docTienLines).append('\n');
                     stringBuilder.append(line);
                     if (entityParent.getLstHoaDon().size() > 0) {
@@ -436,7 +436,7 @@ public class ServiceThermalPrinter extends Service {
                         }
                     }
                 }
-                stringBuilder.append(breakLine("Website: " + escpStyle("https://cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
+                stringBuilder.append(breakLine(escpStyle("https://cskhtanhoa.com.vn", 0b01000), charWidth)).append('\n');
                 stringBuilder.append(breakLine("Quét QR để xem chi tiết lịch sử sử dụng nước:\n\n", charWidth));
                 String link = "https://service.cskhtanhoa.com.vn/khachhang/thongtin?danhbo=" + entityParent.getDanhBo().replace(" ", "");
                 String qrData;
@@ -811,7 +811,7 @@ public class ServiceThermalPrinter extends Service {
                     if (docTienLines != null) {
                         for (String line : docTienLines) {
                             y = handlingYMoreThan450(y, 25);
-                            stringBuilder.append(printLine(line, 1, y, 0, 1, 1));
+                            stringBuilder.append(printLine(line, 3, y, 0, 1, 1));
                         }
                     }
                     y = handlingYMoreThan450(y, 40);
@@ -844,8 +844,8 @@ public class ServiceThermalPrinter extends Service {
                         }
                     }
                 }
-                y = handlingYMoreThan450(y, 25);
-                stringBuilder.append(printLine("Website:", 2, y, 0, 1, 1));
+//                y = handlingYMoreThan450(y, 25);
+//                stringBuilder.append(printLine("Website:", 2, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
                 stringBuilder.append(printLine("https://cskhtanhoa.com.vn", 2, y, 0, 1, 1));
                 y = handlingYMoreThan450(y, 25);
